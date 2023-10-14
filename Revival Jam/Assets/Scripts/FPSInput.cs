@@ -12,7 +12,7 @@ public class FPSInput : MonoBehaviour
 
     private UnityEngine.CharacterController charController;
 
-    bool shouldWalk = true;
+    public bool ShouldWalk { get; private set; } = true;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class FPSInput : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
-            shouldWalk = !shouldWalk;
+            ShouldWalk = !ShouldWalk;
 
 
         MovePlayer();
@@ -33,7 +33,7 @@ public class FPSInput : MonoBehaviour
 
     void MovePlayer()
     {
-        int walk = shouldWalk ? 1 : 0;
+        int walk = ShouldWalk ? 1 : 0;
 
         float deltaX = Input.GetAxis("Horizontal") * speed * walk;
         float deltaZ = Input.GetAxis("Vertical") * speed * walk;

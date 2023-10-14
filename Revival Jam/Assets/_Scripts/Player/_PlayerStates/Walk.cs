@@ -30,6 +30,7 @@ public class Walk : State<CharacterController>
     PlayerAnimator playerAnimator;
     Player player;
 
+
     float walkSoundTimer;
     float jumpTimer;
     float groundedTimer;
@@ -37,6 +38,9 @@ public class Walk : State<CharacterController>
     float horizontalInput;
 
     float maxVerticalVelocity;
+
+    bool shouldWalk = false;
+
 
     public override void Enter(CharacterController parent)
     {
@@ -78,6 +82,15 @@ public class Walk : State<CharacterController>
         FlipPlayer();
 
         CheckWalkSound();
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            shouldWalk = !shouldWalk;
+    }
+
+    public override void FixedUpdate()
+    {
+        MovePlayer();
+        ApplyFriction();
     }
 
     void CheckAnimations()
@@ -133,6 +146,22 @@ public class Walk : State<CharacterController>
 
     }
 
+    public override void ChangeState()
+    {
+        if (jumpTimer > 0 && groundedTimer > 0 && shouldWalk)
+        {
+            jumpTimer = 0;
+            groundedTimer = 0;
+
+            runner.SetState(typeof(Jump));
+        }
+    }
+
+    public override void Exit()
+    {
+
+    }
+
     //Makes sure the player can't gain more vertical velocity than they already have.
     //Prevents bouncing.
     //Note: Performance is poor, optimize using Clamp
@@ -147,17 +176,13 @@ public class Walk : State<CharacterController>
             maxVerticalVelocity = 0;
     }
 
-    public override void FixedUpdate()
-    {
-        MovePlayer();
-        ApplyFriction();
-    }
-
     //Uses forces and math to move the player
     void MovePlayer()
     {
+        float modifier =  shouldWalk ? 1 : 0;
+
         //Calculates the direction we wish to move in; this is our desired velocity
-        float targetSpeed = horizontalInput * walkSpeed;
+        float targetSpeed = horizontalInput * walkSpeed * modifier;
 
         //Difference between the current and desired velocity
         float speedDifference = targetSpeed - rigidbody.velocity.x;
@@ -181,21 +206,6 @@ public class Walk : State<CharacterController>
 
         //Applies force against the player's movement direction
         rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
-    }
-
-    public override void ChangeState()
-    {
-        if (jumpTimer > 0 && groundedTimer > 0)
-        {
-            jumpTimer = 0;
-            groundedTimer = 0;
-
-            runner.SetState(typeof(Jump));
-        }
-    }
-
-    public override void Exit()
-    {
     }
 
     
