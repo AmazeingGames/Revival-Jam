@@ -1,11 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Nice, easy to understand enum-based game manager. For larger and more complex games, look into
-/// state machines. But this will serve just fine for most games.
-/// </summary>
-public class GameManager : StaticInstance<GameManager>
+public class ArcadeGameManager : StaticInstance<GameManager>
 {
     public static event Action<GameState> OnBeforeStateChanged;
     public static event Action<GameState> OnAfterStateChanged;
@@ -40,7 +38,7 @@ public class GameManager : StaticInstance<GameManager>
 }
 
 [Serializable]
-public enum GameState
+public enum ArcadeGameState
 {
     Starting,
     Win,
