@@ -50,7 +50,7 @@ MonoBehaviour:
   raycastLength: 0.1
   terrainLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!1 &1199318112
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 2585088136428366716}
   - component: {fileID: 5235988564058582603}
   - component: {fileID: 388785012916785529}
-  - component: {fileID: -1764705501189639752}
+  - component: {fileID: 1766251042}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -228,7 +228,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-1764705501189639752
+--- !u!114 &1766251042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,13 +237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7501094393617744614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7eebe4ef2a560842b12d16f59d8a4c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 22584ad74897f394caab49a3f15a3c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detector: {fileID: 0}
-  detectTerrainPresent: 0
-  debugResults: 0
-  raycastLength: 0
-  terrainLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  groundDetector: {fileID: 707571209}
+  wallDetector: {fileID: 1199318114}
+  flipTimerLength: 0.25
+  constantSpeed: 3
+  flipMovementPauseLength: 0.5
