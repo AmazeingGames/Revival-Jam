@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wire (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 9135039185744939718, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -274,7 +278,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6673488131414459309, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
 --- !u!224 &79669876 stripped
 RectTransform:
@@ -527,6 +532,10 @@ PrefabInstance:
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_TagString
+      value: Receptacle
       objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176963, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Pivot.x
@@ -790,6 +799,10 @@ PrefabInstance:
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_TagString
+      value: Receptacle
       objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176963, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Pivot.x
@@ -1084,6 +1097,27 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
   m_PrefabInstance: {fileID: 1005358068}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1074919793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9135039185744939718, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+  m_PrefabInstance: {fileID: 189266787}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1074919801
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074919793}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1243010076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,6 +1281,10 @@ PrefabInstance:
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_TagString
+      value: Receptacle
       objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176963, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Pivot.x
@@ -1494,6 +1532,10 @@ PrefabInstance:
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_TagString
+      value: Receptacle
       objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176963, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Pivot.x

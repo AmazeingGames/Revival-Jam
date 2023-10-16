@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1277356446092808496}
   - component: {fileID: 941115154857875440}
   - component: {fileID: 240395121284561949}
-  - component: {fileID: 7279470805699742939}
+  - component: {fileID: 6098120366959326312}
   m_Layer: 9
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Receptacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!61 &7279470805699742939
+--- !u!61 &6098120366959326312
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +101,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 98.51, y: 98.51}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &6190369018237176960
 GameObject:
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 612339409361281733}
   m_Layer: 9
   m_Name: CircuitReceptacle
-  m_TagString: Untagged
+  m_TagString: Receptacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: {fileID: 1121175041880777342}
-  data: {fileID: 11400000, guid: 86f2602694055094d874e2ffae812d15, type: 2}
+  <LinkedControl>k__BackingField: 0
 --- !u!1 &7602538041798186106
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 1121175041880777342}
   m_Layer: 9
   m_Name: Control Name
-  m_TagString: Untagged
+  m_TagString: Receptacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
