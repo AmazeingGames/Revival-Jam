@@ -155,6 +155,11 @@ public class Walk : State<CharacterController>
 
             runner.SetState(typeof(Jump));
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            runner.SetState(typeof(EntryAttack));
+        }
     }
 
     public override void Exit()
