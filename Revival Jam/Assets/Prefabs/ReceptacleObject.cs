@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class ReceptacleObject : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI displayText;
