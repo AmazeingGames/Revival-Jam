@@ -22,5 +22,6 @@ MonoBehaviour:
   jumpBufferLength: 0.1
   maxFallVelocity: 0
   timeBetweenWalkSound: 0.3
-  heavenWalk: {fileID: 8300000, guid: bb9347dabfbf18f4fa3480b3e5620219, type: 3}
-  hellWalk: {fileID: 8300000, guid: e2c0e11a9d4fd4d4e8d623db422340dd, type: 3}
+  debugJumpTimer: 0
+  debugGroundedTimer: 1
+  debugShouldWalk: 0

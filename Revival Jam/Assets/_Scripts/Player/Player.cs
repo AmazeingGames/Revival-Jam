@@ -30,9 +30,17 @@ public class Player : MonoBehaviour
 
             IsGrounded = raycast;
 
+            CheckDebug($"Is grounded : {(bool)IsGrounded}", showGroundCheckDebug);
+
             yield return null;
         }
         
+    }
+
+    void CheckDebug(string msg, bool shouldDebug)
+    {
+        if (shouldDebug)
+            Debug.Log(msg);
     }
 
     void OnDrawGizmos()

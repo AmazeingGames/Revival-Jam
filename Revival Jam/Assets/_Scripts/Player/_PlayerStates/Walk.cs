@@ -25,6 +25,11 @@ public class Walk : State<CharacterController>
     [Header("Sound FX")]
     [SerializeField] float timeBetweenWalkSound;
 
+    [Header("Debug")]
+    [SerializeField] bool debugJumpTimer = false;
+    [SerializeField] bool debugGroundedTimer = false;
+    [SerializeField] bool debugShouldWalk = false;
+
     Transform transform;
     Rigidbody2D rigidbody;
     PlayerAnimator playerAnimator;
@@ -148,6 +153,10 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
+        DebugCheck($"Jump Timer > 0 : {jumpTimer > 0}", debugJumpTimer);
+        DebugCheck($"Grounded Timer > 0 : {groundedTimer > 0}", debugGroundedTimer);
+        DebugCheck($"ShouldWalk: {shouldWalk}", debugShouldWalk);
+
         if (jumpTimer > 0 && groundedTimer > 0 && shouldWalk)
         {
             jumpTimer = 0;
@@ -155,6 +164,12 @@ public class Walk : State<CharacterController>
 
             runner.SetState(typeof(Jump));
         }
+    }
+
+    void DebugCheck(string msg, bool shouldDebug)
+    {
+        if (shouldDebug)
+            Debug.Log(msg);
     }
 
     public override void Exit()
