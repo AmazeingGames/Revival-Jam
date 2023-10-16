@@ -151,12 +151,19 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        if (jumpTimer > 0 && groundedTimer > 0 && !FPSInput.Instance.ShouldWalk)
+
+        bool pass = FPSInput.Instance == null;
+        if (jumpTimer > 0 && groundedTimer > 0 && (pass || !FPSInput.Instance.ShouldWalk))
         {
             jumpTimer = 0;
             groundedTimer = 0;
 
             runner.SetState(typeof(Jump));
+        }
+
+        if (Input.GetButtonDown("Attack") && player.IsGrounded)
+        {
+            runner.SetState(typeof(SimpleAttack));
         }
     }
 
@@ -182,7 +189,10 @@ public class Walk : State<CharacterController>
     //Uses forces and math to move the player
     void MovePlayer()
     {
-        float modifier = !FPSInput.Instance.ShouldWalk ? 1 : 0;
+        float modifier = 1;
+        
+        if (FPSInput.Instance != null)
+            modifier = !FPSInput.Instance.ShouldWalk ? 1 : 0;
 
     #if DEBUG
         if (walkOverride)

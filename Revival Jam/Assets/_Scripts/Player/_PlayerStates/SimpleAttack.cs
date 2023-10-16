@@ -7,27 +7,28 @@ public class SimpleAttack : State<CharacterController>
 {
     [SerializeField] float attackLength;
     [SerializeField] float jumpBufferLength;
+    
+    GameObject attackHitbox;
 
     float jumpBufferTimer;
     float attackTimer;
 
-    BoxCollider2D attackHitbox;
     Rigidbody2D rigidbody2D;
 
     public override void Enter(CharacterController parent)
     {
         base.Enter(parent);
 
-        if (attackHitbox == null )
-            attackHitbox = parent.GetComponentInChildren<BoxCollider2D>();
+        Debug.Log("attack!");
+
         if (rigidbody2D == null)
             rigidbody2D = parent.GetComponent<Rigidbody2D>();
-
-        attackHitbox.enabled = true;
+        if (attackHitbox == null)
+            attackHitbox = parent.transform.Find("AttackHitbox").gameObject;
+        attackHitbox.SetActive(true);
         attackTimer = attackLength;
         jumpBufferTimer = 0;
         rigidbody2D.velocity = Vector3.zero;
-
     }
 
     public override void CaptureInput()
@@ -59,8 +60,8 @@ public class SimpleAttack : State<CharacterController>
     }
 
     public override void Exit()
-    { 
-        attackHitbox.enabled = false;
+    {
+        attackHitbox.SetActive(false);
     }
 
 }

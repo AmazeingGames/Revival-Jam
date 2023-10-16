@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Vector3 rayDirection = new(0, -groundRaycastLength, 0);
+        Vector3 rayDirection = new(0, 0, 0);
         Gizmos.DrawRay(groundRaycastStart.transform.position, rayDirection);    
     }
 }

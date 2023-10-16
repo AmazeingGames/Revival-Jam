@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 707571208}
   - component: {fileID: 707571209}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: GroundDetector
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -61,7 +61,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1199318113}
   - component: {fileID: 1199318114}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: WallDetector
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 5235988564058582603}
   - component: {fileID: 388785012916785529}
   - component: {fileID: 1766251042}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
