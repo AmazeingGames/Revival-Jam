@@ -10,7 +10,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] TerrainDetector wallDetector;
     [SerializeField] float flipTimerLength;
 
+    [Header("Movement")]
+    [SerializeField] float constantSpeed;
+    [SerializeField] float flipMovementPauseLength;
+
+    Rigidbody2D rigidbody;
+
     float flipTimer;
+    float movementPauseTimer;
+
+    private void Start()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -25,10 +37,11 @@ public class Enemy : MonoBehaviour
         if ((groundDetector._ShouldFlip || wallDetector._ShouldFlip) && flipTimer < 0)
         {
             Flip();
-            flipTimer = flipTimerLength;
         }
 
-        UpdateTimer();
+        MoveEnemy();
+
+        UpdateTimers();
     }
 
     void Flip()
@@ -39,14 +52,34 @@ public class Enemy : MonoBehaviour
 
         transform.localScale = newScale;
 
+        rigidbody.velocity = Vector3.zero;
+
+        flipTimer = flipTimerLength;
+        movementPauseTimer = flipMovementPauseLength;
+
         Debug.Log("Flipped");
     }
 
-    void UpdateTimer()
+    void UpdateTimers()
     {
         flipTimer -= Time.deltaTime;
-        
+        movementPauseTimer -= Time.deltaTime;
+
         if (flipTimer < 0)
             flipTimer = -1;
+
+        if (movementPauseTimer < 0)
+            movementPauseTimer = -1;
+    }
+
+    void MoveEnemy()
+    {
+        if (movementPauseTimer > 0)
+        {
+            rigidbody.velocity = Vector3.zero;
+            return;
+        }
+
+        rigidbody.velocity = new Vector3(constantSpeed * (transform.localScale.x / Mathf.Abs(transform.localScale.x)), rigidbody.velocity.y);
     }
 }

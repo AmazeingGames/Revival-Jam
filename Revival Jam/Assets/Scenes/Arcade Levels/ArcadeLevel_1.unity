@@ -917,6 +917,8 @@ MonoBehaviour:
   groundDetector: {fileID: 707571209}
   wallDetector: {fileID: 1199318114}
   flipTimerLength: 0.25
+  constantSpeed: 3
+  flipMovementPauseLength: 0.5
 --- !u!1 &1838590484
 GameObject:
   m_ObjectHideFlags: 0
