@@ -39,6 +39,8 @@ public class Walk : State<CharacterController>
 
     float maxVerticalVelocity;
 
+    bool walkOverride = false;
+
     public override void Enter(CharacterController parent)
     {
         base.Enter(parent);
@@ -61,6 +63,13 @@ public class Walk : State<CharacterController>
 
         if (Input.GetButtonDown("Jump"))
             jumpTimer = jumpBufferLength;
+
+    #if DEBUG
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            walkOverride = !walkOverride;
+        }
+    #endif
     }
 
     public override void Update()
@@ -175,6 +184,10 @@ public class Walk : State<CharacterController>
     {
         float modifier = !FPSInput.Instance.ShouldWalk ? 1 : 0;
 
+    #if DEBUG
+        if (walkOverride)
+            modifier = 1;
+    #endif
         //Calculates the direction we wish to move in; this is our desired velocity
         float targetSpeed = horizontalInput * walkSpeed * modifier;
 
