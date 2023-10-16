@@ -163,7 +163,15 @@ public class Walk : State<CharacterController>
             groundedTimer = 0;
 
             runner.SetState(typeof(Jump));
+
+            return;
         }
+
+        if (Input.GetButtonDown("Attack"))
+        {
+            runner.SetState(typeof(SimpleAttack));
+        }
+
     }
 
     void DebugCheck(string msg, bool shouldDebug)
