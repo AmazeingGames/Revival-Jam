@@ -11,7 +11,7 @@ public class ArcadeGameManager : StaticInstance<GameManager>
     public GameState State { get; private set; }
 
     // Kick the game off with the first state
-    void Start() => ChangeState(GameState.Starting);
+    void Start() => ChangeState(GameState.StartLevel);
 
     public void ChangeState(GameState newState)
     {
@@ -21,7 +21,7 @@ public class ArcadeGameManager : StaticInstance<GameManager>
 
         switch (newState)
         {
-            case GameState.Starting:
+            case GameState.StartLevel:
                 break;
             case GameState.Win:
                 break;
@@ -35,12 +35,4 @@ public class ArcadeGameManager : StaticInstance<GameManager>
 
         Debug.Log($"New state: {newState}");
     }
-}
-
-[Serializable]
-public enum ArcadeGameState
-{
-    Starting,
-    Win,
-    Lose,
 }
