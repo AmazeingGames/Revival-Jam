@@ -16,6 +16,8 @@ public class MouseLook : MonoBehaviour
 
     float verticalRot = 0;
 
+    bool isLocked = false;
+
     void CalcVertRot()
     {
         verticalRot -= Input.GetAxis("Mouse Y") * sensitvityVer;
@@ -26,6 +28,7 @@ public class MouseLook : MonoBehaviour
     {
         return Input.GetAxis("Mouse X") * sensitivityHor;
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,9 +39,31 @@ public class MouseLook : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+    #if DEBUG
+        MouseManager.LockMouse += OnMouseLock;
+    #endif
+    }
+
+    private void OnDisable()
+    {
+    #if DEBUG
+        MouseManager.LockMouse -= OnMouseLock;
+    #endif
+    }
+
     // Update is called once per frame
     void Update()
     {
+        Look();
+    }
+
+    void Look()
+    {
+        if (isLocked)
+            return;
+
         if (axes == RotationAxes.MouseX)
         {
             transform.Rotate(0, GetXRot(), 0);
@@ -60,5 +85,12 @@ public class MouseLook : MonoBehaviour
 
             transform.localEulerAngles = new Vector3(verticalRot, horizontalRot, 0);
         }
+    }
+
+    void OnMouseLock(bool isMouseLocked)
+    {
+    #if DEBUG
+        isLocked = !isMouseLocked;
+    #endif
     }
 }
