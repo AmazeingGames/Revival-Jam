@@ -25,11 +25,6 @@ public class Walk : State<CharacterController>
     [Header("Sound FX")]
     [SerializeField] float timeBetweenWalkSound;
 
-    [Header("Debug")]
-    [SerializeField] bool debugJumpTimer = false;
-    [SerializeField] bool debugGroundedTimer = false;
-    [SerializeField] bool debugShouldWalk = false;
-
     Transform transform;
     Rigidbody2D rigidbody;
     PlayerAnimator playerAnimator;
@@ -43,9 +38,6 @@ public class Walk : State<CharacterController>
     float horizontalInput;
 
     float maxVerticalVelocity;
-
-    bool shouldWalk = false;
-
 
     public override void Enter(CharacterController parent)
     {
@@ -87,9 +79,6 @@ public class Walk : State<CharacterController>
         FlipPlayer();
 
         CheckWalkSound();
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            shouldWalk = !shouldWalk;
     }
 
     public override void FixedUpdate()
@@ -153,31 +142,13 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        DebugCheck($"Jump Timer > 0 : {jumpTimer > 0}", debugJumpTimer);
-        DebugCheck($"Grounded Timer > 0 : {groundedTimer > 0}", debugGroundedTimer);
-        DebugCheck($"ShouldWalk: {shouldWalk}", debugShouldWalk);
-
-        if (jumpTimer > 0 && groundedTimer > 0 && shouldWalk)
+        if (jumpTimer > 0 && groundedTimer > 0 && !FPSInput.Instance.ShouldWalk)
         {
             jumpTimer = 0;
             groundedTimer = 0;
 
             runner.SetState(typeof(Jump));
-
-            return;
         }
-
-        if (Input.GetButtonDown("Attack"))
-        {
-            runner.SetState(typeof(SimpleAttack));
-        }
-
-    }
-
-    void DebugCheck(string msg, bool shouldDebug)
-    {
-        if (shouldDebug)
-            Debug.Log(msg);
     }
 
     public override void Exit()
@@ -202,7 +173,7 @@ public class Walk : State<CharacterController>
     //Uses forces and math to move the player
     void MovePlayer()
     {
-        float modifier =  shouldWalk ? 1 : 0;
+        float modifier = !FPSInput.Instance.ShouldWalk ? 1 : 0;
 
         //Calculates the direction we wish to move in; this is our desired velocity
         float targetSpeed = horizontalInput * walkSpeed * modifier;
