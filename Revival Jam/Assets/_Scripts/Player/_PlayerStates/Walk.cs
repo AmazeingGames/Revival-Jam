@@ -39,9 +39,6 @@ public class Walk : State<CharacterController>
 
     float maxVerticalVelocity;
 
-    bool shouldWalk = false;
-
-
     public override void Enter(CharacterController parent)
     {
         base.Enter(parent);
@@ -82,9 +79,6 @@ public class Walk : State<CharacterController>
         FlipPlayer();
 
         CheckWalkSound();
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            shouldWalk = !shouldWalk;
     }
 
     public override void FixedUpdate()
@@ -148,7 +142,7 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        if (jumpTimer > 0 && groundedTimer > 0 && shouldWalk)
+        if (jumpTimer > 0 && groundedTimer > 0 && !FPSInput.Instance.ShouldWalk)
         {
             jumpTimer = 0;
             groundedTimer = 0;
@@ -179,7 +173,7 @@ public class Walk : State<CharacterController>
     //Uses forces and math to move the player
     void MovePlayer()
     {
-        float modifier =  shouldWalk ? 1 : 0;
+        float modifier = !FPSInput.Instance.ShouldWalk ? 1 : 0;
 
         //Calculates the direction we wish to move in; this is our desired velocity
         float targetSpeed = horizontalInput * walkSpeed * modifier;
