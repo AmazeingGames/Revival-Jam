@@ -57,7 +57,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &8581096017296015267
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,10 +139,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundRaycastStart: {fileID: 8581096017436916583}
-  groundRaycastLength: 0.05
+  groundRaycastLength: 0.06
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
   showGroundCheckDebug: 0
 --- !u!114 &651691400
 MonoBehaviour:
