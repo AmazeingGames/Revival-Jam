@@ -5,6 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Dynamic;
+using System.Security.Cryptography;
+using System;
+using static ReceptacleObject;
+using static ControlsManager;
 
 public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -15,30 +20,70 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private Vector2? lastMousePoint = null;
 
-
     ReceptacleObject connectedReceptacle;
 
-    List<Collider> overlappingColliders;
+    ReceptacleObject overlappingReceptacle = null;
 
-    void Start()
-    {
-    }
+    public static event Action<ChangeControlsEventArgs> ConnectWireCheck;
+
+    Transform autoPosition = null;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Clicked");
-
         shouldFollowMouse = true;
 
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
     }
 
+    //TO DO: MAKE SURE THIS ADDS AND REMOVES ABILITES PROPERLY
     public void OnPointerUp(PointerEventData eventData)
     {
         shouldFollowMouse = false;
 
-        CheckCurrentCollisions();
+        WireToConnector();
+    }
+
+    //'WireToControl' name instead (?)
+    void WireToConnector()
+    {
+        Controls controlToRemove = connectedReceptacle == null ? Controls.Unknown : connectedReceptacle.LinkedControl;
+
+        //ReceptacleObject receptacleScript = overlappingReceptacle == null ? null : overlappingReceptacle.GetComponent<ReceptacleObject>();
+
+        Controls controlToAdd = overlappingReceptacle == null ? Controls.Unknown : overlappingReceptacle.LinkedControl;
+
+        ChangeControlsEventArgs controlsEventArgs = new(overlappingReceptacle, controlToAdd, controlToRemove);
+
+        ConnectWireCheck?.Invoke(controlsEventArgs);
+
+        connectedReceptacle = overlappingReceptacle;
+    }
+
+    public void ManuallyConnect(ReceptacleObject receptacleToConnect)
+    {
+        StartCoroutine(SetPositonManual());
+        autoPosition = receptacleToConnect.WirePosition;
+
+    }
+
+    IEnumerator SetPositonManual()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            yield return null;
+
+            transform.position = autoPosition.position;
+
+            WireToConnector();
+
+        }
+        
+        yield break;
+    }
+
+    void Awake()
+    {
+        ControlsManager.Instance.Wires.Add(this);
     }
 
     // Update is called once per frame
@@ -61,20 +106,41 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
 
-    void CheckCurrentCollisions()
+    void OnTriggerEnter(Collider other)
     {
-        List<Collider2D> overlappingColliders = new();
+        if (other == null) 
+            return;
 
-        for (int i = 0; i < overlappingColliders.Count; i++)
+        if (!other.TryGetComponent<ReceptacleObject>(out var receptacleObject))
+            return;
+
+        Debug.Log("Over Receptacle");
+
+        overlappingReceptacle = receptacleObject;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == overlappingReceptacle.gameObject)
         {
-            var collider = overlappingColliders[i];
-
-            Debug.Log($"Loop : {collider.gameObject.name}");
-
-            if (!collider.gameObject.CompareTag($"{receptacleTag}"))
-                continue;
-
-            collider.gameObject.SetActive(false);
+            Debug.Log("Left Receptacle");
+            overlappingReceptacle = null;
         }
+    }
+
+    public class ChangeControlsEventArgs
+    {
+        public ReceptacleObject NewWireReceptacle { get; private set; }
+        public Controls ControlToAdd { get; private set; }
+        public Controls ControlToRemove { get; private set; }
+
+        public ChangeControlsEventArgs(ReceptacleObject _newWireReceptacle, Controls _controlToAdd = Controls.Unknown, Controls _controlToRemove = Controls.Unknown)
+        {
+            NewWireReceptacle = _newWireReceptacle;
+            ControlToAdd = _controlToAdd;
+            ControlToRemove = _controlToRemove;
+        }
+
+        public void SetControlToAdd(Controls controlToAdd) => ControlToAdd = controlToAdd;
     }
 }

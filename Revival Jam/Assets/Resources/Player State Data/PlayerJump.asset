@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d441b70d4708c42aa56158f1e682ad, type: 3}
   m_Name: PlayerJump
   m_EditorClassIdentifier: 
+  controlType: 2
   jumpHeight: 5
   jumpEndLength: 0.05

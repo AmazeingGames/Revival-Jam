@@ -3,30 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static Wire;
+using static ControlsManager;
 
 //[ExecuteInEditMode]
 public class ReceptacleObject : MonoBehaviour
 {
+    [field: SerializeField] public Transform WirePosition { get; private set; }
     [SerializeField] TextMeshProUGUI displayText;
-    [field: SerializeField] public Control LinkedControl { get; private set; }
+    [field: SerializeField] public Controls LinkedControl { get; private set; }
 
-    public enum Control { Walk, Jump, Joust, Dash }
-
-    public static event Action<Control> OnConnection;
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        ConnectWireCheck += HandleConnectWireCheck;
+    }
+
+    private void OnDisable()
+    {
+        ConnectWireCheck -= HandleConnectWireCheck;
+    }
+
+
+    private void Awake()
+    {
+        ControlsManager.Instance.Receptacles.Add(this);
+    }
+
+    private void Start()
+    {
+        ControlsManager.Instance.Receptacles.Add(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!Application.IsPlaying(gameObject))
-        {
-            displayText.text = LinkedControl.ToString();
-        }
+        displayText.text = LinkedControl.ToString();
+    }
+
+    void HandleConnectWireCheck(ChangeControlsEventArgs eventArgs)
+    {
+        if (eventArgs.NewWireReceptacle != gameObject)
+            return;
     }
 }

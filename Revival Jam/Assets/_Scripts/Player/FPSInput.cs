@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(UnityEngine.CharacterController))]
-[AddComponentMenu("Control Script/Fps Input")]
+[AddComponentMenu("Controls Script/Fps Input")]
 
 public class FPSInput : MonoBehaviour
 {

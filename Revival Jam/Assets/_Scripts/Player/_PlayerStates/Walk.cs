@@ -157,7 +157,7 @@ public class Walk : State<CharacterController>
         DebugCheck($"Grounded Timer > 0 : {groundedTimer > 0}", debugGroundedTimer);
         DebugCheck($"ShouldWalk: {shouldWalk}", debugShouldWalk);
 
-        if (jumpTimer > 0 && groundedTimer > 0 && shouldWalk)
+        if (jumpTimer > 0 && groundedTimer > 0 && shouldWalk && ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Jump))
         {
             jumpTimer = 0;
             groundedTimer = 0;
@@ -194,10 +194,13 @@ public class Walk : State<CharacterController>
     //Uses forces and math to move the player
     void MovePlayer()
     {
-        float modifier =  shouldWalk ? 1 : 0;
+        float canWalkMod = 1;
+
+        if (shouldWalk == false || !ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
+            canWalkMod = 0;
 
         //Calculates the direction we wish to move in; this is our desired velocity
-        float targetSpeed = horizontalInput * walkSpeed * modifier;
+        float targetSpeed = horizontalInput * walkSpeed * canWalkMod;
 
         //Difference between the current and desired velocity
         float speedDifference = targetSpeed - rigidbody.velocity.x;

@@ -280,6 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6673488131414459309, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+    - {fileID: 1693744066276548019, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
 --- !u!224 &79669876 stripped
 RectTransform:
@@ -383,7 +384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 28
+      value: 28.5
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -515,7 +516,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1693744066276548019, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
 --- !u!224 &206956684 stripped
 RectTransform:
@@ -529,6 +531,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 541444858}
     m_Modifications:
+    - target: {fileID: 612339409361281733, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: <LinkedControl>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532355042019116010, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle (2)
@@ -796,6 +806,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 541444858}
     m_Modifications:
+    - target: {fileID: 612339409361281733, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: <Image>k__BackingField
+      value: 
+      objectReference: {fileID: 1596005219}
+    - target: {fileID: 612339409361281733, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: <WirePosition>k__BackingField
+      value: 
+      objectReference: {fileID: 896707443}
+    - target: {fileID: 612339409361281733, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: <LinkedControl>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532355042019116010, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle
@@ -893,6 +919,11 @@ PrefabInstance:
 --- !u!224 &896707442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6190369018237176963, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+  m_PrefabInstance: {fileID: 896707441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &896707443 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5469741977838671036, guid: 638b0c5fa0708144288af9944989926f, type: 3}
   m_PrefabInstance: {fileID: 896707441}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
@@ -1090,34 +1121,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1693744066276548019, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
 --- !u!224 &1005358069 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
   m_PrefabInstance: {fileID: 1005358068}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1074919793 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9135039185744939718, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
-  m_PrefabInstance: {fileID: 189266787}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1074919801
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1074919793}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1243010076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,6 +1289,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 541444858}
     m_Modifications:
+    - target: {fileID: 612339409361281733, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: <LinkedControl>k__BackingField
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532355042019116010, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle (3)
@@ -1522,6 +1541,11 @@ RectTransform:
   m_AnchoredPosition: {x: -3.5, y: 12.69}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1596005219 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5123353361851422705, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+  m_PrefabInstance: {fileID: 896707441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1797468782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1529,6 +1553,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 541444858}
     m_Modifications:
+    - target: {fileID: 612339409361281733, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: <LinkedControl>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532355042019116010, guid: 638b0c5fa0708144288af9944989926f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6190369018237176960, guid: 638b0c5fa0708144288af9944989926f, type: 3}
       propertyPath: m_Name
       value: CircuitReceptacle (1)

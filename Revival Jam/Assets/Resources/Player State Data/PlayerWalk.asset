@@ -23,5 +23,5 @@ MonoBehaviour:
   maxFallVelocity: 0
   timeBetweenWalkSound: 0.3
   debugJumpTimer: 0
-  debugGroundedTimer: 1
+  debugGroundedTimer: 0
   debugShouldWalk: 0
