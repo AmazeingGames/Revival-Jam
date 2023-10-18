@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashSpeed: 8
   dashLength: 0.25
-  maxVelocityYCut: 3
+  maxVelocityYCut: 1.5
   timeToLerp: 1
