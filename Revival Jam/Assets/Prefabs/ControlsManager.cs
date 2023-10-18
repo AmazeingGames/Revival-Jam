@@ -9,7 +9,7 @@ public class ControlsManager : Singleton<ControlsManager>
 {
     [field: SerializeField] public List<Controls> StartingControls { get; private set; } = new();
 
-    public List<Controls> ConnectedControls { get; private set; } = new();
+    public static List<Controls> ConnectedControls { get; private set; } = new();
     public enum Controls { Unknown, Walk, Jump, Joust, Dash }
 
     public List<Wire> Wires { get; private set; } = new();
@@ -73,4 +73,5 @@ public class ControlsManager : Singleton<ControlsManager>
             var control = Receptacles.First(r => r.LinkedControl == StartingControls[i]);
         }
     }
+    public static bool IsControlConneccted(Controls controlToCheck) => ConnectedControls.Contains(controlToCheck);
 }
