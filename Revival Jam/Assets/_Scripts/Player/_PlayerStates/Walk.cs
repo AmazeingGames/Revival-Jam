@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
-
+using static ControlsManager;
 [CreateAssetMenu(menuName = "States/Player/Walk")]
 public class Walk : State<CharacterController>
 {
@@ -22,6 +22,10 @@ public class Walk : State<CharacterController>
     [Header("Fall")]
     [SerializeField] float maxFallVelocity;
 
+    [Header("Dash")]
+    [SerializeField] float dashBufferLength;
+    [SerializeField] float dashCooldownLength;
+
     [Header("Sound FX")]
     [SerializeField] float timeBetweenWalkSound;
 
@@ -34,6 +38,10 @@ public class Walk : State<CharacterController>
     float walkSoundTimer;
     float jumpTimer;
     float groundedTimer;
+
+    float dashTimer;
+    float dashCooldownTimer;
+    bool canDash;
 
     float horizontalInput;
 
@@ -63,6 +71,9 @@ public class Walk : State<CharacterController>
 
         if (Input.GetButtonDown("Jump"))
             jumpTimer = jumpBufferLength;
+        
+        if (Input.GetButton("Dash"))
+            dashTimer = dashBufferLength;
 
     #if DEBUG
         if (Input.GetKeyDown(KeyCode.O))
@@ -77,9 +88,14 @@ public class Walk : State<CharacterController>
         walkSoundTimer -= Time.deltaTime;
         groundedTimer -= Time.deltaTime;
         jumpTimer -= Time.deltaTime;
+        dashTimer -= Time.deltaTime;
+        dashCooldownTimer -= Time.deltaTime;
 
         if (player.IsGrounded)
+        {
+            canDash = true;
             groundedTimer = coyoteTimeLength;
+        }
 
         KeepConstantVelocity();
 
@@ -152,17 +168,29 @@ public class Walk : State<CharacterController>
     public override void ChangeState()
     {
         bool isPlayer3dNull = FPSInput.Instance == null;
-        bool shouldWalk = isPlayer3dNull || !FPSInput.Instance.ShouldWalk;
+        bool isCabinetRunning = isPlayer3dNull || !FPSInput.Instance.ShouldWalk;
 
         bool isControlsManagerNull = ControlsManager.Instance == null;
-        bool isControlConnected = isControlsManagerNull || ControlsManager.IsControlConneccted(ControlsManager.Controls.Jump);
 
-        if (jumpTimer > 0 && groundedTimer > 0 && (isControlConnected) && (shouldWalk))
+        bool isJumpConnected = isControlsManagerNull || IsControlConneccted(Controls.Jump);
+        bool isDashConnected = isControlsManagerNull || IsControlConneccted(Controls.Dash);
+
+        if (!isCabinetRunning)
+            return;
+
+        if (jumpTimer > 0 && groundedTimer > 0 && isJumpConnected)
         {
             jumpTimer = 0;
             groundedTimer = 0;
 
             runner.SetState(typeof(Jump));
+        }
+
+        if (dashTimer > 0 && isDashConnected && canDash & dashCooldownTimer <= 0)
+        {
+            runner.SetState(typeof(Dash));
+            canDash = false;
+            dashCooldownTimer = dashCooldownLength;
         }
 
         if (Input.GetButtonDown("Attack") && player.IsGrounded)
@@ -173,7 +201,7 @@ public class Walk : State<CharacterController>
 
     public override void Exit()
     {
-
+        ResetTimers();
     }
 
     //Makes sure the player can't gain more vertical velocity than they already have.
@@ -206,7 +234,7 @@ public class Walk : State<CharacterController>
             Debug.Log("Controls Manager not present : Assuming controls override");
             walkOverride = true;
         }
-        else if (!ControlsManager.IsControlConneccted(ControlsManager.Controls.Walk))
+        else if (!IsControlConneccted(Controls.Walk))
         {
             Debug.Log("Walk not connected");
             canWalkMod = 0;
@@ -245,6 +273,14 @@ public class Walk : State<CharacterController>
 
         //Applies force against the player's movement direction
         rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+    }
+
+    void ResetTimers()
+    {
+        walkSoundTimer = 0;
+        jumpTimer = 0;
+        groundedTimer = 0;
+        dashTimer = 0;
     }
 
     

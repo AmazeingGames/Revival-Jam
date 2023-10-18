@@ -1303,12 +1303,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 651691400, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
       propertyPath: states.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 651691400, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
       propertyPath: states.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 95db7bf0873d48f4f8219636164b5d13, type: 2}
+    - target: {fileID: 651691400, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: states.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 981e9bff21737af48979620d75ff2362, type: 2}
     - target: {fileID: 8581096017296015264, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
       propertyPath: m_Name
       value: 2D Player
@@ -1364,6 +1368,10 @@ PrefabInstance:
     - target: {fileID: 8581096017296015324, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8581096017296015324, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}

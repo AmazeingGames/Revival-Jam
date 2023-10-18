@@ -17,11 +17,10 @@ MonoBehaviour:
   deceleration: 16
   velocityPower: 0.96
   frictionAmount: 0.22
-  showDebug: 1
+  showDebug: 0
   coyoteTimeLength: 0.15
   jumpBufferLength: 0.1
   maxFallVelocity: 0
+  dashBufferLength: 0.25
+  dashCooldownLength: 0.5
   timeBetweenWalkSound: 0.3
-  debugJumpTimer: 0
-  debugGroundedTimer: 0
-  debugShouldWalk: 0
