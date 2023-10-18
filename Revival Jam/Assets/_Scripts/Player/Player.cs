@@ -53,6 +53,7 @@ public class Player : StaticInstance<Player>
     {
         Vector3 rayDirection = new(0, -groundRaycastLength, 0);
         Gizmos.DrawRay(groundRaycastStart.transform.position, rayDirection);
+        //Vector3 rayDirection = new(0, 0, 0);
     }
 
     

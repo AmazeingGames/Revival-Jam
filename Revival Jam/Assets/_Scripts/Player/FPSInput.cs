@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(UnityEngine.CharacterController))]
 [AddComponentMenu("Controls Script/Fps Input")]
 
-public class FPSInput : MonoBehaviour
+public class FPSInput : StaticInstance<FPSInput> 
 {
     public float speed = 8f;
     public float gravity = -9f;
@@ -25,7 +25,6 @@ public class FPSInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
             ShouldWalk = !ShouldWalk;
-
 
         MovePlayer();
        
