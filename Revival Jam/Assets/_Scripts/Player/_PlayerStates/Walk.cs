@@ -151,9 +151,13 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
+        bool isPlayer3dNull = FPSInput.Instance == null;
+        bool shouldWalk = isPlayer3dNull || !FPSInput.Instance.ShouldWalk;
 
-        bool pass = FPSInput.Instance == null;
-        if (jumpTimer > 0 && groundedTimer > 0 && ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Jump) && (pass || !FPSInput.Instance.ShouldWalk))
+        bool isControlsManagerNull = ControlsManager.Instance == null;
+        bool isControlConnected = isControlsManagerNull || ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Jump);
+
+        if (jumpTimer > 0 && groundedTimer > 0 && (isControlConnected) && (shouldWalk))
         {
             jumpTimer = 0;
             groundedTimer = 0;
@@ -197,7 +201,12 @@ public class Walk : State<CharacterController>
             Debug.Log($"Can walk if connected {canWalkMod}");
         }
 
-        if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
+        if (ControlsManager.Instance == null)
+        {
+            Debug.Log("Controls Manager not present : Assuming controls override");
+            walkOverride = true;
+        }
+        else if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
         {
             Debug.Log("Walk not connected");
             canWalkMod = 0;
