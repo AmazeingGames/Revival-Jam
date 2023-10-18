@@ -189,19 +189,27 @@ public class Walk : State<CharacterController>
     //Uses forces and math to move the player
     void MovePlayer()
     {
-        float canWalkMod = 1;
-
-        if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
-            canWalkMod = 0;
-        float modifier = 1;
+        float canWalkMod = 0;
         
         if (FPSInput.Instance != null)
-            modifier = !FPSInput.Instance.ShouldWalk ? 1 : 0;
+        {
+            canWalkMod = !FPSInput.Instance.ShouldWalk ? 1 : 0;
+            Debug.Log($"Can walk if connected {canWalkMod}");
+        }
 
-    #if DEBUG
+        if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
+        {
+            Debug.Log("Walk not connected");
+            canWalkMod = 0;
+        }
+
+#if DEBUG
         if (walkOverride)
-            modifier = 1;
-    #endif
+        {
+            Debug.Log("Walk modifier active");
+            canWalkMod = 1;
+        }
+#endif
 
         //Calculates the direction we wish to move in; this is our desired velocity
         float targetSpeed = horizontalInput * walkSpeed * canWalkMod;
