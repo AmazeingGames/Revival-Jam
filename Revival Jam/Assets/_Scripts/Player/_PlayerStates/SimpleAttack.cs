@@ -25,6 +25,7 @@ public class SimpleAttack : State<CharacterController>
             rigidbody2D = parent.GetComponent<Rigidbody2D>();
         if (attackHitbox == null)
             attackHitbox = parent.transform.Find("AttackHitbox").gameObject;
+
         attackHitbox.SetActive(true);
         attackTimer = attackLength;
         jumpBufferTimer = 0;

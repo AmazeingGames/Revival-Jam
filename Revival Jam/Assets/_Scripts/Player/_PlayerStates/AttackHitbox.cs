@@ -8,19 +8,10 @@ public class AttackHitbox : MonoBehaviour
     [SerializeField] float raycastLength;
     [SerializeField] LayerMask enemyLayer;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        RaycastHit2D raycast = Physics2D.Raycast(raycastStart.transform.position, Vector3.right, raycastLength, enemyLayer);
-
-
+        RaycastHit2D raycast = Physics2D.Raycast(raycastStart.transform.position, GetRayDirection(), raycastLength, enemyLayer);
 
         if (raycast)
         {
@@ -30,7 +21,14 @@ public class AttackHitbox : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Vector3 rayDirection = new (-raycastLength, 0, 0);
-        Gizmos.DrawRay(raycastStart.transform.position, rayDirection);
+        Gizmos.DrawRay(raycastStart.transform.position, raycastLength * GetRayDirection());
+    }
+
+    Vector3 GetRayDirection()
+    {
+        if (Player.Instance == null)
+            return Vector3.right;
+
+        return Player.Instance.transform.localScale.x < 0 ? Vector3.left : Vector3.right;
     }
 }
