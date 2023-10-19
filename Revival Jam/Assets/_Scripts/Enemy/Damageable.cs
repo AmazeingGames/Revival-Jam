@@ -24,6 +24,7 @@ public abstract class Damageable : MonoBehaviour
         {
             CheckDebug("Damage Coroutine Stopped");
             StopCoroutine(coroutine);
+            DamageCoroutine.Remove(gameObject);
         }
         else
             CheckDebug("Could not stop coroutine");

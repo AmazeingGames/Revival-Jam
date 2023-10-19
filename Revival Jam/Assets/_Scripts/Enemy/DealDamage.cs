@@ -53,10 +53,16 @@ public class DealDamage : MonoBehaviour
         if (collision.gameObject == null)
             return false;
 
-        if (!gameObject.CompareTag(targetTag))
-            return false;
 
-        if (!gameObject.TryGetComponent<Damageable>(out var damageable))
+        if (!collision.gameObject.CompareTag(targetTag))
+        {
+            //CheckDebug($"Does not have _{targetTag}_ tag | Instead has _{gameObject.tag}_ tag");
+            return false;
+        }
+
+        //CheckDebug("Has Damagable script?");
+
+        if (!collision.gameObject.TryGetComponent<Damageable>(out var damageable))
             return false;
 
         return damageable;
