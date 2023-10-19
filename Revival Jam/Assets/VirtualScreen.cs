@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+//To fake functionality, only enable this component when it's being used
 public class VirtualScreen : GraphicRaycaster
 {
     public Camera screenCamera; // Reference to the camera responsible for rendering the virtual screen's rendertexture
