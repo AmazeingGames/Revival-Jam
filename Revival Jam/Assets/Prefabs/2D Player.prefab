@@ -258,6 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   shouldDebug: 1
+  invulnerabilityLength: 0.1
 --- !u!114 &6106551065621404301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1e02991778f1e4391d646e91537155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 0
+  damageAmount: 1
   timeBetweenDamage: 0.25
   targetTag: Enemy
   shouldDebug: 1

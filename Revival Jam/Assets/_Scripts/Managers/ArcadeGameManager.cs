@@ -5,36 +5,22 @@ using UnityEngine;
 using static GameManager;
 
 //Right now the game is small enoguh where we don't need a separate manager for the arcade and real world
+//Changing its functionality to be smaller scale and manage things related to the arcade
+//instead of the flow of the actual game
 public class ArcadeGameManager : StaticInstance<ArcadeGameManager>
 {
-    public static event Action<GameState> OnBeforeStateChanged;
-    public static event Action<GameState> OnAfterStateChanged;
+    public static bool IsMachineOn { get; private set; } = false;
 
-    public GameState State { get; private set; }
-
-    // Kick the game off with the first state
-    void Start() => ChangeState(GameState.StartLevel);
-
-    public void ChangeState(GameState newState)
+    private void Update()
     {
-        OnBeforeStateChanged?.Invoke(newState);
-
-        State = newState;
-
-        switch (newState)
+        if (Input.GetButtonDown("PowerMachine"))
         {
-            case GameState.StartLevel:
-                break;
-            case GameState.Win:
-                break;
-            case GameState.Lose:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+            SetMachineOn(!IsMachineOn);
         }
+    }
 
-        OnAfterStateChanged?.Invoke(newState);
-
-        Debug.Log($"New state: {newState}");
+    void SetMachineOn(bool isOn)
+    {
+        IsMachineOn = isOn;
     }
 }
