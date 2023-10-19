@@ -17,20 +17,20 @@ public class GameManager : StaticInstance<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            UpdateGameState(GameState.StartLevel, 1);
+            UpdateGameState(GameState.StartArcadeLevel, 1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            UpdateGameState(GameState.StartLevel, 2);
+            UpdateGameState(GameState.StartArcadeLevel, 2);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            UpdateGameState(GameState.StartLevel, 3);
+            UpdateGameState(GameState.StartArcadeLevel, 3);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            UpdateGameState(GameState.Restart);
+            UpdateGameState(GameState.RestartLevel);
         }
     }
 
@@ -42,14 +42,17 @@ public class GameManager : StaticInstance<GameManager>
 
         switch (newState)
         {
-            case GameState.StartLevel:
+            case GameState.StartGame:
+                break;
+
+            case GameState.StartArcadeLevel:
                 SceneLoader.Instance.StartLevelLoad(levelToLoad);
                 break;
 
             case GameState.Loading:
                 break;
 
-            case GameState.Restart:
+            case GameState.RestartLevel:
                 ReloadLevel();
                 break;
 
@@ -71,7 +74,7 @@ public class GameManager : StaticInstance<GameManager>
 
     void ReloadLevel()
     {
-        UpdateGameState(GameState.StartLevel, SceneLoader.Instance.LevelNumber);
+        UpdateGameState(GameState.StartArcadeLevel, SceneLoader.Instance.LevelNumber);
     }
 
     void OnLose()
@@ -83,8 +86,9 @@ public class GameManager : StaticInstance<GameManager>
     [Serializable]
     public enum GameState
     {
-        StartLevel,
-        Restart,
+        StartGame,
+        StartArcadeLevel,
+        RestartLevel,
         Loading,
         Win,
         Lose,
