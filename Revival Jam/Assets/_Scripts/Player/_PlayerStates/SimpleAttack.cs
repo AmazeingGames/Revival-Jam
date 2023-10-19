@@ -7,7 +7,10 @@ public class SimpleAttack : State<CharacterController>
 {
     [SerializeField] float attackLength;
     [SerializeField] float jumpBufferLength;
-    
+
+    [Header("Debug")]
+    [SerializeField] bool showDebug;
+
     GameObject attackHitbox;
 
     float jumpBufferTimer;
@@ -19,7 +22,7 @@ public class SimpleAttack : State<CharacterController>
     {
         base.Enter(parent);
 
-        Debug.Log("attack!");
+        CheckDebug("attack!");
 
         if (rigidbody2D == null)
             rigidbody2D = parent.GetComponent<Rigidbody2D>();
@@ -65,4 +68,9 @@ public class SimpleAttack : State<CharacterController>
         attackHitbox.SetActive(false);
     }
 
+    void CheckDebug(string text)
+    {
+        if (showDebug)
+            Debug.Log(text);
+    }
 }

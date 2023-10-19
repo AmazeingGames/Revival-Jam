@@ -95,9 +95,10 @@ GameObject:
   - component: {fileID: 8581096017296015266}
   - component: {fileID: 651691399}
   - component: {fileID: 651691400}
+  - component: {fileID: 6146156786385647920}
   m_Layer: 6
   m_Name: 2D Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,6 +243,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3867e8e1f4a9c884ea3c76a095835a76, type: 2}
   - {fileID: 11400000, guid: 117e0c1d651bac843b638029bec6f903, type: 2}
   - {fileID: 11400000, guid: 95db7bf0873d48f4f8219636164b5d13, type: 2}
+--- !u!114 &6146156786385647920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581096017296015264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82b7b9f365427374f8a2fd2578e020c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 4
+  shouldDebug: 1
 --- !u!1 &8581096017436916583
 GameObject:
   m_ObjectHideFlags: 0

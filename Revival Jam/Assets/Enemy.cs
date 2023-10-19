@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
     [Header("Terrain Detection")]
     [SerializeField] TerrainDetector groundDetector;
     [SerializeField] TerrainDetector wallDetector;
@@ -13,6 +14,9 @@ public class Enemy : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float constantSpeed;
     [SerializeField] float flipMovementPauseLength;
+
+    [Header("Debug")]
+    [SerializeField] bool showDebug;
 
     Rigidbody2D rigidbody;
 
@@ -57,7 +61,7 @@ public class Enemy : MonoBehaviour
         flipTimer = flipTimerLength;
         movementPauseTimer = flipMovementPauseLength;
 
-        Debug.Log("Flipped");
+        CheckDebug("Flipped");
     }
 
     void UpdateTimers()
@@ -81,5 +85,11 @@ public class Enemy : MonoBehaviour
         }
 
         rigidbody.velocity = new Vector3(constantSpeed * (transform.localScale.x / Mathf.Abs(transform.localScale.x)), rigidbody.velocity.y);
+    }
+
+    void CheckDebug(string text)
+    {
+        if (showDebug)
+            Debug.Log(text);
     }
 }

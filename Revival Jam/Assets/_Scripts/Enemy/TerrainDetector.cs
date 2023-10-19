@@ -22,8 +22,7 @@ public class TerrainDetector : MonoBehaviour
     {
         _ShouldFlip = ShouldFlip();
 
-        if (debugResults)
-            Debug.Log($"({gameObject.name}) {DebugText()} : {_ShouldFlip}");
+        CheckDebug($"({gameObject.name}) {DebugText()} : {_ShouldFlip}");
     }
 
     public bool ShouldFlip()
@@ -47,5 +46,11 @@ public class TerrainDetector : MonoBehaviour
     string DebugText()
     {
         return detectTerrainPresent ? "Is there terrain present" : "Is there terrain absent";
+    }
+
+    void CheckDebug(string text)
+    {
+        if (debugResults)
+            Debug.Log(text);
     }
 }

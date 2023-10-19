@@ -668,6 +668,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2D Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8581096017296015264, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8581096017296015265, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -726,6 +730,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 680726078}
     m_Modifications:
+    - target: {fileID: 707571209, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
+      propertyPath: debugResults
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199318114, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
+      propertyPath: debugResults
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1766251042, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
+      propertyPath: constantSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1632786459681171729, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -769,6 +785,10 @@ PrefabInstance:
     - target: {fileID: 1632786459681171729, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307793859594969696, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
+      propertyPath: timeBetweenDamage
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7501094393617744614, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
       propertyPath: m_Name

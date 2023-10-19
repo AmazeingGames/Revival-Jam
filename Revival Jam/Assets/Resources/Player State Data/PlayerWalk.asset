@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17217adf69bfa8744a855d78ef69dfb4, type: 3}
   m_Name: PlayerWalk
   m_EditorClassIdentifier: 
+  showDebug: 0
   walkSpeed: 9
   acceleration: 13
   deceleration: 16
   velocityPower: 0.96
   frictionAmount: 0.22
-  showDebug: 1
   coyoteTimeLength: 0.15
   jumpBufferLength: 0.1
   maxFallVelocity: 0
   timeBetweenWalkSound: 0.3
-  debugJumpTimer: 0
-  debugGroundedTimer: 0
-  debugShouldWalk: 0

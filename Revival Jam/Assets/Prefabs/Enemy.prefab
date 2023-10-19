@@ -115,6 +115,8 @@ GameObject:
   - component: {fileID: 5235988564058582603}
   - component: {fileID: 388785012916785529}
   - component: {fileID: 1766251042}
+  - component: {fileID: 1953323868638980649}
+  - component: {fileID: 4143247997922344993}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -245,3 +247,34 @@ MonoBehaviour:
   flipTimerLength: 0.25
   constantSpeed: 3
   flipMovementPauseLength: 0.5
+  showDebug: 0
+--- !u!114 &1953323868638980649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7501094393617744614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 953392c6a53b699448054f58ee5a8b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 0
+  timeBetweenDamage: 0.25
+  targetTag: Player
+  shouldDebug: 1
+--- !u!114 &4143247997922344993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7501094393617744614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966ed50d2c2db414cb9b774c95f16ef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 4
+  shouldDebug: 1

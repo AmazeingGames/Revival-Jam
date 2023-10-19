@@ -8,6 +8,11 @@ public class AttackHitbox : MonoBehaviour
     [SerializeField] float raycastLength;
     [SerializeField] LayerMask enemyLayer;
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {

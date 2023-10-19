@@ -40,7 +40,6 @@ public class Player : StaticInstance<Player>
 
             yield return null;
         }
-        
     }
 
     void CheckDebug(string msg, bool shouldDebug)

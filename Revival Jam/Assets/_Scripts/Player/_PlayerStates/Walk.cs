@@ -6,14 +6,14 @@ using UnityEngine.Animations;
 [CreateAssetMenu(menuName = "States/Player/Walk")]
 public class Walk : State<CharacterController>
 {
+    [SerializeField] bool showDebug;
+
     [Header("Walk")]
     [SerializeField] float walkSpeed;
     [SerializeField] float acceleration;
     [SerializeField] float deceleration;
     [SerializeField] float velocityPower;
     [SerializeField] float frictionAmount;
-
-    [SerializeField] bool showDebug;
 
     [Header("Jump")]
     [SerializeField] float coyoteTimeLength;
@@ -139,7 +139,7 @@ public class Walk : State<CharacterController>
         if (walkSoundTimer > 0)
             return;
 
-        //Debug.Log(Mathf.Abs(rigidbody.velocity.x));
+        //CheckDebug(Mathf.Abs(rigidbody.velocity.x));
 
         WalkSound();
     }
@@ -198,24 +198,24 @@ public class Walk : State<CharacterController>
         if (FPSInput.Instance != null)
         {
             canWalkMod = !FPSInput.Instance.ShouldWalk ? 1 : 0;
-            Debug.Log($"Can walk if connected {canWalkMod}");
+            CheckDebug($"Can walk if connected {canWalkMod}");
         }
 
         if (ControlsManager.Instance == null)
         {
-            Debug.Log("Controls Manager not present : Assuming controls override");
+            CheckDebug("Controls Manager not present : Assuming controls override");
             walkOverride = true;
         }
         else if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
         {
-            Debug.Log("Walk not connected");
+            CheckDebug("Walk not connected");
             canWalkMod = 0;
         }
 
 #if DEBUG
         if (walkOverride)
         {
-            Debug.Log("Walk modifier active");
+            CheckDebug("Walk modifier active");
             canWalkMod = 1;
         }
 #endif
@@ -247,7 +247,11 @@ public class Walk : State<CharacterController>
         rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
     }
 
-    
+    void CheckDebug(string text)
+    {
+        if (showDebug)
+            Debug.Log(text);
+    }
 
     
 }
