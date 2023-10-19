@@ -7,7 +7,6 @@ using static GameManager;
 public class MainMenu : Singleton<MainMenu>
 {
     [SerializeField] Canvas mainMenu;
-    [SerializeField] Canvas levelSelect;
 
     public enum MenuState { MainMenu, LevelSelectMenu, GameStart }
 
@@ -16,11 +15,13 @@ public class MainMenu : Singleton<MainMenu>
     void OnEnable()
     {
         MainMenuBackButton.OnBack += HandleOnBack;
+        OnAfterStateChanged += HandleGameStateChange;
     }
 
     void OnDisable()
     {
         MainMenuBackButton.OnBack -= HandleOnBack;
+        OnAfterStateChanged -= HandleGameStateChange;
     }
 
     // Start is called before the first frame update
@@ -57,18 +58,24 @@ public class MainMenu : Singleton<MainMenu>
     void OnMainMenuEnter()
     {
         mainMenu.gameObject.SetActive(true);
-        levelSelect.gameObject.SetActive(false);
+        //levelSelect.gameObject.SetActive(false);
     }
 
     void OnLevelSelectMenuEnter()
     {
         mainMenu.gameObject.SetActive(false);
-        levelSelect.gameObject.SetActive(true);
+        //levelSelect.gameObject.SetActive(true);
     }
 
     void MenuExit()
     {
-        levelSelect.gameObject.SetActive(false);
+        //levelSelect.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(false);
+    }
+
+    void HandleGameStateChange(GameState gameState)
+    {
+        if (gameState == GameState.StartGame)
+            MenuExit();
     }
 }

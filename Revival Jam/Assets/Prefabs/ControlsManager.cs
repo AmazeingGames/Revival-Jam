@@ -18,16 +18,14 @@ public class ControlsManager : Singleton<ControlsManager>
     private void OnEnable()
     {
         ConnectWireCheck += HandleConnectWireCheck;
+        GameManager.OnAfterStateChanged += ConnectStartingControls;
     }
 
     private void OnDisable()
     {
         ConnectWireCheck -= HandleConnectWireCheck;
-    }
+        GameManager.OnAfterStateChanged -= ConnectStartingControls;
 
-    private void Start()
-    {
-        ConnectStartingControls();
     }
 
     void AddControls(params Controls[] controlsToAdd)
@@ -54,20 +52,37 @@ public class ControlsManager : Singleton<ControlsManager>
         RemoveControls(eventArgs.ControlToRemove);
     }
 
-    void ConnectStartingControls()
+    void ConnectStartingControls(GameManager.GameState gameState)
     {
+        if (!(gameState == GameManager.GameState.StartGame))
+            return;
+
+        Debug.Log("Connected starting controls");
+
+        StartCoroutine(ConnectStartingWires());
+        
+    }
+
+    IEnumerator ConnectStartingWires()
+    {
+        while (Wires.Count == 0)
+        {
+            Debug.Log("Waiting for wires to load");
+            yield return null;
+        }
+
         for (int i = 0; i < StartingControls.Count(); i++)
         {
             if (i > Wires.Count - 1)
             {
                 throw new IndexOutOfRangeException("Not enough wires to comply with starting controls");
             }
-            
+
             if (StartingControls[i] == Controls.Unknown)
             {
                 throw new NotImplementedException("Unknown should not be included in starting wire controls.");
             }
-                
+
             Wires[i].ManuallyConnect(Receptacles.First(r => r.LinkedControl == StartingControls[i]));
 
             var control = Receptacles.First(r => r.LinkedControl == StartingControls[i]);

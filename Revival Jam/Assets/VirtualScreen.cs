@@ -9,17 +9,17 @@ public class VirtualScreen : GraphicRaycaster
 
     public GraphicRaycaster screenCaster; // Reference to the GraphicRaycaster of the canvas displayed on the virtual screen
 
+    public Transform lastMouseClick;
 
     // Called by Unity when a Raycaster should raycast because it extends BaseRaycaster.
     public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList)
     {
         Ray ray = eventCamera.ScreenPointToRay(eventData.position); // Mouse
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             // Figure out where the pointer would be in the second camera based on texture position or RenderTexture.
-            Vector3 virtualPos = new Vector3(hit.textureCoord.x, hit.textureCoord.y);
+            Vector3 virtualPos = new(hit.textureCoord.x, hit.textureCoord.y);
             virtualPos.x *= screenCamera.targetTexture.width;
             virtualPos.y *= screenCamera.targetTexture.height;
 

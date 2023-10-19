@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,15 +18,15 @@ public class GameManager : StaticInstance<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            UpdateGameState(GameState.StartArcadeLevel, 1);
+            UpdateGameState(GameState.StartLevel, 1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            UpdateGameState(GameState.StartArcadeLevel, 2);
+            UpdateGameState(GameState.StartLevel, 2);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            UpdateGameState(GameState.StartArcadeLevel, 3);
+            UpdateGameState(GameState.StartLevel, 3);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -43,9 +44,10 @@ public class GameManager : StaticInstance<GameManager>
         switch (newState)
         {
             case GameState.StartGame:
+                ReadyGameScenes();
                 break;
 
-            case GameState.StartArcadeLevel:
+            case GameState.StartLevel:
                 SceneLoader.Instance.StartLevelLoad(levelToLoad);
                 break;
 
@@ -72,9 +74,23 @@ public class GameManager : StaticInstance<GameManager>
         Debug.Log($"New state: {newState}");
     }
 
+    void ReadyGameScenes()
+    {
+        SceneLoader.Instance.LoadScene("RealWorld");
+        SceneLoader.Instance.LoadScene("Circuits");
+
+        StartCoroutine(LoadArcadeMenu());
+    }
+
+    IEnumerator LoadArcadeMenu()
+    {
+        yield return new WaitForSeconds(.1f);
+        SceneLoader.Instance.LoadScene("_ArcadeMenu");
+    }
+
     void ReloadLevel()
     {
-        UpdateGameState(GameState.StartArcadeLevel, SceneLoader.Instance.LevelNumber);
+        UpdateGameState(GameState.StartLevel, SceneLoader.Instance.LevelNumber);
     }
 
     void OnLose()
@@ -87,7 +103,7 @@ public class GameManager : StaticInstance<GameManager>
     public enum GameState
     {
         StartGame,
-        StartArcadeLevel,
+        StartLevel,
         RestartLevel,
         Loading,
         Win,

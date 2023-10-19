@@ -35,7 +35,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
 
-    //TO DO: MAKE SURE THIS ADDS AND REMOVES ABILITES PROPERLY
     public void OnPointerUp(PointerEventData eventData)
     {
         shouldFollowMouse = false;
@@ -63,7 +62,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         StartCoroutine(SetPositonManual());
         autoPosition = receptacleToConnect.WirePosition;
-
     }
 
     IEnumerator SetPositonManual()
@@ -75,7 +73,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             transform.position = autoPosition.position;
 
             WireToConnector();
-
         }
         
         yield break;
@@ -83,7 +80,10 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Awake()
     {
-        ControlsManager.Instance.Wires.Add(this);
+        if (ControlsManager.Instance != null)
+            ControlsManager.Instance.Wires.Add(this);
+        else
+            Debug.LogWarning("ControlsManager.Instance is null");
     }
 
     // Update is called once per frame

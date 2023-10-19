@@ -27,9 +27,9 @@ public class SceneLoader : Singleton<SceneLoader>
         LoadLevel(levelToLoad);
     }
 
-    bool LoadLevel(int level) => LoadScene($"{LevelNameConvention}{level}", true);
+    public bool LoadLevel(int level) => LoadScene($"{LevelNameConvention}{level}", true);
 
-    bool LoadScene(string sceneName, bool isLevel = false)
+    public bool LoadScene(string sceneName, bool isLevel = false)
     {
         //loadingCanvas.gameObject.SetActive(true);
 
@@ -43,7 +43,8 @@ public class SceneLoader : Singleton<SceneLoader>
 
         UnloadScene(sceneToUnload);
 
-        sceneToUnload = sceneName;
+        if (isLevel)
+            sceneToUnload = sceneName;
 
         GameManager.Instance.UpdateGameState(GameState.Loading);
 
