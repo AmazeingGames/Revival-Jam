@@ -11,16 +11,7 @@ public class GameManager : StaticInstance<GameManager>
     public static event Action<GameState> OnBeforeStateChanged;
     public static event Action<GameState> OnAfterStateChanged;
 
-    [SerializeField] string LevelNameConvention;
-
-    public static event Action<AsyncOperation, bool> OnLoadStart;
-
-
-    string sceneToUnload = null;
-
     public GameState State { get; private set; }
-
-    public int LevelNumberCurrent { get; private set; }
 
     private void Update()
     {
@@ -47,14 +38,18 @@ public class GameManager : StaticInstance<GameManager>
         switch (newState)
         {
             case GameState.StartLevel:
-                StartLevelLoad(levelToLoad);
+                SceneLoader.Instance.StartLevelLoad(levelToLoad);
                 break;
+
             case GameState.Loading:
-                    break;
+                break;
+
             case GameState.Win:
                 break;
+
             case GameState.Lose:
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
@@ -64,79 +59,13 @@ public class GameManager : StaticInstance<GameManager>
         Debug.Log($"New state: {newState}");
     }
 
-    void StartLevelLoad(int levelToLoad)
+
+    [Serializable]
+    public enum GameState
     {
-        Debug.Log("level Start");
-
-        if (levelToLoad == -1)
-            throw new NotImplementedException();
-
-        LevelNumberCurrent = levelToLoad;
-
-        LoadLevel(levelToLoad);
+        StartLevel,
+        Loading,
+        Win,
+        Lose,
     }
-
-    bool LoadLevel(int level) => LoadScene($"{LevelNameConvention}{level}", true);
-
-    bool LoadScene(string sceneName, bool isLevel = false)
-    {
-        //loadingCanvas.gameObject.SetActive(true);
-
-        if (!DoesSceneExist(sceneName))
-        {
-            //loadingCanvas.gameObject.SetActive(false);
-
-            Debug.Log("Scene does not exist");
-            return false;
-        }
-
-        UnloadScene(sceneToUnload);
-
-        sceneToUnload = sceneName;
-
-        UpdateGameState(GameState.Loading);
-
-        Debug.Log($"Loading Scene: {sceneName}");
-
-        var load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-        OnLoadStart?.Invoke(load, isLevel);
-
-        return true;
-    }
-
-    public static bool DoesSceneExist(string sceneName)
-    {
-        int buildIndex = SceneUtility.GetBuildIndexByScenePath(sceneName);
-
-        if (buildIndex == -1)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    bool UnloadScene(string sceneName)
-    {
-        if (!DoesSceneExist(sceneName))
-            return false;
-
-        if (sceneToUnload == null)
-            return false;
-
-        Debug.Log($"Unloaded scene : {sceneName}");
-
-        SceneManager.UnloadSceneAsync(sceneName);
-
-        return true;
-    }
-}
-
-[Serializable]
-public enum GameState
-{
-    StartLevel,
-    Loading,
-    Win,
-    Lose,
 }

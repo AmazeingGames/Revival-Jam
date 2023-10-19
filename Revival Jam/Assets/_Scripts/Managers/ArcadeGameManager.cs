@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
-public class ArcadeGameManager : StaticInstance<GameManager>
+public class ArcadeGameManager : StaticInstance<ArcadeGameManager>
 {
     public static event Action<GameState> OnBeforeStateChanged;
     public static event Action<GameState> OnAfterStateChanged;
