@@ -32,31 +32,18 @@ public class MouseLook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Rigidbody body = GetComponent<Rigidbody>();
-        if(body != null)
+        if(TryGetComponent<Rigidbody>(out var body))
         {
             body.freezeRotation = true;
         }
-    }
-
-    private void OnEnable()
-    {
-    #if DEBUG
-        MouseManager.LockMouse += OnMouseLock;
-    #endif
-    }
-
-    private void OnDisable()
-    {
-    #if DEBUG
-        MouseManager.LockMouse -= OnMouseLock;
-    #endif
     }
 
     // Update is called once per frame
     void Update()
     {
         Look();
+
+        HandleFocus();
     }
 
     void Look()
@@ -87,10 +74,12 @@ public class MouseLook : MonoBehaviour
         }
     }
 
-    void OnMouseLock(bool isMouseLocked)
+    void HandleFocus()
     {
-    #if DEBUG
-        isLocked = !isMouseLocked;
-    #endif
+        isLocked = PlayerFocus.Focused switch
+        {
+            PlayerFocus.FocusedOn.Nothing => false,
+            _ => true
+        };
     }
 }

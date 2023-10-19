@@ -41,6 +41,8 @@ public class Walk : State<CharacterController>
 
     bool walkOverride = false;
 
+    bool canWalk;
+
     public override void Enter(CharacterController parent)
     {
         base.Enter(parent);
@@ -88,6 +90,12 @@ public class Walk : State<CharacterController>
         FlipPlayer();
 
         CheckWalkSound();
+
+        canWalk = PlayerFocus.Focused switch
+        {
+            PlayerFocus.FocusedOn.Nothing => true,
+            _ => false
+        };
     }
 
     public override void FixedUpdate()
@@ -152,12 +160,12 @@ public class Walk : State<CharacterController>
     public override void ChangeState()
     {
         bool isPlayer3dNull = FPSInput.Instance == null;
-        bool shouldWalk = isPlayer3dNull || !FPSInput.Instance.ShouldWalk;
+        bool canWalk = isPlayer3dNull ||  this.canWalk;
 
         bool isControlsManagerNull = ControlsManager.Instance == null;
         bool isControlConnected = isControlsManagerNull || ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Jump);
 
-        if (jumpTimer > 0 && groundedTimer > 0 && (isControlConnected) && (shouldWalk))
+        if (jumpTimer > 0 && groundedTimer > 0 && (isControlConnected) && (canWalk))
         {
             jumpTimer = 0;
             groundedTimer = 0;
@@ -195,9 +203,9 @@ public class Walk : State<CharacterController>
     {
         float canWalkMod = 0;
         
-        if (FPSInput.Instance != null)
+        if (PlayerFocus.Instance != null)
         {
-            canWalkMod = !FPSInput.Instance.ShouldWalk ? 1 : 0;
+            canWalkMod = canWalk ? 1 : 0;
             CheckDebug($"Can walk if connected {canWalkMod}");
         }
 
@@ -206,6 +214,7 @@ public class Walk : State<CharacterController>
             CheckDebug("Controls Manager not present : Assuming controls override");
             walkOverride = true;
         }
+
         else if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
         {
             CheckDebug("Walk not connected");

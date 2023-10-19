@@ -30,6 +30,9 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (PlayerFocus.Focused != PlayerFocus.FocusedOn.Circuitry)
+            return;
+
         shouldFollowMouse = true;
 
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -37,6 +40,9 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (PlayerFocus.Focused != PlayerFocus.FocusedOn.Circuitry)
+            return;
+
         shouldFollowMouse = false;
 
         WireToConnector();

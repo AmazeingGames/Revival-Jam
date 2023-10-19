@@ -12,27 +12,27 @@ public class FPSInput : StaticInstance<FPSInput>
 
     private UnityEngine.CharacterController charController;
 
-    public bool ShouldWalk { get; private set; } = true;
+    public Camera PlayerCamera { get; private set; }
+
+    public bool CanWalk { get; private set; } = true;
 
     // Start is called before the first frame update
     void Start()
     {
         charController = GetComponent<UnityEngine.CharacterController>();
+
+        PlayerCamera = transform.GetChild(0).GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            ShouldWalk = !ShouldWalk;
-
-        MovePlayer();
-       
+        MovePlayer();  
     }
 
     void MovePlayer()
     {
-        int walk = ShouldWalk ? 1 : 0;
+        int walk = CanWalk ? 1 : 0;
 
         float deltaX = Input.GetAxis("Horizontal") * speed * walk;
         float deltaZ = Input.GetAxis("Vertical") * speed * walk;
@@ -45,5 +45,14 @@ public class FPSInput : StaticInstance<FPSInput>
         movement = transform.TransformDirection(movement);
 
         charController.Move(movement);
+    }
+
+    void HandleFocus()
+    {
+        CanWalk = PlayerFocus.Focused switch
+        {
+            PlayerFocus.FocusedOn.Nothing => true,
+            _ => false
+        };
     }
 }
