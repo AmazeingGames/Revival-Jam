@@ -6,6 +6,6 @@ public class PlayerHealth : Damageable
 {
     protected override void Die()
     {
-        throw new System.NotImplementedException();
+        GameManager.Instance.UpdateGameState(GameManager.GameState.Lose);
     }
 }

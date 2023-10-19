@@ -57,6 +57,7 @@ public class GameManager : StaticInstance<GameManager>
                 break;
 
             case GameState.Lose:
+                OnLose();
                 break;
 
             default:
@@ -71,6 +72,12 @@ public class GameManager : StaticInstance<GameManager>
     void ReloadLevel()
     {
         UpdateGameState(GameState.StartLevel, SceneLoader.Instance.LevelNumber);
+    }
+
+    void OnLose()
+    {
+        //Add game over screen, have game over screen enter into the restart state
+        ReloadLevel();
     }
 
     [Serializable]

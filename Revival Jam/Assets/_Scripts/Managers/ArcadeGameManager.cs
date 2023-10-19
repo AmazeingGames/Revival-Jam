@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
 
+//Right now the game is small enoguh where we don't need a separate manager for the arcade and real world
 public class ArcadeGameManager : StaticInstance<ArcadeGameManager>
 {
     public static event Action<GameState> OnBeforeStateChanged;

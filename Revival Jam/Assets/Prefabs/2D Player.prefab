@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82b7b9f365427374f8a2fd2578e020c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 4
+  health: 3
   shouldDebug: 1
 --- !u!114 &6106551065621404301
 MonoBehaviour:
