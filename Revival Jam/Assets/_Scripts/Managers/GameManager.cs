@@ -27,6 +27,11 @@ public class GameManager : StaticInstance<GameManager>
         {
             UpdateGameState(GameState.StartLevel, 3);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            UpdateGameState(GameState.Restart);
+        }
     }
 
     public void UpdateGameState(GameState newState, int levelToLoad = -1)
@@ -44,6 +49,10 @@ public class GameManager : StaticInstance<GameManager>
             case GameState.Loading:
                 break;
 
+            case GameState.Restart:
+                ReloadLevel();
+                break;
+
             case GameState.Win:
                 break;
 
@@ -59,11 +68,16 @@ public class GameManager : StaticInstance<GameManager>
         Debug.Log($"New state: {newState}");
     }
 
+    void ReloadLevel()
+    {
+        UpdateGameState(GameState.StartLevel, SceneLoader.Instance.LevelNumber);
+    }
 
     [Serializable]
     public enum GameState
     {
         StartLevel,
+        Restart,
         Loading,
         Win,
         Lose,

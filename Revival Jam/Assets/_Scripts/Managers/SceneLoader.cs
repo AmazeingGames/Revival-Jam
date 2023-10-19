@@ -11,7 +11,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public static event Action<AsyncOperation, bool> OnLoadStart;
 
-    public int LevelNumberCurrent { get; private set; }
+    public int LevelNumber { get; private set; }
     
     string sceneToUnload = null;
 
@@ -22,7 +22,7 @@ public class SceneLoader : Singleton<SceneLoader>
         if (levelToLoad == -1)
             throw new NotImplementedException();
 
-        LevelNumberCurrent = levelToLoad;
+        LevelNumber = levelToLoad;
 
         LoadLevel(levelToLoad);
     }
