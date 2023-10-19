@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 651691399}
   - component: {fileID: 651691400}
   - component: {fileID: 6146156786385647920}
+  - component: {fileID: 6106551065621404301}
   m_Layer: 6
   m_Name: 2D Player
   m_TagString: Player
@@ -256,6 +257,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 4
+  shouldDebug: 1
+--- !u!114 &6106551065621404301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581096017296015264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1e02991778f1e4391d646e91537155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 0
+  timeBetweenDamage: 0.25
+  targetTag: Enemy
   shouldDebug: 1
 --- !u!1 &8581096017436916583
 GameObject:

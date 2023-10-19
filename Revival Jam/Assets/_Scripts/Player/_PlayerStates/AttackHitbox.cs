@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,25 @@ public class AttackHitbox : MonoBehaviour
     [SerializeField] float raycastLength;
     [SerializeField] LayerMask enemyLayer;
 
+    public static event Action<GameObject, bool> Hit;
+
+    GameObject hitObject;
+
+    readonly List<GameObject> hitObjects = new List<GameObject>();
+
     private void Start()
     {
+        hitObject = null;
         gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        foreach (GameObject obj in hitObjects)
+            Hit?.Invoke(obj, false);
+
+        hitObjects.Clear();
+        Debug.Log("Cleared hit objects");
     }
 
     // Update is called once per frame
@@ -20,8 +37,20 @@ public class AttackHitbox : MonoBehaviour
 
         if (raycast)
         {
-            raycast.rigidbody.gameObject.SetActive(false);
+            hitObject = raycast.collider.gameObject;
+            OnHit();
         }
+    }
+
+    void OnHit()
+    {
+        if (hitObjects.Contains(hitObject))
+            return;
+
+        Debug.Log("deal damage");
+
+        Hit?.Invoke(hitObject, true);
+        hitObjects.Add(hitObject);
     }
 
     void OnDrawGizmos()

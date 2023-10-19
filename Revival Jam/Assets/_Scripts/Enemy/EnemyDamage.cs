@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class EnemyDamage : DealDamage
 {
-
-    // Start is called before the first frame update
-    void Start()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        CheckDebug("Collison Entered");
+
+        if (!ShouldInitiateDamage(collision, true))
+            return;
+
+        CheckDebug("Object is Damageable : Initiating Damage");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        
+        CheckDebug("Collison Exit");
+
+        if (!ShouldInitiateDamage(collision, false))
+            return;
+
+        CheckDebug("Object is Damageable : Stopping Damage");
     }
 }

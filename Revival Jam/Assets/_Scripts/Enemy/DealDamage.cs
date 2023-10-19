@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DealDamage : MonoBehaviour
+public abstract class DealDamage : MonoBehaviour
 {
     [SerializeField] int damageAmount;
     [SerializeField] float timeBetweenDamage;
@@ -11,36 +11,9 @@ public class DealDamage : MonoBehaviour
 
     [SerializeField] bool shouldDebug;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void InitiateDamage(GameObject _gameObject, bool startDamage)
     {
-        CheckDebug("Collison Entered");
-
-        if (!CanDamage(collision))
-            return;
-
-        CheckDebug("Object is Damageable : Initiating Damage");
-
-        InitiateDamage(collision, true);
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag(targetTag))
-        {
-            CheckDebug("Collison Exit");
-
-            if (!CanDamage(collision))
-                return;
-
-            CheckDebug("Object is Damageable : Stopping Damage");
-
-            InitiateDamage(collision, false);
-        }
-    }
-
-    void InitiateDamage(Collision2D collision, bool startDamage)
-    {
-        Damageable damageable = collision.gameObject.GetComponent<Damageable>();
+        Damageable damageable = _gameObject.GetComponent<Damageable>();
 
         if (startDamage)
             damageable.StartDamage(gameObject, damageAmount, timeBetweenDamage);
@@ -48,27 +21,33 @@ public class DealDamage : MonoBehaviour
             damageable.StopDamage(gameObject);
     }
 
-    bool CanDamage(Collision2D collision)
+    protected virtual void InitiateDamage(Collision2D collision, bool startDamage)
     {
-        if (collision.gameObject == null)
+        InitiateDamage(collision.gameObject, startDamage);
+    }
+
+    protected virtual bool ShouldInitiateDamage(GameObject _gameObject, bool isStartingDamage)
+    {
+        if (_gameObject == null)
             return false;
 
-
-        if (!collision.gameObject.CompareTag(targetTag))
-        {
-            //CheckDebug($"Does not have _{targetTag}_ tag | Instead has _{gameObject.tag}_ tag");
+        if (!_gameObject.CompareTag(targetTag))
             return false;
-        }
 
-        //CheckDebug("Has Damagable script?");
-
-        if (!collision.gameObject.TryGetComponent<Damageable>(out var damageable))
+        if (!_gameObject.TryGetComponent<Damageable>(out var damageable))
             return false;
+
+        InitiateDamage(_gameObject, isStartingDamage);
 
         return damageable;
     }
 
-    void CheckDebug(string text)
+    protected bool ShouldInitiateDamage(Collision2D collision, bool startDamage)
+    {
+        return ShouldInitiateDamage(collision.gameObject, startDamage);
+    }
+
+    protected void CheckDebug(string text)
     {
         if (shouldDebug)
             Debug.Log(text);
