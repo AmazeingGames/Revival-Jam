@@ -20,7 +20,7 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void StopDamage(GameObject gameObject)
     {
-        if (DamageCoroutine.TryGetValue(gameObject, out var coroutine))
+        if (DamageCoroutine.TryGetValue(gameObject, out var coroutine) && coroutine != null)
         {
             CheckDebug("Damage Coroutine Stopped");
             StopCoroutine(coroutine);

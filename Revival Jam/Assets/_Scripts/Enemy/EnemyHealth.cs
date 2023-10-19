@@ -6,6 +6,6 @@ public class EnemyHealth : Damageable
 {
     protected override void Die()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(false);
     }
 }

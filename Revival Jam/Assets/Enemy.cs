@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
     [Header("Terrain Detection")]
     [SerializeField] TerrainDetector groundDetector;
     [SerializeField] TerrainDetector wallDetector;

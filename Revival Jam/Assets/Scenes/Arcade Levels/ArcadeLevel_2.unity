@@ -656,8 +656,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.0816
       objectReference: {fileID: 0}
+    - target: {fileID: 1497344224922737528, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: raycastLength
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4118945497270265958, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106551065621404301, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: damageAmount
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6106551065621404301, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
