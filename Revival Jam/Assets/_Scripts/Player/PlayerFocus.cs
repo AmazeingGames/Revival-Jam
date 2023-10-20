@@ -10,17 +10,20 @@ public class PlayerFocus : Singleton<PlayerFocus>
 
     public enum FocusedOn { Circuitry, Arcade, Nothing }
 
+    public FocusStation ClosestStation { get; private set; } = null;
+
     public static event Action<bool> FocusAttempt;
 
     private void OnEnable()
     {
         FocusStation.ConnectToStation += HandleConnectToStation;
-
+        FocusStation.StationEnter += HandleStationEnter;
     }
 
     private void OnDisable()
     {
         FocusStation.ConnectToStation -= HandleConnectToStation;
+        FocusStation.StationEnter -= HandleStationEnter;
     }
 
     // Update is called once per frame
@@ -42,7 +45,6 @@ public class PlayerFocus : Singleton<PlayerFocus>
 
     public void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
     {
-
         Focused = connectEventArgs.IsConnecting switch
         {
             true    => connectEventArgs.LinkedStation,
@@ -50,15 +52,12 @@ public class PlayerFocus : Singleton<PlayerFocus>
         };
     }
 
-    /*
-    public void OnStationEnter(GameObject focusStation)
+    public void HandleStationEnter(FocusStation focusStation, bool isEntering)
     {
-
+        ClosestStation = isEntering switch
+        {
+            true    => focusStation,
+            _       => null,
+        };
     }
-
-    public void OnStationExit(GameObject focusStation)
-    {
-
-    }
-    */
 }

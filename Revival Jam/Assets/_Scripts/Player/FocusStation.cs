@@ -8,13 +8,10 @@ public class FocusStation : MonoBehaviour
 {
     [SerializeField] FocusedOn linkedStation;
     [SerializeField] Transform stationCamera;
-    
-    bool containsPlayer;
-    bool isPlayerFocused;
-
-   
+       
     VirtualScreen linkedScreen;
 
+    public static event Action<FocusStation, bool> StationEnter;
     public static event Action<ConnectEventArgs> ConnectToStation;
 
     public class ConnectEventArgs : EventArgs
@@ -41,41 +38,33 @@ public class FocusStation : MonoBehaviour
     {
         FocusAttempt -= HandleFocusAttempt;
         VirtualScreen.FindStation -= HandleFindStation;
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == null)
-        {
             return;
-        }
 
-        if (other.gameObject.CompareTag("Player"))
-        {
-            containsPlayer = true;
-            Debug.Log("Player enter");
-        }
+        if (!other.gameObject.CompareTag("Player"))
+            return;
+
+        OnPlayerEnter(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("trigger exit 0");
-
         if (other.gameObject == null)
             return;
 
-        Debug.Log("trigger exit 1");
+        if (!other.gameObject.CompareTag("Player"))
+            return;
 
-        if (other.gameObject.CompareTag("Player"))
-            containsPlayer = false;
-
-        Debug.Log("Trigger exit 2 PLAYER LEFT");
+        OnPlayerEnter(false);
     }
 
     public void HandleFocusAttempt(bool isConnecting)
     {
-        if (!containsPlayer)
+        if (PlayerFocus.Instance.ClosestStation != this)
         {
             Debug.Log($"Disabled virtual screen {linkedScreen.name}");
             linkedScreen.enabled = false;
@@ -96,8 +85,6 @@ public class FocusStation : MonoBehaviour
         }
     }
 
-
-
     void HandleFindStation(VirtualScreen sender, FocusedOn virtualScreenType)
     {
         if (virtualScreenType == linkedStation)
@@ -105,5 +92,10 @@ public class FocusStation : MonoBehaviour
             linkedScreen = sender;
             Debug.Log($"Found screen! Linked Screen null : {linkedScreen == null}");
         }
+    }
+
+    void OnPlayerEnter(bool playerEntering)
+    {
+        StationEnter?.Invoke(this, playerEntering);
     }
 }

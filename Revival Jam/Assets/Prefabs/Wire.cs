@@ -128,11 +128,15 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == overlappingReceptacle.gameObject)
-        {
-            Debug.Log("Left Receptacle");
-            overlappingReceptacle = null;
-        }
+        if (other == null)
+            return;
+
+        if (other.gameObject != overlappingReceptacle.gameObject)
+            return;
+
+        Debug.Log("Left Receptacle");
+
+        overlappingReceptacle = null;
     }
 
     public class ChangeControlsEventArgs
