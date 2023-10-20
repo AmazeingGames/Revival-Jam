@@ -20,5 +20,6 @@ MonoBehaviour:
   frictionAmount: 0.22
   coyoteTimeLength: 0.15
   jumpBufferLength: 0.1
+  jumpCutAmount: 0.5
   maxFallVelocity: 0
   timeBetweenWalkSound: 0.3

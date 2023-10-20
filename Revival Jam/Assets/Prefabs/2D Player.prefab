@@ -31,7 +31,7 @@ Transform:
   m_Children:
   - {fileID: 7243558140895090035}
   m_Father: {fileID: 8581096017296015265}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1497344224922737528
 MonoBehaviour:
@@ -116,6 +116,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2833192844822205945}
   - {fileID: 8581096017436916576}
   - {fileID: 1793914671}
   m_Father: {fileID: 0}
@@ -222,7 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31b1f4c6c0438469c587e1baa6ef22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundRaycastStart: {fileID: 8581096017436916583}
+  leftGroundRaycastStart: {fileID: 8918722986475129129}
+  rightGroundRaycastStart: {fileID: 8581096017436916583}
   groundRaycastLength: 0.06
   groundLayer:
     serializedVersion: 2
@@ -285,7 +287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8581096017436916576}
   m_Layer: 6
-  m_Name: GroundCheckStart
+  m_Name: RightGroundCheckStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -299,7 +301,38 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8581096017436916583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0901, z: 0}
+  m_LocalPosition: {x: 0.056, y: -0.0901, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8581096017296015265}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8918722986475129129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2833192844822205945}
+  m_Layer: 6
+  m_Name: 'LeftGroundCheckStart '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2833192844822205945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918722986475129129}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.056, y: -0.0901, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

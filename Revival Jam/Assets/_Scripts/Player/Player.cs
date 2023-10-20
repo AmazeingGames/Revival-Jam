@@ -11,7 +11,9 @@ using static Wire;
 public class Player : Singleton<Player>
 {
     [Header("Ground Check")]
-    [SerializeField] GameObject groundRaycastStart;
+    [SerializeField] GameObject leftGroundRaycastStart;
+    [SerializeField] GameObject rightGroundRaycastStart;
+
     [SerializeField] float groundRaycastLength;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] bool showGroundCheckDebug;
@@ -32,9 +34,10 @@ public class Player : Singleton<Player>
     {
         while (true)
         {
-            RaycastHit2D raycast = Physics2D.Raycast(groundRaycastStart.transform.position, Vector3.down, groundRaycastLength, groundLayer);
+            RaycastHit2D leftRaycast = GroundRaycast(leftGroundRaycastStart);
+            RaycastHit2D rightRaycast = GroundRaycast(rightGroundRaycastStart);
 
-            IsGrounded = raycast;
+            IsGrounded = leftRaycast || rightRaycast;
 
             CheckDebug($"Is grounded : {IsGrounded}", showGroundCheckDebug);
 
@@ -51,7 +54,13 @@ public class Player : Singleton<Player>
     void OnDrawGizmos()
     {
         Vector3 rayDirection = new(0, -groundRaycastLength, 0);
-        Gizmos.DrawRay(groundRaycastStart.transform.position, rayDirection);
+        Gizmos.DrawRay(leftGroundRaycastStart.transform.position, rayDirection);
+        Gizmos.DrawRay(rightGroundRaycastStart.transform.position, rayDirection);
         //Vector3 rayDirection = new(0, 0, 0);
+    }
+
+    RaycastHit2D GroundRaycast(GameObject rayCastStart)
+    {
+        return Physics2D.Raycast(rayCastStart.transform.position, Vector3.down, groundRaycastLength, groundLayer);
     }
 }
