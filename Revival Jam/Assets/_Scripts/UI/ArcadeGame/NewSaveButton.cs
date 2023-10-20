@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ArcadeGameManager;
 
 public class NewSaveButton : UIButtonBase
 {
@@ -9,6 +10,6 @@ public class NewSaveButton : UIButtonBase
         base.OnClick();
 
         ArcadeMenuManager.Instance.UpdateArcadeMenu(ArcadeMenuManager.ArcadeMenuState.GameRunning);
-        GameManager.Instance.UpdateGameState(GameManager.GameState.StartLevel, 1);
+        ArcadeGameManager.Instance.UpdateArcadeState(ArcadeState.StartLevel, 1);
     }
 }

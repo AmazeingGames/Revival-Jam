@@ -60,4 +60,12 @@ public class PlayerFocus : Singleton<PlayerFocus>
             _       => null,
         };
     }
+
+    public static bool IsFocusedOn(FocusedOn focusedOn)
+    {
+        if (Instance == null)
+            Debug.Log("Instance is null");
+
+        return (Instance == null || focusedOn == Instance.Focused);
+    }
 }

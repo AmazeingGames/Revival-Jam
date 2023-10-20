@@ -14,28 +14,7 @@ public class GameManager : StaticInstance<GameManager>
 
     public GameState State { get; private set; }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            UpdateGameState(GameState.StartLevel, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            UpdateGameState(GameState.StartLevel, 2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            UpdateGameState(GameState.StartLevel, 3);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            UpdateGameState(GameState.RestartLevel);
-        }
-    }
-
-    public void UpdateGameState(GameState newState, int levelToLoad = -1)
+    public void UpdateGameState(GameState newState)
     {
         OnBeforeStateChanged?.Invoke(newState);
 
@@ -47,23 +26,11 @@ public class GameManager : StaticInstance<GameManager>
                 ReadyGameScenes();
                 break;
 
-            case GameState.StartLevel:
-                LoadArcadeLevel(levelToLoad);
-                break;
-
             case GameState.Loading:
                 break;
 
-            case GameState.RestartLevel:
-                ReloadLevel();
-                break;
-
             case GameState.Win:
-                break;
-
-            case GameState.Lose:
-                OnLose();
-                break;
+                break;   
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -74,46 +41,25 @@ public class GameManager : StaticInstance<GameManager>
         Debug.Log($"New state: {newState}");
     }
 
-    void LoadArcadeLevel(int levelToLoad)
-    {
-        SceneLoader.Instance.StartLevelLoad(levelToLoad);
-
-        SceneLoader.Instance.UnloadScene("_ArcadeMenu");
-    }
-
     void ReadyGameScenes()
     {
         SceneLoader.Instance.LoadScene("RealWorld");
         SceneLoader.Instance.LoadScene("Circuits");
 
-        StartCoroutine(LoadArcadeMenu());
+        StartCoroutine(LoadArcadeScene());
     }
 
-    IEnumerator LoadArcadeMenu()
+    IEnumerator LoadArcadeScene()
     {
         yield return new WaitForSeconds(.1f);
-        SceneLoader.Instance.LoadScene("_ArcadeMenu");
-    }
-
-    void ReloadLevel()
-    {
-        UpdateGameState(GameState.StartLevel, SceneLoader.Instance.LevelNumber);
-    }
-
-    void OnLose()
-    {
-        //Add game over screen, have game over screen enter into the restart state
-        ReloadLevel();
+        SceneLoader.Instance.LoadScene("_ArcadeGame");
     }
 
     [Serializable]
     public enum GameState
     {
         StartGame,
-        StartLevel,
-        RestartLevel,
         Loading,
         Win,
-        Lose,
     }
 }

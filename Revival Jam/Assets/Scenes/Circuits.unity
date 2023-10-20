@@ -1434,6 +1434,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  stationType: 0
   screenCamera: {fileID: 1243010078}
   screenCaster: {fileID: 1987116757}
   lastMouseClick: {fileID: 0}

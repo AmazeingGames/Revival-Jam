@@ -9,7 +9,7 @@ public class PlayerHealth : Damageable
 
     private void Update()
     {
-        if (ArcadeGameManager.IsMachineOn)
+        if (MachineAbilities.IsMachineOn)
             invulnerabilityTimer -= Time.deltaTime;
         else
             invulnerabilityTimer = invulnerabilityLength;
@@ -17,7 +17,7 @@ public class PlayerHealth : Damageable
 
     protected override void Die()
     {
-        GameManager.Instance.UpdateGameState(GameManager.GameState.Lose);
+        ArcadeGameManager.Instance.UpdateArcadeState(ArcadeGameManager.ArcadeState.Lose);
     }
 
     public override void TakeDamage(int damageAmount)

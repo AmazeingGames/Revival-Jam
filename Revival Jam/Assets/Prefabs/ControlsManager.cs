@@ -63,6 +63,13 @@ public class ControlsManager : Singleton<ControlsManager>
         
     }
 
+    public static bool IsControlConnected(Controls controlToCheck)
+    {
+        if (Instance == null)
+            Debug.Log("Instance is null");
+        return (Instance == null || Instance.ConnectedControls.Contains(controlToCheck));
+    }
+
     IEnumerator ConnectStartingWires()
     {
         while (Wires.Count == 0)

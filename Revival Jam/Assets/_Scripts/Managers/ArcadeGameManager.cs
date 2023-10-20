@@ -4,23 +4,73 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
 
-//Right now the game is small enoguh where we don't need a separate manager for the arcade and real world
-//Changing its functionality to be smaller scale and manage things related to the arcade
-//instead of the flow of the actual game
-public class ArcadeGameManager : StaticInstance<ArcadeGameManager>
+public class ArcadeGameManager : Singleton<ArcadeGameManager>
 {
-    public static bool IsMachineOn { get; private set; } = false;
+    public ArcadeState CurrentState { get; private set; }
 
     private void Update()
     {
-        if (Input.GetButtonDown("PowerMachine"))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SetMachineOn(!IsMachineOn);
+            UpdateArcadeState(ArcadeState.StartLevel, 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UpdateArcadeState(ArcadeState.StartLevel, 2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UpdateArcadeState(ArcadeState.StartLevel, 3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            UpdateArcadeState(ArcadeState.RestartLevel);
         }
     }
 
-    void SetMachineOn(bool isOn)
+    public void UpdateArcadeState(ArcadeState newState, int levelToLoad = -1)
     {
-        IsMachineOn = isOn;
+        CurrentState = newState;
+
+        switch (newState)
+        {
+            case ArcadeState.StartLevel:
+                LoadLevel(levelToLoad);
+                break;
+
+            case ArcadeState.RestartLevel:
+                ReloadLevel();
+                break;
+
+            case ArcadeState.Lose:
+                Lose();
+                break;
+        }
     }
+
+    void LoadLevel(int levelToLoad)
+    {
+        SceneLoader.Instance.StartLevelLoad(levelToLoad);
+    }
+
+    void ReloadLevel()
+    {
+        UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
+    }
+
+    void Lose()
+    {
+        //Add game over screen, have game over screen enter into the restart state
+        ReloadLevel();
+    }
+
+    [Serializable]
+    public enum ArcadeState
+    {
+        StartLevel,
+        Lose,
+        RestartLevel,
+        Win,
+    } 
 }

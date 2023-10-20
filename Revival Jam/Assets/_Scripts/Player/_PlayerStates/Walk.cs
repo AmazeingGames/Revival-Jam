@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using static ControlsManager;
+using static PlayerFocus;
 
 [CreateAssetMenu(menuName = "States/Player/Walk")]
 public class Walk : State<CharacterController>
@@ -91,12 +93,21 @@ public class Walk : State<CharacterController>
 
         CheckWalkSound();
 
-        canWalk = PlayerFocus.Instance.Focused switch
-        {
-            PlayerFocus.FocusedOn.Nothing => true,
-            _ => false
-        };
+        CanWalk();
     }
+
+    void CanWalk()
+    {
+        bool isFocusedOnArcade = PlayerFocus.IsFocusedOn(FocusedOn.Arcade);
+        bool isWalkConnected = ControlsManager.IsControlConnected(Controls.Walk);
+
+        canWalk = (isFocusedOnArcade && isWalkConnected);
+
+
+        Debug.Log($"canWalk : {canWalk}");
+    }
+
+    
 
     public override void FixedUpdate()
     {
@@ -159,13 +170,7 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        bool isPlayer3dNull = FPSInput.Instance == null;
-        bool canWalk = isPlayer3dNull ||  this.canWalk;
-
-        bool isControlsManagerNull = ControlsManager.Instance == null;
-        bool isControlConnected = isControlsManagerNull || ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Jump);
-
-        if (jumpTimer > 0 && groundedTimer > 0 && (isControlConnected) && (canWalk))
+        if (jumpTimer > 0 && groundedTimer > 0 && canWalk)
         {
             jumpTimer = 0;
             groundedTimer = 0;
@@ -214,12 +219,7 @@ public class Walk : State<CharacterController>
             CheckDebug("Controls Manager not present : Assuming controls override");
             walkOverride = true;
         }
-
-        else if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
-        {
-            CheckDebug("Walk not connected");
-            canWalkMod = 0;
-        }
+        
 
 #if DEBUG
         if (walkOverride)
@@ -261,6 +261,4 @@ public class Walk : State<CharacterController>
         if (showDebug)
             Debug.Log(text);
     }
-
-    
 }

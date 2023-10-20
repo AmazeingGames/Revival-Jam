@@ -15,11 +15,6 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
 
     public ArcadeMenuState CurrentState { get; private set; }
 
-    private void OnDisable()
-    {
-        
-    }
-
     // Start is called before the first frame update
     void Start()
     {
