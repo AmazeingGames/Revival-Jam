@@ -91,7 +91,7 @@ public class Walk : State<CharacterController>
 
         CheckWalkSound();
 
-        canWalk = PlayerFocus.Focused switch
+        canWalk = PlayerFocus.Instance.Focused switch
         {
             PlayerFocus.FocusedOn.Nothing => true,
             _ => false

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static FocusStation;
 
 [RequireComponent(typeof(UnityEngine.CharacterController))]
 [AddComponentMenu("Controls Script/Fps Input")]
@@ -12,16 +13,22 @@ public class FPSInput : StaticInstance<FPSInput>
 
     private UnityEngine.CharacterController charController;
 
-    public Camera PlayerCamera { get; private set; }
-
     public bool CanWalk { get; private set; } = true;
+
+    private void OnEnable()
+    {
+        ConnectToStation += HandleConnectToStation;
+    }
+
+    private void OnDisable()
+    {
+        ConnectToStation -= HandleConnectToStation;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         charController = GetComponent<UnityEngine.CharacterController>();
-
-        PlayerCamera = transform.GetChild(0).GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -47,12 +54,8 @@ public class FPSInput : StaticInstance<FPSInput>
         charController.Move(movement);
     }
 
-    void HandleFocus()
+    void HandleConnectToStation(ConnectEventArgs eventArgs)
     {
-        CanWalk = PlayerFocus.Focused switch
-        {
-            PlayerFocus.FocusedOn.Nothing => true,
-            _ => false
-        };
+        CanWalk = !eventArgs.IsConnecting;
     }
 }

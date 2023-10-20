@@ -6,11 +6,22 @@ using UnityEngine;
 
 public class PlayerFocus : Singleton<PlayerFocus>
 {
-    public static FocusedOn Focused { get; private set; } = FocusedOn.Nothing;
+    public FocusedOn Focused { get; private set; } = FocusedOn.Nothing;
 
     public enum FocusedOn { Circuitry, Arcade, Nothing }
 
-    public static event Action<bool> ConnectToStation;
+    public static event Action<bool> FocusAttempt;
+
+    private void OnEnable()
+    {
+        FocusStation.ConnectToStation += HandleConnectToStation;
+
+    }
+
+    private void OnDisable()
+    {
+        FocusStation.ConnectToStation -= HandleConnectToStation;
+    }
 
     // Update is called once per frame
     void Update()
@@ -26,11 +37,28 @@ public class PlayerFocus : Singleton<PlayerFocus>
 
     void OnCheckStation(bool isConnecting)
     {
-        ConnectToStation?.Invoke(isConnecting);
+        FocusAttempt?.Invoke(isConnecting);
     }
 
-    public void ConnectedToStation(FocusedOn focusedOn)
+    public void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
     {
-        Focused = focusedOn;
+
+        Focused = connectEventArgs.IsConnecting switch
+        {
+            true    => connectEventArgs.LinkedStation,
+            _       => FocusedOn.Nothing,
+        };
     }
+
+    /*
+    public void OnStationEnter(GameObject focusStation)
+    {
+
+    }
+
+    public void OnStationExit(GameObject focusStation)
+    {
+
+    }
+    */
 }

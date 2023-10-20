@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System;
 using static ReceptacleObject;
 using static ControlsManager;
+using static PlayerFocus;
 
 public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -30,7 +31,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (PlayerFocus.Focused != PlayerFocus.FocusedOn.Circuitry)
+        if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
 
         shouldFollowMouse = true;
@@ -40,7 +41,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (PlayerFocus.Focused != PlayerFocus.FocusedOn.Circuitry)
+        if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
 
         shouldFollowMouse = false;

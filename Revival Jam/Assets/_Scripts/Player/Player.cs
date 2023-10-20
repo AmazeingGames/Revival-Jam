@@ -54,6 +54,4 @@ public class Player : Singleton<Player>
         Gizmos.DrawRay(groundRaycastStart.transform.position, rayDirection);
         //Vector3 rayDirection = new(0, 0, 0);
     }
-
-    
 }

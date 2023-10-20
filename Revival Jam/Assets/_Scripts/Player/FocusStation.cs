@@ -2,44 +2,46 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerFocus;
 
 public class FocusStation : MonoBehaviour
 {
-    [SerializeField] PlayerFocus.FocusedOn linkedStation;
+    [SerializeField] FocusedOn linkedStation;
     [SerializeField] Transform stationCamera;
+    
     bool containsPlayer;
+    bool isPlayerFocused;
 
-    Vector3 cameraStartingPosition;
-    Quaternion cameraStartingRotation;
-
-    Camera playerCamera;
+   
     VirtualScreen linkedScreen;
+
+    public static event Action<ConnectEventArgs> ConnectToStation;
+
+    public class ConnectEventArgs : EventArgs
+    {
+        public FocusedOn LinkedStation { get; private set; }
+        public bool IsConnecting { get; private set; }
+        public Transform StationCamera { get; private set; }
+
+        public ConnectEventArgs(FocusedOn _linkedStation, bool _isConnecting, Transform stationCamera)
+        {
+            LinkedStation = _linkedStation;
+            IsConnecting = _isConnecting;
+            StationCamera = stationCamera;
+        } 
+    }
 
     private void OnEnable()
     {
-        PlayerFocus.ConnectToStation += ContainsPlayer;
-        VirtualScreen.FindStation += FindStationHandle;
+        FocusAttempt += HandleFocusAttempt;
+        VirtualScreen.FindStation += HandleFindStation;
     }
 
     private void OnDisable()
     {
-        PlayerFocus.ConnectToStation -= ContainsPlayer;
-        VirtualScreen.FindStation -= FindStationHandle;
+        FocusAttempt -= HandleFocusAttempt;
+        VirtualScreen.FindStation -= HandleFindStation;
 
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (playerCamera == null)
-        {
-            playerCamera = FPSInput.Instance.PlayerCamera;
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,57 +51,54 @@ public class FocusStation : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Is player.Instance null {Player.Instance == null}");
-
         if (other.gameObject.CompareTag("Player"))
         {
             containsPlayer = true;
-            Debug.Log("Contains Player!");
+            Debug.Log("Player enter");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject == null)
+        Debug.Log("trigger exit 0");
+
+        if (other.gameObject == null)
             return;
 
-        if (collision.gameObject.CompareTag("Player"))
+        Debug.Log("trigger exit 1");
+
+        if (other.gameObject.CompareTag("Player"))
             containsPlayer = false;
+
+        Debug.Log("Trigger exit 2 PLAYER LEFT");
     }
 
-    public void ContainsPlayer(bool isConnecting)
+    public void HandleFocusAttempt(bool isConnecting)
     {
-        Debug.Log($"Contains Player: {containsPlayer}");
-
         if (!containsPlayer)
         {
             Debug.Log($"Disabled virtual screen {linkedScreen.name}");
             linkedScreen.enabled = false;
             return;
         }
+
         linkedScreen.enabled = true;
 
+        ConnectToStation?.Invoke(new ConnectEventArgs(linkedStation, isConnecting, stationCamera));
 
         if (isConnecting)
         {
-            cameraStartingPosition = playerCamera.transform.position;
-            cameraStartingRotation = playerCamera.transform.rotation;
-
-            playerCamera.transform.SetPositionAndRotation(stationCamera.transform.position, stationCamera.transform.rotation);
-
-            PlayerFocus.Instance.ConnectedToStation(linkedStation);
+            Debug.Log($"Player connecting to {linkedScreen} station");
         }
         else
         {
-            playerCamera.transform.SetPositionAndRotation(cameraStartingPosition, cameraStartingRotation);
-
-            PlayerFocus.Instance.ConnectedToStation(PlayerFocus.FocusedOn.Nothing);
-
-            linkedScreen.enabled = true;
+            Debug.Log($"Player disconnecting from {linkedScreen} station");
         }
     }
 
-    void FindStationHandle(VirtualScreen sender, PlayerFocus.FocusedOn virtualScreenType)
+
+
+    void HandleFindStation(VirtualScreen sender, FocusedOn virtualScreenType)
     {
         if (virtualScreenType == linkedStation)
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static FocusStation;
 
 public class MouseLook : MonoBehaviour
 {
@@ -38,12 +39,20 @@ public class MouseLook : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        ConnectToStation += HandleConnectToStation;
+    }
+
+    private void OnDisable()
+    {
+        ConnectToStation -= HandleConnectToStation;
+    }
+
     // Update is called once per frame
     void Update()
     {
         Look();
-
-        HandleFocus();
     }
 
     void Look()
@@ -74,12 +83,8 @@ public class MouseLook : MonoBehaviour
         }
     }
 
-    void HandleFocus()
+    void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
-        isLocked = PlayerFocus.Focused switch
-        {
-            PlayerFocus.FocusedOn.Nothing => false,
-            _ => true
-        };
+        isLocked = connectEventArgs.IsConnecting;
     }
 }
