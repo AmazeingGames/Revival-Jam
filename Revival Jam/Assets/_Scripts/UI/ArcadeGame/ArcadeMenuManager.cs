@@ -5,7 +5,7 @@ using static GameManager;
 
 public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
 {
-    [SerializeField] GameObject mainMenuScreenMenu;
+    [SerializeField] GameObject mainMenuScreen;
     [SerializeField] GameObject selectSaveMenu;
 
     public enum ArcadeMenuState { MainMenu, SelectSave, GameRunning }
@@ -43,17 +43,24 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
 
     void MainMenuEnter()
     {
-        mainMenuScreenMenu.SetActive(true);
+        Debug.Log("Main menu enter");
+        mainMenuScreen.SetActive(true);
+        selectSaveMenu.SetActive(false);
     }
 
     void SelectSaveEnter()
     {
-        selectSaveMenu.SetActive(false);
+        Debug.Log("Save Select enter");
+
+        selectSaveMenu.SetActive(true);
+        mainMenuScreen.SetActive(false);
     }
 
     void GameStart()
     {
-        mainMenuScreenMenu.SetActive(false);
+        Debug.Log("Game Start");
+
+        mainMenuScreen.SetActive(false);
         selectSaveMenu.SetActive(false);
     }
 }
