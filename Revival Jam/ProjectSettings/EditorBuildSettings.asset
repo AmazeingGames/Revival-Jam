@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: a16c92d9f568cc64ba6d71e556e6090d
   - enabled: 1
     path: Assets/Scenes/Arcade Levels/_ArcadeMenu.unity
-    guid: ebdac485327a88f438ef325fd52adfcf
+    guid: bc0152b0906f89f47aa920b341b3791b
   - enabled: 1
     path: Assets/Scenes/Arcade Levels/ArcadeLevel_1.unity
     guid: e7c5ca0e71408d54aabf549b45c17bb9

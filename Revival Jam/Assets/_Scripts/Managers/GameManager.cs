@@ -48,7 +48,7 @@ public class GameManager : StaticInstance<GameManager>
                 break;
 
             case GameState.StartLevel:
-                SceneLoader.Instance.StartLevelLoad(levelToLoad);
+                LoadArcadeLevel(levelToLoad);
                 break;
 
             case GameState.Loading:
@@ -72,6 +72,13 @@ public class GameManager : StaticInstance<GameManager>
         OnAfterStateChanged?.Invoke(newState);
 
         Debug.Log($"New state: {newState}");
+    }
+
+    void LoadArcadeLevel(int levelToLoad)
+    {
+        SceneLoader.Instance.StartLevelLoad(levelToLoad);
+
+        SceneLoader.Instance.UnloadScene("_ArcadeMenu");
     }
 
     void ReadyGameScenes()

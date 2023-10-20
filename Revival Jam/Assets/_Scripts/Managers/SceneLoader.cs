@@ -68,7 +68,7 @@ public class SceneLoader : Singleton<SceneLoader>
         return true;
     }
 
-    bool UnloadScene(string sceneName)
+    public bool UnloadScene(string sceneName)
     {
         if (!DoesSceneExist(sceneName))
             return false;

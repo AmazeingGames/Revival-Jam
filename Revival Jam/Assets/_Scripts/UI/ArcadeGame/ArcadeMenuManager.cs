@@ -8,6 +8,9 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
     [SerializeField] GameObject mainMenuScreen;
     [SerializeField] GameObject selectSaveMenu;
 
+    [SerializeField] GameObject eventSystem;
+    [SerializeField] GameObject mainCamera;
+
     public enum ArcadeMenuState { MainMenu, SelectSave, GameRunning }
 
     public ArcadeMenuState CurrentState { get; private set; }
@@ -20,6 +23,12 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
     // Start is called before the first frame update
     void Start()
     {
+#if DEBUG
+        var isGameManagerNull = GameManager.Instance == null;
+
+        eventSystem.SetActive(isGameManagerNull);
+        mainCamera.SetActive(isGameManagerNull);
+#endif
         UpdateArcadeMenu(ArcadeMenuState.MainMenu);
     }
 
