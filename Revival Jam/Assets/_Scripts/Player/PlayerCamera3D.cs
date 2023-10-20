@@ -9,10 +9,12 @@ public class PlayerCamera3D : MonoBehaviour
     Quaternion cameraStartingRotation;
 
     Camera playerCamera;
+    float constantYPosition;
 
     void Start()
     {
-        playerCamera = GetComponent<Camera>();    
+        playerCamera = GetComponent<Camera>();
+        constantYPosition = playerCamera.transform.position.y;
     }
 
     private void OnEnable()
@@ -37,6 +39,7 @@ public class PlayerCamera3D : MonoBehaviour
         else
         {
             playerCamera.transform.SetPositionAndRotation(cameraStartingPosition, cameraStartingRotation);
+            playerCamera.transform.position = new Vector3(transform.position.x, constantYPosition, transform.position.z);
         }
     }
 }
