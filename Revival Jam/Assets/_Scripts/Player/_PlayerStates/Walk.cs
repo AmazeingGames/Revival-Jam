@@ -43,8 +43,6 @@ public class Walk : State<CharacterController>
 
     bool walkOverride = false;
 
-    bool canWalk;
-
     public override void Enter(CharacterController parent)
     {
         base.Enter(parent);
@@ -92,22 +90,31 @@ public class Walk : State<CharacterController>
         FlipPlayer();
 
         CheckWalkSound();
-
-        CanWalk();
     }
 
-    void CanWalk()
+    bool CanWalk()
     {
-        bool isFocusedOnArcade = PlayerFocus.IsFocusedOn(FocusedOn.Arcade);
-        bool isWalkConnected = ControlsManager.IsControlConnected(Controls.Walk);
+        bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
+        bool isWalkConnected = IsControlConnected(Controls.Walk);
 
-        canWalk = (isFocusedOnArcade && isWalkConnected);
-
+        bool canWalk = (isFocusedOnArcade && isWalkConnected);
 
         Debug.Log($"canWalk : {canWalk}");
+
+        return canWalk;
     }
 
-    
+    bool CanJump()
+    {
+        bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
+        bool isJumpConnected = IsControlConnected(Controls.Jump);
+
+        bool canJump = (isFocusedOnArcade && isJumpConnected);
+
+        Debug.Log($"CanJump : {canJump}");
+
+        return canJump;
+    }
 
     public override void FixedUpdate()
     {
@@ -170,7 +177,7 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        if (jumpTimer > 0 && groundedTimer > 0 && canWalk)
+        if (jumpTimer > 0 && groundedTimer > 0 && CanJump())
         {
             jumpTimer = 0;
             groundedTimer = 0;
@@ -210,7 +217,7 @@ public class Walk : State<CharacterController>
         
         if (PlayerFocus.Instance != null)
         {
-            canWalkMod = canWalk ? 1 : 0;
+            canWalkMod = CanWalk() ? 1 : 0;
             CheckDebug($"Can walk if connected {canWalkMod}");
         }
 

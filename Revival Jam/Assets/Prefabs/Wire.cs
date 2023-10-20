@@ -60,22 +60,24 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         ChangeControlsEventArgs controlsEventArgs = new(overlappingReceptacle, controlToAdd, controlToRemove);
 
-        ConnectWireCheck?.Invoke(controlsEventArgs);
-
         connectedReceptacle = overlappingReceptacle;
+
+        Debug.Log($"is overlappingReceptacle null : {overlappingReceptacle == null}");
+
+        ConnectWireCheck?.Invoke(controlsEventArgs);
     }
 
     public void ManuallyConnect(ReceptacleObject receptacleToConnect)
     {
-        StartCoroutine(SetPositonManual());
         autoPosition = receptacleToConnect.WirePosition;
+        StartCoroutine(SetPositonManual());
     }
 
     IEnumerator SetPositonManual()
     {
         for (int i = 0; i < 2; i++)
         {
-            yield return null;
+            yield return new WaitForSeconds(.1f);
 
             transform.position = autoPosition.position;
 

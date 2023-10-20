@@ -37,6 +37,7 @@ public class ReceptacleObject : MonoBehaviour
         displayText.text = LinkedControl.ToString();
     }
 
+    //What is this function for??
     void HandleConnectWireCheck(ChangeControlsEventArgs eventArgs)
     {
         if (eventArgs.NewWireReceptacle != gameObject)

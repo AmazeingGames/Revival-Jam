@@ -57,7 +57,7 @@ public class ControlsManager : Singleton<ControlsManager>
         if (!(gameState == GameManager.GameState.StartGame))
             return;
 
-        Debug.Log("Connected starting controls");
+        Debug.Log("Connecting starting controls");
 
         StartCoroutine(ConnectStartingWires());
         
@@ -67,7 +67,12 @@ public class ControlsManager : Singleton<ControlsManager>
     {
         if (Instance == null)
             Debug.Log("Instance is null");
-        return (Instance == null || Instance.ConnectedControls.Contains(controlToCheck));
+        
+        bool isControlConnected = (Instance == null || Instance.ConnectedControls.Contains(controlToCheck));
+
+        Debug.Log($"IsControlConnected {isControlConnected}");
+
+        return isControlConnected;
     }
 
     IEnumerator ConnectStartingWires()
