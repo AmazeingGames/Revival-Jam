@@ -7,6 +7,7 @@ public class Jump : State<CharacterController>
 {
     [SerializeField] float jumpHeight;
     [SerializeField] float jumpEndLength = .2f;
+    [SerializeField] float jumpCutAmount;
 
     Rigidbody2D rigidBody;
     PlayerAnimator playerAnimator;
@@ -30,13 +31,17 @@ public class Jump : State<CharacterController>
 
     public override void CaptureInput()
     {
+        if (Input.GetButtonUp("Jump"))
+        {
+            Debug.Log("Jump Jump Cut");
+            CharacterController.CutJumpHeight(rigidBody, jumpCutAmount);
+        }
     }
 
     public override void Update()
     {
         switchTimer -= Time.deltaTime;
     }
-    
 
     public override void FixedUpdate()
     {

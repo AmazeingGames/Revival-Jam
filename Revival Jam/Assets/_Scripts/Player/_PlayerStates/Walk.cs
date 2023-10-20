@@ -20,6 +20,7 @@ public class Walk : State<CharacterController>
     [Header("Jump")]
     [SerializeField] float coyoteTimeLength;
     [SerializeField] float jumpBufferLength;
+    [SerializeField] float jumpCutAmount;
 
     [Header("Fall")]
     [SerializeField] float maxFallVelocity;
@@ -42,6 +43,7 @@ public class Walk : State<CharacterController>
     float maxVerticalVelocity;
 
     bool walkOverride = false;
+
 
     public override void Enter(CharacterController parent)
     {
@@ -66,7 +68,13 @@ public class Walk : State<CharacterController>
         if (Input.GetButtonDown("Jump"))
             jumpTimer = jumpBufferLength;
 
-    #if DEBUG
+        if (Input.GetButtonUp("Jump"))
+        {
+            Debug.Log("Walk Cut");
+            CharacterController.CutJumpHeight(rigidbody, jumpCutAmount);
+        }
+
+#if DEBUG
         if (Input.GetKeyDown(KeyCode.O))
         {
             walkOverride = !walkOverride;
@@ -91,6 +99,7 @@ public class Walk : State<CharacterController>
 
         CheckWalkSound();
     }
+
 
     bool CanWalk()
     {
@@ -198,7 +207,7 @@ public class Walk : State<CharacterController>
 
     //Makes sure the player can't gain more vertical velocity than they already have.
     //Prevents bouncing.
-    //Note: Performance is poor, optimize using Clamp
+    //Note: Performance is likely poor, optimize using Clamp
     void KeepConstantVelocity()
     {
         if (rigidbody.velocity.y > maxVerticalVelocity)
