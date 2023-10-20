@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System;
 using static ReceptacleObject;
 using static ControlsManager;
+using static PlayerFocus;
 
 public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -30,14 +31,19 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
+            return;
+
         shouldFollowMouse = true;
 
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
 
-    //TO DO: MAKE SURE THIS ADDS AND REMOVES ABILITES PROPERLY
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
+            return;
+
         shouldFollowMouse = false;
 
         WireToConnector();
@@ -54,28 +60,28 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         ChangeControlsEventArgs controlsEventArgs = new(overlappingReceptacle, controlToAdd, controlToRemove);
 
-        ConnectWireCheck?.Invoke(controlsEventArgs);
-
         connectedReceptacle = overlappingReceptacle;
+
+        Debug.Log($"is overlappingReceptacle null : {overlappingReceptacle == null}");
+
+        ConnectWireCheck?.Invoke(controlsEventArgs);
     }
 
     public void ManuallyConnect(ReceptacleObject receptacleToConnect)
     {
-        StartCoroutine(SetPositonManual());
         autoPosition = receptacleToConnect.WirePosition;
-
+        StartCoroutine(SetPositonManual());
     }
 
     IEnumerator SetPositonManual()
     {
         for (int i = 0; i < 2; i++)
         {
-            yield return null;
+            yield return new WaitForSeconds(.1f);
 
             transform.position = autoPosition.position;
 
             WireToConnector();
-
         }
         
         yield break;
@@ -83,7 +89,10 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Awake()
     {
-        ControlsManager.Instance.Wires.Add(this);
+        if (ControlsManager.Instance != null)
+            ControlsManager.Instance.Wires.Add(this);
+        else
+            Debug.LogWarning("ControlsManager.Instance is null");
     }
 
     // Update is called once per frame
@@ -121,11 +130,15 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == overlappingReceptacle.gameObject)
-        {
-            Debug.Log("Left Receptacle");
-            overlappingReceptacle = null;
-        }
+        if (other == null)
+            return;
+
+        if (other.gameObject != overlappingReceptacle.gameObject)
+            return;
+
+        Debug.Log("Left Receptacle");
+
+        overlappingReceptacle = null;
     }
 
     public class ChangeControlsEventArgs

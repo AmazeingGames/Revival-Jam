@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static FocusStation;
 
 public class MouseLook : MonoBehaviour
 {
@@ -32,8 +33,7 @@ public class MouseLook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Rigidbody body = GetComponent<Rigidbody>();
-        if(body != null)
+        if(TryGetComponent<Rigidbody>(out var body))
         {
             body.freezeRotation = true;
         }
@@ -41,16 +41,12 @@ public class MouseLook : MonoBehaviour
 
     private void OnEnable()
     {
-    #if DEBUG
-        MouseManager.LockMouse += OnMouseLock;
-    #endif
+        ConnectToStation += HandleConnectToStation;
     }
 
     private void OnDisable()
     {
-    #if DEBUG
-        MouseManager.LockMouse -= OnMouseLock;
-    #endif
+        ConnectToStation -= HandleConnectToStation;
     }
 
     // Update is called once per frame
@@ -87,10 +83,8 @@ public class MouseLook : MonoBehaviour
         }
     }
 
-    void OnMouseLock(bool isMouseLocked)
+    void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
-    #if DEBUG
-        isLocked = !isMouseLocked;
-    #endif
+        isLocked = connectEventArgs.IsConnecting;
     }
 }

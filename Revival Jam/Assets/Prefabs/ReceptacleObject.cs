@@ -23,15 +23,12 @@ public class ReceptacleObject : MonoBehaviour
         ConnectWireCheck -= HandleConnectWireCheck;
     }
 
-
     private void Awake()
     {
-        ControlsManager.Instance.Receptacles.Add(this);
-    }
-
-    private void Start()
-    {
-        ControlsManager.Instance.Receptacles.Add(this);
+        if (ControlsManager.Instance != null)
+            ControlsManager.Instance.Receptacles.Add(this);
+        else
+            Debug.LogWarning("Control Manager Instance is null");
     }
 
     // Update is called once per frame
@@ -40,6 +37,7 @@ public class ReceptacleObject : MonoBehaviour
         displayText.text = LinkedControl.ToString();
     }
 
+    //What is this function for??
     void HandleConnectWireCheck(ChangeControlsEventArgs eventArgs)
     {
         if (eventArgs.NewWireReceptacle != gameObject)

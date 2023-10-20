@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,28 +14,7 @@ public class GameManager : StaticInstance<GameManager>
 
     public GameState State { get; private set; }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            UpdateGameState(GameState.StartLevel, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            UpdateGameState(GameState.StartLevel, 2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            UpdateGameState(GameState.StartLevel, 3);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            UpdateGameState(GameState.Restart);
-        }
-    }
-
-    public void UpdateGameState(GameState newState, int levelToLoad = -1)
+    public void UpdateGameState(GameState newState)
     {
         OnBeforeStateChanged?.Invoke(newState);
 
@@ -42,23 +22,15 @@ public class GameManager : StaticInstance<GameManager>
 
         switch (newState)
         {
-            case GameState.StartLevel:
-                SceneLoader.Instance.StartLevelLoad(levelToLoad);
+            case GameState.StartGame:
+                ReadyGameScenes();
                 break;
 
             case GameState.Loading:
                 break;
 
-            case GameState.Restart:
-                ReloadLevel();
-                break;
-
             case GameState.Win:
-                break;
-
-            case GameState.Lose:
-                OnLose();
-                break;
+                break;   
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -69,24 +41,25 @@ public class GameManager : StaticInstance<GameManager>
         Debug.Log($"New state: {newState}");
     }
 
-    void ReloadLevel()
+    void ReadyGameScenes()
     {
-        UpdateGameState(GameState.StartLevel, SceneLoader.Instance.LevelNumber);
+        SceneLoader.Instance.LoadScene("RealWorld");
+        SceneLoader.Instance.LoadScene("Circuits");
+
+        StartCoroutine(LoadArcadeScene());
     }
 
-    void OnLose()
+    IEnumerator LoadArcadeScene()
     {
-        //Add game over screen, have game over screen enter into the restart state
-        ReloadLevel();
+        yield return new WaitForSeconds(.1f);
+        SceneLoader.Instance.LoadScene("_ArcadeGame");
     }
 
     [Serializable]
     public enum GameState
     {
-        StartLevel,
-        Restart,
+        StartGame,
         Loading,
         Win,
-        Lose,
     }
 }

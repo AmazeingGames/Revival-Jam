@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using static ControlsManager;
+using static PlayerFocus;
 
 [CreateAssetMenu(menuName = "States/Player/Walk")]
 public class Walk : State<CharacterController>
@@ -90,6 +92,30 @@ public class Walk : State<CharacterController>
         CheckWalkSound();
     }
 
+    bool CanWalk()
+    {
+        bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
+        bool isWalkConnected = IsControlConnected(Controls.Walk);
+
+        bool canWalk = (isFocusedOnArcade && isWalkConnected);
+
+        Debug.Log($"canWalk : {canWalk}");
+
+        return canWalk;
+    }
+
+    bool CanJump()
+    {
+        bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
+        bool isJumpConnected = IsControlConnected(Controls.Jump);
+
+        bool canJump = (isFocusedOnArcade && isJumpConnected);
+
+        Debug.Log($"CanJump : {canJump}");
+
+        return canJump;
+    }
+
     public override void FixedUpdate()
     {
         MovePlayer();
@@ -151,13 +177,7 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        bool isPlayer3dNull = FPSInput.Instance == null;
-        bool shouldWalk = isPlayer3dNull || !FPSInput.Instance.ShouldWalk;
-
-        bool isControlsManagerNull = ControlsManager.Instance == null;
-        bool isControlConnected = isControlsManagerNull || ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Jump);
-
-        if (jumpTimer > 0 && groundedTimer > 0 && (isControlConnected) && (shouldWalk))
+        if (jumpTimer > 0 && groundedTimer > 0 && CanJump())
         {
             jumpTimer = 0;
             groundedTimer = 0;
@@ -195,9 +215,9 @@ public class Walk : State<CharacterController>
     {
         float canWalkMod = 0;
         
-        if (FPSInput.Instance != null)
+        if (PlayerFocus.Instance != null)
         {
-            canWalkMod = !FPSInput.Instance.ShouldWalk ? 1 : 0;
+            canWalkMod = CanWalk() ? 1 : 0;
             CheckDebug($"Can walk if connected {canWalkMod}");
         }
 
@@ -206,11 +226,7 @@ public class Walk : State<CharacterController>
             CheckDebug("Controls Manager not present : Assuming controls override");
             walkOverride = true;
         }
-        else if (!ControlsManager.Instance.ConnectedControls.Contains(ControlsManager.Controls.Walk))
-        {
-            CheckDebug("Walk not connected");
-            canWalkMod = 0;
-        }
+        
 
 #if DEBUG
         if (walkOverride)
@@ -252,6 +268,4 @@ public class Walk : State<CharacterController>
         if (showDebug)
             Debug.Log(text);
     }
-
-    
 }
