@@ -14,12 +14,12 @@ public class UICamera : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnAfterStateChanged += HandleGameStateChange;
+        GameManager.AfterStateChange += HandleGameStateChange;
     }
 
     private void OnDisable()
     {
-        GameManager.OnAfterStateChanged -= HandleGameStateChange;
+        GameManager.AfterStateChange -= HandleGameStateChange;
     }
 
     void HandleGameStateChange(GameManager.GameState newGameState)

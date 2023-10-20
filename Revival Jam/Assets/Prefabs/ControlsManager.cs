@@ -18,13 +18,13 @@ public class ControlsManager : Singleton<ControlsManager>
     private void OnEnable()
     {
         ConnectWireCheck += HandleConnectWireCheck;
-        GameManager.OnAfterStateChanged += ConnectStartingControls;
+        GameManager.AfterStateChange += ConnectStartingControls;
     }
 
     private void OnDisable()
     {
         ConnectWireCheck -= HandleConnectWireCheck;
-        GameManager.OnAfterStateChanged -= ConnectStartingControls;
+        GameManager.AfterStateChange -= ConnectStartingControls;
 
     }
 

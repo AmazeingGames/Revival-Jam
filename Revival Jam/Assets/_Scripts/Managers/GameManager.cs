@@ -9,14 +9,14 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : StaticInstance<GameManager>
 {
-    public static event Action<GameState> OnBeforeStateChanged;
-    public static event Action<GameState> OnAfterStateChanged;
+    public static event Action<GameState> BeforeStateChange;
+    public static event Action<GameState> AfterStateChange;
 
     public GameState State { get; private set; }
 
     public void UpdateGameState(GameState newState)
     {
-        OnBeforeStateChanged?.Invoke(newState);
+        BeforeStateChange?.Invoke(newState);
 
         State = newState;
 
@@ -36,7 +36,7 @@ public class GameManager : StaticInstance<GameManager>
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
 
-        OnAfterStateChanged?.Invoke(newState);
+        AfterStateChange?.Invoke(newState);
 
         Debug.Log($"New state: {newState}");
     }

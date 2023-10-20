@@ -7,6 +7,7 @@ using static GameManager;
 public class ArcadeGameManager : Singleton<ArcadeGameManager>
 {
     public ArcadeState CurrentState { get; private set; }
+    GameObject glitchedWorld;
 
     private void Update()
     {
@@ -49,9 +50,32 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         }
     }
 
+
+    //Yes, find in coroutine is bad for performance, but it's hard to think of a better way with tile maps
+    IEnumerator FindTileMaps()
+    {
+        while (Player.Instance == null)
+            yield return null;
+
+        GameObject glitchedWorld = null;
+
+        while (glitchedWorld == null)
+        {
+            yield return null;
+
+            glitchedWorld = GameObject.Find("GlitchedWorld");
+        }
+
+        Debug.Log("Found glitched world!");
+
+        this.glitchedWorld = glitchedWorld;
+    }
+
     void LoadLevel(int levelToLoad)
     {
         SceneLoader.Instance.StartLevelLoad(levelToLoad);
+
+        StartCoroutine(FindTileMaps());
     }
 
     void ReloadLevel()
@@ -59,9 +83,9 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
     }
 
+    //Add game over screen, have game over screen enter into the restart state
     void Lose()
     {
-        //Add game over screen, have game over screen enter into the restart state
         ReloadLevel();
     }
 

@@ -15,13 +15,13 @@ public class MainMenu : Singleton<MainMenu>
     void OnEnable()
     {
         MainMenuBackButton.OnBack += HandleOnBack;
-        OnAfterStateChanged += HandleGameStateChange;
+        AfterStateChange += HandleGameStateChange;
     }
 
     void OnDisable()
     {
         MainMenuBackButton.OnBack -= HandleOnBack;
-        OnAfterStateChanged -= HandleGameStateChange;
+        AfterStateChange -= HandleGameStateChange;
     }
 
     // Start is called before the first frame update
