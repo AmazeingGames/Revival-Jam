@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 using static ControlsManager;
@@ -100,16 +101,24 @@ public class Walk : State<CharacterController>
     }
 
 
-    bool CanWalk()
+    bool CanWalkLeft() => CanWalkDirection(isRight: false);
+
+    bool CanWalkRight() => CanWalkDirection(isRight: true);
+
+    bool CanWalkDirection(bool isRight)
     {
+        Controls walkDirection = isRight ? Controls.WalkRight : Controls.WalkLeft;
+        string directionText = $"{walkDirection}".Substring(4);
+
         bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
-        bool isWalkConnected = IsControlConnected(Controls.Walk);
 
-        bool canWalk = (isFocusedOnArcade && isWalkConnected);
+        bool isWalkDirectionConnected = IsControlConnected(walkDirection);
 
-        Debug.Log($"canWalk : {canWalk}");
+        bool canWalkDirection = (isFocusedOnArcade && isWalkDirectionConnected);
 
-        return canWalk;
+        Debug.Log($"canWalk{directionText} : {canWalkDirection}");
+
+        return canWalkDirection;
     }
 
     bool CanJump()
@@ -218,15 +227,17 @@ public class Walk : State<CharacterController>
             maxVerticalVelocity = 0;
     }
 
-    //Uses forces and math to move the player
     void MovePlayer()
     {
-        float canWalkMod = 0;
-        
+        float canWalkRightMod = 0;
+        float canWalkLeftMod = 0;
+
         if (PlayerFocus.Instance != null)
         {
-            canWalkMod = CanWalk() ? 1 : 0;
-            CheckDebug($"Can walk if connected {canWalkMod}");
+            canWalkRightMod = CanWalkRight() ? 1 : 0;
+            canWalkLeftMod = CanWalkLeft() ? 1 : 0;
+
+            CheckDebug($"If connected - canWalkRight {canWalkRightMod} | canWalkLeft {canWalkLeftMod}");
         }
 
         if (ControlsManager.Instance == null)
@@ -240,12 +251,15 @@ public class Walk : State<CharacterController>
         if (walkOverride)
         {
             CheckDebug("Walk modifier active");
-            canWalkMod = 1;
+            canWalkLeftMod = 1;
+            canWalkRightMod = 1;
         }
 #endif
 
+        float walkModToUse = horizontalInput < 0 ? canWalkLeftMod : canWalkRightMod;
+
         //Calculates the direction we wish to move in; this is our desired velocity
-        float targetSpeed = horizontalInput * walkSpeed * canWalkMod;
+        float targetSpeed = horizontalInput * walkSpeed * walkModToUse;
 
         //Difference between the current and desired velocity
         float speedDifference = targetSpeed - rigidbody.velocity.x;

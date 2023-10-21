@@ -133,6 +133,9 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (other == null)
             return;
 
+        if (overlappingReceptacle == null)
+            return;
+
         if (other.gameObject != overlappingReceptacle.gameObject)
             return;
 

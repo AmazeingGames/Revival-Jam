@@ -10,7 +10,7 @@ public class ControlsManager : Singleton<ControlsManager>
     [field: SerializeField] public List<Controls> StartingControls { get; private set; } = new();
 
     public List<Controls> ConnectedControls { get; private set; } = new();
-    public enum Controls { Unknown, Walk, Jump, Joust, Dash }
+    public enum Controls { Unknown, WalkLeft, WalkRight, Jump, Joust }
 
     public List<Wire> Wires { get; private set; } = new();
     public List<ReceptacleObject> Receptacles { get; private set; } = new();
