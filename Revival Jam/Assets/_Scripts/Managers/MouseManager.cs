@@ -8,6 +8,11 @@ public class MouseManager : MonoBehaviour
     public static Action<bool> LockMouse;
 
     bool isMouseLocked = false;
+    
+    //Custom Cursor
+    public Transform mCursorVisual;
+    public Vector3 mDisplacement;
+    [SerializeField] Animator cursorAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +24,15 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    #if DEBUG
+        mCursorVisual.position = Input.mousePosition + mDisplacement;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            cursorAnimator.SetBool("IsPressed", true);
+        } else if (Input.GetMouseButtonUp(0)) cursorAnimator.SetBool("IsPressed", false);
+
+
+#if DEBUG
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isMouseLocked = !isMouseLocked;
