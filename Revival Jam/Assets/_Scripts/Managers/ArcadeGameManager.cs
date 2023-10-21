@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static GameManager;
 
 public class ArcadeGameManager : Singleton<ArcadeGameManager>
 {
+    public static event Action<ArcadeState> AfterArcadeStateChange;
     public ArcadeState CurrentState { get; private set; }
-    GameObject glitchedWorld;
 
     private void Update()
     {
@@ -30,6 +31,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         }
     }
 
+    
     public void UpdateArcadeState(ArcadeState newState, int levelToLoad = -1)
     {
         CurrentState = newState;
@@ -48,34 +50,13 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
                 Lose();
                 break;
         }
-    }
 
-
-    //Yes, find in coroutine is bad for performance, but it's hard to think of a better way with tile maps
-    IEnumerator FindTileMaps()
-    {
-        while (Player.Instance == null)
-            yield return null;
-
-        GameObject glitchedWorld = null;
-
-        while (glitchedWorld == null)
-        {
-            yield return null;
-
-            glitchedWorld = GameObject.Find("GlitchedWorld");
-        }
-
-        Debug.Log("Found glitched world!");
-
-        this.glitchedWorld = glitchedWorld;
+        AfterArcadeStateChange?.Invoke(newState);
     }
 
     void LoadLevel(int levelToLoad)
     {
         SceneLoader.Instance.StartLevelLoad(levelToLoad);
-
-        StartCoroutine(FindTileMaps());
     }
 
     void ReloadLevel()

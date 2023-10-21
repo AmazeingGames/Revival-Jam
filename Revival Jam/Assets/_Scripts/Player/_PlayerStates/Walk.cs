@@ -70,7 +70,6 @@ public class Walk : State<CharacterController>
 
         if (Input.GetButtonUp("Jump"))
         {
-            Debug.Log("Walk Cut");
             CharacterController.CutJumpHeight(rigidbody, jumpCutAmount);
         }
 

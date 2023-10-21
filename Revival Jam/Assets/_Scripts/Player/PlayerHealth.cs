@@ -9,7 +9,7 @@ public class PlayerHealth : Damageable
 
     private void Update()
     {
-        if (MachineAbilities.IsMachineOn)
+        if (MachineAbilities.Instance.IsMachineOn)
             invulnerabilityTimer -= Time.deltaTime;
         else
             invulnerabilityTimer = invulnerabilityLength;

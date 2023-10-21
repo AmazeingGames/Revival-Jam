@@ -50,7 +50,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
         Debug.Log($"Loading Scene: {sceneName}");
 
-        var load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        AsyncOperation load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
         OnLoadStart?.Invoke(load, isLevel);
 

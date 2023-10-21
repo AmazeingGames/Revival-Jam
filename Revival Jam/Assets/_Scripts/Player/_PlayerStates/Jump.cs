@@ -33,7 +33,6 @@ public class Jump : State<CharacterController>
     {
         if (Input.GetButtonUp("Jump"))
         {
-            Debug.Log("Jump Jump Cut");
             CharacterController.CutJumpHeight(rigidBody, jumpCutAmount);
         }
     }
