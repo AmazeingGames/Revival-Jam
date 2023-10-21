@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "States/Player/SimpleAttack")]
-public class SimpleAttack : State<CharacterController>
+[CreateAssetMenu(menuName = "States/Player/Joust")]
+public class Joust : State<CharacterController>
 {
-    [SerializeField] float attackLength;
+    [SerializeField] float dashSpeed;
+    [SerializeField] float joustLength;
     [SerializeField] float jumpBufferLength;
 
     [Header("Debug")]
@@ -31,7 +32,7 @@ public class SimpleAttack : State<CharacterController>
             attackHitbox = parent.transform.Find("AttackHitbox").gameObject;
 
         attackHitbox.SetActive(true);
-        attackTimer = attackLength;
+        attackTimer = joustLength;
         jumpBufferTimer = 0;
         rigidbody2D.velocity = Vector3.zero;
     }

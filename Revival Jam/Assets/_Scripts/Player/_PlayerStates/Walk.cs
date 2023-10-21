@@ -70,9 +70,7 @@ public class Walk : State<CharacterController>
             jumpTimer = jumpBufferLength;
 
         if (Input.GetButtonUp("Jump"))
-        {
             CharacterController.CutJumpHeight(rigidbody, jumpCutAmount);
-        }
 
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.O))
@@ -204,7 +202,7 @@ public class Walk : State<CharacterController>
 
         if (Input.GetButtonDown("Attack") && player.IsGrounded)
         {
-            runner.SetState(typeof(SimpleAttack));
+            runner.SetState(typeof(Joust));
         }
     }
 
@@ -258,20 +256,7 @@ public class Walk : State<CharacterController>
 
         float walkModToUse = horizontalInput < 0 ? canWalkLeftMod : canWalkRightMod;
 
-        //Calculates the direction we wish to move in; this is our desired velocity
-        float targetSpeed = horizontalInput * walkSpeed * walkModToUse;
-
-        //Difference between the current and desired velocity
-        float speedDifference = targetSpeed - rigidbody.velocity.x;
-
-        //Changes our acceleration rate to suit the situation
-        float acceleartionRate = (Mathf.Abs(targetSpeed > .01f ? acceleration : deceleration));
-
-        //Applies acceleration to the speed difference, then raises it to a power, meaning acceleration increases with higher speeds
-        //Multiplies it to reapply direction
-        float movement = Mathf.Pow(Mathf.Abs(speedDifference) * acceleartionRate, velocityPower) * Mathf.Sign(speedDifference);
-
-        rigidbody.AddForce(movement * Vector2.right);
+        CharacterController.MovePlayer(rigidbody, horizontalInput * walkModToUse, walkSpeed, acceleration, deceleration, velocityPower);
     }
 
     //Applies force opposite to the player
