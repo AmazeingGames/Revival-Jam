@@ -18,38 +18,49 @@ public class Joust : State<CharacterController>
     [SerializeField] float joustLength;
     [SerializeField] float jumpBufferLength;
 
+    [Header("Jump")]
+    [SerializeField] float jumpForce;
+    [SerializeField] float coyoteTimeLength;
+    [SerializeField] float jumpCutAmount;
+
     [Header("Debug")]
     [SerializeField] bool showDebug;
 
-
     float jumpBufferTimer;
-    float attackTimer;
     float facingDirection;
     float verticalVelocityCeiling;
 
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D rigidbody;
     Transform transform;
     GameObject attackHitbox;
+
+    bool first = true;
 
     public override void Enter(CharacterController parent)
     {
         base.Enter(parent);
 
-        CheckDebug("Joust!");
+        Debug.Log("Joust!");
 
-        if (rigidbody2D == null)
-            rigidbody2D = parent.GetComponent<Rigidbody2D>();
+        if (rigidbody == null)
+            rigidbody = parent.GetComponent<Rigidbody2D>();
         if (attackHitbox == null)
             attackHitbox = parent.transform.Find("AttackHitbox").gameObject;
         if (transform == null)
             transform = parent.transform;
 
-        attackHitbox.SetActive(true);
-        attackTimer = joustLength;
-        jumpBufferTimer = 0;
-        rigidbody2D.velocity = Vector3.zero;
+        if (first)
+        {
+            WalkCleanup();
+            first = false;
+        }
 
-        verticalVelocityCeiling = rigidbody2D.velocity.y;
+        attackHitbox.SetActive(true);
+        jumpBufferTimer = 0;
+        Player.Instance.ShouldIncrementJoustTimer(true);
+        //rigidbody.velocity = Vector3.zero;
+
+        verticalVelocityCeiling = rigidbody.velocity.y;
     }
 
     public override void CaptureInput()
@@ -61,35 +72,39 @@ public class Joust : State<CharacterController>
     public override void Update()
     {
         jumpBufferTimer -= Time.deltaTime;
-        attackTimer -= Time.deltaTime;
 
         facingDirection = transform.localScale.x < 0 ? -1 : 1;
 
-        CharacterController.KeepConstantVelocity(rigidbody2D, ref verticalVelocityCeiling);
+        CharacterController.KeepConstantVelocity(rigidbody, ref verticalVelocityCeiling);
     }
 
     public override void FixedUpdate()
     {
-        CharacterController.MovePlayer(rigidbody2D, facingDirection, dashSpeed, acceleration, deceleration, velocityPower);
-        CharacterController.ApplyFriction(rigidbody2D, frictionAmount);
+        CharacterController.MovePlayer(rigidbody, facingDirection, dashSpeed, acceleration, deceleration, velocityPower);
+        CharacterController.ApplyFriction(rigidbody, frictionAmount);
     }
 
     public override void ChangeState()
     {
-        if (attackTimer > 0)
+        if (jumpBufferTimer > 0 && Player.Instance.LastGroundedTime <= coyoteTimeLength && CharacterController.CanJump())
+            runner.SetState(typeof(JoustJump));
+
+        if (Player.Instance.JoustTimer <= joustLength)
             return;
              
         runner.SetState(typeof(Walk));
+        WalkCleanup();
+    }
+
+    void WalkCleanup()
+    {
+        attackHitbox.SetActive(false);
+        Player.Instance.ResetJoustTimer();
+        Player.Instance.ShouldIncrementJoustTimer(false);
     }
 
     public override void Exit()
     {
-        attackHitbox.SetActive(false);
-    }
-
-    void CheckDebug(string text)
-    {
-        if (showDebug)
-            Debug.Log(text);
+        
     }
 }

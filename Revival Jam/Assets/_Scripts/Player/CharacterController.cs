@@ -64,7 +64,7 @@ public class CharacterController : StateRunner<CharacterController>
 
         bool canJump = (isFocusedOnArcade && isJumpConnected);
 
-        Debug.Log($"CanJump : {canJump}");
+        //Debug.Log($"CanJump : {canJump}");
 
         return canJump;
     }

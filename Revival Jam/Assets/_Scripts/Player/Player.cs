@@ -23,6 +23,9 @@ public class Player : Singleton<Player>
 
     public bool IsGrounded { get; private set; }
 
+    public float JoustTimer { get; private set; }
+    bool incrementJoust = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +37,7 @@ public class Player : Singleton<Player>
     private void Update()
     {
         UpdateGrounededTimer();
+        UpdateJoustTimer();
     }
 
     void UpdateGrounededTimer()
@@ -79,5 +83,23 @@ public class Player : Singleton<Player>
     RaycastHit2D GroundRaycast(GameObject rayCastStart)
     {
         return Physics2D.Raycast(rayCastStart.transform.position, Vector3.down, groundRaycastLength, groundLayer);
+    }
+
+    public void ShouldIncrementJoustTimer(bool increment)
+    {
+        incrementJoust = increment;
+    }
+
+    public void ResetJoustTimer()
+    {
+        JoustTimer = 0;
+    }
+
+    void UpdateJoustTimer()
+    {
+        if (incrementJoust)
+            JoustTimer += Time.deltaTime;
+        //else
+            //set 0 (?)
     }
 }

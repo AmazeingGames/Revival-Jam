@@ -20,4 +20,7 @@ MonoBehaviour:
   lockVerticalVelocity: 0
   joustLength: 1
   jumpBufferLength: 0.1
+  jumpForce: 7
+  coyoteTimeLength: 0.06
+  jumpCutAmount: 0.65
   showDebug: 0

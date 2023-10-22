@@ -102,7 +102,7 @@ public class Walk : State<CharacterController>
     bool CanWalkDirection(bool isRight)
     {
         Controls walkDirection = isRight ? Controls.WalkRight : Controls.WalkLeft;
-        string directionText = $"{walkDirection}".Substring(4);
+        string directionText = $"{walkDirection}"[4..];
 
         bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
 
@@ -178,7 +178,7 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        if (jumpTimer > 0 && Player.Instance.LastGroundedTime < coyoteTimeLength && CharacterController.CanJump())
+        if (jumpTimer > 0 && Player.Instance.LastGroundedTime <= coyoteTimeLength && CharacterController.CanJump())
         {
             jumpTimer = 0;
 
