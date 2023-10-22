@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AudioManager;
+using static AudioManager.EventSounds;
 
 public abstract class Damageable : MonoBehaviour
 {
     [SerializeField] int health;
     [SerializeField] bool shouldDebug;
+
+    [Header("Sound FX")]
+    [SerializeField] EventSounds takeDamageSound;
 
     readonly Dictionary<GameObject, Coroutine> DamageCoroutine = new();
 
@@ -46,6 +51,7 @@ public abstract class Damageable : MonoBehaviour
     {
         while (true)
         {
+            AudioManager.Instance.TriggerAudioClip(takeDamageSound, transform);
             TakeDamage(damageAmount);
 
             yield return new WaitForSeconds(timeBetweenDamage);

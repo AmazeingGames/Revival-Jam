@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static ReceptacleObject;
 using static Wire;
+using static AudioManager;
+using static AudioManager.EventSounds;
 
 //Could put this in a field separate completely from the player, that the player is able to reference for their controls.
 //That way information could be consistent with the game, regardless of if the arcade game is running or not
@@ -21,7 +23,7 @@ public class Player : Singleton<Player>
     public CircleCollider2D Collider { get; private set; }
 
     public bool IsGrounded { get; private set; }
-    public string LastGroundLayer { get; private set; }
+    public string LastGroundLayer { get; private set; } = "";
 
     // Start is called before the first frame update
     void Start()
@@ -70,9 +72,19 @@ public class Player : Singleton<Player>
             
             string layerName = LayerMask.LayerToName(layerNumber);
 
-            LastGroundLayer = layerName ;//LayerMask.NameToLayer(layerName);
+            LastGroundLayer = layerName;//LayerMask.NameToLayer(layerName);
         }
 
         return racyastHit;
+    }
+
+    public EventSounds GetWalkSound()
+    {
+        return LastGroundLayer switch
+        {
+            "Arcade Stone" => PlayerStoneFootsteps,
+            "Arcade Grass" => PlayerGrassFootsteps,
+            _              => EventSounds.Null,
+        };
     }
 }

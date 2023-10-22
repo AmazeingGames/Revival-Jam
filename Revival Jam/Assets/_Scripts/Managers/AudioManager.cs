@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
- class AudioManager : Singleton<AudioManager>
+public class AudioManager : Singleton<AudioManager>
 {
     [field: Header("Arcade Game Ambience")]
     [SerializeField] EventReference castleAmbience;

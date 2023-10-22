@@ -8,8 +8,21 @@ using static FocusStation;
 
 public class FPSInput : StaticInstance<FPSInput> 
 {
-    public float speed = 8f;
-    public float gravity = -9f;
+    [Header("Walk")]
+    [SerializeField] float speed = 8f;
+    [SerializeField] float gravity = -9f;
+
+    [Header("Sound FX")]
+    [SerializeField] float timeBetweenWalkSounds;
+
+    float walkSoundTimer;
+    float horizontalInput;
+    float verticalInput;
+
+    Vector3 movement;
+
+    float deltaX;
+    float deltaZ;
 
     private UnityEngine.CharacterController charController;
 
@@ -35,16 +48,53 @@ public class FPSInput : StaticInstance<FPSInput>
     void Update()
     {
         MovePlayer();  
+        CheckWalkSound();
+
+        UpdateTimers();
+        GetInput();
+    }
+
+    void GetInput()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+    }
+
+    void UpdateTimers()
+    {
+        walkSoundTimer -= Time.deltaTime;
+    }
+
+    void CheckWalkSound()
+    {
+        if (Mathf.Abs(horizontalInput) < .1f && Mathf.Abs(verticalInput) < .1f)
+            return;
+
+        if (Mathf.Abs(deltaX) < .1f && Mathf.Abs(deltaZ) < .1f)
+            return;
+
+        if (walkSoundTimer > 0)
+            return;
+
+        //CheckDebug(Mathf.Abs(rigidbody.velocity.x));
+
+        PlayWalkSound();
+    }
+
+    void PlayWalkSound()
+    {
+        walkSoundTimer = timeBetweenWalkSounds;
+        AudioManager.Instance.TriggerAudioClip(AudioManager.EventSounds.Player3DFootsteps, transform);
     }
 
     void MovePlayer()
     {
         int walk = CanWalk ? 1 : 0;
 
-        float deltaX = Input.GetAxis("Horizontal") * speed * walk;
-        float deltaZ = Input.GetAxis("Vertical") * speed * walk;
+        deltaX = horizontalInput * speed * walk;
+        deltaZ = verticalInput * speed * walk;
 
-        Vector3 movement = new(deltaX, 0, deltaZ);
+        movement = new(deltaX, 0, deltaZ);
         movement = Vector3.ClampMagnitude(movement, speed);
 
         movement.y = gravity;

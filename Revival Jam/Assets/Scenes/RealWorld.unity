@@ -539,6 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   gravity: -9
+  timeBetweenWalkSounds: 0.5
 --- !u!54 &685435894
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1022,6 +1023,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 124115714}
     m_Modifications:
+    - target: {fileID: -5987877386983386491, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: stationEnterSound
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: -4570419380065789388, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Height
       value: 8.13

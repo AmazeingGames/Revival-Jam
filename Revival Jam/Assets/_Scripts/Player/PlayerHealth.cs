@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerHealth : Damageable
 {
+    [Header("Health")]
     [SerializeField] float invulnerabilityLength = .1f;
-    float invulnerabilityTimer;
+    float invulnerabilityTimer = -1;
 
     private void Update()
     {
@@ -19,6 +20,8 @@ public class PlayerHealth : Damageable
 
     protected override void Die()
     {
+        if (ArcadeGameManager.Instance == null)
+            return;
         ArcadeGameManager.Instance.UpdateArcadeState(ArcadeGameManager.ArcadeState.Lose);
     }
 
