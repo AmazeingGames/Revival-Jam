@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Animations;
 using UnityEngine;
 
 //Create a base class that this and Colored Animator both derive from

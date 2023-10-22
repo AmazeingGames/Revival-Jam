@@ -8,6 +8,6 @@ public class OffDisplay : MonoBehaviour
 
     private void Update()
     {
-        model.enabled = !MachineAbilities.Instance.IsMachineOn;
+        model.enabled = MachineAbilities.Instance != null && !MachineAbilities.Instance.IsMachineOn;
     }
 }

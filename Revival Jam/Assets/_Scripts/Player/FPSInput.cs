@@ -83,6 +83,9 @@ public class FPSInput : StaticInstance<FPSInput>
 
     void PlayWalkSound()
     {
+        if (AudioManager.Instance == null)
+            return;
+
         walkSoundTimer = timeBetweenWalkSounds;
         AudioManager.Instance.TriggerAudioClip(AudioManager.EventSounds.Player3DFootsteps, transform);
     }
