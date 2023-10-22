@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: WireLine
+    uniqueID: 1511059133
+    locked: 0
+  - name: Wire
+    uniqueID: 1414567331
+    locked: 0
