@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
 
     float flipTimer;
     float movementPauseTimer;
+    bool isFlipRunning = false;
 
     private void Start()
     {
@@ -33,13 +34,14 @@ public class Enemy : MonoBehaviour
     #if DEBUG
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Flip();
+            StartCoroutine(Flip(true));
         }
     #endif
 
-        if ((groundDetector._ShouldFlip || wallDetector._ShouldFlip) && flipTimer < 0)
+        if (flipTimer < 0 && !isFlipRunning)
         {
-            Flip();
+            if (wallDetector._ShouldFlip || groundDetector._ShouldFlip)
+                StartCoroutine(Flip(!groundDetector._ShouldFlip));
         }
 
         MoveEnemy();
@@ -47,8 +49,20 @@ public class Enemy : MonoBehaviour
         UpdateTimers();
     }
 
-    void Flip()
+    IEnumerator Flip(bool flipImmediate)
     {
+        isFlipRunning = true;
+
+
+        float wait = flipImmediate ? 0 : movementPauseTimer;
+
+        flipTimer = flipTimerLength;
+        movementPauseTimer = flipMovementPauseLength;
+
+        Debug.Log($"flip immediate : {flipImmediate} | wait : {wait}");
+
+        yield return new WaitForSeconds(Mathf.Abs(wait));
+
         Vector3 newScale = transform.localScale;
 
         newScale.x *= -1;
@@ -57,10 +71,9 @@ public class Enemy : MonoBehaviour
 
         rigidbody.velocity = Vector3.zero;
 
-        flipTimer = flipTimerLength;
-        movementPauseTimer = flipMovementPauseLength;
-
         CheckDebug("Flipped");
+
+        isFlipRunning = false;
     }
 
     void UpdateTimers()
