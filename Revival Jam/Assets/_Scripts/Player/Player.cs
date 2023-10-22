@@ -21,6 +21,7 @@ public class Player : Singleton<Player>
     public CircleCollider2D Collider { get; private set; }
 
     public bool IsGrounded { get; private set; }
+    public string LastGroundLayer { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +62,17 @@ public class Player : Singleton<Player>
 
     RaycastHit2D GroundRaycast(GameObject rayCastStart)
     {
-        return Physics2D.Raycast(rayCastStart.transform.position, Vector3.down, groundRaycastLength, groundLayer);
+        RaycastHit2D racyastHit = Physics2D.Raycast(rayCastStart.transform.position, Vector3.down, groundRaycastLength, groundLayer);
+
+        if (racyastHit)
+        {
+            int layerNumber = racyastHit.transform.gameObject.layer;
+            
+            string layerName = LayerMask.LayerToName(layerNumber);
+
+            LastGroundLayer = layerName ;//LayerMask.NameToLayer(layerName);
+        }
+
+        return racyastHit;
     }
 }

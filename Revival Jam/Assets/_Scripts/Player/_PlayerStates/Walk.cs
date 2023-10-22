@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Animations;
 using static ControlsManager;
 using static PlayerFocus;
+using static AudioManager;
+using static AudioManager.EventSounds;
 
 [CreateAssetMenu(menuName = "States/Player/Walk")]
 public class Walk : State<CharacterController>
@@ -189,7 +191,7 @@ public class Walk : State<CharacterController>
 
     void WalkSound()
     {
-
+        //AudioManager.Instance.TriggerAudioClip(EventSounds.Pl)
     }
 
     public override void ChangeState()
