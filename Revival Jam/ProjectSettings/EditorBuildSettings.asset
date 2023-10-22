@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/_MainGame.unity
     guid: 022751760391f094f804dc146642f3b7
   - enabled: 1
-    path: Assets/Scenes/RealWorld.unity
+    path: Assets/Scenes/RealWorldNew.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Circuits.unity
     guid: a16c92d9f568cc64ba6d71e556e6090d
+  - enabled: 1
+    path: Assets/Scenes/RealWorld.unity
+    guid: 33e9dedb7e1e9c0478cfc9bac014e1d2
   - enabled: 1
     path: Assets/Scenes/Arcade Levels/_ArcadeGame.unity
     guid: bc0152b0906f89f47aa920b341b3791b
