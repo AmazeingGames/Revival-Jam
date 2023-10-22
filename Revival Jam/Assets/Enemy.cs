@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using static EnemyAnimator;
+using static EnemyAnimator.EnemyAnimation;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class Enemy : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float constantSpeed;
     [SerializeField] float flipMovementPauseLength;
+   
 
     [Header("Debug")]
     [SerializeField] bool showDebug;
@@ -23,15 +26,16 @@ public class Enemy : MonoBehaviour
     float movementPauseTimer;
     bool isFlipRunning = false;
 
+    EnemyAnimator enemyAnimator;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (flipTimer < 0 && !isFlipRunning)
         {
             if (wallDetector._ShouldFlip || groundDetector._ShouldFlip)
@@ -52,7 +56,7 @@ public class Enemy : MonoBehaviour
         flipTimer = flipTimerLength;
         movementPauseTimer = flipMovementPauseLength;
 
-        Debug.Log($"flip immediate : {flipImmediate} | wait : {wait}");
+        //Debug.Log($"flip immediate : {flipImmediate} | wait : {wait}");
 
         yield return new WaitForSeconds(Mathf.Abs(wait));
 
@@ -85,11 +89,12 @@ public class Enemy : MonoBehaviour
     {
         if (movementPauseTimer > 0)
         {
-
+            enemyAnimator.PlayAnimation(Idle);
             rigidbody.velocity = Vector3.zero;
             return;
         }
 
+        enemyAnimator.PlayAnimation(EnemyAnimation.Walk);
         rigidbody.velocity = new Vector3(constantSpeed * (transform.localScale.x / Mathf.Abs(transform.localScale.x)), rigidbody.velocity.y);
     }
 

@@ -291,6 +291,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1990764290}
     m_Modifications:
+    - target: {fileID: 707571209, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
+      propertyPath: terrainLayer.m_Bits
+      value: 6272
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199318114, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
+      propertyPath: terrainLayer.m_Bits
+      value: 6272
+      objectReference: {fileID: 0}
     - target: {fileID: 1766251042, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
       propertyPath: constantSpeed
       value: 2
@@ -301,7 +309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1632786459681171729, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1632786459681171729, guid: 630dd49fc74d1ae43965314b3ae53106, type: 3}
       propertyPath: m_LocalScale.x

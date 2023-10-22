@@ -23,4 +23,6 @@ MonoBehaviour:
   jumpForce: 7
   coyoteTimeLength: 0.06
   jumpCutAmount: 0.65
+  timeBetweenJoustSFX: 0.25
+  timeBetweenWalkSFX: 0.1
   showDebug: 0

@@ -15,12 +15,11 @@ public class EnemyAnimator : MonoBehaviour
     public enum EnemyAnimation { Walk, Die, Idle }
     public Dictionary<EnemyAnimation, int> AnimationTypeToHash;
 
-    Animator animator;
+    [Header("Animation")]
+    [SerializeField] Animator animator;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-
         AnimationTypeToHash = new()
         {
             { EnemyAnimation.Walk,  walk },
@@ -38,9 +37,6 @@ public class EnemyAnimator : MonoBehaviour
 
     protected void PlayAnimation(int animationToPlay)
     {
-        if (animator == null)
-            animator = GetComponent<Animator>();
-
         animator.CrossFade(animationToPlay, 0, 0);
     }
 }

@@ -23,8 +23,14 @@ public class Joust : State<CharacterController>
     [SerializeField] float coyoteTimeLength;
     [SerializeField] float jumpCutAmount;
 
+    [Header("Sound FX")]
+    [SerializeField] float timeBetweenJoustSFX;
+    [SerializeField] float timeBetweenWalkSFX;
+
     [Header("Debug")]
     [SerializeField] bool showDebug;
+
+    float walkSFXTimer;
 
     float jumpBufferTimer;
     float facingDirection;
@@ -34,6 +40,8 @@ public class Joust : State<CharacterController>
     Transform transform;
     GameObject attackHitbox;
     PlayerAnimator playerAnimator;
+    PlayerSFX playerSFX;
+    Player player;
 
     bool first = true;
 
@@ -51,6 +59,10 @@ public class Joust : State<CharacterController>
             transform = parent.transform;
         if (playerAnimator == null)
             playerAnimator = parent.GetComponentInChildren<PlayerAnimator>();
+        if (playerSFX == null)
+            playerSFX = parent.GetComponent<PlayerSFX>();
+        if (player == null)
+            player = parent.GetComponent<Player>();
 
         if (first)
         {
@@ -58,6 +70,7 @@ public class Joust : State<CharacterController>
             first = false;
         }
 
+        playerSFX.StartJoustSound(timeBetweenJoustSFX);
         attackHitbox.SetActive(true);
         jumpBufferTimer = 0;
         Player.Instance.ShouldIncrementJoustTimer(true);
@@ -80,7 +93,29 @@ public class Joust : State<CharacterController>
         facingDirection = transform.localScale.x < 0 ? -1 : 1;
 
         CharacterController.KeepConstantVelocity(rigidbody, ref verticalVelocityCeiling);
+
+        walkSFXTimer -= Time.deltaTime;
+
+        CheckWalkSound();
     }
+
+    void CheckWalkSound()
+    {
+        if (!player.IsGrounded)
+            return;
+
+        if (walkSFXTimer > 0)
+            return;
+
+        WalkSound();
+    }
+
+    void WalkSound()
+    {
+        walkSFXTimer = timeBetweenWalkSFX;
+        AudioManager.Instance.TriggerAudioClip(Player.Instance.GetWalkSound(), transform);
+    }
+
 
     public override void FixedUpdate()
     {
@@ -95,9 +130,9 @@ public class Joust : State<CharacterController>
 
         if (Player.Instance.JoustTimer <= joustLength)
             return;
-             
-        runner.SetState(typeof(Walk));
+
         WalkCleanup();
+        runner.SetState(typeof(Walk));
     }
 
     void WalkCleanup()
@@ -105,6 +140,8 @@ public class Joust : State<CharacterController>
         attackHitbox.SetActive(false);
 
         playerAnimator.ShouldPlayJoust(false);
+        playerSFX.StopJoustSound();
+        walkSFXTimer = timeBetweenWalkSFX;
 
         Player.Instance.ResetJoustTimer();
         Player.Instance.ShouldIncrementJoustTimer(false);
