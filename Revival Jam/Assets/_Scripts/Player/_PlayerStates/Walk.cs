@@ -185,7 +185,7 @@ public class Walk : State<CharacterController>
             runner.SetState(typeof(Jump));
         }
 
-        if (Input.GetButtonDown("Attack") && player.IsGrounded)
+        if (Input.GetButtonDown("Attack") && player.IsGrounded && CharacterController.CanJoust())
         {
             runner.SetState(typeof(Joust));
         }

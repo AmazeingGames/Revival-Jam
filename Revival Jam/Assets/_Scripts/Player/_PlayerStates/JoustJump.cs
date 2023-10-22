@@ -15,8 +15,6 @@ public class JoustJump : Jump
     public override void ChangeState()
     {
         if (switchTimer <= 0)
-        {
             runner.SetState(typeof(Joust));
-        }
     }
 }

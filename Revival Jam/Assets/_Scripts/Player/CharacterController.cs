@@ -57,15 +57,17 @@ public class CharacterController : StateRunner<CharacterController>
             verticalVelocityCeiling = 0;
     }
 
-    public static bool CanJump()
+    public static bool CanJump() => CanUseControl(Controls.Jump);
+
+    public static bool CanJoust() => CanUseControl(Controls.Joust);
+
+    static bool CanUseControl(Controls control)
     {
         bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
-        bool isJumpConnected = IsControlConnected(Controls.Jump);
+        bool isControlConnected = IsControlConnected(control);
 
-        bool canJump = (isFocusedOnArcade && isJumpConnected);
+        bool canUse = (isFocusedOnArcade && isControlConnected);
 
-        //Debug.Log($"CanJump : {canJump}");
-
-        return canJump;
+        return canUse;
     }
 }

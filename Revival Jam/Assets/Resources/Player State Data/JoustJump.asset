@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5232d579dd2bfe44b85392ee02b58df8, type: 3}
   m_Name: JoustJump
   m_EditorClassIdentifier: 
-  jumpHeight: 7
+  jumpHeight: 3.5
   jumpEndLength: 0.1
   jumpCutAmount: 0.7
