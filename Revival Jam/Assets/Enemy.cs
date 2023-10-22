@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using static EnemyAnimator;
+using static EnemyAnimator.EnemyAnimation;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class Enemy : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float constantSpeed;
     [SerializeField] float flipMovementPauseLength;
+   
 
     [Header("Debug")]
     [SerializeField] bool showDebug;
@@ -21,25 +24,22 @@ public class Enemy : MonoBehaviour
 
     float flipTimer;
     float movementPauseTimer;
+    bool isFlipRunning = false;
 
+    EnemyAnimator enemyAnimator;
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-    #if DEBUG
-        if (Input.GetKeyDown(KeyCode.F))
+        if (flipTimer < 0 && !isFlipRunning)
         {
-            Flip();
-        }
-    #endif
-
-        if ((groundDetector._ShouldFlip || wallDetector._ShouldFlip) && flipTimer < 0)
-        {
-            Flip();
+            if (wallDetector._ShouldFlip || groundDetector._ShouldFlip)
+                StartCoroutine(Flip(!groundDetector._ShouldFlip));
         }
 
         MoveEnemy();
@@ -47,8 +47,19 @@ public class Enemy : MonoBehaviour
         UpdateTimers();
     }
 
-    void Flip()
+    IEnumerator Flip(bool flipImmediate)
     {
+        isFlipRunning = true;
+
+        float wait = flipImmediate ? 0 : movementPauseTimer;
+
+        flipTimer = flipTimerLength;
+        movementPauseTimer = flipMovementPauseLength;
+
+        //Debug.Log($"flip immediate : {flipImmediate} | wait : {wait}");
+
+        yield return new WaitForSeconds(Mathf.Abs(wait));
+
         Vector3 newScale = transform.localScale;
 
         newScale.x *= -1;
@@ -57,10 +68,9 @@ public class Enemy : MonoBehaviour
 
         rigidbody.velocity = Vector3.zero;
 
-        flipTimer = flipTimerLength;
-        movementPauseTimer = flipMovementPauseLength;
-
         CheckDebug("Flipped");
+
+        isFlipRunning = false;
     }
 
     void UpdateTimers()
@@ -79,10 +89,12 @@ public class Enemy : MonoBehaviour
     {
         if (movementPauseTimer > 0)
         {
+            enemyAnimator.PlayAnimation(Idle);
             rigidbody.velocity = Vector3.zero;
             return;
         }
 
+        enemyAnimator.PlayAnimation(EnemyAnimation.Walk);
         rigidbody.velocity = new Vector3(constantSpeed * (transform.localScale.x / Mathf.Abs(transform.localScale.x)), rigidbody.velocity.y);
     }
 

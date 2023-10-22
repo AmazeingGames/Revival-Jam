@@ -123,6 +123,148 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &57155830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57155831}
+  - component: {fileID: 57155832}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &57155831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57155830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 391721815}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &57155832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57155830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877795de9c169cc428d4f0de27274bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castleAmbience:
+    Guid:
+      Data1: -1962390025
+      Data2: 1268748878
+      Data3: 819367058
+      Data4: 1510063668
+    Path: event:/Amb/Amb_Castle
+  castleGlitchAmbience:
+    Guid:
+      Data1: 1143012046
+      Data2: 1075363930
+      Data3: 1294306176
+      Data4: -300508654
+    Path: event:/Amb/Amb_Castle_Glitch
+  forestAmbience:
+    Guid:
+      Data1: -518376280
+      Data2: 1267435301
+      Data3: -1955760709
+      Data4: -1833489258
+    Path: event:/Amb/Amb_Forest
+  forestGlitchAmbience:
+    Guid:
+      Data1: -970859097
+      Data2: 1211753154
+      Data3: -13866850
+      Data4: -45242747
+    Path: event:/Amb/Amb_Forest_Glitch
+  playerJoust:
+    Guid:
+      Data1: 1844079503
+      Data2: 1328298913
+      Data3: -1064413015
+      Data4: 1505602411
+    Path: event:/Player/Knight_Attack
+  playerDamage:
+    Guid:
+      Data1: 677844244
+      Data2: 1271776339
+      Data3: 1016229791
+      Data4: -1261953178
+    Path: event:/Player/Knight_Damage
+  playerGrassFootsteps:
+    Guid:
+      Data1: -1184206891
+      Data2: 1127201577
+      Data3: -1918228823
+      Data4: -470494814
+    Path: event:/Player/Knight_FS_Grass
+  playerStoneFootsteps:
+    Guid:
+      Data1: 53141662
+      Data2: 1129719275
+      Data3: -936183410
+      Data4: 473726998
+    Path: event:/Player/Knight_FS_Stone
+  circuitCablePlug:
+    Guid:
+      Data1: 1477670588
+      Data2: 1330030452
+      Data3: -1026875217
+      Data4: -1539935979
+    Path: event:/Arcade_Cabinet/Arcade_Cable_Plug
+  circuitCableUnplug:
+    Guid:
+      Data1: -164316232
+      Data2: 1102708397
+      Data3: -526775114
+      Data4: 1356164690
+    Path: event:/Arcade_Cabinet/Arcade_Cable_Unplug
+  arcadeOn:
+    Guid:
+      Data1: 385990583
+      Data2: 1300825346
+      Data3: -1315932739
+      Data4: -2100672109
+    Path: event:/Arcade_Cabinet/Arcade_On
+  arcadeOff:
+    Guid:
+      Data1: -1116542458
+      Data2: 1230191815
+      Data3: 1705357452
+      Data4: 2087289514
+    Path: event:/Arcade_Cabinet/Arcade_Off
+  circuitPanelOpen:
+    Guid:
+      Data1: 860523533
+      Data2: 1309415511
+      Data3: -639264101
+      Data4: 1800864614
+    Path: event:/Arcade_Cabinet/Panel_Open
+  player3DFootsteps:
+    Guid:
+      Data1: 1422787389
+      Data2: 1237129234
+      Data3: -1967562111
+      Data4: 2074404572
+    Path: event:/Player/Player_FS
 --- !u!1 &318588440
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +467,7 @@ Transform:
   - {fileID: 467958459}
   - {fileID: 448598101}
   - {fileID: 951545372}
+  - {fileID: 57155831}
   m_Father: {fileID: 773147445}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -877,8 +1020,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1509175154}
   - component: {fileID: 1509175156}
-  - component: {fileID: 1509175155}
   - component: {fileID: 1509175157}
+  - component: {fileID: 1509175158}
   m_Layer: 0
   m_Name: CanvasCamera
   m_TagString: Untagged
@@ -901,14 +1044,6 @@ Transform:
   m_Father: {fileID: 318588441}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1509175155
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509175153}
-  m_Enabled: 1
 --- !u!20 &1509175156
 Camera:
   m_ObjectHideFlags: 0
@@ -964,6 +1099,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee57c0b9669ded14fb3b011065835adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1509175158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509175153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &1657216738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,6 +1292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glitchWorldTimerLength: 10
+  pauseTimerOnMachineOff: 0
 --- !u!1 &1971273321
 GameObject:
   m_ObjectHideFlags: 0

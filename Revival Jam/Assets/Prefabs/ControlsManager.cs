@@ -70,7 +70,7 @@ public class ControlsManager : Singleton<ControlsManager>
         
         bool isControlConnected = (Instance == null || Instance.ConnectedControls.Contains(controlToCheck));
 
-        Debug.Log($"IsControlConnected {isControlConnected}");
+        //Debug.Log($"IsControlConnected {isControlConnected}");
 
         return isControlConnected;
     }

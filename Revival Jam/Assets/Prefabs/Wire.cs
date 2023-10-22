@@ -11,6 +11,7 @@ using System;
 using static ReceptacleObject;
 using static ControlsManager;
 using static PlayerFocus;
+using static AudioManager.EventSounds;
 
 public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -34,6 +35,8 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
 
+        AudioManager.Instance.TriggerAudioClip(CircuitCableUnplug, transform);
+
         shouldFollowMouse = true;
 
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -43,6 +46,8 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
+
+        AudioManager.Instance.TriggerAudioClip(CircuitCablePlug, transform);
 
         shouldFollowMouse = false;
 

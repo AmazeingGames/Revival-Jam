@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static PlayerFocus;
+using static AudioManager;
 
 public class FocusStation : MonoBehaviour
 {
     [SerializeField] FocusedOn linkedStation;
     [SerializeField] Transform stationCamera;
+
+    [Header("Sound FX")]
+    [SerializeField] EventSounds stationEnterSound = EventSounds.Null;
        
     VirtualScreen linkedScreen;
 
@@ -78,6 +82,8 @@ public class FocusStation : MonoBehaviour
         if (isConnecting)
         {
             Debug.Log($"Player connecting to {linkedScreen} station");
+
+            AudioManager.Instance.TriggerAudioClip(stationEnterSound, transform);
         }
         else
         {

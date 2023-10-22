@@ -22,7 +22,7 @@ public class TerrainDetector : MonoBehaviour
     {
         _ShouldFlip = ShouldFlip();
 
-        CheckDebug($"({gameObject.name}) {DebugText()} : {_ShouldFlip}");
+        //CheckDebug($"({gameObject.name}) {DebugText()} : {_ShouldFlip}");
     }
 
     public bool ShouldFlip()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AudioManager;
 
 public abstract class DealDamage : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public abstract class DealDamage : MonoBehaviour
     [SerializeField] string targetTag;
 
     [SerializeField] bool shouldDebug;
+
+    [Header("Sound FX")]
+    [SerializeField] EventSounds dealDamageSound;
 
     protected virtual void InitiateDamage(GameObject _gameObject, bool startDamage)
     {

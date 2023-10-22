@@ -5,13 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "States/Player/Jump")]
 public class Jump : State<CharacterController>
 {
-    [SerializeField] float jumpHeight;
-    [SerializeField] float jumpEndLength = .2f;
-    [SerializeField] float jumpCutAmount;
+    [SerializeField] protected float jumpHeight;
+    [SerializeField] protected float jumpEndLength = .2f;
+    [SerializeField] protected float jumpCutAmount;
 
-    Rigidbody2D rigidBody;
-    PlayerAnimator playerAnimator;
-    float switchTimer;
+    protected Rigidbody2D rigidBody;
+    protected PlayerAnimator playerAnimator;
+    protected float switchTimer;
 
     public override void Enter(CharacterController parent)
     {
@@ -20,7 +20,7 @@ public class Jump : State<CharacterController>
         if (rigidBody == null)
             rigidBody = parent.GetComponent<Rigidbody2D>();
         if (playerAnimator == null)
-            playerAnimator = parent.GetComponent<PlayerAnimator>();
+            playerAnimator = parent.GetComponentInChildren<PlayerAnimator>();
 
         switchTimer = jumpEndLength;
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpHeight);
