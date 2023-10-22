@@ -1144,6 +1144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glitchWorldTimerLength: 10
+  pauseTimerOnMachineOff: 0
 --- !u!1 &1971273321
 GameObject:
   m_ObjectHideFlags: 0

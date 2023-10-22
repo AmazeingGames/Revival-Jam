@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 651691400}
   - component: {fileID: 6146156786385647920}
   - component: {fileID: 6106551065621404301}
+  - component: {fileID: -8482444489371944344}
   m_Layer: 6
   m_Name: 2D Player
   m_TagString: Player
@@ -277,6 +278,27 @@ MonoBehaviour:
   timeBetweenDamage: 0.25
   targetTag: Enemy
   shouldDebug: 1
+--- !u!95 &-8482444489371944344
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581096017296015264}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 64f60668568441446ae8a3d8cfbf9aa9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8581096017436916583
 GameObject:
   m_ObjectHideFlags: 0

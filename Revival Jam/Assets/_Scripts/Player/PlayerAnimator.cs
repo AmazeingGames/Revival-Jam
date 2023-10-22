@@ -5,8 +5,7 @@ using UnityEngine;
 
 //Create a base class that this and Colored Animator both derive from
 public class PlayerAnimator : MonoBehaviour
-{    
-
+{
     [Header("Jump")]
     [SerializeField] float jumpAnimationLength;
 
@@ -17,13 +16,15 @@ public class PlayerAnimator : MonoBehaviour
 
     bool isJumpPlaying;
 
-    static readonly string runName  = "Run_Player";
+    static readonly string runName = "Run_Player";
     static readonly string jumpName = "Jump_Player";
     static readonly string idleName = "Idle_Player";
+    static readonly string joustName = "Joust_Player";
 
     static readonly int run = Animator.StringToHash(runName);
     static readonly int jump = Animator.StringToHash(jumpName);
     static readonly int idle = Animator.StringToHash(idleName);
+    static readonly int joust = Animator.StringToHash(joustName);
 
     void Start()
     {
@@ -59,6 +60,14 @@ public class PlayerAnimator : MonoBehaviour
             PlayAnimation(jump);
 
             StartCoroutine(StartJumpTimer());
+        }
+    }
+
+    public void ShouldPlayJoust(bool startedJoust)
+    {
+        if (startedJoust)
+        {
+            PlayAnimation(joust);
         }
     }
 
