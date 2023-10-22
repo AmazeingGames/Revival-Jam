@@ -1151,6 +1151,10 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 521163300682902857, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: WiringStation
@@ -1354,7 +1358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 421744695}
-  cursorOffset: {x: 0, y: 0, z: 0}
+  cursorOffset: {x: 30, y: -28, z: 0}
 --- !u!1 &1509977441
 GameObject:
   m_ObjectHideFlags: 0
