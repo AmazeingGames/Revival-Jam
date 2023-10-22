@@ -633,8 +633,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axes: 1
-  sensitvityVer: 9
-  sensitivityHor: 6
+  sensitvityVer: 4
+  sensitivityHor: 5.5
   minimumVert: -45
   maximumVert: 45
 --- !u!114 &685435893
@@ -1004,8 +1004,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axes: 2
-  sensitvityVer: 9
-  sensitivityHor: 9
+  sensitvityVer: 4
+  sensitivityHor: 5.5
   minimumVert: -45
   maximumVert: 45
 --- !u!114 &963194230
