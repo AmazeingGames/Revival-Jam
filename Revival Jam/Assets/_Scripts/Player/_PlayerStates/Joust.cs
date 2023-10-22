@@ -33,6 +33,7 @@ public class Joust : State<CharacterController>
     Rigidbody2D rigidbody;
     Transform transform;
     GameObject attackHitbox;
+    PlayerAnimator playerAnimator;
 
     bool first = true;
 
@@ -48,6 +49,8 @@ public class Joust : State<CharacterController>
             attackHitbox = parent.transform.Find("AttackHitbox").gameObject;
         if (transform == null)
             transform = parent.transform;
+        if (playerAnimator == null)
+            playerAnimator = parent.GetComponentInChildren<PlayerAnimator>();
 
         if (first)
         {
@@ -58,6 +61,7 @@ public class Joust : State<CharacterController>
         attackHitbox.SetActive(true);
         jumpBufferTimer = 0;
         Player.Instance.ShouldIncrementJoustTimer(true);
+        playerAnimator.ShouldPlayJoust(true);
         //rigidbody.velocity = Vector3.zero;
 
         verticalVelocityCeiling = rigidbody.velocity.y;
@@ -99,6 +103,9 @@ public class Joust : State<CharacterController>
     void WalkCleanup()
     {
         attackHitbox.SetActive(false);
+
+        playerAnimator.ShouldPlayJoust(false);
+
         Player.Instance.ResetJoustTimer();
         Player.Instance.ShouldIncrementJoustTimer(false);
     }

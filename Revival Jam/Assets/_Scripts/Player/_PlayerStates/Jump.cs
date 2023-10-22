@@ -20,7 +20,7 @@ public class Jump : State<CharacterController>
         if (rigidBody == null)
             rigidBody = parent.GetComponent<Rigidbody2D>();
         if (playerAnimator == null)
-            playerAnimator = parent.GetComponent<PlayerAnimator>();
+            playerAnimator = parent.GetComponentInChildren<PlayerAnimator>();
 
         switchTimer = jumpEndLength;
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpHeight);

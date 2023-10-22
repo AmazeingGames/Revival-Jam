@@ -54,7 +54,7 @@ public class Walk : State<CharacterController>
         if (rigidbody == null)
             rigidbody = parent.GetComponent<Rigidbody2D>();
         if (playerAnimator == null)
-            playerAnimator = parent.GetComponent<PlayerAnimator>();
+            playerAnimator = parent.GetComponentInChildren<PlayerAnimator>();
         if (transform == null)
             transform = parent.GetComponent<Transform>();
 
