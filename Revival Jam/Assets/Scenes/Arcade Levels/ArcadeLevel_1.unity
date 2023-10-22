@@ -2763,6 +2763,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 672787624}
     m_Modifications:
+    - target: {fileID: 651691400, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: states.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 651691400, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: states.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6c6c20919bf9154449f8c5fe624abd31, type: 2}
+    - target: {fileID: 651691400, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
+      propertyPath: states.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: fbd9a2075fe5a31449c1c52169821774, type: 2}
     - target: {fileID: 8581096017296015264, guid: 77abeba112cfc434b80c489c3173d2e9, type: 3}
       propertyPath: m_Name
       value: 2D Player
