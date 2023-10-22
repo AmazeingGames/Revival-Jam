@@ -31,12 +31,6 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    #if DEBUG
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            StartCoroutine(Flip(true));
-        }
-    #endif
 
         if (flipTimer < 0 && !isFlipRunning)
         {
@@ -52,7 +46,6 @@ public class Enemy : MonoBehaviour
     IEnumerator Flip(bool flipImmediate)
     {
         isFlipRunning = true;
-
 
         float wait = flipImmediate ? 0 : movementPauseTimer;
 
@@ -92,6 +85,7 @@ public class Enemy : MonoBehaviour
     {
         if (movementPauseTimer > 0)
         {
+
             rigidbody.velocity = Vector3.zero;
             return;
         }

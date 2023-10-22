@@ -22,4 +22,4 @@ MonoBehaviour:
   jumpBufferLength: 0.1
   jumpCutAmount: 0.5
   maxFallVelocity: 0
-  timeBetweenWalkSound: 0.2
+  timeBetweenWalkSound: 0.35

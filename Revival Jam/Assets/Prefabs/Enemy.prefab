@@ -50,7 +50,7 @@ MonoBehaviour:
   raycastLength: 0.1
   terrainLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 6272
 --- !u!1 &1199318112
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   raycastLength: 0.1
   terrainLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 6272
 --- !u!1 &2321462026945369032
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7408988812358637990}
   - component: {fileID: 3592109543959445673}
+  - component: {fileID: 1446778687166803016}
   m_Layer: 8
   m_Name: Enemy Visuals
   m_TagString: Untagged
@@ -186,6 +187,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1446778687166803016
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2321462026945369032}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 25e609193b4109b46a981f3924117237, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7501094393617744614
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +318,7 @@ MonoBehaviour:
   timeBetweenDamage: 0.6
   targetTag: Player
   shouldDebug: 1
+  dealDamageSound: 0
 --- !u!114 &4143247997922344993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,3 +333,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 4
   shouldDebug: 1
+  takeDamageSound: 0

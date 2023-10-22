@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6555785255197549061}
   - component: {fileID: 8234576584617398197}
   - component: {fileID: 5462391800003048986}
+  - component: {fileID: 9132195318620253513}
   m_Layer: 6
   m_Name: FlameWall
   m_TagString: Untagged
@@ -128,3 +129,25 @@ MonoBehaviour:
   timeBetweenDamage: 0.5
   targetTag: Player
   shouldDebug: 1
+  dealDamageSound: 0
+--- !u!95 &9132195318620253513
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434199548611612953}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0d75a0d5919f9dc4e871b351d5492871, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
