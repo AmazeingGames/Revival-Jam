@@ -37,7 +37,6 @@ public class Walk : State<CharacterController>
 
     float walkSoundTimer;
     float jumpTimer;
-    float groundedTimer;
 
     float horizontalInput;
 
@@ -83,13 +82,10 @@ public class Walk : State<CharacterController>
     public override void Update()
     {
         walkSoundTimer -= Time.deltaTime;
-        groundedTimer -= Time.deltaTime;
+
         jumpTimer -= Time.deltaTime;
 
-        if (player.IsGrounded)
-            groundedTimer = coyoteTimeLength;
-
-        KeepConstantVelocity();
+        CharacterController.KeepConstantVelocity(rigidbody, ref maxVerticalVelocity);
 
         CheckAnimations();
 
@@ -119,22 +115,12 @@ public class Walk : State<CharacterController>
         return canWalkDirection;
     }
 
-    bool CanJump()
-    {
-        bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
-        bool isJumpConnected = IsControlConnected(Controls.Jump);
-
-        bool canJump = (isFocusedOnArcade && isJumpConnected);
-
-        Debug.Log($"CanJump : {canJump}");
-
-        return canJump;
-    }
+    
 
     public override void FixedUpdate()
     {
         MovePlayer();
-        ApplyFriction();
+        CharacterController.ApplyFriction(rigidbody, frictionAmount);
     }
 
     void CheckAnimations()
@@ -192,10 +178,9 @@ public class Walk : State<CharacterController>
 
     public override void ChangeState()
     {
-        if (jumpTimer > 0 && groundedTimer > 0 && CanJump())
+        if (jumpTimer > 0 && Player.Instance.LastGroundedTime < coyoteTimeLength && CharacterController.CanJump())
         {
             jumpTimer = 0;
-            groundedTimer = 0;
 
             runner.SetState(typeof(Jump));
         }
@@ -209,20 +194,6 @@ public class Walk : State<CharacterController>
     public override void Exit()
     {
 
-    }
-
-    //Makes sure the player can't gain more vertical velocity than they already have.
-    //Prevents bouncing.
-    //Note: Performance is likely poor, optimize using Clamp
-    void KeepConstantVelocity()
-    {
-        if (rigidbody.velocity.y > maxVerticalVelocity)
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, maxVerticalVelocity);
-        else
-            maxVerticalVelocity = rigidbody.velocity.y;
-
-        if (maxVerticalVelocity < 0)
-            maxVerticalVelocity = 0;
     }
 
     void MovePlayer()
@@ -257,17 +228,6 @@ public class Walk : State<CharacterController>
         float walkModToUse = horizontalInput < 0 ? canWalkLeftMod : canWalkRightMod;
 
         CharacterController.MovePlayer(rigidbody, horizontalInput * walkModToUse, walkSpeed, acceleration, deceleration, velocityPower);
-    }
-
-    //Applies force opposite to the player
-    void ApplyFriction()
-    {
-        float amount = Mathf.Min(Mathf.Abs(rigidbody.velocity.x), Mathf.Abs(frictionAmount));
-
-        amount *= Mathf.Sign(rigidbody.velocity.x);
-
-        //Applies force against the player's movement direction
-        rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
     }
 
     void CheckDebug(string text)

@@ -18,6 +18,7 @@ public class Player : Singleton<Player>
     [SerializeField] LayerMask groundLayer;
     [SerializeField] bool showGroundCheckDebug;
 
+    public float LastGroundedTime { get; private set; }
     public CircleCollider2D Collider { get; private set; }
 
     public bool IsGrounded { get; private set; }
@@ -28,6 +29,22 @@ public class Player : Singleton<Player>
         Collider = GetComponent<CircleCollider2D>();
 
         StartCoroutine(GroundCheck());
+    }
+
+    private void Update()
+    {
+        UpdateGrounededTimer();
+    }
+
+    void UpdateGrounededTimer()
+    {
+        if (IsGrounded)
+        {
+            LastGroundedTime = 0;
+            return;
+        }
+
+        LastGroundedTime += Time.deltaTime;
     }
 
     IEnumerator GroundCheck()
