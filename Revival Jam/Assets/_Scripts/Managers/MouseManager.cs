@@ -57,10 +57,12 @@ public class MouseManager : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
-            animator.SetBool("IsPressed", true);
+            if (animator)
+                animator.SetBool("IsPressed", true);
 
         if (Input.GetMouseButtonUp(0))
-            animator.SetBool("IsPressed", false);
+            if (animator)
+                animator.SetBool("IsPressed", false);
 
     #if DEBUG
         if (Input.GetKeyDown(KeyCode.Escape))
