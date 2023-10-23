@@ -173,7 +173,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 31168
+    m_Bits: 63936
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 5821936833bf0db43a5039e28dc6b0ad, type: 2}
   m_TargetDisplay: 0
@@ -411,7 +411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 267530200}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -458,7 +458,7 @@ GameObject:
   - component: {fileID: 309068272}
   - component: {fileID: 309068274}
   - component: {fileID: 309068273}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2107,7 +2107,7 @@ GameObject:
   - component: {fileID: 518929395}
   - component: {fileID: 518929397}
   - component: {fileID: 518929396}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3193,7 +3193,7 @@ GameObject:
   - component: {fileID: 589016225}
   - component: {fileID: 589016227}
   - component: {fileID: 589016226}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3298,7 +3298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 645851216}
   - component: {fileID: 645851217}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: SecondmostBackground (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3595,7 +3595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 924544486}
   - component: {fileID: 924544487}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: SecondmostBackground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3679,7 +3679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 936604375}
   - component: {fileID: 936604376}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: SecondmostBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3861,7 +3861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1309471494}
   - component: {fileID: 1309471495}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: SecondmostBackground (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3946,7 +3946,7 @@ GameObject:
   - component: {fileID: 1334019313}
   - component: {fileID: 1334019315}
   - component: {fileID: 1334019314}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4606,7 +4606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1838590485
 Transform:
   m_ObjectHideFlags: 0
@@ -4661,7 +4661,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 31168
+    m_Bits: 63936
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 1
@@ -4717,7 +4717,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1881590417}
   - component: {fileID: 1881590418}
-  m_Layer: 14
+  m_Layer: 15
   m_Name: CastleNr2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
