@@ -7,11 +7,16 @@ using UnityEngine.SceneManagement;
 /// Nice, easy to understand enum-based game manager. For larger and more complex games, look into
 /// state machines. But this will serve just fine for most games.
 /// </summary>
-public class GameManager : StaticInstance<GameManager>
+public class GameManager : Singleton<GameManager>
 {
     public static event Action<GameState> BeforeStateChange;
     public static event Action<GameState> AfterStateChange;
 
+    private void Awake()
+    {
+        base.Awake();
+        ReadyUI();
+    }
     public GameState State { get; private set; }
 
     public void UpdateGameState(GameState newState)
@@ -24,6 +29,7 @@ public class GameManager : StaticInstance<GameManager>
         {
             case GameState.StartGame:
                 ReadyGameScenes();
+                UnreadyMenuScenes();
                 break;
 
             case GameState.Loading:
@@ -49,10 +55,20 @@ public class GameManager : StaticInstance<GameManager>
         StartCoroutine(LoadArcadeScene());
     }
 
+    void UnreadyMenuScenes()
+    {
+        SceneLoader.Instance.UnloadScene("RealWorld_BackgroundArea", true);
+    }
+
     IEnumerator LoadArcadeScene()
     {
         yield return new WaitForSeconds(.1f);
         SceneLoader.Instance.LoadScene("_ArcadeGame");
+    }
+
+    void ReadyUI()
+    {
+        SceneLoader.Instance.LoadScene("RealWorld_BackgroundArea");
     }
 
     [Serializable]

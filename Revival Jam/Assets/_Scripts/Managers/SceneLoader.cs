@@ -46,6 +46,8 @@ public class SceneLoader : Singleton<SceneLoader>
         if (isLevel)
             sceneToUnload = sceneName;
 
+        if (!GameManager.Instance)
+            Debug.Log("No Game Manager Instance");
         GameManager.Instance.UpdateGameState(GameState.Loading);
 
         Debug.Log($"Loading Scene: {sceneName}");
@@ -68,12 +70,12 @@ public class SceneLoader : Singleton<SceneLoader>
         return true;
     }
 
-    public bool UnloadScene(string sceneName)
+    public bool UnloadScene(string sceneName, bool bypass = false)
     {
         if (!DoesSceneExist(sceneName))
             return false;
 
-        if (sceneToUnload == null)
+        if (sceneToUnload == null && !bypass)
             return false;
 
         Debug.Log($"Unloaded scene : {sceneName}");
