@@ -36,7 +36,11 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.Win:
-                break;   
+                LoadNextLevel();
+                break;
+            case GameState.LevelStart:
+                OnLevelLoad(SceneLoader.Instance.LevelNumber + 1);
+                break;
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -71,11 +75,22 @@ public class GameManager : Singleton<GameManager>
         SceneLoader.Instance.LoadScene("RealWorld_BackgroundArea");
     }
 
+    void LoadNextLevel()
+    {
+        if (SceneLoader.DoesLevelExist(SceneLoader.Instance.LevelNumber + 1)) UpdateGameState(GameState.LevelStart);
+    }
+
+    void OnLevelLoad(int levelnumber)
+    {
+        SceneLoader.Instance.LoadLevel(levelnumber);
+    }
+
     [Serializable]
     public enum GameState
     {
         StartGame,
         Loading,
         Win,
+        LevelStart,
     }
 }
