@@ -95,7 +95,8 @@ public class DialogueManager : Singleton<DialogueManager>
             return;
         }
 
-        dialogueSpeech.text = string.Empty;
+        if (!currentMessages[activeMessage].continuePreviousMessage)
+            dialogueSpeech.text = string.Empty;
 
         StartCoroutine(DisplayMessageSlow());
     }
