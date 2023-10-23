@@ -21,7 +21,7 @@ TagManager:
   - Arcade Stone
   - Arcade Grass
   - Arcade Glitched
-  - 
+  - ArcadeBackground
   - 
   - 
   - 
@@ -48,4 +48,7 @@ TagManager:
     locked: 0
   - name: Wire
     uniqueID: 1414567331
+    locked: 0
+  - name: Background
+    uniqueID: 4082156907
     locked: 0

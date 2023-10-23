@@ -8,6 +8,7 @@ public class MouseManager : MonoBehaviour
 {
     [SerializeField] Transform cursor;
     [SerializeField] Vector3 cursorOffset;
+    [SerializeField] Animator animator;
 
     bool isMouseLocked = false;
     
@@ -26,7 +27,7 @@ public class MouseManager : MonoBehaviour
     {
         Cursor.visible = false;
 
-        LockMouse(true);   
+        LockMouse(false);   
     }
 
     void HandleConnectToStation(ConnectEventArgs connectEventArgs)
@@ -40,6 +41,7 @@ public class MouseManager : MonoBehaviour
         {
             case true:
                 Cursor.lockState = CursorLockMode.Locked;
+                
                 break;
             
             case false:
@@ -54,13 +56,19 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+            animator.SetBool("IsPressed", true);
+
+        if (Input.GetMouseButtonUp(0))
+            animator.SetBool("IsPressed", false);
+
     #if DEBUG
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isMouseLocked = !isMouseLocked;
         }
 
-        Cursor.visible = !isMouseLocked;
+        //Cursor.visible = !isMouseLocked;
         Cursor.lockState = isMouseLocked ? CursorLockMode.Locked : CursorLockMode.None;
 #endif
 

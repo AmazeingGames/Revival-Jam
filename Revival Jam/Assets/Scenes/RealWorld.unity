@@ -1359,6 +1359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursor: {fileID: 421744695}
   cursorOffset: {x: 30, y: -28, z: 0}
+  animator: {fileID: 0}
 --- !u!1 &1509977441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1824144648
 RectTransform:
   m_ObjectHideFlags: 0
