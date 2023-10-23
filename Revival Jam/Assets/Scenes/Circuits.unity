@@ -148,7 +148,7 @@ RectTransform:
   m_GameObject: {fileID: 51124019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 206956684}
@@ -171,7 +171,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: sensitivity
-      value: 2250
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: virtualScreen
@@ -267,11 +267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -357,7 +357,7 @@ MonoBehaviour:
     Base: {fileID: 0}
   _animateScale: 1
   _transform: {fileID: 79669876}
-  _animationTime: 0.2
+  _animationTime: 0.1
   _widthScale: 1.5
   _heightScale: 1.5
   _deltaCurve:
@@ -375,8 +375,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -394,7 +394,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: sensitivity
-      value: 2250
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: virtualScreen
@@ -486,11 +486,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -574,7 +574,7 @@ MonoBehaviour:
     Base: {fileID: 0}
   _animateScale: 1
   _transform: {fileID: 189266788}
-  _animationTime: 0.2
+  _animationTime: 0.1
   _widthScale: 1.5
   _heightScale: 1.5
   _deltaCurve:
@@ -592,8 +592,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -611,7 +611,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: sensitivity
-      value: 2250
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: virtualScreen
@@ -703,11 +703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9135039185744939719, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -792,7 +792,7 @@ MonoBehaviour:
     Base: {fileID: 0}
   _animateScale: 1
   _transform: {fileID: 206956684}
-  _animationTime: 0.2
+  _animationTime: 0.1
   _widthScale: 1.5
   _heightScale: 1.5
   _deltaCurve:
@@ -810,8 +810,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -929,11 +929,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169484, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 32.559425
+      value: 14.511885
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169484, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 12.858873
+      value: 2.5717747
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169485, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: wire
@@ -1244,11 +1244,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169484, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 19.47496
+      value: 11.894992
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169484, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: m_Positions.Array.data[1].y
-      value: 12.633278
+      value: 2.5266557
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169485, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: wire
@@ -1540,7 +1540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2372,7 +2372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169484, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: m_Positions.Array.data[1].x
-      value: 32.559425
+      value: 14.511885
       objectReference: {fileID: 0}
     - target: {fileID: 5989143653649169484, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
       propertyPath: m_Positions.Array.data[1].y
