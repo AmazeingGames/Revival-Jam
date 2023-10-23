@@ -70,6 +70,8 @@ public class SceneLoader : Singleton<SceneLoader>
         return true;
     }
 
+    public static bool DoesLevelExist(int levelnumber) => DoesSceneExist($"Arcade_{levelnumber}");
+
     public bool UnloadScene(string sceneName, bool bypass = false)
     {
         if (!DoesSceneExist(sceneName))
@@ -84,5 +86,8 @@ public class SceneLoader : Singleton<SceneLoader>
 
         return true;
     }
+
+   
+
 }
 

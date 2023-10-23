@@ -7,8 +7,7 @@ using static GameManager;
 public class MainMenu : Singleton<MainMenu>
 {
     [SerializeField] Canvas mainMenu;
-
-    public enum MenuState { MainMenu, LevelSelectMenu, GameStart }
+    public enum MenuState { MainMenu, LevelSelectMenu, GameStart, Pause }
 
     public MenuState CurrentState { get; private set; }
 
@@ -52,6 +51,9 @@ public class MainMenu : Singleton<MainMenu>
             case MenuState.GameStart:
                 MenuExit();
                 break;
+            case MenuState.Pause:
+                PauseGame();
+                break;
         }
     }
 
@@ -71,6 +73,11 @@ public class MainMenu : Singleton<MainMenu>
     {
         //levelSelect.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(false);
+    }
+
+    void PauseGame()
+    {
+        
     }
 
     void HandleGameStateChange(GameState gameState)

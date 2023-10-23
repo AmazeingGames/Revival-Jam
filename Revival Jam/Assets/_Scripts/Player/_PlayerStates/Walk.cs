@@ -112,7 +112,7 @@ public class Walk : State<CharacterController>
 
         bool canWalkDirection = (isFocusedOnArcade && isWalkDirectionConnected);
 
-        Debug.Log($"canWalk{directionText} : {canWalkDirection}");
+        //Debug.Log($"canWalk{directionText} : {canWalkDirection}");
 
         return canWalkDirection;
     }
@@ -176,6 +176,7 @@ public class Walk : State<CharacterController>
     void WalkSound()
     {
         walkSoundTimer = timeBetweenWalkSound;
+        if (!AudioManager.Instance) return;
         AudioManager.Instance.TriggerAudioClip(Player.Instance.GetWalkSound(), transform);
     }
 

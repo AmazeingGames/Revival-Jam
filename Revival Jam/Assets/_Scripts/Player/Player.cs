@@ -87,7 +87,7 @@ public class Player : Singleton<Player>
     {
         RaycastHit2D racyastHit = Physics2D.Raycast(rayCastStart.transform.position, Vector3.down, groundRaycastLength, groundLayer);
 
-        Debug.Log($"Raycast hit : {(bool)racyastHit}");
+        //Debug.Log($"Raycast hit : {(bool)racyastHit}");
         if (racyastHit)
         {
 

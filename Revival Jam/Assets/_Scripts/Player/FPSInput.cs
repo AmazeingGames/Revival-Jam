@@ -25,7 +25,7 @@ public class FPSInput : StaticInstance<FPSInput>
     float deltaZ;
 
     private UnityEngine.CharacterController charController;
-
+    [SerializeField] GameObject controlsPanel;
     public bool CanWalk { get; private set; } = true;
 
     private void OnEnable()
@@ -58,6 +58,22 @@ public class FPSInput : StaticInstance<FPSInput>
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!controlsPanel)
+            {
+                controlsPanel = GameObject.Find("Controls Panel");
+            }
+
+            if (!controlsPanel.activeSelf)
+                controlsPanel.SetActive(true);
+            else controlsPanel.SetActive(false);
+
+            //if (Time.timeScale != 0) Time.timeScale = 0;
+            //else if (Time.timeScale != 1) Time.timeScale = 1;
+        }
+
     }
 
     void UpdateTimers()
