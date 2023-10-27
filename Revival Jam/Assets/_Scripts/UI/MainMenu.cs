@@ -13,26 +13,17 @@ public class MainMenu : Singleton<MainMenu>
 
     void OnEnable()
     {
-        MainMenuBackButton.OnBack += HandleOnBack;
         AfterStateChange += HandleGameStateChange;
     }
 
     void OnDisable()
     {
-        MainMenuBackButton.OnBack -= HandleOnBack;
         AfterStateChange -= HandleGameStateChange;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        UpdateState(MenuState.MainMenu);
-    }
-
-    void HandleOnBack()
-    {
-        Debug.Log("Pressed back");
-
         UpdateState(MenuState.MainMenu);
     }
 
@@ -51,6 +42,7 @@ public class MainMenu : Singleton<MainMenu>
             case MenuState.GameStart:
                 MenuExit();
                 break;
+
             case MenuState.Pause:
                 PauseGame();
                 break;
@@ -60,18 +52,15 @@ public class MainMenu : Singleton<MainMenu>
     void OnMainMenuEnter()
     {
         mainMenu.gameObject.SetActive(true);
-        //levelSelect.gameObject.SetActive(false);
     }
 
     void OnLevelSelectMenuEnter()
     {
         mainMenu.gameObject.SetActive(false);
-        //levelSelect.gameObject.SetActive(true);
     }
 
     void MenuExit()
     {
-        //levelSelect.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(false);
     }
 
@@ -80,6 +69,7 @@ public class MainMenu : Singleton<MainMenu>
         
     }
 
+    //This and the play button kind of do the same thing.
     void HandleGameStateChange(GameState gameState)
     {
         if (gameState == GameState.StartGame)

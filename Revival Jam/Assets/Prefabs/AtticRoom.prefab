@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 515028581}
   - component: {fileID: 515028580}
   m_Layer: 0
-  m_Name: Ceiling (3)
+  m_Name: LeftWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6035,7 +6035,7 @@ GameObject:
   - component: {fileID: 1262158451}
   - component: {fileID: 1262158450}
   m_Layer: 0
-  m_Name: Ceiling (7)
+  m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6132,7 +6132,7 @@ GameObject:
   - component: {fileID: 1274780081}
   - component: {fileID: 1274780080}
   m_Layer: 0
-  m_Name: Ceiling (2)
+  m_Name: RightWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6229,7 +6229,7 @@ GameObject:
   - component: {fileID: 1290610570}
   - component: {fileID: 1290610569}
   m_Layer: 0
-  m_Name: Ceiling (4)
+  m_Name: FrontRightWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6411,7 +6411,7 @@ GameObject:
   - component: {fileID: 1456673486}
   - component: {fileID: 1456673485}
   m_Layer: 0
-  m_Name: Ceiling (6)
+  m_Name: FrontLeftWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6945,7 +6945,7 @@ GameObject:
   - component: {fileID: 1891284663}
   - component: {fileID: 1891284662}
   m_Layer: 0
-  m_Name: Ceiling (1)
+  m_Name: BackWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7139,7 +7139,7 @@ GameObject:
   - component: {fileID: 1946899078}
   - component: {fileID: 1946899077}
   m_Layer: 0
-  m_Name: Ceiling (8)
+  m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7418,7 +7418,7 @@ GameObject:
   - component: {fileID: 2024556835}
   - component: {fileID: 2024556834}
   m_Layer: 0
-  m_Name: Ceiling (5)
+  m_Name: FrontWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8273,7 +8273,7 @@ BoxCollider:
   m_GameObject: {fileID: 6084748988159134408}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -8883,7 +8883,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d0c9821d4a2ff114bab2bb4f550ffedf, type: 2}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (3)
+      value: AtticRoomRightWall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -8983,7 +8983,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (8)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -8997,8 +8997,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748986570213120}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1217952964
-BoxCollider:
+--- !u!64 &519715720
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9007,9 +9007,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748986870597582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9083,7 +9084,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (13)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -9097,8 +9098,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748986870597582}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &691324280
-BoxCollider:
+--- !u!64 &325260100
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9107,9 +9108,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748986874866493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9269,7 +9271,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (5)
+      value: CeilingBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -9283,8 +9285,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748986923079253}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1326734955
-BoxCollider:
+--- !u!64 &1152688657
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9293,9 +9295,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748987079884518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9369,7 +9372,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (7)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -9383,8 +9386,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748987079884518}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1135985818
-BoxCollider:
+--- !u!64 &1205550507
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9393,9 +9396,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748987260560321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9469,7 +9473,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (11)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -9483,8 +9487,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748987260560321}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1822222176
-BoxCollider:
+--- !u!64 &1531991324
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9493,9 +9497,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748987569296287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9569,7 +9574,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (14)
+      value: WallBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -9583,8 +9588,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748987569296287}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1499073636
-BoxCollider:
+--- !u!64 &966666634
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9592,10 +9597,11 @@ BoxCollider:
   m_GameObject: {fileID: 6390668511268662990}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748987802718364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9674,6 +9680,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1bcbbf7046671aa4d87ec0a63761c291, type: 3}
   m_PrefabInstance: {fileID: 6084748987802718364}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6390668510429392333 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1bcbbf7046671aa4d87ec0a63761c291, type: 3}
+  m_PrefabInstance: {fileID: 6084748987802718364}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1989307706
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6390668510429392333}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: 1bcbbf7046671aa4d87ec0a63761c291, type: 3}
 --- !u!1001 &6084748987920923500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9752,6 +9777,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1bcbbf7046671aa4d87ec0a63761c291, type: 3}
   m_PrefabInstance: {fileID: 6084748987920923500}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6390668510547969597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1bcbbf7046671aa4d87ec0a63761c291, type: 3}
+  m_PrefabInstance: {fileID: 6084748987920923500}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &724300376
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6390668510547969597}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: 1bcbbf7046671aa4d87ec0a63761c291, type: 3}
 --- !u!1001 &6084748987978902550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9825,7 +9869,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (10)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -9839,8 +9883,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748987978902550}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1842169326
-BoxCollider:
+--- !u!64 &323653118
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9849,9 +9893,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748988055221018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10021,7 +10066,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (9)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -10035,8 +10080,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748988065542498}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1658659416
-BoxCollider:
+--- !u!64 &406556233
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10045,9 +10090,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748988140005719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10121,7 +10167,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (6)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -10135,8 +10181,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748988140005719}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1146100521
-BoxCollider:
+--- !u!64 &3757542
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10145,9 +10191,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748988190741518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10221,7 +10268,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (15)
+      value: WallBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -10235,8 +10282,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748988190741518}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &740036419
-BoxCollider:
+--- !u!64 &421980890
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10244,10 +10291,11 @@ BoxCollider:
   m_GameObject: {fileID: 6390668509743671647}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748988365718334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10317,7 +10365,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d0c9821d4a2ff114bab2bb4f550ffedf, type: 2}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (2)
+      value: AtticRoomLeftWall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -10417,7 +10465,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (12)
+      value: SupportBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -10431,8 +10479,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748988508129457}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &788573684
-BoxCollider:
+--- !u!64 &1972271414
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10441,9 +10489,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6084748988576499956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10517,7 +10566,7 @@ PrefabInstance:
       objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
       propertyPath: m_Name
-      value: AtticRoomFloor (4)
+      value: CeilingBeam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
@@ -10531,8 +10580,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dec60cebf2c5e2e41a0694bf11bd5afa, type: 3}
   m_PrefabInstance: {fileID: 6084748988576499956}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1073911025
-BoxCollider:
+--- !u!64 &199077695
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10541,6 +10590,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.019999998, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
