@@ -79,6 +79,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         StartCoroutine(SetPositonManual());
     }
 
+    //Used on game start to have certain wires start connected to the machine
     IEnumerator SetPositonManual()
     {
         for (int i = 0; i < 2; i++)
@@ -111,21 +112,26 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (!shouldFollowMouse)
             return;
-
+        
+        //Gets the movement of the mouse
         float differenceX = Input.mousePosition.x - lastMousePoint.Value.x;
-
         float differenceY = Input.mousePosition.y - lastMousePoint.Value.y;
 
+        //Updates the wire position with the mouse movement
         float newXPosition = transform.position.x + (differenceX / 188) * Time.deltaTime * sensitivity;
         float newYPosition = transform.position.y + (differenceY / 188) * Time.deltaTime * sensitivity;
 
+        //Makes sure wires stay between the bounds
         newXPosition = Mathf.Clamp(newXPosition, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
         newYPosition = Mathf.Clamp(newYPosition, CircuitScreenBounds.Instance.NegativeBounds.y, CircuitScreenBounds.Instance.PositveBounds.y);
 
         transform.position = new Vector3(newXPosition, newYPosition, transform.position.z);
 
+        //Not sure what this does
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
+
+
 
     void OnTriggerEnter(Collider other)
     {

@@ -24,5 +24,7 @@ public class CircuitScreenBounds : Singleton<CircuitScreenBounds>
         NegativeBounds = BoundsToVector(NegativeXBound, NegativeYBound);
     }
 
+    //Converts the given Transform Bounds into a Vector2
+    //Used to clamp the max/min position of the wires
     Vector2 BoundsToVector(Transform xBound, Transform yBound) => new(xBound.position.x, yBound.position.y);
 }
