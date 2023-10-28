@@ -18,6 +18,7 @@ public class MouseLook : MonoBehaviour
     float verticalRot = 0;
 
     bool isLocked = false;
+    bool escape = false;
 
     void CalcVertRot()
     {
@@ -52,12 +53,14 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            escape = !escape;
         Look();
     }
 
     void Look()
     {
-        if (isLocked)
+        if (isLocked || escape)
             return;
 
         if (axes == RotationAxes.MouseX)
