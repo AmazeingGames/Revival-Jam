@@ -59,28 +59,16 @@ public class PlayerCamera3D : MonoBehaviour
     }
 
     //Sets the Camera's Position to the given transform
+    //This needs a delay to work properly, hence the coroutine
     IEnumerator SetPosition(Vector3 positionToSet, Quaternion rotationToSet, bool isConnecting)
     {
-        //For some reason if we set the position of the camera directly it breaks
-        //Don't ask why coroutines magically fix everything
-        for (int i = 0; i < 1;  i++)
-        {
-            yield return null;
+        yield return null;
 
-            playerCamera.transform.SetPositionAndRotation(positionToSet, rotationToSet);
-
-            Debug.Log($"Position is position to set : (x : {positionToSet.x == playerCamera.transform.position.x}, y : {positionToSet.y == playerCamera.transform.position.y}, z : {positionToSet.z == playerCamera.transform.position.z})");
-        }
+        playerCamera.transform.SetPositionAndRotation(positionToSet, rotationToSet);
 
         if (isConnecting)
             yield break;
 
-        //Makes sure the height of the camera stays the same when returning to the player's body
-        //playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, constantYPosition, playerCamera.transform.position.z);
-
         playerCamera.transform.position = cameraProxy.position;
-
-        //Debug.Log($"Is y camera position greater than max y position : {playerCamera.transform.position.y > constantYPosition}");
-
     }
 }
