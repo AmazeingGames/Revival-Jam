@@ -31,10 +31,11 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
+        if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
 
-        AudioManager.Instance.TriggerAudioClip(CircuitCableUnplug, transform);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.TriggerAudioClip(CircuitCableUnplug, transform);
 
         shouldFollowMouse = true;
 
@@ -43,10 +44,11 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
+        if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
 
-        AudioManager.Instance.TriggerAudioClip(CircuitCablePlug, transform);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.TriggerAudioClip(CircuitCablePlug, transform);
 
         shouldFollowMouse = false;
 
@@ -114,7 +116,13 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         float differenceY = Input.mousePosition.y - lastMousePoint.Value.y;
 
-        transform.position = new Vector3(transform.position.x + (differenceX / 188) * Time.deltaTime * sensitivity, transform.position.y + (differenceY / 188) * Time.deltaTime * sensitivity, transform.position.z);
+        float newXPosition = transform.position.x + (differenceX / 188) * Time.deltaTime * sensitivity;
+        float newYPosition = transform.position.y + (differenceY / 188) * Time.deltaTime * sensitivity;
+
+        newXPosition = Mathf.Clamp(newXPosition, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
+        newYPosition = Mathf.Clamp(newYPosition, CircuitScreenBounds.Instance.NegativeBounds.y, CircuitScreenBounds.Instance.PositveBounds.y);
+
+        transform.position = new Vector3(newXPosition, newYPosition, transform.position.z);
 
         lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
