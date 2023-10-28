@@ -66,7 +66,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public void TriggerAudioClip(EventSounds sound, Vector3 origin)
     {
-        Debug.Log($"Triggered Audio Clip: {sound}");
+        //Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == EventSounds.Null)
             return;

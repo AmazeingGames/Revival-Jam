@@ -70,7 +70,7 @@ public class FocusStation : MonoBehaviour
     {
         if (PlayerFocus.Instance.ClosestStation != this && PlayerFocus.Instance.Focused != linkedStation)
         {
-            Debug.Log($"Disabled virtual screen {linkedScreen.name}");
+            //Debug.Log($"Disabled virtual screen {linkedScreen.name}");
             linkedScreen.enabled = false;
             return;
         }
@@ -81,13 +81,13 @@ public class FocusStation : MonoBehaviour
 
         if (isConnecting)
         {
-            Debug.Log($"Player connecting to {linkedScreen} station");
+            //Debug.Log($"Player connecting to {linkedScreen} station");
 
             AudioManager.Instance.TriggerAudioClip(stationEnterSound, transform);
         }
         else
         {
-            Debug.Log($"Player disconnecting from {linkedScreen} station");
+            //  Debug.Log($"Player disconnecting from {linkedScreen} station");
         }
     }
 
