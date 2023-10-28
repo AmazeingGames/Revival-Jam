@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92a036ed4987db4cb1287adac16eb13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraProxy: {fileID: 4088744519767607700}
 --- !u!1 &7890317245439217253
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +296,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4088744519767607700}
-  - component: {fileID: 7334995301130565330}
   m_Layer: 0
   m_Name: CameraProxy
   m_TagString: Untagged
@@ -318,15 +318,3 @@ Transform:
   m_Father: {fileID: 5626275802296457464}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7334995301130565330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7890317245439217253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cafa87986d6c67408f2f21b5504dd2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

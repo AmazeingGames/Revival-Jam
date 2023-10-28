@@ -5,20 +5,24 @@ using static FocusStation;
 
 public class PlayerCamera3D : MonoBehaviour
 {
+    [SerializeField] Transform cameraProxy;
+
     Vector3 cameraStartingPosition;
     Quaternion cameraStartingRotation;
 
     Camera playerCamera;
-    float constantYPosition;
+    //float constantYPosition;
 
     void Start()
     {
         playerCamera = GetComponent<Camera>();
-        constantYPosition = playerCamera.transform.position.y;
 
         //Note we actually don't need or care about these values on start; their only purpose on start is for debugging reasons
         cameraStartingPosition = playerCamera.transform.position;
         cameraStartingRotation = playerCamera.transform.rotation;
+
+        cameraProxy.position = playerCamera.transform.position;
+
     }
 
     private void OnEnable()
@@ -47,7 +51,7 @@ public class PlayerCamera3D : MonoBehaviour
         }
         else
         {
-            positionToSet = cameraStartingPosition;
+            positionToSet = cameraProxy.position;
             rotationToSet = cameraStartingRotation;
         }
 
@@ -72,9 +76,11 @@ public class PlayerCamera3D : MonoBehaviour
             yield break;
 
         //Makes sure the height of the camera stays the same when returning to the player's body
-        playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, constantYPosition, playerCamera.transform.position.z);
+        //playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, constantYPosition, playerCamera.transform.position.z);
 
-        Debug.Log($"Is y camera position greater than max y position : {playerCamera.transform.position.y > constantYPosition}");
+        playerCamera.transform.position = cameraProxy.position;
+
+        //Debug.Log($"Is y camera position greater than max y position : {playerCamera.transform.position.y > constantYPosition}");
 
     }
 }
