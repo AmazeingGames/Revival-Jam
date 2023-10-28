@@ -11,10 +11,4 @@ public class StartActive : MonoBehaviour
     {
         gameObject.SetActive(startActive);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
