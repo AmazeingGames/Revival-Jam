@@ -11,19 +11,17 @@ using static ReceptacleObject;
 using static ControlsManager;
 using static PlayerFocus;
 using static AudioManager.EventSounds;
-using UnityEngine.InputSystem;
 
 public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] float sensitivity;
     [SerializeField] string receptacleTag;
 
-    [SerializeField] bool shouldSkipUpdates;
-    [SerializeField] float timeBetweenUpdateSkips;
+    [SerializeField] bool normalizeVector;
+    [SerializeField] bool getRawAxis;
+    [SerializeField] bool divide;
 
     bool shouldFollowMouse = false;
-
-    private Vector2? lastMousePoint = null;
 
     ReceptacleObject connectedReceptacle;
 
@@ -69,7 +67,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         UnityEngine.Cursor.visible = !shouldFollowMouse;
         
-        //UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+        //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
         grabPosition = Input.mousePosition;
     }
@@ -131,37 +129,39 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (!shouldFollowMouse)
             return;
-        
-        //Compares the mouse's current position with its last position
-        float differenceX = Input.mousePosition.x - lastMousePoint.Value.x;
-        float differenceY = Input.mousePosition.y - lastMousePoint.Value.y;
 
-        //Updates the wire position with the mouse movement
-        float newXPosition = transform.position.x + (differenceX / 188) * Time.deltaTime * sensitivity;
-        float newYPosition = transform.position.y + (differenceY / 188) * Time.deltaTime * sensitivity;
+        float mouseX;
+        float mouseY;
+
+        if (getRawAxis)
+        {
+            mouseX = Input.GetAxisRaw("Mouse X");
+            mouseY = Input.GetAxisRaw("Mouse Y");
+        }
+        else
+        {
+            mouseX = Input.GetAxis("Mouse X");
+            mouseY = Input.GetAxis("Mouse Y");
+        }
+
+        Vector2 mouseInput = new(mouseX, mouseY);
+        
+        //Always normalize vector; makes movement s m o o t h
+        if (normalizeVector)
+            mouseInput = mouseInput.normalized;
+
+        Debug.Log($"Mouse x : {mouseX} | Mouse y : {mouseY}");
+
+        //Sets the wire position based on input
+        //Not sure if there's a purpose to dividing it
+        float newXPosition = transform.position.x + (mouseInput.x / 188) * Time.deltaTime * sensitivity;
+        float newYPosition = transform.position.y + (mouseInput.y / 188) * Time.deltaTime * sensitivity;
 
         //Makes sure wires stay between the bounds
         newXPosition = Mathf.Clamp(newXPosition, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
         newYPosition = Mathf.Clamp(newYPosition, CircuitScreenBounds.Instance.NegativeBounds.y, CircuitScreenBounds.Instance.PositveBounds.y);
 
-        if (skipUpdate)
-            skipUpdate = false;
-        else
-            transform.position = new Vector3(newXPosition, newYPosition, transform.position.z);
-
-        if (shouldSkipUpdates)
-            timer += Time.deltaTime;
-
-        if (timer > timeBetweenUpdateSkips)
-        {
-            Debug.Log("teleport");
-
-            timer = 0;
-            skipUpdate = true;
-            Mouse.current.WarpCursorPosition((Vector2)grabPosition);
-        }
-
-        lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        transform.position = new Vector3(newXPosition, newYPosition, transform.position.z);
     }
 
 

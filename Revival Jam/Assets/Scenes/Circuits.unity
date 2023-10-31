@@ -170,13 +170,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 51124020}
     m_Modifications:
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+      propertyPath: getRawAxis
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: sensitivity
-      value: 4000
+      value: 12000
       objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: virtualScreen
       value: 
       objectReference: {fileID: 1461545896}
+    - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+      propertyPath: normalizeVector
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: shouldSkipUpdates
       value: 1
@@ -401,13 +409,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 51124020}
     m_Modifications:
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+      propertyPath: getRawAxis
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: sensitivity
-      value: 4000
+      value: 12000
       objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: virtualScreen
       value: 
       objectReference: {fileID: 1461545896}
+    - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+      propertyPath: normalizeVector
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: shouldSkipUpdates
       value: 1
@@ -626,13 +642,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 51124020}
     m_Modifications:
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+      propertyPath: getRawAxis
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: sensitivity
-      value: 4000
+      value: 12000
       objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: virtualScreen
       value: 
       objectReference: {fileID: 1461545896}
+    - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
+      propertyPath: normalizeVector
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 79941251634208878, guid: e5ba7bca4ed98f945b221191ebc5eceb, type: 3}
       propertyPath: shouldSkipUpdates
       value: 1
