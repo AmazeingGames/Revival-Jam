@@ -31,10 +31,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     Transform autoPosition = null;
 
-    float timer;
-    Vector2 grabPosition;
-    bool skipUpdate = false;
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
@@ -44,8 +40,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             AudioManager.Instance.TriggerAudioClip(CircuitCableUnplug, transform);
 
         SetMouseFollow(true);
-
-        lastMousePoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -67,9 +61,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         UnityEngine.Cursor.visible = !shouldFollowMouse;
         
-        //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-
-        grabPosition = Input.mousePosition;
+        UnityEngine.Cursor.lockState = shouldFollowMouse ? CursorLockMode.Locked : CursorLockMode.Confined;
     }
 
     //'WireToControl' name instead (?)
