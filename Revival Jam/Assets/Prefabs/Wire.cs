@@ -31,6 +31,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     Transform autoPosition = null;
 
+    //Drags wire on mouse down
     public void OnPointerDown(PointerEventData eventData)
     {
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
@@ -42,6 +43,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         SetMouseFollow(true);
     }
 
+    //Lets go of wire on mouse up
     public void OnPointerUp(PointerEventData eventData)
     {
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
@@ -55,6 +57,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         WireToConnector();
     }
 
+    //Preps the cursor for wire follow
     void SetMouseFollow(bool shouldFollowMouse)
     {
         this.shouldFollowMouse = shouldFollowMouse;
@@ -64,7 +67,8 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         UnityEngine.Cursor.lockState = shouldFollowMouse ? CursorLockMode.Locked : CursorLockMode.Confined;
     }
 
-    //'WireToControl' name instead (?)
+    //Adds the control from the new overlapping receptacle
+    //Removes the control from the old receptacle
     void WireToConnector()
     {
         Controls controlToRemove = connectedReceptacle == null ? Controls.Unknown : connectedReceptacle.LinkedControl;
@@ -82,6 +86,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         ConnectWireCheck?.Invoke(controlsEventArgs);
     }
 
+    //Given a recpetacle, manually adds that control
     public void ManuallyConnect(ReceptacleObject receptacleToConnect)
     {
         autoPosition = receptacleToConnect.WirePosition;
@@ -117,6 +122,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         FollowMouse();
     }
 
+    //Updates the wire along with the mouse movement
     void FollowMouse()
     {
         if (!shouldFollowMouse)
@@ -155,7 +161,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         transform.position = new Vector3(newXPosition, newYPosition, transform.position.z);
     }
-
 
 
     void OnTriggerEnter(Collider other)
