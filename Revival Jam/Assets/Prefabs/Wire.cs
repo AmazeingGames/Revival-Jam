@@ -23,8 +23,11 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     ReceptacleObject overlappingReceptacle = null;
 
     public static event Action<ChangeControlsEventArgs> ConnectWireCheck;
+    public static event Action<Wire, bool> GrabWire; 
 
     Transform autoPosition = null;
+
+    enum Pointer { Up, Down }
 
     //Drags wire on mouse down
     public void OnPointerDown(PointerEventData eventData)
@@ -35,7 +38,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (AudioManager.Instance != null)
             AudioManager.Instance.TriggerAudioClip(CircuitCableUnplug, transform);
 
-        SetMouseFollow(true);
+        OnGrab(Pointer.Down);
     }
 
     //Lets go of wire on mouse up
@@ -47,9 +50,21 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (AudioManager.Instance != null)
             AudioManager.Instance.TriggerAudioClip(CircuitCablePlug, transform);
 
-        SetMouseFollow(false);
-
+        OnGrab(Pointer.Up);
         WireToConnector();
+    }
+
+    //Called on pointer up/down
+    void OnGrab(Pointer pointer)
+    {
+        bool isGrab = pointer switch
+        {
+            Pointer.Down => true,
+            _ => false,
+        };
+
+        SetMouseFollow(isGrab);
+        GrabWire?.Invoke(this, isGrab);
     }
 
     //Preps the cursor for wire follow
@@ -57,9 +72,11 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         this.shouldFollowMouse = shouldFollowMouse;
 
-        UnityEngine.Cursor.visible = !shouldFollowMouse;
+        if (wireSettings.HideMouse)
+            UnityEngine.Cursor.visible = !shouldFollowMouse;
         
-        UnityEngine.Cursor.lockState = shouldFollowMouse ? CursorLockMode.Locked : CursorLockMode.Confined;
+        if (wireSettings.LockMouse)
+            UnityEngine.Cursor.lockState = shouldFollowMouse ? CursorLockMode.Locked : CursorLockMode.Confined;
     }
 
     //Adds the control from the new overlapping receptacle
@@ -114,11 +131,12 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     // Update is called once per frame
     void Update()
     {
-        FollowMouse();
+        FollowMouse(transform, wireSettings.Sensitivity, wireSettings.SetPosition);
     }
 
     //Updates the wire along with the mouse movement
-    void FollowMouse()
+    //Either sets the position directly or adds the position
+    public void FollowMouse(Transform followingTransform, float sensitivity, bool setPosition)
     {
         if (!shouldFollowMouse)
             return;
@@ -145,16 +163,23 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         Debug.Log($"Mouse x : {mouseX} | Mouse y : {mouseY}");
 
-        //Sets the wire position based on input
-        //Not sure if there's a purpose to dividing it
-        float newXPosition = transform.position.x + (mouseInput.x / 188) * Time.deltaTime * wireSettings.Sensitivity;
-        float newYPosition = transform.position.y + (mouseInput.y / 188) * Time.deltaTime * wireSettings.Sensitivity;
+        //Gets the amount to move the wires by
+        float addXAmount = (mouseInput.x / 188) * Time.deltaTime * sensitivity;
+        float addYAmount = (mouseInput.y / 188) * Time.deltaTime * sensitivity;
+
+        float newXPosition = followingTransform.position.x + addXAmount;
+        float newYPosition = followingTransform.position.y + addYAmount;
 
         //Makes sure wires stay between the bounds
         newXPosition = Mathf.Clamp(newXPosition, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
         newYPosition = Mathf.Clamp(newYPosition, CircuitScreenBounds.Instance.NegativeBounds.y, CircuitScreenBounds.Instance.PositveBounds.y);
 
-        transform.position = new Vector3(newXPosition, newYPosition, transform.position.z);
+        //Either adds the amount to move or sets the position directly
+        //Not really a difference between the two; in fact adding is move versatile
+        if (setPosition)
+            followingTransform.position = new Vector3(newXPosition, newYPosition, followingTransform.position.z);
+        else
+            followingTransform.position += new Vector3(addXAmount, addYAmount, 0);
     }
 
 

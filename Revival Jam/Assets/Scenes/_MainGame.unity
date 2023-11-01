@@ -1445,6 +1445,7 @@ MonoBehaviour:
   cursor: {fileID: 1222862583}
   cursorOffset: {x: 30, y: -28, z: 0}
   animator: {fileID: 1222862584}
+  wireFollowSensitivity: 40000
 --- !u!1 &448887614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,7 +1676,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 141918813}
-  optionsMenu: {fileID: 0}
 --- !u!1 &620723423
 GameObject:
   m_ObjectHideFlags: 0
@@ -4537,6 +4537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c82bdaa86467643945cd4ad174288b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadStartingScenes: 1
 --- !u!114 &1798405142
 MonoBehaviour:
   m_ObjectHideFlags: 0

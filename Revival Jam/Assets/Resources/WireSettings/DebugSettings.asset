@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49ce756445c81414c946ddb2369164c5, type: 3}
-  m_Name: WorkingSettings
+  m_Name: DebugSettings
   m_EditorClassIdentifier: 
-  <Sensitivity>k__BackingField: 15000
   <ReceptacleTag>k__BackingField: Receptacle
+  <Sensitivity>k__BackingField: 15000
   <NormalizeVector>k__BackingField: 1
   <GetRawAxis>k__BackingField: 1
   <Divide>k__BackingField: 0
+  <SetPosition>k__BackingField: 0
+  <LockMouse>k__BackingField: 0
+  <HideMouse>k__BackingField: 0

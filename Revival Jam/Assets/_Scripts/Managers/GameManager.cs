@@ -9,14 +9,23 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] bool loadStartingScenes = true;
+
     public static event Action<GameState> BeforeStateChange;
     public static event Action<GameState> AfterStateChange;
 
     private void Awake()
     {
         base.Awake();
+
+        #if DEBUG
+        if (!loadStartingScenes)
+            return;
+        #endif
+
         ReadyUI();
     }
+
     public GameState State { get; private set; }
 
     public void UpdateGameState(GameState newState)
