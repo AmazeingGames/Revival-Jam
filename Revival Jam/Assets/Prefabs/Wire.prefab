@@ -274,8 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a698724363d4eb940bd11bd96935e7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 2250
-  receptacleTag: Receptacle
+  wireSettings: {fileID: 11400000, guid: 7422d84ed539d3c4d83edc530b737918, type: 2}
 --- !u!65 &5090000221524212573
 BoxCollider:
   m_ObjectHideFlags: 0

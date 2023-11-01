@@ -14,12 +14,7 @@ using static AudioManager.EventSounds;
 
 public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] float sensitivity;
-    [SerializeField] string receptacleTag;
-
-    [SerializeField] bool normalizeVector;
-    [SerializeField] bool getRawAxis;
-    [SerializeField] bool divide;
+    [SerializeField] WireSettings wireSettings;
 
     bool shouldFollowMouse = false;
 
@@ -131,7 +126,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         float mouseX;
         float mouseY;
 
-        if (getRawAxis)
+        if (wireSettings.GetRawAxis)
         {
             mouseX = Input.GetAxisRaw("Mouse X");
             mouseY = Input.GetAxisRaw("Mouse Y");
@@ -145,15 +140,15 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         Vector2 mouseInput = new(mouseX, mouseY);
         
         //Always normalize vector; makes movement s m o o t h
-        if (normalizeVector)
+        if (wireSettings.NormalizeVector)
             mouseInput = mouseInput.normalized;
 
         Debug.Log($"Mouse x : {mouseX} | Mouse y : {mouseY}");
 
         //Sets the wire position based on input
         //Not sure if there's a purpose to dividing it
-        float newXPosition = transform.position.x + (mouseInput.x / 188) * Time.deltaTime * sensitivity;
-        float newYPosition = transform.position.y + (mouseInput.y / 188) * Time.deltaTime * sensitivity;
+        float newXPosition = transform.position.x + (mouseInput.x / 188) * Time.deltaTime * wireSettings.Sensitivity;
+        float newYPosition = transform.position.y + (mouseInput.y / 188) * Time.deltaTime * wireSettings.Sensitivity;
 
         //Makes sure wires stay between the bounds
         newXPosition = Mathf.Clamp(newXPosition, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
