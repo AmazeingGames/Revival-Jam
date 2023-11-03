@@ -1445,7 +1445,7 @@ MonoBehaviour:
   cursor: {fileID: 1222862583}
   cursorOffset: {x: 30, y: -28, z: 0}
   animator: {fileID: 1222862584}
-  wireFollowSensitivity: 40000
+  wireFollowSensitivity: 70000
 --- !u!1 &448887614
 GameObject:
   m_ObjectHideFlags: 0
