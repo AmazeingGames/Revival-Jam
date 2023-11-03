@@ -17,6 +17,6 @@ MonoBehaviour:
   <NormalizeVector>k__BackingField: 1
   <GetRawAxis>k__BackingField: 1
   <Divide>k__BackingField: 0
-  <SetPosition>k__BackingField: 0
+  <SetPosition>k__BackingField: 1
   <LockMouse>k__BackingField: 0
   <HideMouse>k__BackingField: 0

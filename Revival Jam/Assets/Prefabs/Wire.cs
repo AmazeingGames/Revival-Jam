@@ -16,6 +16,9 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] WireSettings wireSettings;
 
+
+    public Vector2 AddAmount { get; private set; }
+
     bool shouldFollowMouse = false;
 
     ReceptacleObject connectedReceptacle;
@@ -131,16 +134,40 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     // Update is called once per frame
     void Update()
     {
-        FollowMouse(transform, wireSettings.Sensitivity, wireSettings.SetPosition);
+        FollowMovement(transform, wireSettings.Sensitivity, wireSettings.SetPosition, GetMouseInput());
     }
 
     //Updates the wire along with the mouse movement
     //Either sets the position directly or adds the position
-    public void FollowMouse(Transform followingTransform, float sensitivity, bool setPosition)
+    public void FollowMovement(Transform followingTransform, float sensitivity, bool setPosition, Vector2 movementToFollow)
     {
         if (!shouldFollowMouse)
             return;
 
+        float addXAmount;
+        float addYAmount;
+
+        //Gets the amount to move the wires by
+        addXAmount = (movementToFollow.x / 188) * Time.deltaTime * sensitivity;
+        addYAmount = (movementToFollow.y / 188) * Time.deltaTime * sensitivity;
+
+        AddAmount = new Vector2(addXAmount, addYAmount);
+
+        Vector2 newPosition = new(followingTransform.position.x + addXAmount, followingTransform.position.y + addYAmount);
+
+        //Updates the transform position
+        if (setPosition)
+        {
+            followingTransform.position = new Vector3(newPosition.x, newPosition.y, followingTransform.position.z);
+            ClampToBounds(followingTransform);
+        }
+        else
+            followingTransform.position += new Vector3(addXAmount, addYAmount, 0);
+    }
+
+    //Gets the (normalized) (raw) input of the mouse
+    Vector2 GetMouseInput()
+    {
         float mouseX;
         float mouseY;
 
@@ -156,30 +183,24 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
 
         Vector2 mouseInput = new(mouseX, mouseY);
-        
+
         //Always normalize vector; makes movement s m o o t h
         if (wireSettings.NormalizeVector)
             mouseInput = mouseInput.normalized;
 
-        Debug.Log($"Mouse x : {mouseX} | Mouse y : {mouseY}");
+       //Debug.Log($"Mouse x : {mouseX} | Mouse y : {mouseY}");
 
-        //Gets the amount to move the wires by
-        float addXAmount = (mouseInput.x / 188) * Time.deltaTime * sensitivity;
-        float addYAmount = (mouseInput.y / 188) * Time.deltaTime * sensitivity;
+        return mouseInput;
+    }
 
-        float newXPosition = followingTransform.position.x + addXAmount;
-        float newYPosition = followingTransform.position.y + addYAmount;
+    public void ClampToBounds(Transform transformToClamp)
+    {
+        Vector3 clampedPosition = transformToClamp.position;
 
-        //Makes sure wires stay between the bounds
-        newXPosition = Mathf.Clamp(newXPosition, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
-        newYPosition = Mathf.Clamp(newYPosition, CircuitScreenBounds.Instance.NegativeBounds.y, CircuitScreenBounds.Instance.PositveBounds.y);
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, CircuitScreenBounds.Instance.NegativeBounds.y, CircuitScreenBounds.Instance.PositveBounds.y);
 
-        //Either adds the amount to move or sets the position directly
-        //Not really a difference between the two; in fact adding is move versatile
-        if (setPosition)
-            followingTransform.position = new Vector3(newXPosition, newYPosition, followingTransform.position.z);
-        else
-            followingTransform.position += new Vector3(addXAmount, addYAmount, 0);
+        transformToClamp.position = clampedPosition;
     }
 
 

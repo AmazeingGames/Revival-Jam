@@ -14,6 +14,7 @@ public class MouseManager : MonoBehaviour
 
     Wire wireToFollow;
 
+    Vector2 lastWirePoint;
     private void OnEnable()
     {
         Wire.GrabWire += HandleWireGrab;
@@ -56,7 +57,17 @@ public class MouseManager : MonoBehaviour
 
     void FollowWire()
     {
-        wireToFollow.FollowMouse(cursor, wireFollowSensitivity, false);
+
+        float differenceX = wireToFollow.transform.position.x - lastWirePoint.x;
+        float differenceY = wireToFollow.transform.position.y - lastWirePoint.y;
+
+        Vector2 wireDifference = new (differenceX, differenceY);
+
+        Debug.Log($"Difference x : {differenceX} | difference y : {differenceY}");
+
+        wireToFollow.FollowMovement(cursor, wireFollowSensitivity, setPosition: false, movementToFollow: wireDifference);
+
+        lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
     }
 
     void FollowMouse() => cursor.position = Input.mousePosition + cursorOffset;
