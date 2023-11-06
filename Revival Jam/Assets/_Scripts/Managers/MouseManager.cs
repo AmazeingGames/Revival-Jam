@@ -15,6 +15,8 @@ public class MouseManager : MonoBehaviour
     Wire wireToFollow;
 
     Vector2 lastWirePoint;
+
+    Coroutine followWire;
     private void OnEnable()
     {
         Wire.GrabWire += HandleWireGrab;
@@ -55,24 +57,40 @@ public class MouseManager : MonoBehaviour
     void SetCursorPosition()
     {
         if (wireToFollow == null)
+        {
+            if (followWire != null)
+            {
+                StopCoroutine(followWire);
+                followWire = null;
+            }
+            
             FollowMouse();
-        else
-            FollowWire();
+        }
+        else followWire ??= StartCoroutine(FollowWire());
     }
 
-    //Updates the virtual cursor to follow the grabbed wire
-    void FollowWire()
+    //Updates the virtual cursor to follow the movement of the grabbed wire
+    IEnumerator FollowWire()
     {
-        float differenceX = wireToFollow.transform.position.x - lastWirePoint.x;
-        float differenceY = wireToFollow.transform.position.y - lastWirePoint.y;
-
-        Vector2 wireDifference = new (differenceX, differenceY);
-
-        Debug.Log($"Difference x : {differenceX} | difference y : {differenceY}");
-
-        wireToFollow.FollowMovement(cursor, wireFollowSensitivity, setPosition: false, movementToFollow: wireDifference);
-
         lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
+
+        yield return null;
+
+        while (true)
+        {
+            float differenceX = wireToFollow.transform.position.x - lastWirePoint.x;
+            float differenceY = wireToFollow.transform.position.y - lastWirePoint.y;
+
+            Vector2 wireDifference = new(differenceX, differenceY);
+
+            Debug.Log($"Difference x : {differenceX} | difference y : {differenceY}");
+
+            wireToFollow.FollowMovement(cursor, wireFollowSensitivity, setPosition: false, movementToFollow: wireDifference);
+
+            lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
+
+            yield return null;
+        }
     }
 
     //Updates the virtual cursor to follow the mouse
