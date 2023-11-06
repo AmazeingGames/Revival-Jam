@@ -25,6 +25,11 @@ public class MouseManager : MonoBehaviour
         Wire.GrabWire -= HandleWireGrab;
     }
 
+    void Start()
+    {
+        //Cursor.lockState = CursorLockMode.Confined;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -33,7 +38,7 @@ public class MouseManager : MonoBehaviour
         ToggleMouseSettings();
     }
 
-    //Sets cursor animations on click
+    //Plays the clicking animations for the cursor
     void PlayCursorAnimations()
     {
         if (!animator)
@@ -46,7 +51,7 @@ public class MouseManager : MonoBehaviour
             animator.SetBool("IsPressed", false);
     }
 
-    //Sets cursor to follow mouse
+    //Calls the proper cursor move function
     void SetCursorPosition()
     {
         if (wireToFollow == null)
@@ -55,9 +60,9 @@ public class MouseManager : MonoBehaviour
             FollowWire();
     }
 
+    //Updates the virtual cursor to follow the grabbed wire
     void FollowWire()
     {
-
         float differenceX = wireToFollow.transform.position.x - lastWirePoint.x;
         float differenceY = wireToFollow.transform.position.y - lastWirePoint.y;
 
@@ -70,6 +75,7 @@ public class MouseManager : MonoBehaviour
         lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
     }
 
+    //Updates the virtual cursor to follow the mouse
     void FollowMouse() => cursor.position = Input.mousePosition + cursorOffset;
 
     //Change mouse visibility for debugging
@@ -81,6 +87,7 @@ public class MouseManager : MonoBehaviour
         #endif
     }
 
+    //Gets a reference to the wire on grab
     void HandleWireGrab(Wire wire, bool isGrab)
     {
         Debug.Log("HandleWireGrab");
