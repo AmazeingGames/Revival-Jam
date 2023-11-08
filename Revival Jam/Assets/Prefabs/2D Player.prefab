@@ -302,6 +302,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   showGroundCheckDebug: 0
+  characterController: {fileID: 651691400}
 --- !u!114 &651691400
 MonoBehaviour:
   m_ObjectHideFlags: 0

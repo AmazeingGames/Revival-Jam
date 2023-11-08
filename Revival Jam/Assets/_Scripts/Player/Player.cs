@@ -20,6 +20,9 @@ public class Player : Singleton<Player>
     [SerializeField] LayerMask groundLayer;
     [SerializeField] bool showGroundCheckDebug;
 
+    [Header("Player Movement")]
+    [SerializeField] CharacterController characterController;
+
     public float LastGroundedTime { get; private set; }
     public CircleCollider2D Collider { get; private set; }
 
@@ -35,6 +38,21 @@ public class Player : Singleton<Player>
         Collider = GetComponent<CircleCollider2D>();
 
         StartCoroutine(GroundCheck());
+    }
+
+    private void OnEnable()
+    {
+        DialogueManager.EnterDialogue += HandleDialogue;
+    }
+
+    private void OnDisable()
+    {
+        DialogueManager.EnterDialogue -= HandleDialogue;
+    }
+
+    void HandleDialogue(bool enteringDialogue)
+    {
+        characterController.gameObject.SetActive(enteringDialogue);
     }
 
     private void Update()
@@ -90,7 +108,6 @@ public class Player : Singleton<Player>
         //Debug.Log($"Raycast hit : {(bool)racyastHit}");
         if (racyastHit)
         {
-
             int layerNumber = racyastHit.transform.gameObject.layer;
 
             string layerName = LayerMask.LayerToName(layerNumber);

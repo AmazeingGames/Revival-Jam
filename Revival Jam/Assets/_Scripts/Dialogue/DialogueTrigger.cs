@@ -5,8 +5,17 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
+    [Header("Dialogue")]
     [SerializeField] List<Message> messages;
     [SerializeField] List<Actor> actors;
+
+    [Header("Prompt")]
+    [SerializeField] GameObject Icon;
+
+    bool hasPlayedDialogue;
+
+    //Create a second dialogue that plays when you read the note again
+    //The second time would highlight the important dialogue the player needs to read
 
     public void StartDialogue()
     {

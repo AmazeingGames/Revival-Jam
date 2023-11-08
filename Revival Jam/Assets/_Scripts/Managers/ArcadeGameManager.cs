@@ -58,22 +58,23 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         AfterArcadeStateChange?.Invoke(newState);
     }
 
+    //Loads the given level
     void LoadLevel(int levelToLoad)
     {
         SceneLoader.Instance.StartLevelLoad(levelToLoad);
-
     }
 
+    //Starts the current level over from the beginning
     void ReloadLevel()
     {
         UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
     }
 
-    //Add game over screen, have game over screen enter into the restart state
     void Lose()
     {
         ReloadLevel();
     }
+
     void LoadNextLevel()
     {
         if (SceneLoader.DoesLevelExist(SceneLoader.Instance.LevelNumber + 1))
@@ -81,7 +82,6 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
             UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber + 1);
             Debug.Log("Loading next level");
         }
-        
     }
 
     [Serializable]
