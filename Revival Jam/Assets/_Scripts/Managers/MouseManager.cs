@@ -76,7 +76,7 @@ public class MouseManager : MonoBehaviour
 
         yield return null;
 
-        while (true)
+        while (wireToFollow != null)
         {
             float differenceX = wireToFollow.transform.position.x - lastWirePoint.x;
             float differenceY = wireToFollow.transform.position.y - lastWirePoint.y;

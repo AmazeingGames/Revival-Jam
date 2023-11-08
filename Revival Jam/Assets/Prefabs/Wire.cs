@@ -16,7 +16,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] WireSettings wireSettings;
 
-
     public Vector2 AddAmount { get; private set; }
 
     bool shouldFollowMouse = false;
@@ -32,14 +31,21 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     enum Pointer { Up, Down }
 
+    void OnEnable()
+    {
+        FocusStation.ConnectToStation += HandleConnectToStation;
+    }
+
+    void OnDisable()
+    {
+        FocusStation.ConnectToStation -= HandleConnectToStation;
+    }
+
     //Drags wire on mouse down
     public void OnPointerDown(PointerEventData eventData)
     {
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
-
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.TriggerAudioClip(CircuitCableUnplug, transform);
 
         OnGrab(Pointer.Down);
     }
@@ -50,9 +56,25 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.TriggerAudioClip(CircuitCablePlug, transform);
+        
 
+        DropWire();
+    }
+
+    void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
+    {
+        if (connectEventArgs.LinkedStation != FocusedOn.Circuitry)
+            return;
+
+        if (connectEventArgs.IsConnecting)
+            return;
+
+        DropWire();
+    }
+
+    //Stops wire mouse follow and connects it to an overlapping receptacle (if any)
+    void DropWire()
+    {
         OnGrab(Pointer.Up);
         WireToConnector();
     }
@@ -60,11 +82,27 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Called on pointer up/down
     void OnGrab(Pointer pointer)
     {
-        bool isGrab = pointer switch
+        bool isGrab;
+        AudioManager.EventSounds soundToPlay;
+
+        switch (pointer)
         {
-            Pointer.Down => true,
-            _ => false,
-        };
+            case Pointer.Up:
+                isGrab = false;
+                soundToPlay = CircuitCablePlug;
+                break;
+
+            case Pointer.Down:
+                isGrab = true;
+                soundToPlay = CircuitCableUnplug;
+                break;
+
+            default:
+                throw new Exception("Pointer Type Not Recognized");
+        }
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.TriggerAudioClip(soundToPlay, transform);
 
         SetMouseFollow(isGrab);
         GrabWire?.Invoke(this, isGrab);
