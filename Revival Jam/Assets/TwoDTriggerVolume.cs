@@ -10,7 +10,9 @@ public class TwoDTriggerVolume : MonoBehaviour
         Debug.Log("Player passed thru me");
         //if (!ArcadeGameManager.Instance) return;
         //ArcadeGameManager.Instance.UpdateArcadeState(ArcadeGameManager.ArcadeState.Win);
-        gamgameObject.SetActive(true);
+
+        if (gamgameObject != null)
+            gamgameObject.SetActive(true);
 
     }
 }

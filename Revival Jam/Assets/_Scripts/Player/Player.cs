@@ -22,6 +22,7 @@ public class Player : Singleton<Player>
 
     [Header("Player Movement")]
     [SerializeField] CharacterController characterController;
+    [SerializeField] bool stopOnDialogue;
 
     public float LastGroundedTime { get; private set; }
     public CircleCollider2D Collider { get; private set; }
@@ -52,7 +53,12 @@ public class Player : Singleton<Player>
 
     void HandleDialogue(bool enteringDialogue)
     {
-        characterController.gameObject.SetActive(enteringDialogue);
+        characterController.enabled = !enteringDialogue;
+
+        Debug.Log(enteringDialogue);
+
+        //if (!stopOnDialogue)
+          //  characterController.enabled = true;
     }
 
     private void Update()

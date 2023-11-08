@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using static ArcadeGameManager;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -13,6 +14,8 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] TextMeshProUGUI dialogueName;
     [SerializeField] TextMeshProUGUI dialogueSpeech;
     [SerializeField] RectTransform dialogueBackground;
+
+    [SerializeField] Canvas dialogueCanvas;
 
     List<Message> currentMessages;
     List<Actor> currentActors;
@@ -49,7 +52,7 @@ public class DialogueManager : Singleton<DialogueManager>
     //Opens the dialogue box and prepares for the first line of a dialogue
     public void StartDialogue(List<Message> messages, List<Actor> actors)
     {
-        //EnterDialogue?.Invoke(true);
+        EnterDialogue?.Invoke(true);
 
         currentActors = actors;
         currentMessages = messages;
@@ -146,5 +149,45 @@ public class DialogueManager : Singleton<DialogueManager>
     void CloseDialogueBox()
     {
         dialogueBackground.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        AfterArcadeStateChange += HandleArcadeGameStateChange;
+    }
+
+    private void OnDisable()
+    {
+        AfterArcadeStateChange -= HandleArcadeGameStateChange;
+    }
+
+    void HandleArcadeGameStateChange(ArcadeState arcadeState)
+    {
+        switch (arcadeState)
+        {
+            case ArcadeState.StartLevel:
+                StartCoroutine(FindCamera());
+                break;
+        }
+    }
+
+    //Yes, find in coroutine is bad for performance, but it's hard to think of a better way with tile maps
+    IEnumerator FindCamera()
+    {
+        while (Player.Instance == null)
+            yield return null;
+
+        GameObject arcadeCamera = null;
+
+        while (arcadeCamera == null)
+        {
+            yield return null;
+
+            arcadeCamera = GameObject.Find("Arcade Camera");
+        }
+
+        Debug.Log("Found arcade camera!");
+
+        dialogueCanvas.worldCamera = arcadeCamera.GetComponent<Camera>();
     }
 }

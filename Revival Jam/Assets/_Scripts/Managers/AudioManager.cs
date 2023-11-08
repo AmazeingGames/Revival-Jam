@@ -62,6 +62,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public void TriggerAudioClip(EventSounds sound, GameObject origin) => TriggerAudioClip(sound, origin.transform.position);
 
+    //Change this to be a static function that uses instance
     public void TriggerAudioClip(EventSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
     public void TriggerAudioClip(EventSounds sound, Vector3 origin)

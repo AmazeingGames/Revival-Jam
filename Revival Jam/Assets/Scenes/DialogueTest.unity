@@ -539,7 +539,7 @@ RectTransform:
   - {fileID: 8352127451142877885}
   - {fileID: 878910660}
   - {fileID: 459779423}
-  - {fileID: 990394802}
+  - {fileID: 866686424}
   m_Father: {fileID: 8352127450538410116}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -572,190 +572,7 @@ MonoBehaviour:
   m_Spacing: {x: 29.65, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!1001 &878910659
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 717242829}
-    m_Modifications:
-    - target: {fileID: 458819472926785062, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_text
-      value: Note 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049500, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_Name
-      value: NoteTrigger (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: actors.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.size
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: actors.Array.data[0].name
-      value: "\u201CC;\\Users\\John\\Devnotes>Note /??"
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[0].message
-      value: "Another day working on Sunday, \u2018hope you read this in your free
-        time!\u2019"
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[1].message
-      value: '. . . '
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[2].message
-      value: "as if you\u2019ll ever get any at this point, since the boss apparently
-        needs you to fix the machines too!"
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[3].message
-      value: One of the wires is missing from the machine this time, damn rats always
-        chewing things up.
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[4].message
-      value: What am I, a mechanic for God's sake?
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[5].message
-      value: '*sigh*'
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[6].message
-      value: 'I think he left his crowbar somewhere around here. . . '
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[7].message
-      value: Apparently these machines come with extra controls that can be rerouted
-        from the back.
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[8].message
-      value: Maybe I can use the crowbar to bend up the back panel and rewire the
-        controls to whatever I need?
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[9].message
-      value: '. . . '
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[10].message
-      value: "Granted I don\u2019t die of electrocution first."
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[11].message
-      value: "Granted I don\u2019t die of electrocution first."
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[12].message
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[2].continuePreviousMessage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-      propertyPath: messages.Array.data[10].continuePreviousMessage
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
---- !u!224 &878910660 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-  m_PrefabInstance: {fileID: 878910659}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &990394801
+--- !u!1001 &866686423
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -768,7 +585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049500, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: m_Name
-      value: NoteTrigger (3)
+      value: NoteTrigger (4)
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: m_Pivot.x
@@ -985,10 +802,193 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
---- !u!224 &990394802 stripped
+--- !u!224 &866686424 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
-  m_PrefabInstance: {fileID: 990394801}
+  m_PrefabInstance: {fileID: 866686423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &878910659
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 717242829}
+    m_Modifications:
+    - target: {fileID: 458819472926785062, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_text
+      value: Note 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049500, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_Name
+      value: NoteTrigger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: actors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: actors.Array.data[0].name
+      value: "\u201CC;\\Users\\John\\Devnotes>Note /??"
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[0].message
+      value: "Another day working on Sunday, \u2018hope you read this in your free
+        time!\u2019"
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[1].message
+      value: '. . . '
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[2].message
+      value: "as if you\u2019ll ever get any at this point, since the boss apparently
+        needs you to fix the machines too!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[3].message
+      value: One of the wires is missing from the machine this time, damn rats always
+        chewing things up.
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[4].message
+      value: What am I, a mechanic for God's sake?
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[5].message
+      value: '*sigh*'
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[6].message
+      value: 'I think he left his crowbar somewhere around here. . . '
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[7].message
+      value: Apparently these machines come with extra controls that can be rerouted
+        from the back.
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[8].message
+      value: Maybe I can use the crowbar to bend up the back panel and rewire the
+        controls to whatever I need?
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[9].message
+      value: '. . . '
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[10].message
+      value: "Granted I don\u2019t die of electrocution first."
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[11].message
+      value: "Granted I don\u2019t die of electrocution first."
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[12].message
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[2].continuePreviousMessage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: messages.Array.data[10].continuePreviousMessage
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+--- !u!224 &878910660 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 458819473841049501, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+  m_PrefabInstance: {fileID: 878910659}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1589862735
 GameObject:
@@ -1308,6 +1308,7 @@ GameObject:
   - component: {fileID: 8352127450538410119}
   - component: {fileID: 8352127450538410118}
   - component: {fileID: 8352127450538410117}
+  - component: {fileID: 8352127450538410120}
   m_Layer: 0
   m_Name: DialogueCanvas
   m_TagString: Untagged
@@ -1387,7 +1388,7 @@ Canvas:
   m_GameObject: {fileID: 8352127450538410115}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1399,6 +1400,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &8352127450538410120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8352127450538410115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26aae43e1ae82343afc4a691e58be23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messages: []
+  actors: []
+  Icon: {fileID: 0}
 --- !u!222 &8352127450778684848
 CanvasRenderer:
   m_ObjectHideFlags: 0

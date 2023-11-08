@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 458819473841049503}
   - component: {fileID: 458819473841049502}
   m_Layer: 0
-  m_Name: NoteTrigger
+  m_Name: TestNoteTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
