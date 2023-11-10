@@ -12,8 +12,8 @@ public class HotbarManager : MonoBehaviour
 
     [SerializeField] List<ItemData> itemsData;
 
-    public Dictionary<ItemAndAbilityManager.ItemsAndAbilities, Item> ItemsDictionary = new();
-    public List<Item> HotbarItems = new();
+    readonly Dictionary<ItemAndAbilityManager.ItemsAndAbilities, Item> ItemsDictionary = new();
+    readonly List<Item> HotbarItems = new();
 
     private void OnEnable()
     {
