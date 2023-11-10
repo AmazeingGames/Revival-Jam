@@ -8,21 +8,20 @@ public class DialogueTrigger : MonoBehaviour
 {
     //Probably Change this to accept a scriptable object instead
     [Header("Dialogue")]
-    [SerializeField] List<Message> messages;
-    [SerializeField] List<Actor> actors;
+    [SerializeField] Dialogue dialogue;
 
     [Header("Prompt")]
     [SerializeField] GameObject Icon;
 
     //Create a second dialogue that plays when you read the note again
-    //The second time would highlight the important dialogue the player needs to read
+    //The second time would highlight the important dialogue the player needs to do (kind of like a hint)
     bool hasPlayedDialogue;
 
     bool isPlayerInRange = false;
 
     public void StartDialogue()
     {
-        DialogueManager.Instance.StartDialogue(messages, actors);
+        DialogueManager.Instance.StartDialogue(dialogue.Messages, dialogue.Actors);
     }
 
     void Update()

@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbb7e61c95cdf745a83c00e8c6f5b0e, type: 3}
+  m_Name: HammerDialogue
+  m_EditorClassIdentifier: 
+  <Messages>k__BackingField:
+  - actorId: 0
+    message: "That\u2019s it."
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: " One of these days I\u2019m just going to take a hammer with me to
+      work,"
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: "stare in my boss\u2019 eyes and smash his stupid,"
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: ' rat-infested,'
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: ' game'
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: t o   b i t s .
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: God! The hell even smells so bad anyways?!
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "If I don\u2019t smash the machine, I better hope someone else will."
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: Just HIT it!
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: ' BREAK it!'
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: 'Please! '
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: 'please '
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: '. '
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: .
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: ' .'
+    continuePreviousMessage: 1
+  <Actors>k__BackingField:
+  - name: "\u201CC;\\Users\\John\\Devnotes>Note /?!?!?!?"
+    sprite: {fileID: 0}

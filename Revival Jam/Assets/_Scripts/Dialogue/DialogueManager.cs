@@ -99,6 +99,8 @@ public class DialogueManager : Singleton<DialogueManager>
         textFinished = true;
     }
 
+    //Bug Fix Idea: Issue where instant display doesn't properly display instant messages
+    //Create a 'load message' string variable, it holds the message to display using the continues messages, clear it when there isn't a continuous message, add to it when there is
     //Displays the message all at once instead of one character at a time
     void DisplayMessageInstant()
     {

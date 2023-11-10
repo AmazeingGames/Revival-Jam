@@ -223,6 +223,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b9bd74aee584eb4e84aad2a9899abb6, type: 2}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: actors.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -672,6 +676,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e7d762637d8e5848834a4748529554f, type: 2}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: actors.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -907,6 +915,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: b33d0e7e31aec924d9fc988e71a80229, type: 2}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: actors.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1108,6 +1120,7 @@ MonoBehaviour:
   dialogueName: {fileID: 8352127450418121474}
   dialogueSpeech: {fileID: 8352127451858274276}
   dialogueBackground: {fileID: 8352127451080916126}
+  dialogueCanvas: {fileID: 0}
 --- !u!4 &2005302220
 Transform:
   m_ObjectHideFlags: 0
@@ -1412,8 +1425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26aae43e1ae82343afc4a691e58be23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messages: []
-  actors: []
+  dialogue: {fileID: 0}
   Icon: {fileID: 0}
 --- !u!222 &8352127450778684848
 CanvasRenderer:
@@ -1807,6 +1819,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: a8fbde9e20cf6c44f954dc0c9e92e15e, type: 2}
+    - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: actors.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1820,8 +1836,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: messages.Array.data[0].message
-      value: 'Long day wrestling with this code; boss is breathing down my neck to
-        finish the game. '
+      value: a
       objectReference: {fileID: 0}
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: messages.Array.data[1].message
