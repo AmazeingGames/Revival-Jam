@@ -7,7 +7,6 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     //Probably Change this to accept a scriptable object instead
-    //Or it could read from a JSON file instead
     [Header("Dialogue")]
     [SerializeField] List<Message> messages;
     [SerializeField] List<Actor> actors;

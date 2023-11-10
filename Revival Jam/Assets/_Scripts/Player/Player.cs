@@ -23,6 +23,7 @@ public class Player : Singleton<Player>
     [Header("Player Movement")]
     [SerializeField] CharacterController characterController;
     [SerializeField] bool stopOnDialogue;
+    [SerializeField] Rigidbody2D rigidbody;
 
     public float LastGroundedTime { get; private set; }
     public CircleCollider2D Collider { get; private set; }
@@ -54,6 +55,8 @@ public class Player : Singleton<Player>
     void HandleDialogue(bool enteringDialogue)
     {
         characterController.enabled = !enteringDialogue;
+
+        rigidbody.velocity = Vector3.zero;
 
         Debug.Log(enteringDialogue);
 

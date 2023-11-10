@@ -303,6 +303,8 @@ MonoBehaviour:
     m_Bits: 128
   showGroundCheckDebug: 0
   characterController: {fileID: 651691400}
+  stopOnDialogue: 0
+  rigidbody: {fileID: 8581096017296015324}
 --- !u!114 &651691400
 MonoBehaviour:
   m_ObjectHideFlags: 0
