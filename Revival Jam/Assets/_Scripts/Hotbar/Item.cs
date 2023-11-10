@@ -11,8 +11,9 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [SerializeField] Image image;
 
+    [SerializeField] Vector2 zeroZeroPosition;
+
     bool followMouse;
-    Transform slotParent;
 
     private void Start()
     {
@@ -43,6 +44,9 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         Debug.Log("Mouse Up");
+
+        if (followMouse)
+            transform.localPosition = zeroZeroPosition;
 
         followMouse = false;
     }
