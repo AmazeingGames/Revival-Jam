@@ -70,6 +70,8 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
     }
 
+    //Restarts the current level
+    //To Do: Create Game Over Menu
     void Lose()
     {
         ReloadLevel();
