@@ -21,15 +21,13 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue()
     {
-        DialogueManager.Instance.StartDialogue(dialogue.Messages, dialogue.Actors);
+        DialogueManager.Instance.StartDialogue(dialogue);
     }
 
     void Update()
     {
         if (Input.GetButtonDown("Read") && isPlayerInRange)
-        {
             StartDialogue();
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

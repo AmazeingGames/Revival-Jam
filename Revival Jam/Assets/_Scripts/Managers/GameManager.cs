@@ -47,9 +47,11 @@ public class GameManager : Singleton<GameManager>
             case GameState.Win:
                 LoadNextLevel();
                 break;
+
+            //I don't think we ever use the level start game state | Needs additional testing
             case GameState.LevelStart:
                 OnLevelLoad(SceneLoader.Instance.LevelNumber + 1);
-                break;
+                throw new Exception("I want to see when this is called");
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);

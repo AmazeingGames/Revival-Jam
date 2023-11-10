@@ -21,21 +21,30 @@ public class MachineAbilities : Singleton<MachineAbilities>
 
     float glitchTimer;
 
+    bool canShakeMachine = false;
+    bool canPowerMachine = false;
+
     public bool IsMachineOn { get; private set; } = false;
 
     private void OnEnable()
     {
         AfterArcadeStateChange += HandleArcadeGameStateChange;
+        ItemAndAbilityManager.AbilityGain += HandleAbilityGain;
     }
 
     private void OnDisable()
     {
         AfterArcadeStateChange -= HandleArcadeGameStateChange;
+        ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
+
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("PowerMachine") && PlayerFocus.Instance.Focused == FocusedOn.Arcade)
+        if (PlayerFocus.Instance.Focused != FocusedOn.Arcade)
+            return;
+
+        if (Input.GetButtonDown("PowerMachine") && (canPowerMachine || !IsMachineOn))
         {
             SetMachineOn(!IsMachineOn);
             
@@ -44,8 +53,8 @@ public class MachineAbilities : Singleton<MachineAbilities>
             AudioManager.Instance.TriggerAudioClip(soundToPlay, transform);
         }
         
-        //This could just as easily refer to the singleton player class
-        if (Input.GetButtonDown("ShakeArcade") && PlayerFocus.Instance.Focused == FocusedOn.Arcade && Player.Instance != null)
+        //Perhaps check if we have already shaked the machine in the last 10 seconds
+        if (Input.GetButtonDown("ShakeArcade") && canShakeMachine && Player.Instance != null)
         {
             Debug.Log("Shake Arcade");
             ShakeArcade();
@@ -62,12 +71,28 @@ public class MachineAbilities : Singleton<MachineAbilities>
         }
     }
 
+    void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities newAbility)
+    {
+        switch (newAbility)
+        {
+            case ItemAndAbilityManager.ItemsAndAbilities.Shake:
+                Debug.Log("Learned Ability: Shake Machine");
+                canShakeMachine = true;
+                break;
+
+            case ItemAndAbilityManager.ItemsAndAbilities.Power:
+                canPowerMachine = true;
+                Debug.Log("Learned Ability: Power Machine");
+                break;
+        }
+    }
+
     void ShakeArcade()
     {
         StartCoroutine(EnterGlitchedWorld());
     }
 
-    //Yes, find in coroutine is bad for performance, but it's hard to think of a better way with tile maps
+    //Yes, 'GameObject.Find' in coroutine is bad for performance, but it's hard to think of a better way with tile maps
     IEnumerator FindTileMaps()
     {
         while (Player.Instance == null)

@@ -4619,6 +4619,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1589458236270872725, guid: 566b3e1fa64937a4f8c6e13844b111e9, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e7d762637d8e5848834a4748529554f, type: 2}
+    - target: {fileID: 1589458236270872725, guid: 566b3e1fa64937a4f8c6e13844b111e9, type: 3}
       propertyPath: actors.Array.size
       value: 1
       objectReference: {fileID: 0}

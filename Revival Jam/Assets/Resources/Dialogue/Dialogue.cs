@@ -8,4 +8,7 @@ public class Dialogue : ScriptableObject
     [field: Header("Dialogue")]
     [field: SerializeField] public List<Message> Messages { get; private set; }
     [field: SerializeField] public List<Actor> Actors { get; private set; }
+
+    [field: Header("Ability")]
+    [field: SerializeField] public ItemAndAbilityManager.ItemsAndAbilities NewInformation = ItemAndAbilityManager.ItemsAndAbilities.None;
 }

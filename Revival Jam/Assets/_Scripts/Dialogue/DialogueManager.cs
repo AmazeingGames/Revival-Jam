@@ -17,6 +17,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     [SerializeField] Canvas dialogueCanvas;
 
+    Dialogue currentDialogue;
     List<Message> currentMessages;
     List<Actor> currentActors;
     int activeMessage = 0;
@@ -50,12 +51,13 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Opens the dialogue box and prepares for the first line of a dialogue
-    public void StartDialogue(List<Message> messages, List<Actor> actors)
+    public void StartDialogue(Dialogue dialogue)
     {
         EnterDialogue?.Invoke(true);
 
-        currentActors = actors;
-        currentMessages = messages;
+        currentDialogue = dialogue;
+        currentActors = dialogue.Actors;
+        currentMessages = dialogue.Messages;
         activeMessage = 0;
 
         isDialogueRunning = true;
@@ -66,7 +68,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         //DisplayMessageInstant();
 
-        Debug.Log($"Started Convo | Length {messages.Count}");
+        Debug.Log($"Started Convo | Length {dialogue.Messages.Count}");
     }
 
     //Sets the name and portrait for the current line of dialogue
@@ -136,6 +138,9 @@ public class DialogueManager : Singleton<DialogueManager>
     void ExitDialogue()
     {
         EnterDialogue?.Invoke(false);
+        
+        if (currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None)
+            ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
         CloseDialogueBox();
         isDialogueRunning = false;

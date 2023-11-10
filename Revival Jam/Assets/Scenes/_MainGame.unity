@@ -735,8 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26aae43e1ae82343afc4a691e58be23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messages: []
-  actors: []
+  dialogue: {fileID: 0}
   Icon: {fileID: 0}
 --- !u!114 &145791903
 MonoBehaviour:
@@ -5100,6 +5099,7 @@ GameObject:
   - component: {fileID: 1798405140}
   - component: {fileID: 1798405141}
   - component: {fileID: 1798405142}
+  - component: {fileID: 1798405143}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -5149,6 +5149,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glitchWorldTimerLength: 10
   pauseTimerOnMachineOff: 0
+--- !u!114 &1798405143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798405139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c637392c5ef747488877cbc1751e4d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1926494368
 GameObject:
   m_ObjectHideFlags: 0
