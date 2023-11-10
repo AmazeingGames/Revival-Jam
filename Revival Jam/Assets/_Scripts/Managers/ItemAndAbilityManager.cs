@@ -11,7 +11,7 @@ public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
 {
     public static event Action<ItemsAndAbilities> AbilityGain;
 
-    public enum ItemsAndAbilities { None, Shake, Power, Crowbar, Hammer, Screwdriver }
+    public enum ItemsAndAbilities { None, Shake, Power, Crowbar, Hammer, Screwdriver, Wrench }
 
     readonly List<ItemsAndAbilities> learnedAbilities = new();
 
@@ -37,10 +37,5 @@ public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
 
         learnedAbilities.Add(ability);
         AbilityGain?.Invoke(ability);
-    }
-
-    private void Start()
-    {
-
     }
 }

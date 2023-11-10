@@ -50,7 +50,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
     }
 
-    //Opens the dialogue box and prepares for the first line of a dialogue
+    //Opens the dialogue slot and prepares for the first line of a dialogue
     public void StartDialogue(Dialogue dialogue)
     {
         EnterDialogue?.Invoke(true);

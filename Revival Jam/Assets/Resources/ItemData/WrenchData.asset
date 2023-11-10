@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WrenchData
   m_EditorClassIdentifier: 
   <Sprite>k__BackingField: {fileID: -257322312, guid: 548e5eabbe189b840a479bb6d02b1e0b, type: 3}
-  <ItemType>k__BackingField: 0
+  <ItemType>k__BackingField: 6
   <MouseFollowOffset>k__BackingField: {x: 0, y: 0}
-  <Scale>k__BackingField: 0.75
+  <Scale>k__BackingField: 70

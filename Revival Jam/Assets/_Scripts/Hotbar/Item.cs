@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] ItemData itemData;
+    [field: SerializeField] public ItemData ItemData { get; private set; }
 
     [SerializeField] Image image;
 
@@ -24,14 +24,16 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         FollowMouse();
 
+        //Make sure to remove this later
+#if DEBUG
         InitializeData();
-
+#endif
     }
 
     void FollowMouse()
     {
         if (followMouse)
-            transform.position = Input.mousePosition + (Vector3)itemData.MouseFollowOffset;
+            transform.position = Input.mousePosition + (Vector3)ItemData.MouseFollowOffset;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -46,22 +48,33 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         Debug.Log("Mouse Up");
 
         if (followMouse)
-            transform.localPosition = zeroZeroPosition;
+            ResetPosition();
 
         followMouse = false;
     }
 
-    public void InitializeData(ItemData itemToMatch = null)
+    void ResetPosition()
     {
-        if (itemToMatch == null && itemData == null)
+        transform.localPosition = zeroZeroPosition;
+    }
+
+    public void InitializeData(Transform parent = null, ItemData itemToMatch = null)
+    {
+        if (itemToMatch == null && ItemData == null)
             return;
 
         if (itemToMatch != null)
-            itemData = itemToMatch;
+            ItemData = itemToMatch;
 
-        image.sprite = itemData.Sprite;
+        if (parent != null)
+        {
+            transform.SetParent(parent);
+            ResetPosition();
+        }
+
+        image.sprite = ItemData.Sprite;
         
-        var newScale = itemData.Scale;
+        var newScale = ItemData.Scale;
         transform.localScale = new Vector3(newScale, newScale);
     }
 }
