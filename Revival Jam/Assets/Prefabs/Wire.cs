@@ -56,8 +56,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
             return;
 
-        
-
         DropWire();
     }
 
