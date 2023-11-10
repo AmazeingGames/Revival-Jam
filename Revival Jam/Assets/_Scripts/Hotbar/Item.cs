@@ -24,18 +24,20 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         FollowMouse();
 
-        //Make sure to remove this later
+        //Not necessary to be in update, but helps for testing purposes
 #if DEBUG
         InitializeData();
 #endif
     }
 
+    //Sets position to mouse + offset
     void FollowMouse()
     {
         if (followMouse)
             transform.position = Input.mousePosition + (Vector3)ItemData.MouseFollowOffset;
     }
 
+    //Follows virtual cursor
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("Mouse Click");
@@ -43,6 +45,7 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         followMouse = true;
     }
 
+    //Stops following mouse and resets to slot position
     public void OnPointerUp(PointerEventData eventData)
     {
         Debug.Log("Mouse Up");
@@ -53,11 +56,10 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         followMouse = false;
     }
 
-    void ResetPosition()
-    {
-        transform.localPosition = zeroZeroPosition;
-    }
+    //Sets position back to its original slot position
+    void ResetPosition() => transform.localPosition = zeroZeroPosition;
 
+    //Matches the given data and prepares it for use
     public void InitializeData(Transform parent = null, ItemData itemToMatch = null)
     {
         if (itemToMatch == null && ItemData == null)

@@ -28,6 +28,8 @@ public class HotbarManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Instantiates the hotbar essentially
+        //Readies items and their respective data
         foreach (var itemData in itemsData)
         {
             Transform currentSlot = Instantiate(slot).transform;
@@ -51,12 +53,14 @@ public class HotbarManager : MonoBehaviour
         DebugGainItems();
     }
 
+    //Responds to gaining an ability be activating the given item for use
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities ability)
     {
         if (ItemsDictionary.ContainsKey(ability))
             ItemsDictionary[ability].gameObject.SetActive(true);
     }
 
+    //Simulates what it would be like to handle an Ability Gain
     void DebugGainItems()
     {
 #if DEBUG
