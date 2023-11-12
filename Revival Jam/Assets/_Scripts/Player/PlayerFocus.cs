@@ -29,6 +29,7 @@ public class PlayerFocus : Singleton<PlayerFocus>
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetButtonDown("Focus"))
         {
             if (Focused == FocusedOn.Nothing)
@@ -36,6 +37,7 @@ public class PlayerFocus : Singleton<PlayerFocus>
             else
                 OnCheckStation(false);
         } 
+        
     }
 
     void OnCheckStation(bool isConnecting)

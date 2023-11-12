@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HotbarManager : MonoBehaviour
+public class HotbarManager : Singleton<HotbarManager>
 {
     [SerializeField] HorizontalLayoutGroup HotbarLayoutGroup;
     [SerializeField] GameObject slot;
@@ -15,14 +15,26 @@ public class HotbarManager : MonoBehaviour
     readonly Dictionary<ItemAndAbilityManager.ItemsAndAbilities, Item> ItemsDictionary = new();
     readonly List<Item> HotbarItems = new();
 
+    public ItemData HoldingItem { get; private set; } = null;
+
     private void OnEnable()
     {
         ItemAndAbilityManager.AbilityGain += HandleAbilityGain;
+        Item.GrabTool += HandleGrabTool;
     }
 
     private void OnDisable()
     {
         ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
+        Item.GrabTool -= HandleGrabTool;
+    }
+
+    void HandleGrabTool(bool isGrabbingTool, ItemData data)
+    {
+        if (isGrabbingTool)
+            HoldingItem = data;
+        else
+            HoldingItem = null;
     }
 
     // Start is called before the first frame update

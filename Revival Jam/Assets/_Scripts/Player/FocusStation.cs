@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using static PlayerFocus;
 using static AudioManager;
+using UnityEngine.EventSystems;
 
-public class FocusStation : MonoBehaviour
+public class FocusStation : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] FocusedOn linkedStation;
     [SerializeField] Transform stationCamera;
@@ -97,11 +98,20 @@ public class FocusStation : MonoBehaviour
         {
             linkedScreen = sender;
             Debug.Log($"Found screen! Linked Screen null : {linkedScreen == null}");
+
+            //Wonder if this changes or messes up anything
+            //For some reason linked screen interferes with hotbar items being grabbed
+            linkedScreen.enabled = false;
         }
     }
 
     void OnPlayerEnter(bool playerEntering)
     {
         StationEnter?.Invoke(this, playerEntering);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("Mouse clicked interface");
     }
 }

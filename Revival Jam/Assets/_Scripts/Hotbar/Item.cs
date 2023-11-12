@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,8 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] Vector2 zeroZeroPosition;
 
     bool followMouse;
+
+    public static event Action<bool, ItemData> GrabTool;
 
     private void Start()
     {
@@ -43,6 +46,8 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         Debug.Log("Mouse Click");
 
         followMouse = true;
+
+        OnGrabTool();
     }
 
     //Stops following mouse and resets to slot position
@@ -54,7 +59,12 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             ResetPosition();
 
         followMouse = false;
+
+        OnGrabTool();
     }
+
+    //Not sure about this in a snytaxtical sense, but it seems good enough
+    void OnGrabTool() => GrabTool?.Invoke(followMouse, ItemData);
 
     //Sets position back to its original slot position
     void ResetPosition() => transform.localPosition = zeroZeroPosition;

@@ -24,6 +24,11 @@ public class VirtualScreen : GraphicRaycaster
         FindStation?.Invoke(this, stationType);
     }
 
+    void Update()
+    {
+           
+    }
+
     // Called by Unity when a Raycaster should raycast because it extends BaseRaycaster.
     public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList)
     {
