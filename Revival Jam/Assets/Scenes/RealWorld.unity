@@ -143,12 +143,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.51410294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.53568584
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.744
+      value: -0.8419
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.097
+      value: 12.9939
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.z
@@ -542,7 +550,7 @@ GameObject:
   - component: {fileID: 254176085}
   - component: {fileID: 254176084}
   - component: {fileID: 254176083}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6532,7 +6540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 43.443
+      value: 43.472
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalRotation.w

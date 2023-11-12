@@ -1010,6 +1010,51 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5989143653649169474, guid: 81fc537daac482544b958c2e916ddf50, type: 3}
   m_PrefabInstance: {fileID: 339144429}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &387863630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 387863632}
+  - component: {fileID: 387863631}
+  m_Layer: 0
+  m_Name: Wiring
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &387863631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387863630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d61bfb22b254f94d97f97e84e5cbc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wiringCabinet: {fileID: 1461545895}
+--- !u!4 &387863632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387863630}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2892044, y: 12.754482, z: 44.395973}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &455167813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2072,7 +2117,7 @@ GameObject:
   - component: {fileID: 1461545898}
   - component: {fileID: 1461545897}
   - component: {fileID: 1461545896}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Wiring Cabinet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2097,6 +2142,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   stationType: 0
+  hitLayerMasks:
+    serializedVersion: 2
+    m_Bits: 0
   screenCamera: {fileID: 1243010078}
   screenCaster: {fileID: 1987116757}
   lastMouseClick: {fileID: 0}

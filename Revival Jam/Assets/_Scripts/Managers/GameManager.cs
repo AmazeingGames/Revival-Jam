@@ -65,8 +65,11 @@ public class GameManager : Singleton<GameManager>
     void ReadyGameScenes()
     {
         SceneLoader.Instance.LoadScene("RealWorld");
-        SceneLoader.Instance.LoadScene("Circuits");
         SceneLoader.Instance.LoadScene("Hotbar");
+        SceneLoader.Instance.LoadScene("Circuits");
+        
+        StartCoroutine(WiringManager.SetWiringCabinet(false));
+        
         StartCoroutine(LoadArcadeScene());
     }
 

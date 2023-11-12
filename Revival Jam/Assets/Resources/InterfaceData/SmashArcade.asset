@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <InterfaceTool>k__BackingField: 4
   <InterfaceType>k__BackingField: 1
+  <TargetInterfaceLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 65536

@@ -8,6 +8,7 @@ using System;
 public class VirtualScreen : GraphicRaycaster
 {
     [SerializeField] PlayerFocus.FocusedOn stationType;
+    [SerializeField] LayerMask hitLayerMasks;
 
     public static event Action<VirtualScreen, PlayerFocus.FocusedOn> FindStation;
 
