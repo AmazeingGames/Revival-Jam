@@ -12,6 +12,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
 
     private void Update()
     {
+#if DEBUG
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             UpdateArcadeState(ArcadeState.StartLevel, 1);
@@ -24,11 +25,12 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         {
             UpdateArcadeState(ArcadeState.StartLevel, 3);
         }
-
+#endif
         if (Input.GetKeyDown(KeyCode.R))
         {
             UpdateArcadeState(ArcadeState.RestartLevel);
         }
+
     }
 
     
