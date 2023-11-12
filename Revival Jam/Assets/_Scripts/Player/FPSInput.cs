@@ -59,19 +59,18 @@ public class FPSInput : StaticInstance<FPSInput>
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!controlsPanel)
-            {
                 controlsPanel = GameObject.Find("Controls Panel");
-            }
+
+            if (controlsPanel == null)
+                return;
 
             if (!controlsPanel.activeSelf)
                 controlsPanel.SetActive(true);
-            else controlsPanel.SetActive(false);
-
-            //if (Time.timeScale != 0) Time.timeScale = 0;
-            //else if (Time.timeScale != 1) Time.timeScale = 1;
+            else 
+                controlsPanel.SetActive(false);
         }
 
     }

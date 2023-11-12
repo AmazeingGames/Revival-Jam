@@ -37,7 +37,6 @@ public class MouseManager : MonoBehaviour
     {
         PlayCursorAnimations();
         SetCursorPosition();
-        ToggleMouseSettings();
     }
 
     //Plays the clicking animations for the cursor
@@ -95,15 +94,6 @@ public class MouseManager : MonoBehaviour
 
     //Updates the virtual cursor to follow the mouse
     void FollowMouse() => cursor.position = Input.mousePosition + cursorOffset;
-
-    //Change mouse visibility for debugging
-    void ToggleMouseSettings()
-    {
-        #if DEBUG
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Cursor.visible = !Cursor.visible;
-        #endif
-    }
 
     //Gets a reference to the wire on grab
     void HandleWireGrab(Wire wire, bool isGrab)

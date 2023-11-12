@@ -53,7 +53,7 @@ public class HotbarManager : MonoBehaviour
         DebugGainItems();
     }
 
-    //Responds to gaining an ability be activating the given item for use
+    //Adds the item to the player's hotbar
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities ability)
     {
         if (ItemsDictionary.ContainsKey(ability))

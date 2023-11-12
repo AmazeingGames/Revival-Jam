@@ -12,8 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/RealWorld_BackgroundArea.unity
     guid: 3a312688eda0bcf4e9a4f3f56743a2b5
   - enabled: 0
-    path: Assets/Scenes/RealWorldNew.unity
+    path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Hotbar.unity
+    guid: 84a4324c64561b14c8cbbedb0b84c254
   - enabled: 1
     path: Assets/Scenes/Circuits.unity
     guid: a16c92d9f568cc64ba6d71e556e6090d

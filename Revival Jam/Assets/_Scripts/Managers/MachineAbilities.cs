@@ -84,6 +84,20 @@ public class MachineAbilities : Singleton<MachineAbilities>
                 canPowerMachine = true;
                 Debug.Log("Learned Ability: Power Machine");
                 break;
+
+            case ItemAndAbilityManager.ItemsAndAbilities.Screwdriver:
+                break;
+
+            
+            case ItemAndAbilityManager.ItemsAndAbilities.Crowbar:
+                
+                break;
+
+            case ItemAndAbilityManager.ItemsAndAbilities.Hammer:
+                break;
+
+            case ItemAndAbilityManager.ItemsAndAbilities.Wrench:
+                break;
         }
     }
 

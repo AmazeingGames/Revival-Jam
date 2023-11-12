@@ -68,7 +68,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         //DisplayMessageInstant();
 
-        Debug.Log($"Started Convo | Length {dialogue.Messages.Count}");
+        Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
     }
 
     //Sets the name and portrait for the current line of dialogue
@@ -144,6 +144,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
         CloseDialogueBox();
         isDialogueRunning = false;
+
+        ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
         Debug.Log("Conversation finished");
     }

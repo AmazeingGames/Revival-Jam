@@ -66,7 +66,7 @@ public class GameManager : Singleton<GameManager>
     {
         SceneLoader.Instance.LoadScene("RealWorld");
         SceneLoader.Instance.LoadScene("Circuits");
-
+        SceneLoader.Instance.LoadScene("Hotbar");
         StartCoroutine(LoadArcadeScene());
     }
 

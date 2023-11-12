@@ -15,27 +15,18 @@ public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
 
     readonly List<ItemsAndAbilities> learnedAbilities = new();
 
-    public List<ItemsAndAbilities> GetLearnedAbilities() => learnedAbilities.AsReadOnly().ToList();
+    //public List<ItemsAndAbilities> GetLearnedAbilities() => learnedAbilities.AsReadOnly().ToList();
 
     public void GainAbilityInformation(ItemsAndAbilities ability)
     {
-        /*
-        switch (ability)
-        {
-            case ItemsAndAbilities.Shake:
-                break;
-            case ItemsAndAbilities.Power:
-                break;
-            case ItemsAndAbilities.Crowbar:
-                break;
-            case ItemsAndAbilities.Hammer:
-                break;
-            case ItemsAndAbilities.Screwdriver:
-                break;
-        }
-        */
+        //learnedAbilities.Add(ability);
+        if (learnedAbilities.Contains(ability))
+            return;
 
         learnedAbilities.Add(ability);
+
         AbilityGain?.Invoke(ability);
+
+        Debug.Log($"Gained Information : {ability}");
     }
 }
