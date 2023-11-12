@@ -176,8 +176,8 @@ public class Walk : State<CharacterController>
     void WalkSound()
     {
         walkSoundTimer = timeBetweenWalkSound;
-        if (!AudioManager.Instance) return;
-        AudioManager.Instance.TriggerAudioClip(Player.Instance.GetWalkSound(), transform);
+        
+        TriggerAudioClip(Player.Instance.GetWalkSound(), transform);
     }
 
     public override void ChangeState()

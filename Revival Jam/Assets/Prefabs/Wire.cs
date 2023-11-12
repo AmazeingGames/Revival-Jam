@@ -99,8 +99,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 throw new Exception("Pointer Type Not Recognized");
         }
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.TriggerAudioClip(soundToPlay, transform);
+        AudioManager.TriggerAudioClip(soundToPlay, transform);
 
         SetMouseFollow(isGrab);
         GrabWire?.Invoke(this, isGrab);

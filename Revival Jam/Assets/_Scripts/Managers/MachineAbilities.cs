@@ -50,7 +50,7 @@ public class MachineAbilities : Singleton<MachineAbilities>
             
             EventSounds soundToPlay = IsMachineOn ? ArcadeOn : ArcadeOff;
 
-            AudioManager.Instance.TriggerAudioClip(soundToPlay, transform);
+            AudioManager.TriggerAudioClip(soundToPlay, transform);
         }
         
         //Perhaps check if we have already shaked the machine in the last 10 seconds

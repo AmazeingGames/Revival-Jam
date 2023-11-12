@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arcade Levels/ArcadeLevel_2.unity
     guid: 63859f3595977b14b8ebba48624200f2
+  - enabled: 1
+    path: Assets/Scenes/NewArcadeLevels/SceneTemplate.unity
+    guid: 1736666797e722b468927b430be84ac2
   m_configObjects: {}

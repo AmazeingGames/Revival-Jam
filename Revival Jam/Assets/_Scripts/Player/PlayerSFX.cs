@@ -33,7 +33,7 @@ public class PlayerSFX : MonoBehaviour
         {
             Debug.Log("joust running");
             isJoustPlaying = true;
-            AudioManager.Instance.TriggerAudioClip(PlayerJoust, transform);
+            AudioManager.TriggerAudioClip(PlayerJoust, transform);
             yield return new WaitForSeconds(timeBetweenSounds);
         }  
     }

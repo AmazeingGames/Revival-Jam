@@ -2928,7 +2928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26db349aa427d2d42b0f4cd94c52cffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelNameConvention: ArcadeLevel_
+  LevelNameConvention: NewArcadeLevel_
 --- !u!1 &959783758
 GameObject:
   m_ObjectHideFlags: 0

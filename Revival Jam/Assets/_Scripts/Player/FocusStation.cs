@@ -84,7 +84,7 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
         {
             //Debug.Log($"Player connecting to {linkedScreen} station");
 
-            AudioManager.Instance.TriggerAudioClip(stationEnterSound, transform);
+            TriggerAudioClip(stationEnterSound, transform);
         }
         else
         {

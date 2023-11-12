@@ -51,7 +51,7 @@ public abstract class Damageable : MonoBehaviour
     {
         while (true)
         {
-            AudioManager.Instance.TriggerAudioClip(takeDamageSound, transform);
+            TriggerAudioClip(takeDamageSound, transform);
             TakeDamage(damageAmount);
 
             yield return new WaitForSeconds(timeBetweenDamage);

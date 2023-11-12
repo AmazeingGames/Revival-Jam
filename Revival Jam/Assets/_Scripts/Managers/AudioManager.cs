@@ -60,19 +60,22 @@ public class AudioManager : Singleton<AudioManager>
         CleanUp();
     }
 
-    public void TriggerAudioClip(EventSounds sound, GameObject origin) => TriggerAudioClip(sound, origin.transform.position);
+    public static void TriggerAudioClip(EventSounds sound, GameObject origin) => TriggerAudioClip(sound, origin.transform.position);
 
     //Change this to be a static function that uses instance
-    public void TriggerAudioClip(EventSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
+    public static void TriggerAudioClip(EventSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
-    public void TriggerAudioClip(EventSounds sound, Vector3 origin)
+    public static void TriggerAudioClip(EventSounds sound, Vector3 origin)
     {
         //Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == EventSounds.Null)
             return;
 
-        TriggerAudioClip(SoundTypeToReference[sound], origin);
+        if (Instance == null)
+            return;
+
+        Instance.TriggerAudioClip(Instance.SoundTypeToReference[sound], origin);
     }
 
     void TriggerAudioClip(EventReference sound, Vector3 origin)
