@@ -34,7 +34,15 @@ public class HotbarManager : Singleton<HotbarManager>
         if (isGrabbingTool)
             HoldingItem = data;
         else
-            HoldingItem = null;
+            StartCoroutine(DropHoldingItem());
+    }
+
+    //Gives a delay for the interface to know we're holding an item
+    IEnumerator DropHoldingItem()
+    {
+        yield return new WaitForSeconds(.1f);
+
+        HoldingItem = null;
     }
 
     // Start is called before the first frame update

@@ -2117,7 +2117,7 @@ GameObject:
   - component: {fileID: 1461545898}
   - component: {fileID: 1461545897}
   - component: {fileID: 1461545896}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: Wiring Cabinet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

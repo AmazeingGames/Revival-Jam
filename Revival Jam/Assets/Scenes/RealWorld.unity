@@ -138,29 +138,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Circuit Interface
       objectReference: {fileID: 0}
+    - target: {fileID: 3351342064981848450, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.51410294
+      value: 0.6396368
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.53568584
+      value: 0.6495727
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.8419
+      value: -0.8417
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.9939
+      value: 12.937
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 44.431
+      value: 44.332
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalRotation.w
@@ -550,7 +554,8 @@ GameObject:
   - component: {fileID: 254176085}
   - component: {fileID: 254176084}
   - component: {fileID: 254176083}
-  m_Layer: 16
+  - component: {fileID: 254176086}
+  m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -636,6 +641,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254176081}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &254176086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254176081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e29979d88555da14daea951341ae20ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cabinet: {fileID: 254176081}
 --- !u!1 &257988030
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,6 +6544,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arcade Tool Interface
       objectReference: {fileID: 0}
+    - target: {fileID: 3351342064981848450, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -6536,11 +6558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.421294
+      value: 13.408
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 43.472
+      value: 43.763
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalRotation.w

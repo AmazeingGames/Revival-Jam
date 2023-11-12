@@ -18,6 +18,16 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public static event Action<bool, ItemData> GrabTool;
 
+    private void OnEnable()
+    {
+        Interface.UseItem += HandleUse;
+    }
+
+    private void OnDisable()
+    {
+        Interface.UseItem -= HandleUse;
+    }
+
     private void Start()
     {
         InitializeData();
@@ -33,6 +43,20 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 #endif
     }
 
+    void HandleUse(ItemData itemData)
+    {
+        if (itemData == null) 
+            return;
+
+        if (itemData != ItemData)
+            return;
+
+        OnUse();
+    }
+
+    //'Destroys' the item after being used
+    void OnUse() => gameObject.SetActive(false);
+
     //Sets position to mouse + offset
     void FollowMouse()
     {
@@ -43,7 +67,7 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Follows virtual cursor
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Mouse Click");
+        //Debug.Log("Mouse Click");
 
         followMouse = true;
 
@@ -53,7 +77,7 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Stops following mouse and resets to slot position
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("Mouse Up");
+        //Debug.Log("Mouse Up");
 
         if (followMouse)
             ResetPosition();
