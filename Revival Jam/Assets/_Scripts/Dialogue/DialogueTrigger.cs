@@ -26,7 +26,7 @@ public class DialogueTrigger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Read") && isPlayerInRange)
+        if (Input.GetButtonDown("Interact") && isPlayerInRange)
             StartDialogue();
     }
 

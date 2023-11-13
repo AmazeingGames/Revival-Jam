@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    [SerializeField] string LevelNameConvention;
+    [SerializeField] string levelNameConvention;
 
     public static event Action<AsyncOperation, bool> OnLoadStart;
 
@@ -27,7 +27,7 @@ public class SceneLoader : Singleton<SceneLoader>
         LoadLevel(levelToLoad);
     }
 
-    public bool LoadLevel(int level) => LoadScene($"{LevelNameConvention}{level}", true);
+    public bool LoadLevel(int level) => LoadScene($"{levelNameConvention}{level}", true);
 
     public bool LoadScene(string sceneName, bool isLevel = false)
     {
@@ -70,7 +70,13 @@ public class SceneLoader : Singleton<SceneLoader>
         return true;
     }
 
-    public static bool DoesLevelExist(int levelnumber) => DoesSceneExist($"Arcade_{levelnumber}");
+    public static bool DoesLevelExist(int levelnumber)
+    {
+        if (Instance == null)
+            return false;
+
+        return DoesSceneExist($"{Instance.levelNameConvention}{levelnumber}");
+    }
 
     public bool UnloadScene(string sceneName, bool bypass = false)
     {
