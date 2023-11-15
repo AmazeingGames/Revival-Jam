@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbb7e61c95cdf745a83c00e8c6f5b0e, type: 3}
+  m_Name: WrenchDialogue
+  m_EditorClassIdentifier: 
+  <Messages>k__BackingField:
+  - actorId: 0
+    message: 'Huh, first day working on this new game!  '
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "It\u2019s been rough looking for work lately, so I\u2019m glad to finally
+      get my hands on something.  "
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "Though I have to say, some parts of this job are a bit\u2026"
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "I mean there\u2019s just something\u2026"
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: off...
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "We\u2019re reusing some of the old parts and even modifying the old
+      game that used to be on the cabinet to save time \u2013 "
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "Boss says it\u2019s totally legit, but if we get in some legal trouble
+      it\u2019s not on me. "
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: Anyways
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: ' ...'
+    continuePreviousMessage: 1
+  - actorId: 0
+    message: "Thought I might save my notes in the console so everything\u2019s in
+      one place!"
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: Speaking of which, the jump button seems to be broken, so reminder to
+      fix that!
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "\u2026"
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: "\u2026"
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: 'Ah, there I fixed it! '
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: 'Note for future self: If it gets jammed again, use a wrench to screw
+      it back into place.'
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: 'Good work John! '
+    continuePreviousMessage: 0
+  - actorId: 0
+    message: ' I can already tell this is gonna be fun!'
+    continuePreviousMessage: 1
+  <Actors>k__BackingField:
+  - name: "\u201CC;\\Users\\John\\Devnotes>Note /Hello-World!"
+    sprite: {fileID: 0}
+  NewInformation: 0

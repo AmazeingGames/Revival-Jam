@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 996a08cfb7c0692429806237ae74ac95, type: 3}
-  m_Name: SmashArcade
+  m_Name: FixJump
   m_EditorClassIdentifier: 
-  <InterfaceTool>k__BackingField: 4
-  <InterfaceType>k__BackingField: 01000000
+  <InterfaceTool>k__BackingField: 6
+  <InterfaceType>k__BackingField: 0100000002000000

@@ -20,7 +20,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     bool shouldFollowMouse = false;
 
-    ReceptacleObject connectedReceptacle;
+    public ReceptacleObject ConnectedReceptacle { get; private set; }
 
     ReceptacleObject overlappingReceptacle = null;
 
@@ -41,7 +41,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         FocusStation.ConnectToStation -= HandleConnectToStation;
     }
 
-    //Drags wire on mouse down
+    //Drags wire
     public void OnPointerDown(PointerEventData eventData)
     {
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
@@ -50,7 +50,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         OnGrab(Pointer.Down);
     }
 
-    //Lets go of wire on mouse up
+    //Drops & Connects wire
     public void OnPointerUp(PointerEventData eventData)
     {
         if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Circuitry)
@@ -121,7 +121,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Removes the control from the old receptacle
     void WireToConnector()
     {
-        Controls controlToRemove = connectedReceptacle == null ? Controls.Unknown : connectedReceptacle.LinkedControl;
+        Controls controlToRemove = ConnectedReceptacle == null ? Controls.Unknown : ConnectedReceptacle.LinkedControl;
 
         //ReceptacleObject receptacleScript = overlappingReceptacle == null ? null : overlappingReceptacle.GetComponent<ReceptacleObject>();
 
@@ -129,7 +129,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         ChangeControlsEventArgs controlsEventArgs = new(overlappingReceptacle, controlToAdd, controlToRemove);
 
-        connectedReceptacle = overlappingReceptacle;
+        ConnectedReceptacle = overlappingReceptacle;
 
         Debug.Log($"is overlappingReceptacle null : {overlappingReceptacle == null}");
 

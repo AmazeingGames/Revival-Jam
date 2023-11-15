@@ -8,6 +8,8 @@ using UnityEngine.InputSystem.HID;
 public class Interface : MonoBehaviour
 {
     [SerializeField] InterfaceData InterfaceData;
+    [field: SerializeField] public LayerMask InterfaceLayer { get; private set; }
+
 
     public static event Action<ItemData> UseItem;
 
@@ -22,7 +24,7 @@ public class Interface : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out var hit, 5, InterfaceData.InterfaceLayer))
+        if (Physics.Raycast(ray, out var hit, 5, InterfaceLayer))
         {
             //Debug.Log(hit.transform.name);
 
@@ -36,7 +38,7 @@ public class Interface : MonoBehaviour
     {
         var holdingItem = HotbarManager.Instance.HoldingItem;
 
-        if (PlayerFocus.Instance.Focused != InterfaceData.InterfaceType)
+        if (!InterfaceData.InterfaceType.Contains(PlayerFocus.Instance.Focused))
             return;
 
         if (holdingItem == null || holdingItem.ItemType != InterfaceData.InterfaceTool)

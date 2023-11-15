@@ -6,6 +6,7 @@ public class WiringManager : Singleton<WiringManager>
 {
     [SerializeField] GameObject wiringCabinet;
 
+    //Sets on and off the virtual screen **quad** to give the player access
     public static IEnumerator SetWiringCabinet(bool isActive)
     {
         while (Instance == null)

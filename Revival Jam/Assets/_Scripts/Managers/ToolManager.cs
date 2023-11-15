@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static ItemAndAbilityManager;
 
@@ -41,6 +42,21 @@ public class ToolManager : MonoBehaviour
                 break;
 
             case ItemsAndAbilities.Wrench:
+                if (ControlsManager.IsControlConnected(ControlsManager.Controls.Jump))
+                {
+                    Debug.Log("Jump is already connected");
+                    return;
+                }
+
+                var wires = ControlsManager.Instance.Wires;
+                var receptacles = ControlsManager.Instance.Receptacles;
+
+                var unusedWire = wires.First(w => w.ConnectedReceptacle == null);
+                var jumpReceptacle = receptacles.First(r => r.LinkedControl == ControlsManager.Controls.Jump);
+
+                Debug.Log($"Enable Jump | Using wire: {unusedWire} | Using receptacle: {jumpReceptacle}");
+
+                unusedWire.ManuallyConnect(jumpReceptacle);
                 break;
         }
     }

@@ -97,6 +97,7 @@ public class ControlsManager : Singleton<ControlsManager>
 
             Wires[i].ManuallyConnect(Receptacles.First(r => r.LinkedControl == StartingControls[i]));
 
+            //Not sure what the point of this variable is for
             var control = Receptacles.First(r => r.LinkedControl == StartingControls[i]);
         }
     }

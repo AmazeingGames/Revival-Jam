@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArcadeQuad : Singleton<ArcadeQuad>
 {
     [SerializeField] GameObject cabinet;
+    [SerializeField] GameObject offdisplay;
 
     public static IEnumerator SetCabinet(bool isActive)
     {
@@ -17,5 +18,6 @@ public class ArcadeQuad : Singleton<ArcadeQuad>
         Debug.Log($"Set wiring cabinet active {isActive} - wiring cabine is active {Instance.cabinet.activeSelf}");
 
         Instance.cabinet.SetActive(isActive);
+        Instance.offdisplay.SetActive(isActive);
     }
 }

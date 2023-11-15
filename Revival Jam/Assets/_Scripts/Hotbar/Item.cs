@@ -45,10 +45,7 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void HandleUse(ItemData itemData)
     {
-        if (itemData == null) 
-            return;
-
-        if (itemData != ItemData)
+        if (itemData == null || itemData != ItemData) 
             return;
 
         OnUse();

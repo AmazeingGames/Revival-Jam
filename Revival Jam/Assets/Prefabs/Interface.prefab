@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -7986702552760058872}
   - component: {fileID: -6165531832953788036}
   - component: {fileID: 1613090129}
-  m_Layer: 2
+  m_Layer: 16
   m_Name: Interface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,10 +59,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b58985c68ea504caf07978091e77e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceLayer:
+  InterfaceData: {fileID: 0}
+  <InterfaceLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 65536
-  InterfaceData: {fileID: 0}
 --- !u!212 &1613090129
 SpriteRenderer:
   m_ObjectHideFlags: 0

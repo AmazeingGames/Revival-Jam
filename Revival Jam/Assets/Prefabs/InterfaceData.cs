@@ -6,7 +6,6 @@ using UnityEngine;
 public class InterfaceData : ScriptableObject
 {
     [field: SerializeField] public ItemAndAbilityManager.ItemsAndAbilities InterfaceTool { get; private set; }
-    [field: SerializeField] public PlayerFocus.FocusedOn InterfaceType { get; private set; }
-    [field: SerializeField] public LayerMask InterfaceLayer { get; private set; }
+    [field: SerializeField] public List<PlayerFocus.FocusedOn> InterfaceType { get; private set; }
 
 }

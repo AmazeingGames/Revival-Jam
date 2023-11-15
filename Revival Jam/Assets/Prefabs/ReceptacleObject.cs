@@ -10,7 +10,9 @@ using static ControlsManager;
 public class ReceptacleObject : MonoBehaviour
 {
     [field: SerializeField] public Transform WirePosition { get; private set; }
+
     [SerializeField] TextMeshProUGUI displayText;
+
     [field: SerializeField] public Controls LinkedControl { get; private set; }
 
     private void OnEnable()
