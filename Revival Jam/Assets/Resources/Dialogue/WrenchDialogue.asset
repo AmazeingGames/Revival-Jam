@@ -55,13 +55,10 @@ MonoBehaviour:
     message: "\u2026"
     continuePreviousMessage: 0
   - actorId: 0
-    message: "\u2026"
-    continuePreviousMessage: 0
-  - actorId: 0
     message: 'Ah, there I fixed it! '
     continuePreviousMessage: 0
   - actorId: 0
-    message: 'Note for future self: If it gets jammed again, use a wrench to screw
+    message: 'Note for future self: If it gets jammed again, use a wrench to hit
       it back into place.'
     continuePreviousMessage: 0
   - actorId: 0
@@ -73,4 +70,4 @@ MonoBehaviour:
   <Actors>k__BackingField:
   - name: "\u201CC;\\Users\\John\\Devnotes>Note /Hello-World!"
     sprite: {fileID: 0}
-  NewInformation: 0
+  NewInformation: 6

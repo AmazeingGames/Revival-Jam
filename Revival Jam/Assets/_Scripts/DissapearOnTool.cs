@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DissapearOnTool : MonoBehaviour
+{
+    [SerializeField] bool disappearOnToolGain = false;
+    [SerializeField] bool disappearOnToolUse = false;
+
+    [SerializeField] ItemAndAbilityManager.ItemsAndAbilities toolGainType;
+    [SerializeField] ItemAndAbilityManager.ItemsAndAbilities toolUseType;
+
+    private void OnEnable()
+    {
+        ItemAndAbilityManager.AbilityGain += HandleAbilityGain;
+        Interface.UseItem += HandleToolUse;
+    }
+    private void OnDisable()
+    {
+        ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
+        Interface.UseItem -= HandleToolUse;
+
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+           
+    }
+
+    void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities abilities)
+    {
+        if (!disappearOnToolGain)
+            return;
+
+        if (abilities != toolGainType)
+            return;
+
+        gameObject.SetActive(false);
+    }
+
+    void HandleToolUse(ItemData itemData)
+    {
+        if (!disappearOnToolUse)
+            return;
+
+        if (itemData.ItemType != toolUseType)
+            return;
+
+        gameObject.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
