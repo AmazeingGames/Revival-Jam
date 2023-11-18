@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using static ItemAndAbilityManager;
 
-public class ToolManager : MonoBehaviour
+public class ToolManager : Singleton<ToolManager>
 {
     private void OnEnable()
     {
@@ -16,7 +16,10 @@ public class ToolManager : MonoBehaviour
         Interface.UseItem -= HandleUseTool;
     }
 
-    
+    readonly List<ItemData> usedTools = new();  
+
+    public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
+
     void HandleUseTool(ItemData toolData)
     {
         if (toolData == null)
@@ -58,7 +61,13 @@ public class ToolManager : MonoBehaviour
 
                 unusedWire.ManuallyConnect(jumpReceptacle);
                 break;
+
+            default:
+                Debug.LogWarning("Case not covered");
+                return;
         }
+
+        usedTools.Add(toolData);
     }
 
     void HandleSpawnTool(ItemData toolData)

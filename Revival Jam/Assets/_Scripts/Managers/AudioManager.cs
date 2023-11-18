@@ -24,6 +24,8 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] EventReference arcadeOn;
     [SerializeField] EventReference arcadeOff;
     [SerializeField] EventReference circuitPanelOpen;
+    [SerializeField] EventReference arcadeUIHover;
+    [SerializeField] EventReference arcadeUISelect;
 
     [field: Header("3D Game")]
     [SerializeField] EventReference player3DFootsteps;
@@ -78,10 +80,7 @@ public class AudioManager : Singleton<AudioManager>
         Instance.TriggerAudioClip(Instance.SoundTypeToReference[sound], origin);
     }
 
-    void TriggerAudioClip(EventReference sound, Vector3 origin)
-    {
-        RuntimeManager.PlayOneShot(sound, origin);
-    }
+    void TriggerAudioClip(EventReference sound, Vector3 origin) => RuntimeManager.PlayOneShot(sound, origin);
 
     void CleanUp()
     {
@@ -91,18 +90,4 @@ public class AudioManager : Singleton<AudioManager>
             eventInstance.release();
         }
     }
-
-    /*
-    //Creates the instance
-    EventInstance CreateEventInstance(EventSounds eventSound) => CreateEventInstance(SoundTypeToReference[eventSound]);
-
-    EventInstance CreateEventInstance(EventReference eventReference)
-    {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-
-        EventInstances.Add(eventInstance);
-
-        return eventInstance;
-    }
-    */
 }

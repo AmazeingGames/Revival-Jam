@@ -17,6 +17,9 @@ public class HotbarManager : Singleton<HotbarManager>
 
     public ItemData HoldingItem { get; private set; } = null;
 
+    readonly List<ItemData> gainedTools = new();
+    public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetGainedTools() => gainedTools.AsReadOnly();
+
     private void OnEnable()
     {
         ItemAndAbilityManager.AbilityGain += HandleAbilityGain;
@@ -37,7 +40,7 @@ public class HotbarManager : Singleton<HotbarManager>
             StartCoroutine(DropHoldingItem());
     }
 
-    //Gives a delay for the interface to know we're holding an item
+    //Gives a delay for the interface to know we're holding an itemToGain
     IEnumerator DropHoldingItem()
     {
         yield return new WaitForSeconds(.1f);
@@ -73,11 +76,17 @@ public class HotbarManager : Singleton<HotbarManager>
         DebugGainItems();
     }
 
-    //Adds the item to the player's hotbar
+    //Adds the itemToGain to the player's hotbar
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities ability)
     {
-        if (ItemsDictionary.ContainsKey(ability))
-            ItemsDictionary[ability].gameObject.SetActive(true);
+        if (!ItemsDictionary.ContainsKey(ability))
+            return;
+
+        Item itemToGain = ItemsDictionary[ability];
+
+        itemToGain.gameObject.SetActive(true);
+
+        gainedTools.Add(itemToGain.ItemData);
     }
 
     //Simulates what it would be like to handle an Ability Gain

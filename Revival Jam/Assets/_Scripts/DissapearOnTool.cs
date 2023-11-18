@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
+using static ItemAndAbilityManager;
 
 public class DissapearOnTool : MonoBehaviour
 {
@@ -11,15 +15,17 @@ public class DissapearOnTool : MonoBehaviour
     [SerializeField] bool appearOnToolGain = false;
     [SerializeField] bool appearOnToolUse = false;
 
-    [SerializeField] ItemAndAbilityManager.ItemsAndAbilities appearToolGainType;
-    [SerializeField] ItemAndAbilityManager.ItemsAndAbilities appearToolUseType;
+    [SerializeField] ItemsAndAbilities appearToolGainType;
+    [SerializeField] ItemsAndAbilities appearToolUseType;
 
     [Header("Disappear Settings")]
     [SerializeField] bool disappearOnToolGain = false;
     [SerializeField] bool disappearOnToolUse = false;
 
-    [SerializeField] ItemAndAbilityManager.ItemsAndAbilities toolGainType;
-    [SerializeField] ItemAndAbilityManager.ItemsAndAbilities toolUseType;
+    [FormerlySerializedAs("toolGainType")]
+    [SerializeField] ItemsAndAbilities disappearToolGainType;
+    [FormerlySerializedAs("toolUseType")]
+    [SerializeField] ItemsAndAbilities disappearToolUseType;
 
     private void OnEnable()
     {
@@ -36,14 +42,15 @@ public class DissapearOnTool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-           
+        CheckUsedToolsDisappear();
+        CheckGainedToolsDisappear();
     }
 
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities abilities)
     {
         if (disappearOnToolGain)
         {
-            if (abilities != toolGainType)
+            if (abilities != disappearToolGainType)
                 return;
 
             gameObject.SetActive(false);
@@ -59,14 +66,16 @@ public class DissapearOnTool : MonoBehaviour
 
     }
 
+    //This whole disappear/appear thing needs to be refactored
+    //Setup is a bit unintuitive/messy
     void HandleToolUse(ItemData itemData)
     {
         if (disappearOnToolUse)
         {
-            if (itemData.ItemType != toolUseType)
+            if (itemData.ItemType != disappearToolUseType)
                 return;
 
-            gameObject.SetActive(false);
+            Disappear();
         }
 
         if (appearOnToolUse)
@@ -74,9 +83,40 @@ public class DissapearOnTool : MonoBehaviour
             if (itemData.ItemType != appearToolUseType)
                 return;
 
-            gameObject.SetActive(true);
+            Appear();
         }
     }
+
+    void CheckUsedToolsDisappear()
+    {
+        var usedTools = ToolManager.Instance.GetUsedTools();
+
+        var usedToolTypes = from tool in usedTools select tool.ItemType;
+
+        if (usedToolTypes.Contains(disappearToolUseType))
+            Disappear();
+    }
+
+    void CheckGainedToolsDisappear()
+    {
+        var usedTools = HotbarManager.Instance.GetGainedTools();
+
+        var usedToolTypes = from tool in usedTools select tool.ItemType;
+
+        if (usedToolTypes.Contains(disappearToolGainType))
+            Disappear();
+    }
+
+    void Disappear()
+    {
+        gameObject.SetActive(false);
+    }
+    
+    void Appear()
+    {
+        gameObject.SetActive(true);
+    }
+
 
     void SetActive(bool active)
     {
