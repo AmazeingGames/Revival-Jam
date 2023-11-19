@@ -2,34 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static AudioManager;
 
 public abstract class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
+    [SerializeField] protected bool isArcadeButton = false;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        OnClick();
-    }
+    EventSounds HoverSound => isArcadeButton ? EventSounds.ArcadeUIHover : EventSounds.UIHover;
+    EventSounds ClickSound => isArcadeButton ? EventSounds.ArcadeUISelect : EventSounds.UISelect;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        OnEnter();
-    }
+    Transform Origin => isArcadeButton ? ArcadeSoundEmitter.Transform : transform;
+
+    public void OnPointerClick(PointerEventData eventData) => OnClick();
+
+    public void OnPointerEnter(PointerEventData eventData) => OnEnter();
 
     public virtual void OnClick()
     {
-        //if (CanBeClicked())
-            //AudioManager.Instance.TriggerAudioClip(UIClick, gameObject);
-    }
+        if (!CanBeClicked())
+            return;
 
+        TriggerAudioClip(ClickSound, Origin);
+    }
 
     public virtual void OnEnter()
     {
+        if (!CanBeClicked())
+            return;
 
+        TriggerAudioClip(HoverSound, Origin);
     }
 
-    public virtual bool CanBeClicked()
-    {
-        return true;
-    }
+    public virtual bool CanBeClicked() => true;
 }

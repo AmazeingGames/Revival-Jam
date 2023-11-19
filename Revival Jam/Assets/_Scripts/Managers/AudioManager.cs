@@ -27,10 +27,14 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] EventReference arcadeUIHover;
     [SerializeField] EventReference arcadeUISelect;
 
+    [field: Header("UI")]
+    [SerializeField] EventReference gameUIHover;
+    [SerializeField] EventReference gameUISelect;
+
     [field: Header("3D Game")]
     [SerializeField] EventReference player3DFootsteps;
 
-    public enum EventSounds { Null, CastleAmbience, CastleGlitchAmbience, ForestAmbience, ForestGlitchAmbience, PlayerJoust, PlayerDamage, PlayerGrassFootsteps, PlayerStoneFootsteps, CircuitCablePlug, CircuitCableUnplug, ArcadeOn, ArcadeOff, CircuitPanelOpen, Player3DFootsteps }
+    public enum EventSounds { Null, CastleAmbience, CastleGlitchAmbience, ForestAmbience, ForestGlitchAmbience, PlayerJoust, PlayerDamage, PlayerGrassFootsteps, PlayerStoneFootsteps, CircuitCablePlug, CircuitCableUnplug, ArcadeOn, ArcadeOff, CircuitPanelOpen, Player3DFootsteps, ArcadeUIHover, ArcadeUISelect, UIHover, UISelect}
 
     Dictionary<EventSounds, EventReference> SoundTypeToReference;
 
@@ -54,6 +58,10 @@ public class AudioManager : Singleton<AudioManager>
             { EventSounds.ArcadeOff, arcadeOff},
             { EventSounds.CircuitPanelOpen, circuitPanelOpen },
             { EventSounds.Player3DFootsteps, player3DFootsteps },
+            { EventSounds.ArcadeUIHover, arcadeUIHover },
+            { EventSounds.ArcadeUISelect, arcadeUISelect },
+            { EventSounds.UIHover, gameUIHover },
+            { EventSounds.UISelect, gameUISelect },
         };
     }
 
