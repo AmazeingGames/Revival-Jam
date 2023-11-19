@@ -3,7 +3,9 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using Unity.VisualScripting;
 using UnityEngine;
+
 public class AudioManager : Singleton<AudioManager>
 {
     [field: Header("Arcade Game Ambience")]
@@ -38,6 +40,7 @@ public class AudioManager : Singleton<AudioManager>
 
     Dictionary<EventSounds, EventReference> SoundTypeToReference;
 
+    readonly Dictionary<EventSounds, EventInstance> SoundTypeToInstance = new();
     readonly List<EventInstance> EventInstances = new();
 
     void Start()
@@ -72,12 +75,12 @@ public class AudioManager : Singleton<AudioManager>
 
     public static void TriggerAudioClip(EventSounds sound, GameObject origin) => TriggerAudioClip(sound, origin.transform.position);
 
-    //Change this to be a static function that uses instance
+    //Change this to be a static function that uses value
     public static void TriggerAudioClip(EventSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
     public static void TriggerAudioClip(EventSounds sound, Vector3 origin)
     {
-        //Debug.Log($"Triggered Audio Clip: {sound}");
+        //Debug.Log($"Triggered Audio Clip: {key}");
 
         if (sound == EventSounds.Null)
             return;
@@ -89,6 +92,44 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     void TriggerAudioClip(EventReference sound, Vector3 origin) => RuntimeManager.PlayOneShot(sound, origin);
+
+    EventInstance CreateEventInstance(EventSounds key, EventReference reference)
+    {
+        EventInstance value = RuntimeManager.CreateInstance(reference);
+
+        EventInstances.Add(value);
+        SoundTypeToInstance.Add(key, value);
+
+        return value;
+    }
+
+    //Starts and Stops a given event instance
+    public void StartEventInstance(EventSounds key, bool start = true, FMOD.Studio.STOP_MODE stopMode = FMOD.Studio.STOP_MODE.ALLOWFADEOUT)
+    {
+        //If no event instance exists, we create a new instance and recur
+        if (!SoundTypeToInstance.TryGetValue(key, out EventInstance instance))
+        {
+            if (!SoundTypeToReference.TryGetValue(key, out EventReference reference))
+                return;
+
+            var newInstance = CreateEventInstance(key, reference);
+            
+            Debug.Log($"Created new EventInstance (key) {key} | (reference) {reference} | (instnace) {newInstance}");
+
+            StartEventInstance(key, start, stopMode);
+
+            return;
+        }
+
+        if (start)
+            instance.start();
+        else
+            instance.stop(stopMode);
+
+        Debug.Log($"{(start ? "Started" : "Stopped")} {key}");
+    }
+
+    
 
     void CleanUp()
     {

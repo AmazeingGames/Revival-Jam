@@ -11,9 +11,4 @@ public class PlayButton : UIButtonBase
         GameManager.Instance.UpdateGameState(GameManager.GameState.StartGame);
         MainMenu.Instance.UpdateState(MainMenu.MenuState.GameStart);
     }
-
-    public override void OnEnter()
-    {
-
-    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static AudioManager;
 
-public abstract class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
+public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
     [SerializeField] protected bool isArcadeButton = false;
 
@@ -22,12 +22,18 @@ public abstract class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPoint
         if (!CanBeClicked())
             return;
 
+        if (isArcadeButton)
+            return;
+
         TriggerAudioClip(ClickSound, Origin);
     }
 
     public virtual void OnEnter()
     {
         if (!CanBeClicked())
+            return;
+
+        if (isArcadeButton)
             return;
 
         TriggerAudioClip(HoverSound, Origin);

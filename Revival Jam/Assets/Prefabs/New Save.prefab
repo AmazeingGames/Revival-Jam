@@ -301,3 +301,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa861137c3897ce4d89f1685ecbc7212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isArcadeButton: 1

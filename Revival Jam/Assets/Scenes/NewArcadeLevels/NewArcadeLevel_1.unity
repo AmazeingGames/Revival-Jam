@@ -6978,10 +6978,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castleAmbience:
     Guid:
-      Data1: -1962390025
-      Data2: 1268748878
-      Data3: 819367058
-      Data4: 1510063668
+      Data1: 1143012046
+      Data2: 1075363930
+      Data3: 1294306176
+      Data4: -300508654
     Path: event:/Amb/Amb_Castle
   castleGlitchAmbience:
     Guid:
@@ -6989,13 +6989,13 @@ MonoBehaviour:
       Data2: 1075363930
       Data3: 1294306176
       Data4: -300508654
-    Path: event:/Amb/Amb_Castle_Glitch
+    Path: event:/Amb/Amb_Castle
   forestAmbience:
     Guid:
-      Data1: -518376280
-      Data2: 1267435301
-      Data3: -1955760709
-      Data4: -1833489258
+      Data1: -970859097
+      Data2: 1211753154
+      Data3: -13866850
+      Data4: -45242747
     Path: event:/Amb/Amb_Forest
   forestGlitchAmbience:
     Guid:
@@ -7003,7 +7003,7 @@ MonoBehaviour:
       Data2: 1211753154
       Data3: -13866850
       Data4: -45242747
-    Path: event:/Amb/Amb_Forest_Glitch
+    Path: event:/Amb/Amb_Forest
   playerJoust:
     Guid:
       Data1: 1844079503
@@ -7024,7 +7024,7 @@ MonoBehaviour:
       Data2: 1127201577
       Data3: -1918228823
       Data4: -470494814
-    Path: event:/Player/Knight_FS_Grass
+    Path: event:/Player/Knight_FS
   playerStoneFootsteps:
     Guid:
       Data1: 53141662
@@ -7067,6 +7067,34 @@ MonoBehaviour:
       Data3: -639264101
       Data4: 1800864614
     Path: event:/Arcade_Cabinet/Panel_Open
+  arcadeUIHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  arcadeUISelect:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  gameUIHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  gameUISelect:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   player3DFootsteps:
     Guid:
       Data1: 1422787389
@@ -21783,10 +21811,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe501809b36afed46b15641d2169f6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 0}
+  appearOnToolGain: 0
+  appearOnToolUse: 0
+  appearToolGainType: 0
+  appearToolUseType: 0
   disappearOnToolGain: 0
   disappearOnToolUse: 1
-  toolGainType: 0
-  toolUseType: 6
+  disappearToolGainType: 0
+  disappearToolUseType: 6
 --- !u!1001 &1064487068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27063,10 +27096,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe501809b36afed46b15641d2169f6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 0}
+  appearOnToolGain: 0
+  appearOnToolUse: 0
+  appearToolGainType: 0
+  appearToolUseType: 0
   disappearOnToolGain: 1
   disappearOnToolUse: 1
-  toolGainType: 6
-  toolUseType: 6
+  disappearToolGainType: 6
+  disappearToolUseType: 6
 --- !u!1 &1278509284
 GameObject:
   m_ObjectHideFlags: 0
