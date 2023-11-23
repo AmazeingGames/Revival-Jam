@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static FocusStation;
 
 public class MouseLook : MonoBehaviour
 {
     public enum RotationAxes { MouseXY, MouseX, MouseY }
-
 
     public RotationAxes axes = RotationAxes.MouseXY;
 
@@ -23,6 +23,27 @@ public class MouseLook : MonoBehaviour
     bool isLocked = false;
     bool escape = false;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (TryGetComponent<Rigidbody>(out var body))
+            body.freezeRotation = true;
+
+        StartCoroutine(IsLockedCheck());
+    }
+
+    private void OnEnable()
+    {
+        ConnectToStation += HandleConnectToStation;
+        Resume.ResumeGame += HandleResumeGame;
+    }
+
+    private void OnDisable()
+    {
+        ConnectToStation -= HandleConnectToStation;
+        Resume.ResumeGame -= HandleResumeGame;
+    }
+
     void CalcVertRot()
     {
         verticalRot -= Input.GetAxis("Mouse Y") * sensitvityVer;
@@ -34,26 +55,7 @@ public class MouseLook : MonoBehaviour
         return Input.GetAxis("Mouse X") * sensitivityHor;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(TryGetComponent<Rigidbody>(out var body))
-        {
-            body.freezeRotation = true;
-        }
-
-        StartCoroutine(IsLockedCheck());
-    }
-
-    private void OnEnable()
-    {
-        ConnectToStation += HandleConnectToStation;
-    }
-
-    private void OnDisable()
-    {
-        ConnectToStation -= HandleConnectToStation;
-    }
+    void HandleResumeGame() => escape = false;
 
     //Makes sure isLocked stays properly synced with the game
     //Note for Performance: Running for every instance of MouseLook takes up unnecessary performance.

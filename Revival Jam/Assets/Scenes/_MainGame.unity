@@ -485,11 +485,11 @@ MonoBehaviour:
     Path: event:/Player/Player_FS
   endingSounds:
     Guid:
-      Data1: 1322450809
-      Data2: 1184677349
-      Data3: 2093425039
-      Data4: -1115940861
-    Path: event:/Other/ShakeStart
+      Data1: 1663357229
+      Data2: 1197833168
+      Data3: 1792298649
+      Data4: 1717853835
+    Path: event:/Other/Ending
   consoleBlip:
     Guid:
       Data1: -721626253

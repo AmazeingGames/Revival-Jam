@@ -41,6 +41,8 @@ public abstract class Damageable : MonoBehaviour
 
         health -= damageAmount;
 
+        TriggerAudioClip(takeDamageSound, transform);
+
         if (health <= 0)
         {
             Die();
@@ -51,7 +53,6 @@ public abstract class Damageable : MonoBehaviour
     {
         while (true)
         {
-            TriggerAudioClip(takeDamageSound, transform);
             TakeDamage(damageAmount);
 
             yield return new WaitForSeconds(timeBetweenDamage);

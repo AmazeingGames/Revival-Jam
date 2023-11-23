@@ -39,6 +39,8 @@ public class ToolManager : Singleton<ToolManager>
             case ItemsAndAbilities.Hammer:
                 StartCoroutine(ArcadeQuad.SetCabinet(isActive: false));
                 Debug.Log("Thank you for freeing me! MuHAHAHA");
+
+                AudioManager.TriggerAudioClip(AudioManager.EventSounds.Ending, ArcadeSoundEmitter.Transform);
                 break;
 
             case ItemsAndAbilities.Screwdriver:

@@ -2310,6 +2310,10 @@ PrefabInstance:
       value: 0.61916
       objectReference: {fileID: 0}
     - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 7.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173066567377303877, guid: b0d5757d49b4a404ab7bc4af89a88e79, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.612
       objectReference: {fileID: 0}
@@ -2918,6 +2922,7 @@ GameObject:
   - component: {fileID: 823926601}
   - component: {fileID: 823926600}
   - component: {fileID: 823926599}
+  - component: {fileID: 823926603}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -3064,6 +3069,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 823926603}
+        m_TargetAssemblyTypeName: Resume, Assembly-CSharp
+        m_MethodName: OnResume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &823926601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3102,6 +3119,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823926597}
   m_CullTransparentMesh: 1
+--- !u!114 &823926603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823926597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24289802a58a481428a0c8a8a1fdf5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &885688318
 GameObject:
   m_ObjectHideFlags: 0
