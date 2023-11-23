@@ -728,7 +728,6 @@ RectTransform:
   - {fileID: 129802041}
   - {fileID: 620895197}
   - {fileID: 1571511717}
-  - {fileID: 779839582}
   m_Father: {fileID: 1696395889}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1970,6 +1969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 141918813}
+  menuCamera: {fileID: 779839581}
 --- !u!1 &620723423
 GameObject:
   m_ObjectHideFlags: 0
@@ -2516,7 +2516,7 @@ GameObject:
   - component: {fileID: 779839581}
   - component: {fileID: 779839583}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: MenuCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2573,12 +2573,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779839579}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -283.02606, y: 22, z: 0}
-  m_LocalScale: {x: 0.6956521, y: 0.6956521, z: 0.6956521}
+  m_LocalPosition: {x: 107.46982, y: 249.7125, z: 0}
+  m_LocalScale: {x: 0.63913035, y: 0.63913035, z: 0.63913035}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 141918814}
-  m_RootOrder: 4
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &779839583
 MonoBehaviour:

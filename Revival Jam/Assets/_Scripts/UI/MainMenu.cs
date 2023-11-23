@@ -7,6 +7,8 @@ using static GameManager;
 public class MainMenu : Singleton<MainMenu>
 {
     [SerializeField] Canvas mainMenu;
+    [SerializeField] Camera menuCamera;
+
     public enum MenuState { MainMenu, LevelSelectMenu, GameStart, Pause }
 
     public MenuState CurrentState { get; private set; }
@@ -52,6 +54,12 @@ public class MainMenu : Singleton<MainMenu>
     void OnMainMenuEnter()
     {
         mainMenu.gameObject.SetActive(true);
+        
+        if (!menuCamera.isActiveAndEnabled)
+        {
+            Debug.LogWarning("MenuCamera was not active. Setting Cam active");
+            menuCamera.gameObject.SetActive(true);
+        }
     }
 
     void OnLevelSelectMenuEnter()
@@ -62,6 +70,7 @@ public class MainMenu : Singleton<MainMenu>
     void MenuExit()
     {
         mainMenu.gameObject.SetActive(false);
+        menuCamera.gameObject.SetActive(false);
     }
 
     void PauseGame()
