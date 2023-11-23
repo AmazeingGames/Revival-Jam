@@ -24,7 +24,10 @@ public class AttackHitbox : MonoBehaviour
     private void OnDisable()
     {
         foreach (GameObject obj in hitObjects)
-            Hit?.Invoke(obj, false);
+        {
+            if (obj != null)
+                Hit?.Invoke(obj, false);
+        }
 
         hitObjects.Clear();
         Debug.Log("Cleared hit objects");

@@ -385,20 +385,27 @@ MonoBehaviour:
       Data3: 1016229791
       Data4: -1261953178
     Path: event:/Player/Knight_Damage
-  playerGrassFootsteps:
+  arcadeFootsteps:
     Guid:
       Data1: -1184206891
       Data2: 1127201577
       Data3: -1918228823
       Data4: -470494814
     Path: event:/Player/Knight_FS
-  playerStoneFootsteps:
+  fireWall:
     Guid:
-      Data1: -1184206891
-      Data2: 1127201577
-      Data3: -1918228823
-      Data4: -470494814
-    Path: event:/Player/Knight_FS
+      Data1: -717055751
+      Data2: 1093861397
+      Data3: -609620568
+      Data4: 973732384
+    Path: event:/Amb/Amb_Fire_Wall
+  enemyDamage:
+    Guid:
+      Data1: 1191808672
+      Data2: 1150183276
+      Data3: -1655495784
+      Data4: 1366679655
+    Path: event:/Other/Skeleton_Damage
   circuitCablePlug:
     Guid:
       Data1: 1477670588
@@ -448,6 +455,13 @@ MonoBehaviour:
       Data3: 872947876
       Data4: -1692866111
     Path: event:/UI/UI_Select
+  shakeArcade:
+    Guid:
+      Data1: -1308587326
+      Data2: 1317913276
+      Data3: -2021656394
+      Data4: 1050791445
+    Path: event:/Arcade_Cabinet/Shake_Arcade
   gameUIHover:
     Guid:
       Data1: 587588092
@@ -469,6 +483,20 @@ MonoBehaviour:
       Data3: -1967562111
       Data4: 2074404572
     Path: event:/Player/Player_FS
+  endingSounds:
+    Guid:
+      Data1: 1322450809
+      Data2: 1184677349
+      Data3: 2093425039
+      Data4: -1115940861
+    Path: event:/Other/ShakeStart
+  consoleBlip:
+    Guid:
+      Data1: -721626253
+      Data2: 1258798338
+      Data3: -1918120796
+      Data4: -129498168
+    Path: event:/Other/Console_Blip
 --- !u!1 &113366750
 GameObject:
   m_ObjectHideFlags: 0
@@ -2486,7 +2514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 779839582}
   - component: {fileID: 779839581}
-  - component: {fileID: 779839580}
+  - component: {fileID: 779839583}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -2494,14 +2522,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &779839580
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 779839579}
-  m_Enabled: 1
 --- !u!20 &779839581
 Camera:
   m_ObjectHideFlags: 0
@@ -2560,6 +2580,19 @@ Transform:
   m_Father: {fileID: 141918814}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &779839583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779839579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &792686647
 GameObject:
   m_ObjectHideFlags: 0
@@ -4144,6 +4177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalTextSpeed: 0.05
+  blipDelay: 0
   dialoguePortrait: {fileID: 1575645867}
   dialogueName: {fileID: 1297940732}
   dialogueSpeech: {fileID: 2107827861}

@@ -117,8 +117,6 @@ public class Walk : State<CharacterController>
         return canWalkDirection;
     }
 
-    
-
     public override void FixedUpdate()
     {
         MovePlayer();

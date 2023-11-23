@@ -1,5 +1,6 @@
 using FMOD.Studio;
 using FMODUnity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -14,11 +15,12 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] EventReference forestAmbience;
     [SerializeField] EventReference forestGlitchAmbience;
 
-    [field: Header("Arcade Game Player SFX")]
+    [field: Header("Arcade Game SFX")]
     [SerializeField] EventReference playerJoust;
     [SerializeField] EventReference playerDamage;
-    [SerializeField] EventReference playerGrassFootsteps;
-    [SerializeField] EventReference playerStoneFootsteps;
+    [SerializeField] EventReference arcadeFootsteps;
+    [SerializeField] EventReference fireWall;
+    [SerializeField] EventReference enemyDamage;
 
     [field: Header("Arcade Cabinet SFX")]
     [SerializeField] EventReference circuitCablePlug;
@@ -28,6 +30,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] EventReference circuitPanelOpen;
     [SerializeField] EventReference arcadeUIHover;
     [SerializeField] EventReference arcadeUISelect;
+    [SerializeField] EventReference shakeArcade;
 
     [field: Header("UI")]
     [SerializeField] EventReference gameUIHover;
@@ -35,13 +38,23 @@ public class AudioManager : Singleton<AudioManager>
 
     [field: Header("3D Game")]
     [SerializeField] EventReference player3DFootsteps;
+    [SerializeField] EventReference endingSounds;
 
-    public enum EventSounds { Null, CastleAmbience, CastleGlitchAmbience, ForestAmbience, ForestGlitchAmbience, PlayerJoust, PlayerDamage, PlayerGrassFootsteps, PlayerStoneFootsteps, CircuitCablePlug, CircuitCableUnplug, ArcadeOn, ArcadeOff, CircuitPanelOpen, Player3DFootsteps, ArcadeUIHover, ArcadeUISelect, UIHover, UISelect}
+    [field: Header("2D Game")]
+    [SerializeField] EventReference consoleBlip;
+
+    public enum EventSounds { Null, CastleAmbience, CastleGlitchAmbience, ForestAmbience, ForestGlitchAmbience, PlayerJoust, PlayerDamage, ArcadeFootsteps, CircuitCablePlug, CircuitCableUnplug, ArcadeOn, ArcadeOff, CircuitPanelOpen, Player3DFootsteps, ArcadeUIHover, ArcadeUISelect, UIHover, UISelect, FireWall, ConsoleDialogue, Ending, ArcadeShake, EnemyTakeDamage }
+
+    public enum FootstepsParameter { Grass, Stone }
+
 
     Dictionary<EventSounds, EventReference> SoundTypeToReference;
 
     readonly Dictionary<EventSounds, EventInstance> SoundTypeToInstance = new();
     readonly List<EventInstance> EventInstances = new();
+    readonly List<StudioEventEmitter> EventEmitters = new();
+
+    EventInstance footstepsEvent;
 
     void Start()
     {
@@ -53,8 +66,8 @@ public class AudioManager : Singleton<AudioManager>
             { EventSounds.ForestGlitchAmbience, forestGlitchAmbience },
             { EventSounds.PlayerJoust, playerJoust},
             { EventSounds.PlayerDamage, playerDamage},
-            { EventSounds.PlayerGrassFootsteps, playerGrassFootsteps},
-            { EventSounds.PlayerStoneFootsteps, playerStoneFootsteps},
+            { EventSounds.FireWall, fireWall },
+            { EventSounds.ArcadeFootsteps, arcadeFootsteps},
             { EventSounds.CircuitCablePlug, circuitCablePlug},
             { EventSounds.CircuitCableUnplug, circuitCableUnplug},
             { EventSounds.ArcadeOn, arcadeOn },
@@ -65,7 +78,31 @@ public class AudioManager : Singleton<AudioManager>
             { EventSounds.ArcadeUISelect, arcadeUISelect },
             { EventSounds.UIHover, gameUIHover },
             { EventSounds.UISelect, gameUISelect },
+            { EventSounds.ConsoleDialogue, consoleBlip },
+            { EventSounds.Ending, endingSounds },
+            { EventSounds.ArcadeShake, shakeArcade },
+            { EventSounds.EnemyTakeDamage, enemyDamage },
         };
+            
+    }
+
+    private void Update()
+    {
+#if DEBUG
+        if (Input.GetKeyDown(KeyCode.J))
+            SetFootsteps(FootstepsParameter.Grass);
+        if (Input.GetKeyDown(KeyCode.K))
+            SetFootsteps(FootstepsParameter.Stone);
+        if (Input.GetKeyDown(KeyCode.L))
+            TriggerAudioClip(arcadeFootsteps, transform.position);
+#endif
+    }
+
+    public static void SetFootsteps(FootstepsParameter groundType)
+    {
+        RuntimeManager.StudioSystem.setParameterByName("TerrainType", (float)groundType);
+
+        Debug.Log($"Set TerrainType Parameter to {groundType}");
     }
 
     void OnDestroy()
@@ -75,7 +112,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public static void TriggerAudioClip(EventSounds sound, GameObject origin) => TriggerAudioClip(sound, origin.transform.position);
 
-    //Change this to be a static function that uses value
+    //Change this to be a static function that uses emitter
     public static void TriggerAudioClip(EventSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
     public static void TriggerAudioClip(EventSounds sound, Vector3 origin)
@@ -93,8 +130,10 @@ public class AudioManager : Singleton<AudioManager>
 
     void TriggerAudioClip(EventReference sound, Vector3 origin) => RuntimeManager.PlayOneShot(sound, origin);
 
-    EventInstance CreateEventInstance(EventSounds key, EventReference reference)
+    EventInstance CreateEventInstance(EventSounds key)
     {
+        SoundTypeToReference.TryGetValue(key, out EventReference reference);
+
         EventInstance value = RuntimeManager.CreateInstance(reference);
 
         EventInstances.Add(value);
@@ -103,33 +142,60 @@ public class AudioManager : Singleton<AudioManager>
         return value;
     }
 
+    public StudioEventEmitter InitializeEventEmitter(EventSounds key, GameObject emitterObject)
+    {
+        if (!SoundTypeToReference.TryGetValue(key, out var reference))
+        {
+            Debug.LogWarning($"No event reference found with the key \"{key}\"");
+            return null;
+        }
+
+        if (!emitterObject.TryGetComponent<StudioEventEmitter>(out var emitter))
+        {
+            Debug.LogWarning("No event emitter component attached to object");
+            return null;
+        }
+
+        Debug.Log($"Initialized emitter {key}");
+
+        emitter.EventReference = reference;
+        EventEmitters.Add(emitter);
+        return emitter;
+    }
+
     //Starts and Stops a given event instance
-    public void StartEventInstance(EventSounds key, bool start = true, FMOD.Studio.STOP_MODE stopMode = FMOD.Studio.STOP_MODE.ALLOWFADEOUT)
+    public void StartEventInstance(EventSounds key)
     {
         //If no event instance exists, we create a new instance and recur
         if (!SoundTypeToInstance.TryGetValue(key, out EventInstance instance))
         {
-            if (!SoundTypeToReference.TryGetValue(key, out EventReference reference))
-                return;
-
-            var newInstance = CreateEventInstance(key, reference);
+            var newInstance = CreateEventInstance(key);
             
-            Debug.Log($"Created new EventInstance (key) {key} | (reference) {reference} | (instnace) {newInstance}");
+            Debug.Log($"Created new EventInstance (key) {key} | (instnace) {newInstance}");
 
-            StartEventInstance(key, start, stopMode);
-
+            StartEventInstance(key);
             return;
         }
+        
+        instance.start();
 
-        if (start)
-            instance.start();
-        else
-            instance.stop(stopMode);
-
-        Debug.Log($"{(start ? "Started" : "Stopped")} {key}");
+        Debug.Log($"Started {key}");
     }
 
-    
+
+    public void SetFootstepsParameter(string name, float value)
+    {
+    }
+
+    public void StopEventInstance(EventSounds key, FMOD.Studio.STOP_MODE stopMode = FMOD.Studio.STOP_MODE.ALLOWFADEOUT)
+    {
+        if (!SoundTypeToInstance.TryGetValue(key, out EventInstance instance))
+            return;
+
+        instance.stop(stopMode);
+
+        Debug.Log($"Stopped {key}");
+    }
 
     void CleanUp()
     {
@@ -138,5 +204,8 @@ public class AudioManager : Singleton<AudioManager>
             eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             eventInstance.release();
         }
+
+        foreach (var eventEmitter in EventEmitters)
+            eventEmitter.Stop();
     }
 }

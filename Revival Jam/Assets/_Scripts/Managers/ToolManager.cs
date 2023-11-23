@@ -54,7 +54,14 @@ public class ToolManager : Singleton<ToolManager>
                 var wires = ControlsManager.Instance.Wires;
                 var receptacles = ControlsManager.Instance.Receptacles;
 
-                var unusedWire = wires.First(w => w.ConnectedReceptacle == null);
+                var unusedWire = wires.FirstOrDefault(w => w.ConnectedReceptacle == null);
+
+                if (unusedWire == null)
+                {
+                    Debug.Log("No unused wire");
+                    return;
+                }
+
                 var jumpReceptacle = receptacles.First(r => r.LinkedControl == ControlsManager.Controls.Jump);
 
                 Debug.Log($"Enable Jump | Using wire: {unusedWire} | Using receptacle: {jumpReceptacle}");

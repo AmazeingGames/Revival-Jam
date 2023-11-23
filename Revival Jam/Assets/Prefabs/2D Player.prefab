@@ -220,6 +220,8 @@ GameObject:
   - component: {fileID: 6106551065621404301}
   - component: {fileID: 3962043395338557031}
   - component: {fileID: 930982152403181924}
+  - component: {fileID: 1073138300472243111}
+  - component: {fileID: -1475511767145247034}
   m_Layer: 6
   m_Name: 2D Player
   m_TagString: Player
@@ -300,7 +302,7 @@ MonoBehaviour:
   groundRaycastLength: 0.06
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 14464
   showGroundCheckDebug: 0
   characterController: {fileID: 651691400}
   stopOnDialogue: 0
@@ -353,7 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   shouldDebug: 1
-  takeDamageSound: 0
+  takeDamageSound: 6
   invulnerabilityLength: 0.1
 --- !u!114 &930982152403181924
 MonoBehaviour:
@@ -367,6 +369,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c97239bb5245a4fbdc955ffeda99b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1073138300472243111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581096017296015264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+--- !u!114 &-1475511767145247034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581096017296015264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3161fc47b997bc64ca99a19dda00fc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listener: {fileID: 1073138300472243111}
+  not: 0
 --- !u!1 &8581096017436916583
 GameObject:
   m_ObjectHideFlags: 0

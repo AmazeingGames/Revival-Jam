@@ -69,6 +69,9 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
     public void HandleFocusAttempt(bool isConnecting)
     {
+        if (linkedScreen == null)
+            return;
+
         if (PlayerFocus.Instance.ClosestStation != this && PlayerFocus.Instance.Focused != linkedStation)
         {
             //Debug.Log($"Disabled virtual screen {linkedScreen.name}");

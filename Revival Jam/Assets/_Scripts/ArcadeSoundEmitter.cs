@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//I now realize this sound is confusing, given that an 'emmitter' is a real thing in FMOD
 public class ArcadeSoundEmitter : Singleton<ArcadeSoundEmitter>
 {
     public static Transform Transform { get => GetTransform(); }

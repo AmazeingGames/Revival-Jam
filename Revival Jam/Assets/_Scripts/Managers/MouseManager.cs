@@ -13,10 +13,9 @@ public class MouseManager : MonoBehaviour
     [SerializeField] float wireFollowSensitivity;
 
     Wire wireToFollow;
-
     Vector2 lastWirePoint;
-
     Coroutine followWire;
+
     private void OnEnable()
     {
         Wire.GrabWire += HandleWireGrab;

@@ -16,7 +16,7 @@ public abstract class Damageable : MonoBehaviour
 
     public virtual void StartDamage(GameObject gameObject, int damageAmount, float timeBetweenDamage)
     {
-        CheckDebug("Damage Coroutine Started");
+        CheckDebug("    Damage Coroutine Started");
 
         Coroutine coroutine = StartCoroutine(Damage(damageAmount, timeBetweenDamage));
 

@@ -107,10 +107,10 @@ public class Joust : State<CharacterController>
         if (walkSFXTimer > 0)
             return;
 
-        WalkSound();
+        PlayWalkSFX();
     }
 
-    void WalkSound()
+    void PlayWalkSFX()
     {
         walkSFXTimer = timeBetweenWalkSFX;
         AudioManager.TriggerAudioClip(Player.Instance.GetWalkSound(), transform);

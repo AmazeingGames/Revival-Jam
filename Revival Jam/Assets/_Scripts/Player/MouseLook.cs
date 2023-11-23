@@ -7,6 +7,7 @@ public class MouseLook : MonoBehaviour
 {
     public enum RotationAxes { MouseXY, MouseX, MouseY }
 
+
     public RotationAxes axes = RotationAxes.MouseXY;
 
     public float sensitvityVer = 9f;
@@ -16,6 +17,8 @@ public class MouseLook : MonoBehaviour
     public float maximumVert = 45f;
 
     float verticalRot = 0;
+
+    [SerializeField] float timeBetweenLockChecks = .25f;
 
     bool isLocked = false;
     bool escape = false;
@@ -38,6 +41,8 @@ public class MouseLook : MonoBehaviour
         {
             body.freezeRotation = true;
         }
+
+        StartCoroutine(IsLockedCheck());
     }
 
     private void OnEnable()
@@ -50,14 +55,38 @@ public class MouseLook : MonoBehaviour
         ConnectToStation -= HandleConnectToStation;
     }
 
+    //Makes sure isLocked stays properly synced with the game
+    //Note for Performance: Running for every instance of MouseLook takes up unnecessary performance.
+    IEnumerator IsLockedCheck()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeBetweenLockChecks);
+
+            if (PlayerFocus.Instance == null)
+                continue;
+
+            var shouldLock = PlayerFocus.Instance.Focused != PlayerFocus.FocusedOn.Nothing;
+
+            if (isLocked != shouldLock)
+            {
+                isLocked = shouldLock;
+                Debug.LogWarning("IsLocked got Desynced. Fixing IsLocked");
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             escape = !escape;
+
         Look();
     }
 
+    //Rotates the attached transform with the movement of the mouse and only on specified axes
+    //Only when not focused and not paused
     void Look()
     {
         if (isLocked || escape)
@@ -86,6 +115,7 @@ public class MouseLook : MonoBehaviour
         }
     }
 
+    //Locks camera movement while focused on an interface
     void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
         isLocked = connectEventArgs.IsConnecting;

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5626275802296457471}
   - component: {fileID: 5626275802296457468}
   - component: {fileID: 5626275802296457469}
+  - component: {fileID: -7727100020276059579}
   m_Layer: 0
   m_Name: 3D Player
   m_TagString: Player
@@ -171,6 +172,19 @@ MonoBehaviour:
   sensitivityHor: 5.5
   minimumVert: -45
   maximumVert: 45
+--- !u!114 &-7727100020276059579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626275802296457444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cf93d25ed0d8c4489f877bdbe08485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 5626275802593255034}
 --- !u!1 &5626275802593255032
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,9 +195,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5626275802593255037}
   - component: {fileID: 5626275802593255034}
-  - component: {fileID: 5626275802593255035}
   - component: {fileID: 5626275802593255036}
   - component: {fileID: 5626275802593255039}
+  - component: {fileID: 6959611744803926210}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -249,14 +263,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5626275802593255035
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5626275802593255032}
-  m_Enabled: 0
 --- !u!114 &5626275802593255036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +293,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraProxy: {fileID: 4088744519767607700}
+--- !u!114 &6959611744803926210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626275802593255032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &7890317245439217253
 GameObject:
   m_ObjectHideFlags: 0

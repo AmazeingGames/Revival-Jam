@@ -1116,6 +1116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalTextSpeed: 0.05
+  blipDelay: 0.15
   dialoguePortrait: {fileID: 8352127450778684863}
   dialogueName: {fileID: 8352127450418121474}
   dialogueSpeech: {fileID: 8352127451858274276}
@@ -1135,6 +1136,197 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2008334951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2008334953}
+  - component: {fileID: 2008334952}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2008334952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008334951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877795de9c169cc428d4f0de27274bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castleAmbience:
+    Guid:
+      Data1: 1143012046
+      Data2: 1075363930
+      Data3: 1294306176
+      Data4: -300508654
+    Path: event:/Amb/Amb_Castle
+  castleGlitchAmbience:
+    Guid:
+      Data1: 1143012046
+      Data2: 1075363930
+      Data3: 1294306176
+      Data4: -300508654
+    Path: event:/Amb/Amb_Castle
+  forestAmbience:
+    Guid:
+      Data1: -970859097
+      Data2: 1211753154
+      Data3: -13866850
+      Data4: -45242747
+    Path: event:/Amb/Amb_Forest
+  forestGlitchAmbience:
+    Guid:
+      Data1: -970859097
+      Data2: 1211753154
+      Data3: -13866850
+      Data4: -45242747
+    Path: event:/Amb/Amb_Forest
+  playerJoust:
+    Guid:
+      Data1: 1844079503
+      Data2: 1328298913
+      Data3: -1064413015
+      Data4: 1505602411
+    Path: event:/Player/Knight_Attack
+  playerDamage:
+    Guid:
+      Data1: 677844244
+      Data2: 1271776339
+      Data3: 1016229791
+      Data4: -1261953178
+    Path: event:/Player/Knight_Damage
+  arcadeFootsteps:
+    Guid:
+      Data1: -1184206891
+      Data2: 1127201577
+      Data3: -1918228823
+      Data4: -470494814
+    Path: event:/Player/Knight_FS
+  fireWall:
+    Guid:
+      Data1: -717055751
+      Data2: 1093861397
+      Data3: -609620568
+      Data4: 973732384
+    Path: event:/Amb/Amb_Fire_Wall
+  circuitCablePlug:
+    Guid:
+      Data1: 1477670588
+      Data2: 1330030452
+      Data3: -1026875217
+      Data4: -1539935979
+    Path: event:/Arcade_Cabinet/Arcade_Cable_Plug
+  circuitCableUnplug:
+    Guid:
+      Data1: -164316232
+      Data2: 1102708397
+      Data3: -526775114
+      Data4: 1356164690
+    Path: event:/Arcade_Cabinet/Arcade_Cable_Unplug
+  arcadeOn:
+    Guid:
+      Data1: 385990583
+      Data2: 1300825346
+      Data3: -1315932739
+      Data4: -2100672109
+    Path: event:/Arcade_Cabinet/Arcade_On
+  arcadeOff:
+    Guid:
+      Data1: -1116542458
+      Data2: 1230191815
+      Data3: 1705357452
+      Data4: 2087289514
+    Path: event:/Arcade_Cabinet/Arcade_Off
+  circuitPanelOpen:
+    Guid:
+      Data1: 860523533
+      Data2: 1309415511
+      Data3: -639264101
+      Data4: 1800864614
+    Path: event:/Arcade_Cabinet/Panel_Open
+  arcadeUIHover:
+    Guid:
+      Data1: 587588092
+      Data2: 1340560223
+      Data3: -1981327478
+      Data4: 699671086
+    Path: event:/UI/UI_Hover
+  arcadeUISelect:
+    Guid:
+      Data1: -1085064949
+      Data2: 1075086016
+      Data3: 872947876
+      Data4: -1692866111
+    Path: event:/UI/UI_Select
+  shakeArcade:
+    Guid:
+      Data1: -1308587326
+      Data2: 1317913276
+      Data3: -2021656394
+      Data4: 1050791445
+    Path: event:/Arcade_Cabinet/Shake_Arcade
+  gameUIHover:
+    Guid:
+      Data1: 587588092
+      Data2: 1340560223
+      Data3: -1981327478
+      Data4: 699671086
+    Path: event:/UI/UI_Hover
+  gameUISelect:
+    Guid:
+      Data1: -1085064949
+      Data2: 1075086016
+      Data3: 872947876
+      Data4: -1692866111
+    Path: event:/UI/UI_Select
+  player3DFootsteps:
+    Guid:
+      Data1: 1422787389
+      Data2: 1237129234
+      Data3: -1967562111
+      Data4: 2074404572
+    Path: event:/Player/Player_FS
+  endingSounds:
+    Guid:
+      Data1: 1322450809
+      Data2: 1184677349
+      Data3: 2093425039
+      Data4: -1115940861
+    Path: event:/Other/ShakeStart
+  consoleBlip:
+    Guid:
+      Data1: -721626253
+      Data2: 1258798338
+      Data3: -1918120796
+      Data4: -129498168
+    Path: event:/Other/Console_Blip
+--- !u!4 &2008334953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008334951}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.1499798, y: 12.035692, z: 45.264076}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8352127449795173033
 GameObject:

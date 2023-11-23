@@ -33,7 +33,6 @@ public class MachineAbilities : Singleton<MachineAbilities>
     {
         AfterArcadeStateChange -= HandleArcadeGameStateChange;
         ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
-
     }
 
     private void Update()
@@ -101,6 +100,8 @@ public class MachineAbilities : Singleton<MachineAbilities>
     void ShakeArcade()
     {
         StartCoroutine(EnterGlitchedWorld());
+
+        AudioManager.TriggerAudioClip(EventSounds.ArcadeShake, ArcadeSoundEmitter.Transform);
     }
 
     //Yes, 'GameObject.Find' in coroutine is bad for performance, but it's hard to think of a better way with tile maps
@@ -134,13 +135,14 @@ public class MachineAbilities : Singleton<MachineAbilities>
 
         while (glitchTimer > 0)
         {
-            Debug.Log("Paused Timer");
 
             if (pauseTimerOnMachineOff || IsMachineOn)
             {
                 Debug.Log("Counting down timer");
                 glitchTimer -= Time.deltaTime;
             }
+            else
+                Debug.Log("Paused Timer");
 
             yield return null;
         }

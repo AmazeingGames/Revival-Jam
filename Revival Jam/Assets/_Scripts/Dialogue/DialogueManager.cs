@@ -9,6 +9,7 @@ using static ArcadeGameManager;
 public class DialogueManager : Singleton<DialogueManager>
 {
     [SerializeField] float globalTextSpeed;
+    [SerializeField] float blipDelay;
 
     [SerializeField] Image dialoguePortrait;
     [SerializeField] TextMeshProUGUI dialogueName;
@@ -30,6 +31,8 @@ public class DialogueManager : Singleton<DialogueManager>
     //False -> Exit Dialogue
     public static event Action<bool> EnterDialogue;
 
+    float blipTimer;
+
     private void Start()
     {
         CloseDialogueBox();
@@ -48,6 +51,8 @@ public class DialogueManager : Singleton<DialogueManager>
                 DisplayMessageInstant();
             }
         }
+
+        blipTimer -= Time.deltaTime;
     }
 
     //Opens the dialogue slot and prepares for the first line of a dialogue
@@ -96,6 +101,13 @@ public class DialogueManager : Singleton<DialogueManager>
                 yield break;
 
             dialogueSpeech.text += character;
+
+            if (blipTimer <= 0)
+            {
+                AudioManager.TriggerAudioClip(AudioManager.EventSounds.ConsoleDialogue, transform);
+                blipTimer = blipDelay;
+            }
+
             yield return new WaitForSeconds(globalTextSpeed);
         }
         textFinished = true;
@@ -115,6 +127,8 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueSpeech.text = displayMessage.message;
 
         textFinished = true;
+
+        AudioManager.TriggerAudioClip(AudioManager.EventSounds.ConsoleDialogue, transform);
     }
 
     //Starts the next line of the current dialogue, and exits if there are none left
@@ -139,13 +153,12 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         EnterDialogue?.Invoke(false);
         
-        if (currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None)
+        //Why does this happen twice?
+        if (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None)
             ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
         CloseDialogueBox();
         isDialogueRunning = false;
-
-        ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
         Debug.Log("Conversation finished");
     }

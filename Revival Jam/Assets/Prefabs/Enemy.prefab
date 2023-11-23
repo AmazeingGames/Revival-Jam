@@ -334,7 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 4
   shouldDebug: 1
-  takeDamageSound: 0
+  takeDamageSound: 22
 --- !u!114 &5174789078075838897
 MonoBehaviour:
   m_ObjectHideFlags: 0

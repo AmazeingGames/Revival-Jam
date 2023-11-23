@@ -7,6 +7,7 @@ using static ReceptacleObject;
 using static Wire;
 using static AudioManager;
 using static AudioManager.EventSounds;
+using FMODUnity;
 
 //Could put this in a field separate completely from the player, that the player is able to reference for their controls.
 //That way information could be consistent with the game, regardless of if the arcade game is running or not
@@ -129,12 +130,17 @@ public class Player : Singleton<Player>
 
     public EventSounds GetWalkSound()
     {
-        return LastGroundLayer switch
+        switch (LastGroundLayer)
         {
-            "Arcade Stone" => PlayerStoneFootsteps,
-            "Arcade Grass" => PlayerGrassFootsteps,
-            _              => EventSounds.Null,
+            case "Arcade Stone":
+                SetFootsteps(FootstepsParameter.Stone);
+                    break;
+            case "Arcade Grass": 
+                SetFootsteps(FootstepsParameter.Grass);
+                    break;
         };
+
+        return ArcadeFootsteps; 
     }
 
     public void ShouldIncrementJoustTimer(bool increment)

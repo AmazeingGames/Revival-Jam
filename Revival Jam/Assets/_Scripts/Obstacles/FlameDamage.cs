@@ -1,9 +1,29 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FlameDamage : DealDamage
 {
+    StudioEventEmitter emitter;
+
+    private void Awake()
+    {
+        emitter = AudioManager.Instance.InitializeEventEmitter(AudioManager.EventSounds.FireWall, gameObject);
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("Played emitter");
+        emitter.Play();
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("Stopped emitter");
+
+        emitter.Stop();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
