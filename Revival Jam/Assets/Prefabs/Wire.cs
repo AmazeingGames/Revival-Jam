@@ -16,7 +16,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] WireSettings wireSettings;
 
-    public Vector2 AddAmount { get; private set; }
+    Vector2 addAmount;
 
     bool shouldFollowMouse = false;
 
@@ -105,7 +105,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         GrabWire?.Invoke(this, isGrab);
     }
 
-    //Preps the cursor for wire follow
+    //Preps the mouse cursor for wire follow
     void SetMouseFollow(bool shouldFollowMouse)
     {
         this.shouldFollowMouse = shouldFollowMouse;
@@ -117,8 +117,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             UnityEngine.Cursor.lockState = shouldFollowMouse ? CursorLockMode.Locked : CursorLockMode.Confined;
     }
 
-    //Adds the control from the new overlapping receptacle
-    //Removes the control from the old receptacle
+    //Replaces the old control with the new receptacle's control
     void WireToConnector()
     {
         Controls controlToRemove = ConnectedReceptacle == null ? Controls.Unknown : ConnectedReceptacle.LinkedControl;
@@ -136,7 +135,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         ConnectWireCheck?.Invoke(controlsEventArgs);
     }
 
-    //Given a recpetacle, manually adds that control
+    //Manaully adds a control
     public void ManuallyConnect(ReceptacleObject receptacleToConnect)
     {
         autoPosition = receptacleToConnect.WirePosition;
@@ -169,75 +168,12 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     // Update is called once per frame
     void Update()
     {
-        FollowMovement(transform, wireSettings.Sensitivity, wireSettings.SetPosition, GetMouseInput());
-    }
-
-    //Updates the wire along with the mouse movement
-    //Either sets the position directly or adds the position
-    public void FollowMovement(Transform followingTransform, float sensitivity, bool setPosition, Vector2 movementToFollow)
-    {
-        if (!shouldFollowMouse)
-            return;
-
-        float addXAmount;
-        float addYAmount;
-
-        //Gets the amount to move the wires by
-        addXAmount = (movementToFollow.x / 188) * Time.deltaTime * sensitivity;
-        addYAmount = (movementToFollow.y / 188) * Time.deltaTime * sensitivity;
-
-        AddAmount = new Vector2(addXAmount, addYAmount);
-
-        Vector2 newPosition = new(followingTransform.position.x + addXAmount, followingTransform.position.y + addYAmount);
-
-        //Updates the transform position
-        if (setPosition)
+        if (shouldFollowMouse)
         {
-            followingTransform.position = new Vector3(newPosition.x, newPosition.y, followingTransform.position.z);
-            ClampToBounds(followingTransform);
-        }
-        else
-            followingTransform.position += new Vector3(addXAmount, addYAmount, 0);
+            transform.FollowMovement(TransformExtensions.GetMouseInput(), wireSettings.Sensitivity, wireSettings.SetPosition, ref addAmount);
+            transform.ClampToBounds(CircuitScreenBounds.Instance.PositveBounds, CircuitScreenBounds.Instance.NegativeBounds);
+        } 
     }
-
-    //Gets the (normalized) (raw) input of the mouse
-    Vector2 GetMouseInput()
-    {
-        float mouseX;
-        float mouseY;
-
-        if (wireSettings.GetRawAxis)
-        {
-            mouseX = Input.GetAxisRaw("Mouse X");
-            mouseY = Input.GetAxisRaw("Mouse Y");
-        }
-        else
-        {
-            mouseX = Input.GetAxis("Mouse X");
-            mouseY = Input.GetAxis("Mouse Y");
-        }
-
-        Vector2 mouseInput = new(mouseX, mouseY);
-
-        //Always normalize vector; makes movement s m o o t h
-        if (wireSettings.NormalizeVector)
-            mouseInput = mouseInput.normalized;
-
-       //Debug.Log($"Mouse x : {mouseX} | Mouse y : {mouseY}");
-
-        return mouseInput;
-    }
-
-    public void ClampToBounds(Transform transformToClamp)
-    {
-        Vector3 clampedPosition = transformToClamp.position;
-
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, CircuitScreenBounds.Instance.NegativeBounds.x, CircuitScreenBounds.Instance.PositveBounds.x);
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, CircuitScreenBounds.Instance.NegativeBounds.y, CircuitScreenBounds.Instance.PositveBounds.y);
-
-        transformToClamp.position = clampedPosition;
-    }
-
 
     void OnTriggerEnter(Collider other)
     {

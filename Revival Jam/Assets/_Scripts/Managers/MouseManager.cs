@@ -16,6 +16,8 @@ public class MouseManager : MonoBehaviour
     Vector2 lastWirePoint;
     Coroutine followWire;
 
+    Vector2 AddAmount;
+
     private void OnEnable()
     {
         Wire.GrabWire += HandleWireGrab;
@@ -54,17 +56,19 @@ public class MouseManager : MonoBehaviour
     //Calls the proper cursor move function
     void SetCursorPosition()
     {
-        if (wireToFollow == null)
+        if (wireToFollow != null)
         {
-            if (followWire != null)
-            {
-                StopCoroutine(followWire);
-                followWire = null;
-            }
-            
-            FollowMouse();
+            followWire ??= StartCoroutine(FollowWire());
+            return;
         }
-        else followWire ??= StartCoroutine(FollowWire());
+
+        if (followWire != null)
+        {
+            StopCoroutine(followWire);
+            followWire = null;
+        }
+            
+        FollowMouse();
     }
 
     //Updates the virtual cursor to follow the movement of the grabbed wire
@@ -76,14 +80,11 @@ public class MouseManager : MonoBehaviour
 
         while (wireToFollow != null)
         {
-            float differenceX = wireToFollow.transform.position.x - lastWirePoint.x;
-            float differenceY = wireToFollow.transform.position.y - lastWirePoint.y;
+            Vector2 wireDifference = wireToFollow.transform.PositionalDifference(lastWirePoint);
 
-            Vector2 wireDifference = new(differenceX, differenceY);
+            Debug.Log($"Difference x : {wireDifference.x} | difference y : {wireDifference.y}");
 
-            Debug.Log($"Difference x : {differenceX} | difference y : {differenceY}");
-
-            wireToFollow.FollowMovement(cursor, wireFollowSensitivity, setPosition: false, movementToFollow: wireDifference);
+            cursor.FollowMovement(wireDifference, wireFollowSensitivity, false, ref AddAmount);
 
             lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
 
