@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static FocusStation;
 
 public class VirtualCursorActivator : MonoBehaviour
 {
     [SerializeField] ActiveState activeState;
 
-    [SerializeField] VirtualCursor virtualCursor;
+    [SerializeField] VirtualInputModule virtualInput;
     [SerializeField] Animator cursorAnimator;
 
     public static event Action<SetActiveCursorEventArgs> ActiveCursorSet;
@@ -77,7 +78,7 @@ public class VirtualCursorActivator : MonoBehaviour
         Debug.Log($"Set active cursor {active}");
 
         isActived = active;
-        virtualCursor.gameObject.SetActive(active);
+        virtualInput.gameObject.SetActive(active);
 
         OnSetActiveCursor(active);
     }
