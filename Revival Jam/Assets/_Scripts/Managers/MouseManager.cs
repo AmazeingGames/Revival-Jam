@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
@@ -14,16 +15,14 @@ public class MouseManager : Singleton<MouseManager>
     [SerializeField] float wireFollowSensitivity;
     [SerializeField] float mouseFollowSensitivity;
     [SerializeField] bool followMouseMovement;
-    [SerializeField] Transform activeCursor;
-    [SerializeField] Animator activeAnimator;
 
     [SerializeField] bool getRaw;
     [SerializeField] bool normalize;
 
-    [SerializeField] bool moveMouse;
-    //
-
-    VirtualMouseInput virtualMouse;
+    [SerializeField] bool controlMouse;
+   
+    [SerializeField] float moveDelay = .1f;
+    bool isDelayOver;
 
     Vector2 variable;
 
@@ -31,30 +30,39 @@ public class MouseManager : Singleton<MouseManager>
     Vector2 lastWirePoint;
     Coroutine followWire;
 
-    Mouse mouse;
+    Transform activeCursor;
+    Animator activeAnimator;
+
+    bool hasActiveCursor = false;
 
     private void OnEnable()
     {
         Wire.GrabWire += HandleWireGrab;
+        VirtualCursorActivator.ActiveCursorSet += HandleSetActiveCursor;
     }
 
     private void OnDisable()
     {
         Wire.GrabWire -= HandleWireGrab;
+        VirtualCursorActivator.ActiveCursorSet -= HandleSetActiveCursor;
     }
 
-    private void Start()
+    //Purpose is to fix bug where mouse is very sensitive on game start
+    private IEnumerator Start()
     {
         Debug.Log("INSTANCE");
+
+        yield return new WaitForSeconds(moveDelay);
+
+        isDelayOver = true;
     }
+
 
     // Update is called once per frame
     void Update()
     {
         PlayCursorAnimations();
         SetCursorPosition();
-
-        
     }
 
     //Plays the clicking animations for the activeCursor
@@ -73,10 +81,16 @@ public class MouseManager : Singleton<MouseManager>
     //Calls the proper activeCursor move function
     void SetCursorPosition()
     {
-        if (!moveMouse)
+        if (!controlMouse)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            return;
+        }
+
+        if (!isDelayOver || !hasActiveCursor)
+        {
+            Cursor.visible = false;
             return;
         }
 
@@ -92,8 +106,12 @@ public class MouseManager : Singleton<MouseManager>
             followWire = null;
         }
 
-        FollowMouseMovement();
+        if (followMouseMovement)
+            FollowMouseMovement();
+        else
+            FollowMouse();
     }
+
     //Updates the virtual activeCursor to follow the movement of the grabbed wire
     IEnumerator FollowWire()
     {
@@ -116,7 +134,11 @@ public class MouseManager : Singleton<MouseManager>
     }
 
     //Updates the virtual activeCursor to follow the mouse
-    void FollowMouse() => activeCursor.position = Input.mousePosition + cursorOffset;
+    void FollowMouse()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        activeCursor.position = Input.mousePosition + cursorOffset;
+    }
 
     void FollowMouseMovement()
     {
@@ -135,5 +157,24 @@ public class MouseManager : Singleton<MouseManager>
         Debug.Log("HandleWireGrab");
 
         wireToFollow = isGrab ? wire : null;
+    }
+
+    void HandleSetActiveCursor(VirtualCursorActivator.SetActiveCursorEventArgs cursorEventArgs)
+    {
+        if (cursorEventArgs.SetActiveCursor)
+        {
+            hasActiveCursor = true;
+
+            activeAnimator = cursorEventArgs.CursorAnimator;
+            activeCursor = cursorEventArgs.CursorAnimator.transform;
+        }
+
+        else if (activeAnimator == cursorEventArgs.CursorAnimator)
+        {
+            hasActiveCursor = false;
+
+            activeAnimator = null;
+            activeCursor = null;
+        }
     }
 }

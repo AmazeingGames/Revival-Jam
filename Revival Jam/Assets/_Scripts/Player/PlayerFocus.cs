@@ -8,7 +8,7 @@ public class PlayerFocus : Singleton<PlayerFocus>
 {
     public FocusedOn Focused { get; private set; } = FocusedOn.Nothing;
 
-    public enum FocusedOn { Circuitry, Arcade, Nothing }
+    public enum FocusedOn { Circuitry, Arcade, Nothing, Null }
 
     public FocusStation ClosestStation { get; private set; } = null;
 

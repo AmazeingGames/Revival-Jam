@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static FocusStation;
 
 [RequireComponent(typeof(UnityEngine.CharacterController))]
@@ -116,6 +117,7 @@ public class FPSInput : StaticInstance<FPSInput>
         movement = Vector3.ClampMagnitude(movement, speed);
 
         movement.y = gravity;
+
         movement *= Time.deltaTime;
         movement = transform.TransformDirection(movement);
 

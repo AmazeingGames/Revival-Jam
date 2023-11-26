@@ -44,15 +44,6 @@ public class GameManager : Singleton<GameManager>
             case GameState.Loading:
                 break;
 
-            case GameState.Win:
-                LoadNextLevel();
-                break;
-
-            //I don't think we ever use the level start game state | Needs additional testing
-            case GameState.LevelStart:
-                OnLevelLoad(SceneLoader.Instance.LevelNumber + 1);
-                throw new Exception("I want to see when this is called");
-
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
@@ -89,11 +80,6 @@ public class GameManager : Singleton<GameManager>
         SceneLoader.Instance.LoadScene("RealWorld_BackgroundArea");
     }
 
-    void LoadNextLevel()
-    {
-        if (SceneLoader.DoesLevelExist(SceneLoader.Instance.LevelNumber + 1)) UpdateGameState(GameState.LevelStart);
-    }
-
     void OnLevelLoad(int levelnumber)
     {
         SceneLoader.Instance.LoadLevel(levelnumber);
@@ -102,9 +88,8 @@ public class GameManager : Singleton<GameManager>
     [Serializable]
     public enum GameState
     {
+        Null,
         StartGame,
         Loading,
-        Win,
-        LevelStart,
     }
 }

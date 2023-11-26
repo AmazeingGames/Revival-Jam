@@ -31,11 +31,11 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public bool LoadScene(string sceneName, bool isLevel = false)
     {
-        //loadingCanvas.gameObject.SetActive(true);
+        //loadingCanvas.gameObject.SetActiveCursor(true);
 
         if (!DoesSceneExist(sceneName))
         {
-            //loadingCanvas.gameObject.SetActive(false);
+            //loadingCanvas.gameObject.SetActiveCursor(false);
 
             Debug.Log("Scene does not exist");
             return false;
@@ -48,6 +48,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
         if (!GameManager.Instance)
             Debug.Log("No Game Manager Instance");
+
         GameManager.Instance.UpdateGameState(GameState.Loading);
 
         Debug.Log($"Loading Scene: {sceneName}");

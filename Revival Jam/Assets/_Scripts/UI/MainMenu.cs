@@ -9,9 +9,11 @@ public class MainMenu : Singleton<MainMenu>
     [SerializeField] Canvas mainMenu;
     [SerializeField] Camera menuCamera;
 
-    public enum MenuState { MainMenu, LevelSelectMenu, GameStart, Pause }
+    public enum MenuState { Null, MainMenu, LevelSelectMenu, GameStart, Pause }
 
     public MenuState CurrentState { get; private set; }
+
+    public static event Action<MenuState> OnMenuStateChange;
 
     void OnEnable()
     {
@@ -31,6 +33,8 @@ public class MainMenu : Singleton<MainMenu>
 
     public void UpdateState(MenuState newState)
     {
+        CurrentState = newState;
+
         switch (newState)
         {
             case MenuState.MainMenu:
@@ -49,6 +53,8 @@ public class MainMenu : Singleton<MainMenu>
                 PauseGame();
                 break;
         }
+
+        OnMenuStateChange.Invoke(newState);
     }
 
     void OnMainMenuEnter()

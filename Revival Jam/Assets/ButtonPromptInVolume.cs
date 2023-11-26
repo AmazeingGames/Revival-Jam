@@ -21,7 +21,7 @@ public class ButtonPromptInVolume : MonoBehaviour
         {
             //if (triggerVolume.bounds.Contains(transform.position))
             //{
-            //    promptText.GetComponentInParent<GameObject>().SetActive(true);
+            //    promptText.GetComponentInParent<GameObject>().SetActiveCursor(true);
             //    promptText.text = TextToSay;
             //    CheckForInput();
             //}
