@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static ItemAndAbilityManager;
 
@@ -19,6 +20,14 @@ public class ToolManager : Singleton<ToolManager>
     readonly List<ItemData> usedTools = new();  
 
     public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StartCoroutine(WiringManager.SetWiringCabinet(isActive: true));
+        }
+    }
 
     void HandleUseTool(ItemData toolData)
     {

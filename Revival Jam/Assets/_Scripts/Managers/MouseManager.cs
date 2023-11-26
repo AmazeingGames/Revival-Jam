@@ -115,6 +115,18 @@ public class MouseManager : Singleton<MouseManager>
     //Updates the virtual activeCursor to follow the movement of the grabbed wire
     IEnumerator FollowWire()
     {
+        yield return null;
+
+        while (wireToFollow != null)
+        {
+            var wirePosition = wireToFollow.transform.position;
+            wirePosition.z = activeCursor.position.z;
+
+            activeCursor.transform.position = wirePosition;
+            yield return null;
+        }
+
+        /*
         lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
 
         yield return null;
@@ -131,6 +143,7 @@ public class MouseManager : Singleton<MouseManager>
 
             yield return null;
         }
+        */
     }
 
     //Updates the virtual activeCursor to follow the mouse
