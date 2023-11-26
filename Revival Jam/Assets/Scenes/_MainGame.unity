@@ -1735,10 +1735,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdfba1a56948c64693b32b96b31ef01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 1222862583}
   cursorOffset: {x: 30, y: -28, z: 0}
-  animator: {fileID: 1222862584}
   wireFollowSensitivity: 80000
+  mouseFollowSensitivity: 150000
+  followMouseMovement: 0
+  activeCursor: {fileID: 1222862583}
+  activeAnimator: {fileID: 1222862584}
+  getRaw: 0
+  normalize: 0
+  moveMouse: 0
 --- !u!1 &448887614
 GameObject:
   m_ObjectHideFlags: 0

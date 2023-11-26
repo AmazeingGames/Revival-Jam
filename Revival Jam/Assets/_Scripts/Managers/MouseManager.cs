@@ -2,21 +2,36 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.UI;
 using static FocusStation;
 
-public class MouseManager : MonoBehaviour
+public class MouseManager : Singleton<MouseManager>
 {
-    [Header("Visual Cursor")]
-    [SerializeField] Transform cursor;
+    [Header("Virtual Cursor")]
     [SerializeField] Vector3 cursorOffset;
-    [SerializeField] Animator animator;
     [SerializeField] float wireFollowSensitivity;
+    [SerializeField] float mouseFollowSensitivity;
+    [SerializeField] bool followMouseMovement;
+    [SerializeField] Transform activeCursor;
+    [SerializeField] Animator activeAnimator;
+
+    [SerializeField] bool getRaw;
+    [SerializeField] bool normalize;
+
+    [SerializeField] bool moveMouse;
+    //
+
+    VirtualMouseInput virtualMouse;
+
+    Vector2 variable;
 
     Wire wireToFollow;
     Vector2 lastWirePoint;
     Coroutine followWire;
 
-    Vector2 AddAmount;
+    Mouse mouse;
 
     private void OnEnable()
     {
@@ -28,9 +43,9 @@ public class MouseManager : MonoBehaviour
         Wire.GrabWire -= HandleWireGrab;
     }
 
-    void Start()
+    private void Start()
     {
-        //Cursor.lockState = CursorLockMode.Confined;
+        Debug.Log("INSTANCE");
     }
 
     // Update is called once per frame
@@ -38,24 +53,33 @@ public class MouseManager : MonoBehaviour
     {
         PlayCursorAnimations();
         SetCursorPosition();
+
+        
     }
 
-    //Plays the clicking animations for the cursor
+    //Plays the clicking animations for the activeCursor
     void PlayCursorAnimations()
     {
-        if (!animator)
+        if (!activeAnimator)
             return;
 
         if (Input.GetMouseButtonDown(0))
-            animator.SetBool("IsPressed", true);
+            activeAnimator.SetBool("IsPressed", true);
 
         if (Input.GetMouseButtonUp(0))
-            animator.SetBool("IsPressed", false);
+            activeAnimator.SetBool("IsPressed", false);
     }
 
-    //Calls the proper cursor move function
+    //Calls the proper activeCursor move function
     void SetCursorPosition()
     {
+        if (!moveMouse)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+
         if (wireToFollow != null)
         {
             followWire ??= StartCoroutine(FollowWire());
@@ -67,11 +91,10 @@ public class MouseManager : MonoBehaviour
             StopCoroutine(followWire);
             followWire = null;
         }
-            
-        FollowMouse();
-    }
 
-    //Updates the virtual cursor to follow the movement of the grabbed wire
+        FollowMouseMovement();
+    }
+    //Updates the virtual activeCursor to follow the movement of the grabbed wire
     IEnumerator FollowWire()
     {
         lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
@@ -84,7 +107,7 @@ public class MouseManager : MonoBehaviour
 
             Debug.Log($"Difference x : {wireDifference.x} | difference y : {wireDifference.y}");
 
-            cursor.FollowMovement(wireDifference, wireFollowSensitivity, false, ref AddAmount);
+            activeCursor.FollowMovement(wireDifference, wireFollowSensitivity, false, ref variable);
 
             lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
 
@@ -92,8 +115,19 @@ public class MouseManager : MonoBehaviour
         }
     }
 
-    //Updates the virtual cursor to follow the mouse
-    void FollowMouse() => cursor.position = Input.mousePosition + cursorOffset;
+    //Updates the virtual activeCursor to follow the mouse
+    void FollowMouse() => activeCursor.position = Input.mousePosition + cursorOffset;
+
+    void FollowMouseMovement()
+    {
+        if (activeCursor == null)
+            return;
+
+        activeCursor.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), mouseFollowSensitivity, false, ref variable);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 
     //Gets a reference to the wire on grab
     void HandleWireGrab(Wire wire, bool isGrab)
