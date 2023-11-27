@@ -7713,6 +7713,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa03eed410ef7844e827a560a7d48076, type: 3}
+--- !u!20 &5626275801631257354 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5626275802593255034, guid: aa03eed410ef7844e827a560a7d48076, type: 3}
+  m_PrefabInstance: {fileID: 5626275801631257353}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5626275801631257355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5626275802296457444, guid: aa03eed410ef7844e827a560a7d48076, type: 3}
+  m_PrefabInstance: {fileID: 5626275801631257353}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5626275801631257356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626275801631257355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dfa0eb3dfc89bd4b8827449262f85bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PlayerCamera>k__BackingField: {fileID: 5626275801631257354}
 --- !u!1 &5667613914481055115
 GameObject:
   m_ObjectHideFlags: 0

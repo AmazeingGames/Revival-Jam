@@ -20,7 +20,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
     bool isActived;
 
-    public enum ActiveState { MainMenu, Pause, Circuitry, Arcade }
+    public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3}
 
     private void OnEnable()
     {
@@ -34,34 +34,21 @@ public class VirtualCursorActivator : MonoBehaviour
         MenuManager.OnMenuStateChange -= HandleMenuStateChange;
     }
 
-    //Having a cursor for main menu and a cursor for pause seems a little redundant
     void HandleMenuStateChange(MenuManager.MenuState newState)
     {
         switch (activeState)
         {
-            case ActiveState.MainMenu:
+            case ActiveState.Menu:
                 switch (newState)
                 {
                     case MenuManager.MenuState.MainMenu:
-                        SetActiveCursor(true);
-                        break;
-
-                    case MenuManager.MenuState.GameStart:
-                        SetActiveCursor(false);
-                        break;
-                }
-                break;
-
-            case ActiveState.Pause:
-                switch (newState)
-                {
                     case MenuManager.MenuState.Pause:
                     case MenuManager.MenuState.Settings:
                         SetActiveCursor(true);
                         break;
 
                     default:
-                        SetActiveCursor(false); 
+                        SetActiveCursor(false);
                         break;
                 }
                 break;
@@ -86,8 +73,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
         switch (activeState)
         {
-            case ActiveState.Pause:
-            case ActiveState.MainMenu:
+            case ActiveState.Menu:
                 SetActiveCursor(false);
                 break;
 

@@ -35,13 +35,11 @@ public class MouseLook : MonoBehaviour
     private void OnEnable()
     {
         ConnectToStation += HandleConnectToStation;
-        Resume.ResumeGame += HandleResumeGame;
     }
 
     private void OnDisable()
     {
         ConnectToStation -= HandleConnectToStation;
-        Resume.ResumeGame -= HandleResumeGame;
     }
 
     void CalcVertRot()
@@ -55,7 +53,6 @@ public class MouseLook : MonoBehaviour
         return Input.GetAxis("Mouse X") * sensitivityHor;
     }
 
-    void HandleResumeGame() => escape = false;
 
     //Makes sure isLocked stays properly synced with the game
     //Note for Performance: Running for every instance of MouseLook takes up unnecessary performance.
@@ -81,9 +78,6 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            escape = !escape;
-
         Look();
     }
 
@@ -91,7 +85,7 @@ public class MouseLook : MonoBehaviour
     //Only when not focused and not paused
     void Look()
     {
-        if (isLocked || escape)
+        if (isLocked || MenuManager.Instance.IsInMenu)
             return;
 
         if (axes == RotationAxes.MouseX)

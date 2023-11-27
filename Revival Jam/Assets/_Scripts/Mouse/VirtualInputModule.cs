@@ -23,7 +23,7 @@ namespace UnityEngine.EventSystems
             Buttons
         }
 
-        //[Obsolete("Mode is no longer needed on input module as it handles both mouse and keyboard simultaneously.", false)]
+        [Obsolete("Mode is no longer needed on input module as it handles both mouse and keyboard simultaneously.", false)]
         public InputMode inputMode
         {
             get { return InputMode.Mouse; }

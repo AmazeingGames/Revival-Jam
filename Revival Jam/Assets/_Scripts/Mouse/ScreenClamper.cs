@@ -7,6 +7,9 @@ public class ScreenClamper : MonoBehaviour
     [Header("Components")]
     [SerializeField] RectTransform rectTransform;
     [SerializeField] RectTransform canvasTransform;
+
+    [Header("Performance")]
+    [SerializeField] float timeBetweenCalculations = 5f;
     Canvas canvasCanvas;
 
     Vector2 negativeBounds;
@@ -19,20 +22,27 @@ public class ScreenClamper : MonoBehaviour
     {
         canvasCanvas = canvasTransform.GetComponent<Canvas>();
 
-        CalculateBounds();
+        StartCoroutine(CalculateBounds());
     }
 
-    void CalculateBounds()
+    //Calculates the canvas borders based on the size of the screen
+    //We need to calculate it continuously in case the screen window changes size
+    IEnumerator CalculateBounds()
     {
-        parentRect = rectTransform.parent.GetComponent<RectTransform>();
+        while (true)
+        {
+            parentRect = rectTransform.parent.GetComponent<RectTransform>();
 
-        cam = canvasCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvasCanvas.worldCamera;
+            cam = canvasCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvasCanvas.worldCamera;
 
-        negativeBounds.x = rectTransform.pivot.x * rectTransform.rect.size.x;
-        positiveBounds.x = canvasTransform.rect.size.x - (1 - rectTransform.pivot.x) * rectTransform.rect.size.x;
+            negativeBounds.x = rectTransform.pivot.x * rectTransform.rect.size.x;
+            positiveBounds.x = canvasTransform.rect.size.x - (1 - rectTransform.pivot.x) * rectTransform.rect.size.x;
 
-        negativeBounds.y = rectTransform.pivot.y * rectTransform.rect.size.y;
-        positiveBounds.y = canvasTransform.rect.size.y - (1 - rectTransform.pivot.y) * rectTransform.rect.size.y;
+            negativeBounds.y = rectTransform.pivot.y * rectTransform.rect.size.y;
+            positiveBounds.y = canvasTransform.rect.size.y - (1 - rectTransform.pivot.y) * rectTransform.rect.size.y;
+
+            yield return new WaitForSeconds(timeBetweenCalculations);
+        }
     }
 
     private void LateUpdate()

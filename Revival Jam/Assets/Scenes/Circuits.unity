@@ -414,7 +414,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1891215317634406341, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
       propertyPath: activeState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1891215317634406341, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
       propertyPath: cameraClamp

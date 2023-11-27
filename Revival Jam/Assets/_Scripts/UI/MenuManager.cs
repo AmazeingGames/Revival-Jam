@@ -4,17 +4,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static GameManager;
+using static PlayerFocus;
 
 public class MenuManager : Singleton<MenuManager>
 {
     [Header("Main Menu")]
     [SerializeField] Canvas mainMenu;
-    [SerializeField] Camera menuCamera;
 
     [Header("Pause")]
     [SerializeField] Canvas pauseMenu;
     [SerializeField] GameObject controlsPanel;
     [SerializeField] GameObject settings;
+
+    [Header("Cameras")]
+    [SerializeField] Camera menuCamera;
+
+    List<DisableOnMenu> objectsToDisable = new();
+
+    public bool IsInMenu => menuCamera.isActiveAndEnabled;
 
     public enum MenuState { Null, MainMenu, LevelSelectMenu, GameStart, Pause, Settings, GameResume }
 
@@ -25,11 +32,13 @@ public class MenuManager : Singleton<MenuManager>
     void OnEnable()
     {
         AfterStateChange += HandleGameStateChange;
+        DisableOnMenu.AddToDisable += HandleAddToDisable;
     }
 
     void OnDisable()
     {
         AfterStateChange -= HandleGameStateChange;
+        DisableOnMenu.AddToDisable -= HandleAddToDisable;
     }
 
     // Start is called before the first frame update
@@ -43,10 +52,26 @@ public class MenuManager : Singleton<MenuManager>
         OnEscape();
     }
 
+    void HandleAddToDisable(DisableOnMenu sender)
+    {
+        if (sender != null)
+        {
+            objectsToDisable.Add(sender);
+            Debug.Log($"Added {sender} to disable list");
+        }
+    }
+
     //Pressing escape will either pause and unpause the game
     void OnEscape()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+
+        var keyPress = KeyCode.Escape;
+
+#if DEBUG 
+        keyPress = KeyCode.P;
+#endif
+
+        if (Input.GetKeyDown(keyPress))
         {
             switch (CurrentState)
             {
@@ -100,6 +125,17 @@ public class MenuManager : Singleton<MenuManager>
         OnMenuStateChange.Invoke(newState);
     }
 
+    void SetMenuCamera(bool setActive)
+    {
+        menuCamera.gameObject.SetActive(setActive);
+
+        foreach (var disable in objectsToDisable)
+        {
+            if (disable != null)
+                disable.gameObject.SetActive(!setActive);
+        }
+    }
+
     void OnMainMenuEnter()
     {
         mainMenu.gameObject.SetActive(true);
@@ -107,7 +143,7 @@ public class MenuManager : Singleton<MenuManager>
         if (!menuCamera.isActiveAndEnabled)
         {
             Debug.LogWarning("MenuCamera was not active. Setting Cam active");
-            menuCamera.gameObject.SetActive(true);
+            SetMenuCamera(true);
         }
     }
 
@@ -118,20 +154,24 @@ public class MenuManager : Singleton<MenuManager>
 
     void OnGameStart()
     {
+        SetMenuCamera(false);
+
         mainMenu.gameObject.SetActive(false);
-        menuCamera.gameObject.SetActive(false);
     }
 
     void OnGamePause()
     {
+        SetMenuCamera(true);
+
         controlsPanel.SetActive(true);
         pauseMenu.gameObject.SetActive(true);
-
         settings.SetActive(false);
     }
 
     void OnGameResume()
     {
+        SetMenuCamera(false);
+
         pauseMenu.gameObject.SetActive(false);
     }
 

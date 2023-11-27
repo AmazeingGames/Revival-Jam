@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5626275802296457468}
   - component: {fileID: 5626275802296457469}
   - component: {fileID: -7727100020276059579}
+  - component: {fileID: 6365418771464767114}
   m_Layer: 0
   m_Name: 3D Player
   m_TagString: Player
@@ -154,7 +155,6 @@ MonoBehaviour:
   speed: 5
   gravity: -9
   timeBetweenWalkSounds: 0.5
-  controlsPanel: {fileID: 0}
 --- !u!114 &5626275802296457469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   sensitivityHor: 5.5
   minimumVert: -45
   maximumVert: 45
+  timeBetweenLockChecks: 0.25
 --- !u!114 &-7727100020276059579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +186,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 5626275802593255034}
+  usePosition: 0
+  usePlayerPosition: 0
+--- !u!114 &6365418771464767114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626275802296457444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43f77841ee50f4d4b9029549d41bd5b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5626275802593255032
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +295,7 @@ MonoBehaviour:
   sensitivityHor: 5.5
   minimumVert: -45
   maximumVert: 45
+  timeBetweenLockChecks: 0.25
 --- !u!114 &5626275802593255039
 MonoBehaviour:
   m_ObjectHideFlags: 0

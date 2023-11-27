@@ -205,3 +205,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 224855071198627067}
   canvasTransform: {fileID: 0}
+  timeBetweenCalculations: 5
