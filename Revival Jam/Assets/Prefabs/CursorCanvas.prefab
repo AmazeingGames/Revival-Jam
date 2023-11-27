@@ -204,10 +204,27 @@ PrefabInstance:
       propertyPath: m_canvasCamera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3367865765159639106, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1891215318027607128}
+    - target: {fileID: 3367865765159639106, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
+      propertyPath: transform
+      value: 
+      objectReference: {fileID: 1891215318931269353}
+    - target: {fileID: 3367865765159639106, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
+      propertyPath: canvasTransform
+      value: 
+      objectReference: {fileID: 1891215318027607128}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
 --- !u!224 &1891215317634406340 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224855070237390294, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
+  m_PrefabInstance: {fileID: 1810493440313631250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1891215318931269353 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224855071198627067, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
   m_PrefabInstance: {fileID: 1810493440313631250}
   m_PrefabAsset: {fileID: 0}

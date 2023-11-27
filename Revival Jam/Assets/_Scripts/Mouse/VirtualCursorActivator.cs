@@ -18,7 +18,10 @@ public class VirtualCursorActivator : MonoBehaviour
 
     bool isActived;
 
+
     public enum ActiveState { MainGame, Circuitry, Arcade }
+
+    
 
     private void OnEnable()
     {
@@ -48,7 +51,7 @@ public class VirtualCursorActivator : MonoBehaviour
         }
     }
 
-    void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
+    void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
         Debug.Log($"Cursor | Handled connect to Station {connectEventArgs.LinkedStation} | isConnecting {connectEventArgs.IsConnecting}");
 

@@ -50,8 +50,6 @@ public class MouseManager : Singleton<MouseManager>
     //Purpose is to fix bug where mouse is very sensitive on game start
     private IEnumerator Start()
     {
-        Debug.Log("INSTANCE");
-
         yield return new WaitForSeconds(moveDelay);
 
         isDelayOver = true;
@@ -112,7 +110,7 @@ public class MouseManager : Singleton<MouseManager>
             FollowMouse();
     }
 
-    //Updates the virtual activeCursor to follow the movement of the grabbed wire
+    //Updates the virtual activeCursor to follow the *position of the grabbed wire
     IEnumerator FollowWire()
     {
         yield return null;
@@ -126,6 +124,7 @@ public class MouseManager : Singleton<MouseManager>
             yield return null;
         }
 
+        //Code to follow wire movement
         /*
         lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
 

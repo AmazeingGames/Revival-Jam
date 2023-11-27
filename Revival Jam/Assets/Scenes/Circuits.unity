@@ -416,6 +416,10 @@ PrefabInstance:
       propertyPath: activeState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1891215317634406341, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: cameraClamp
+      value: 
+      objectReference: {fileID: 1243010078}
     - target: {fileID: 1891215317634406343, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -524,8 +528,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 160986908}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: transform
+      value: 
+      objectReference: {fileID: 160986909}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: rectTransform
+      value: 
+      objectReference: {fileID: 160986909}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: canvasTransform
+      value: 
+      objectReference: {fileID: 160986908}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+--- !u!224 &160986908 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1891215318027607128, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+  m_PrefabInstance: {fileID: 160986907}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &160986909 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1891215318931269353, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+  m_PrefabInstance: {fileID: 160986907}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &189266787
 PrefabInstance:
   m_ObjectHideFlags: 0

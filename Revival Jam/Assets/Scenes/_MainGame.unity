@@ -5136,6 +5136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c637392c5ef747488877cbc1751e4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1866972287 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1891215318931269353, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+  m_PrefabInstance: {fileID: 1891215317717188638}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1926494368
 GameObject:
   m_ObjectHideFlags: 0
@@ -5516,6 +5521,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1696395889}
     m_Modifications:
+    - target: {fileID: 1891215317634406341, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: cameraClamp
+      value: 
+      objectReference: {fileID: 779839581}
     - target: {fileID: 1891215318027607127, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
       propertyPath: m_Camera
       value: 
@@ -5616,5 +5625,29 @@ PrefabInstance:
       propertyPath: m_canvasCamera
       value: 
       objectReference: {fileID: 779839581}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1866972287}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: modifier
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: transform
+      value: 
+      objectReference: {fileID: 2124389446}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: cameraClamp
+      value: 
+      objectReference: {fileID: 779839581}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: rectTransform
+      value: 
+      objectReference: {fileID: 1866972287}
+    - target: {fileID: 4007423156260944464, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: canvasTransform
+      value: 
+      objectReference: {fileID: 2124389446}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}

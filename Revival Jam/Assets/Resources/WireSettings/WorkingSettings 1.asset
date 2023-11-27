@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WorkingSettings 1
   m_EditorClassIdentifier: 
   <ReceptacleTag>k__BackingField: Receptacle
-  <Sensitivity>k__BackingField: 15000
+  <Sensitivity>k__BackingField: 18000
   <NormalizeVector>k__BackingField: 1
   <GetRawAxis>k__BackingField: 1
   <Divide>k__BackingField: 0

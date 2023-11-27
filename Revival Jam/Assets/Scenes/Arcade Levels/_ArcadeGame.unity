@@ -1670,6 +1670,10 @@ PrefabInstance:
       propertyPath: activeState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1891215317634406341, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: cameraClamp
+      value: 
+      objectReference: {fileID: 717188441}
     - target: {fileID: 1891215317634406343, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
       propertyPath: m_Layer
       value: 10

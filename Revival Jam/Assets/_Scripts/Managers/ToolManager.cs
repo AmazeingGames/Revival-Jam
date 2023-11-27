@@ -23,10 +23,12 @@ public class ToolManager : Singleton<ToolManager>
 
     private void Update()
     {
+#if DEBUG
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             StartCoroutine(WiringManager.SetWiringCabinet(isActive: true));
         }
+#endif
     }
 
     void HandleUseTool(ItemData toolData)
