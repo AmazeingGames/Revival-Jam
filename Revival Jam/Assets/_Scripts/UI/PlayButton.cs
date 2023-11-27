@@ -9,6 +9,6 @@ public class PlayButton : UIButtonBase
         base.OnClick();
 
         GameManager.Instance.UpdateGameState(GameManager.GameState.StartGame);
-        MainMenu.Instance.UpdateState(MainMenu.MenuState.GameStart);
+        MenuManager.Instance.UpdateState(MenuManager.MenuState.GameStart);
     }
 }

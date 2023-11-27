@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static FocusStation;
 
+//Having so many of these could be costly in terms of performance?
+//If so, it would be better to have a reference to all of the cursors and have this act as a singleton manager instead
 public class VirtualCursorActivator : MonoBehaviour
 {
     [SerializeField] ActiveState activeState;
@@ -18,30 +20,50 @@ public class VirtualCursorActivator : MonoBehaviour
 
     bool isActived;
 
-
-    public enum ActiveState { MainGame, Circuitry, Arcade }
-
-    
+    public enum ActiveState { MainMenu, Pause, Circuitry, Arcade }
 
     private void OnEnable()
     {
         FocusStation.ConnectToStation += HandleConnectToStation;
-        MainMenu.OnMenuStateChange += HandleMenuStateChange; 
+        MenuManager.OnMenuStateChange += HandleMenuStateChange; 
     }
 
     private void OnDisable()
     {
         FocusStation.ConnectToStation -= HandleConnectToStation;
-        MainMenu.OnMenuStateChange -= HandleMenuStateChange;
+        MenuManager.OnMenuStateChange -= HandleMenuStateChange;
     }
 
-    void HandleMenuStateChange(MainMenu.MenuState newState)
+    //Having a cursor for main menu and a cursor for pause seems a little redundant
+    void HandleMenuStateChange(MenuManager.MenuState newState)
     {
         switch (activeState)
         {
-            case ActiveState.MainGame:
-                if (newState == MainMenu.MenuState.MainMenu || newState == MainMenu.MenuState.GameStart)
-                    SetActiveCursor(true);
+            case ActiveState.MainMenu:
+                switch (newState)
+                {
+                    case MenuManager.MenuState.MainMenu:
+                        SetActiveCursor(true);
+                        break;
+
+                    case MenuManager.MenuState.GameStart:
+                        SetActiveCursor(false);
+                        break;
+                }
+                break;
+
+            case ActiveState.Pause:
+                switch (newState)
+                {
+                    case MenuManager.MenuState.Pause:
+                    case MenuManager.MenuState.Settings:
+                        SetActiveCursor(true);
+                        break;
+
+                    default:
+                        SetActiveCursor(false); 
+                        break;
+                }
                 break;
 
             case ActiveState.Circuitry:
@@ -64,8 +86,9 @@ public class VirtualCursorActivator : MonoBehaviour
 
         switch (activeState)
         {
-            case ActiveState.MainGame:
-                SetActiveCursor(!connectEventArgs.IsConnecting);
+            case ActiveState.Pause:
+            case ActiveState.MainMenu:
+                SetActiveCursor(false);
                 break;
 
             case ActiveState.Arcade:

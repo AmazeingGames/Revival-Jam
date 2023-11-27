@@ -26,7 +26,7 @@ public class FPSInput : StaticInstance<FPSInput>
     float deltaZ;
 
     private UnityEngine.CharacterController charController;
-    [SerializeField] GameObject controlsPanel;
+
     public bool CanWalk { get; private set; } = true;
 
     private void OnEnable()
@@ -59,21 +59,6 @@ public class FPSInput : StaticInstance<FPSInput>
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!controlsPanel)
-                controlsPanel = GameObject.Find("Controls Panel");
-
-            if (controlsPanel == null)
-                return;
-
-            if (!controlsPanel.activeSelf)
-                controlsPanel.SetActive(true);
-            else 
-                controlsPanel.SetActive(false);
-        }
-
     }
 
     void UpdateTimers()
@@ -91,8 +76,6 @@ public class FPSInput : StaticInstance<FPSInput>
 
         if (walkSoundTimer > 0)
             return;
-
-        //CheckDebug(Mathf.Abs(rigidbody.velocity.x));
 
         PlayWalkSound();
     }
