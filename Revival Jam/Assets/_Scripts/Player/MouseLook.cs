@@ -85,7 +85,7 @@ public class MouseLook : MonoBehaviour
     //Only when not focused and not paused
     void Look()
     {
-        if (isLocked || MenuManager.Instance.IsInMenu)
+        if (isLocked || MenuManager.Instance.IsInMenu || MovementManager.ControlMovement)
             return;
 
         if (axes == RotationAxes.MouseX)

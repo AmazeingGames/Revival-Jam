@@ -13,7 +13,10 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
     [Header("Sound FX")]
     [SerializeField] EventSounds stationEnterSound = EventSounds.Null;
-       
+
+    [Header("Debug")]
+    [SerializeField] KeyCode stationKey;
+
     VirtualScreen linkedScreen;
 
     public static event Action<FocusStation, bool> StationEnter;
@@ -35,13 +38,15 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        FocusAttempt += HandleFocusAttempt;
+        Move.ConnectToStation += HandleMoveFocusAttempt;
+        FocusAttempt += HandlePlayerFocusAttempt;
         VirtualScreen.FindStation += HandleFindStation;
     }
 
     private void OnDisable()
     {
-        FocusAttempt -= HandleFocusAttempt;
+        Move.ConnectToStation -= HandleMoveFocusAttempt;
+        FocusAttempt -= HandlePlayerFocusAttempt;
         VirtualScreen.FindStation -= HandleFindStation;
     }
 
@@ -67,32 +72,46 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
         OnPlayerEnter(false);
     }
 
-    public void HandleFocusAttempt(bool isConnecting)
+    public void HandlePlayerFocusAttempt(bool isConnecting)
     {
         if (linkedScreen == null)
             return;
 
+        //Neither connecting nor disconnecting
         if (PlayerFocus.Instance.ClosestStation != this && PlayerFocus.Instance.Focused != linkedStation)
         {
-            //Debug.Log($"Disabled virtual screen {linkedScreen.name}");
             linkedScreen.enabled = false;
             return;
         }
 
+        //Either connecting or disconnecting
         linkedScreen.enabled = true;
-
         ConnectToStation?.Invoke(new ConnectEventArgs(linkedStation, isConnecting, stationCamera));
 
         if (isConnecting)
-        {
-            //Debug.Log($"Player connecting to {linkedScreen} station");
-
             TriggerAudioClip(stationEnterSound, transform);
-        }
-        else
+    }
+
+    public void HandleMoveFocusAttempt(FocusedOn stationType)
+    {
+        if (linkedScreen == null)
+            return;
+
+        //Neither connecting nor disconnecting
+        if (stationType != linkedStation && PlayerFocus.Instance.Focused != linkedStation)
         {
-            //  Debug.Log($"Player disconnecting from {linkedScreen} station");
+            linkedScreen.enabled = false;
+            return;
         }
+
+        bool isConnecting = stationType == linkedStation;
+
+        //Either connecting or disconnecting
+        linkedScreen.enabled = true;
+        ConnectToStation?.Invoke(new ConnectEventArgs(linkedStation, isConnecting, stationCamera));
+
+        if (isConnecting)
+            TriggerAudioClip(stationEnterSound, transform);
     }
 
     void HandleFindStation(VirtualScreen sender, FocusedOn virtualScreenType)
@@ -102,8 +121,6 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
             linkedScreen = sender;
             Debug.Log($"Found screen! Linked Screen null : {linkedScreen == null}");
 
-            //Wonder if this changes or messes up anything
-            //For some reason linked screen interferes with hotbar items being grabbed
             linkedScreen.enabled = false;
         }
     }

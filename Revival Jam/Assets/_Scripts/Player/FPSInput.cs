@@ -93,6 +93,9 @@ public class FPSInput : StaticInstance<FPSInput>
     {
         int walk = CanWalk ? 1 : 0;
 
+        if (MovementManager.ControlMovement)
+            walk = 0;
+
         deltaX = horizontalInput * speed * walk;
         deltaZ = verticalInput * speed * walk;
 

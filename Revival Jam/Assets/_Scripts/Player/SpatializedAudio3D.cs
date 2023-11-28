@@ -57,6 +57,7 @@ public class SpatializedAudio3D : MonoBehaviour
         FocusStation.ConnectToStation -= HandleConnectToStation;
     }
 
+    //Theoretical idea to allow the 3D player to hear audio from the 2D arcade
     public void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
     {
         switch (connectEventArgs.LinkedStation)

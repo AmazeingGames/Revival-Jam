@@ -19,6 +19,7 @@ public class PlayerAudio : MonoBehaviour
         FocusStation.ConnectToStation -= HandleConnectToStation;
     }
 
+    //Disables the Arcade Game Audio via the Arcade Player's listener
     public void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
     {
         switch (connectEventArgs.LinkedStation)

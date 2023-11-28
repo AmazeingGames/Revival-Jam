@@ -8,6 +8,7 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
 using static FocusStation;
 
+//Rename: "CursorManager"
 public class MouseManager : Singleton<MouseManager>
 {
     [Header("Virtual Cursor")]

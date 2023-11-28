@@ -35,7 +35,7 @@ public class PlayerCamera3D : MonoBehaviour
         ConnectToStation -= HandleConnectToStation;
     }
 
-    //Responsible for moving the camera when focusing/unfocusing
+    //Moves the camera when focusing/unfocusing
     void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
         Vector3 positionToSet;

@@ -22,12 +22,7 @@ public class ArcadeMachineCollider : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //Turns off collider, since it blocks raycasting
     void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
     {
         if (connectEventArgs == null)

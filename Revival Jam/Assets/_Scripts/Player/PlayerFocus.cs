@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//Potential Rename: "Focus Manager"
 public class PlayerFocus : Singleton<PlayerFocus>
 {
     public FocusedOn Focused { get; private set; } = FocusedOn.Nothing;
 
-    public enum FocusedOn { Circuitry, Arcade, Nothing, Null }
+    public enum FocusedOn { Circuitry, Arcade, Nothing, Null, FrontView, BackView, RightView, LeftView }
 
     public FocusStation ClosestStation { get; private set; } = null;
 
@@ -29,15 +30,11 @@ public class PlayerFocus : Singleton<PlayerFocus>
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetButtonDown("Focus"))
+        if (!MovementManager.ControlMovement)
         {
-            if (Focused == FocusedOn.Nothing)
-                OnCheckStation(true);
-            else
-                OnCheckStation(false);
-        } 
-        
+            if (Input.GetButtonDown("Focus"))
+                OnCheckStation(Focused == FocusedOn.Nothing);
+        }
     }
 
     void OnCheckStation(bool isConnecting)
@@ -63,13 +60,5 @@ public class PlayerFocus : Singleton<PlayerFocus>
         };
     }
 
-    public static bool IsFocusedOn(FocusedOn focusedOn)
-    {
-        if (Instance == null)
-        {
-            //Debug.Log("Instance is null");
-        }
-
-        return (Instance == null || focusedOn == Instance.Focused);
-    }
+    public static bool IsFocusedOn(FocusedOn focusedOn) => (Instance == null || focusedOn == Instance.Focused);
 }
