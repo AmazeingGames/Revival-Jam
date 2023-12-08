@@ -216,6 +216,10 @@ PrefabInstance:
       propertyPath: canvasTransform
       value: 
       objectReference: {fileID: 1891215318027607128}
+    - target: {fileID: 8419872460446444264, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
+      propertyPath: <ParentCanvas>k__BackingField
+      value: 
+      objectReference: {fileID: 1891215318027607127}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1297f8ecaa2152b44949116ab0c26cc2, type: 3}
 --- !u!224 &1891215317634406340 stripped

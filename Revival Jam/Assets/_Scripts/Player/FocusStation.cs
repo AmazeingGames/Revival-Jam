@@ -38,14 +38,16 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        Move.ConnectToStation += HandleMoveFocusAttempt;
+        MoveArrow.ConnectToStation += HandleMoveFocusAttempt;
+
         FocusAttempt += HandlePlayerFocusAttempt;
         VirtualScreen.FindStation += HandleFindStation;
     }
 
     private void OnDisable()
     {
-        Move.ConnectToStation -= HandleMoveFocusAttempt;
+        MoveArrow.ConnectToStation -= HandleMoveFocusAttempt;
+
         FocusAttempt -= HandlePlayerFocusAttempt;
         VirtualScreen.FindStation -= HandleFindStation;
     }

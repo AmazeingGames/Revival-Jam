@@ -2343,11 +2343,11 @@ MonoBehaviour:
   cursorOffset: {x: 30, y: -28, z: 0}
   wireFollowSensitivity: 80000
   mouseFollowSensitivity: 150000
-  followMouseMovement: 1
   getRaw: 0
   normalize: 0
-  controlMouse: 1
   moveDelay: 0.1
+  mouseEventSystem: {fileID: 2097139689}
+  useVirtualMouseMovement: 1
 --- !u!114 &448598104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2360,7 +2360,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b122f7b1acdb164fbd758bba336f709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ControlMovement>k__BackingField: 0
+  movementData:
+  - {fileID: 11400000, guid: 9e13f55deb466714bac084c43ee6f929, type: 2}
+  - {fileID: 11400000, guid: 8604a73e42305cb4497751b3a9308dbc, type: 2}
+  - {fileID: 11400000, guid: 3bf89647d790b0f40bec70b4ca3e9ae7, type: 2}
+  - {fileID: 11400000, guid: 51ab4c162b8570e4baae90736f4505d9, type: 2}
+  - {fileID: 11400000, guid: fd02963e2f148724b80a27bad5c15c1e, type: 2}
+  - {fileID: 11400000, guid: cf769c704170b7c46af3b61fbf594c91, type: 2}
+  controlMovement: 0
+  startingStation: 3
 --- !u!1 &448887614
 GameObject:
   m_ObjectHideFlags: 0
@@ -8728,6 +8736,74 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &2097139687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2097139690}
+  - component: {fileID: 2097139689}
+  - component: {fileID: 2097139688}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2097139688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097139687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &2097139689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097139687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &2097139690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097139687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2107827858
 GameObject:
   m_ObjectHideFlags: 0
@@ -9059,6 +9135,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 779839581}
+    - target: {fileID: 1891215318027607127, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1891215318027607128, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}
       propertyPath: m_Pivot.x
       value: 0

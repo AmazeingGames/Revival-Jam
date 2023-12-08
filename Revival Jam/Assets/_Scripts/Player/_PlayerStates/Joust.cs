@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "States/Player/Joust")]
 public class Joust : State<CharacterController>
 {
-    [Header("Move Player")]
+    [Header("MoveArrow Player")]
     [SerializeField] float dashSpeed;
     [SerializeField] float acceleration;
     [SerializeField] float deceleration;

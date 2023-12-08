@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
@@ -15,23 +16,26 @@ public class MouseManager : Singleton<MouseManager>
     [SerializeField] Vector3 cursorOffset;
     [SerializeField] float wireFollowSensitivity;
     [SerializeField] float mouseFollowSensitivity;
-    [SerializeField] bool followMouseMovement;
 
     [SerializeField] bool getRaw;
     [SerializeField] bool normalize;
 
-    [SerializeField] bool controlMouse;
-   
     [SerializeField] float moveDelay = .1f;
+    [SerializeField] EventSystem mouseEventSystem;
+
+    [field: Header("Debug")]
+    [SerializeField] bool useVirtualMouseMovement;
+
+
     bool isDelayOver;
 
     Vector2 variable;
 
     Wire wireToFollow;
-    Vector2 lastWirePoint;
     Coroutine followWire;
 
-    Transform activeCursor;
+    Transform ActiveTransform => activeCursor == null ? null : activeCursor.transform;
+    VirtualCursor activeCursor;
     Animator activeAnimator;
 
     bool hasActiveCursor = false;
@@ -54,14 +58,42 @@ public class MouseManager : Singleton<MouseManager>
         yield return new WaitForSeconds(moveDelay);
 
         isDelayOver = true;
+
+        Debug.Log("Hello World!");
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        VirtualCheck();
+
         PlayCursorAnimations();
-        SetCursorPosition();
+        MoveCursor();
+    }
+
+    //Prepares the game to use either the virtual mouse or actual mouse, for both movement and input
+    void VirtualCheck()
+    {
+        if (activeCursor != null)
+        {
+            activeCursor.CursorEventSystem.enabled = useVirtualMouseMovement;
+            activeCursor.CursorClamper.enabled = useVirtualMouseMovement;
+            activeCursor.ParentCanvas.renderMode = useVirtualMouseMovement ? RenderMode.ScreenSpaceCamera : RenderMode.ScreenSpaceOverlay;
+        }
+        if (mouseEventSystem != null)
+            mouseEventSystem.gameObject.SetActive(!useVirtualMouseMovement);
+
+        if (useVirtualMouseMovement)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
     }
 
     //Plays the clicking animations for the activeCursor
@@ -77,38 +109,33 @@ public class MouseManager : Singleton<MouseManager>
             activeAnimator.SetBool("IsPressed", false);
     }
 
-    //Calls the proper activeCursor move function
-    void SetCursorPosition()
+    //Calls the proper move function for the active cursor
+    void MoveCursor()
     {
-        if (!controlMouse)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            return;
-        }
-
+        //Makes sure the game has started and that the mouse manager has a valid cursor
         if (!isDelayOver || !hasActiveCursor)
         {
             Cursor.visible = false;
             return;
         }
 
+        //If we're holding a wire, uses the wire follow movement; otherwise ends the wire movement coroutine
         if (wireToFollow != null)
         {
             followWire ??= StartCoroutine(FollowWire());
             return;
         }
-
-        if (followWire != null)
+        else if (followWire != null)
         {
             StopCoroutine(followWire);
             followWire = null;
         }
 
-        if (followMouseMovement)
+        //Either uses the mouse movement or mouse's actual position
+        if (useVirtualMouseMovement)
             FollowMouseMovement();
         else
-            FollowMouse();
+            FollowMousePosition();
     }
 
     //Updates the virtual activeCursor to follow the *position of the grabbed wire
@@ -119,49 +146,37 @@ public class MouseManager : Singleton<MouseManager>
         while (wireToFollow != null)
         {
             var wirePosition = wireToFollow.transform.position;
-            wirePosition.z = activeCursor.position.z;
+            wirePosition.z = ActiveTransform.position.z;
 
-            activeCursor.transform.position = wirePosition;
+            ActiveTransform.transform.position = wirePosition;
             yield return null;
         }
-
-        //Code to follow wire movement
-        /*
-        lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
-
-        yield return null;
-
-        while (wireToFollow != null)
-        {
-            Vector2 wireDifference = wireToFollow.transform.PositionalDifference(lastWirePoint);
-
-            Debug.Log($"Difference x : {wireDifference.x} | difference y : {wireDifference.y}");
-
-            activeCursor.FollowMovement(wireDifference, wireFollowSensitivity, false, ref variable);
-
-            lastWirePoint = new Vector2(wireToFollow.transform.position.x, wireToFollow.transform.position.y);
-
-            yield return null;
-        }
-        */
     }
 
-    //Updates the virtual activeCursor to follow the mouse
-    void FollowMouse()
+    //Updates the visual cursor's transform to the mouse
+    void FollowMousePosition()
     {
-        Cursor.lockState = CursorLockMode.None;
-        activeCursor.position = Input.mousePosition + cursorOffset;
-    }
-
-    void FollowMouseMovement()
-    {
-        if (activeCursor == null)
+        if (ActiveTransform == null)
             return;
 
-        activeCursor.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), mouseFollowSensitivity, false, ref variable);
+        Debug.Log("Set cursor to mouse position");
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Vector3 newMousePosition = Input.mousePosition + cursorOffset;
+
+        newMousePosition.z = ActiveTransform.position.z;
+
+        Debug.Log($"newMousePosition : ({newMousePosition.x}, {newMousePosition.y}, {newMousePosition.z})");
+
+        ActiveTransform.position = newMousePosition;
+    }
+
+    //Updates the virtual cursor's position to follow the movement of the mouse
+    void FollowMouseMovement()
+    {
+        if (ActiveTransform == null)
+            return;
+
+        ActiveTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), mouseFollowSensitivity, false, ref variable);
     }
 
     //Gets a reference to the wire on grab
@@ -179,9 +194,8 @@ public class MouseManager : Singleton<MouseManager>
             hasActiveCursor = true;
 
             activeAnimator = cursorEventArgs.CursorAnimator;
-            activeCursor = cursorEventArgs.CursorAnimator.transform;
+            activeCursor = cursorEventArgs.VirtualCursor;
         }
-
         else if (activeAnimator == cursorEventArgs.CursorAnimator)
         {
             hasActiveCursor = false;

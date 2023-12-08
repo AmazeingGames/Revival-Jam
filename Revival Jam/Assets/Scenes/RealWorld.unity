@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: linkedStation
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 521163300682902857, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: LeftView
@@ -1512,6 +1516,10 @@ PrefabInstance:
       propertyPath: linkedStation
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 521163300682902857, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: FrontView
@@ -1982,6 +1990,10 @@ PrefabInstance:
       propertyPath: linkedStation
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 521163300682902857, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: BackView
@@ -2274,6 +2286,10 @@ PrefabInstance:
       propertyPath: linkedStation
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 521163300682902857, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: RightView
@@ -2447,11 +2463,11 @@ MonoBehaviour:
   cursorOffset: {x: 30, y: -28, z: 0}
   wireFollowSensitivity: 0
   mouseFollowSensitivity: 0
-  followMouseMovement: 0
   getRaw: 0
   normalize: 0
-  controlMouse: 0
   moveDelay: 0.1
+  mouseEventSystem: {fileID: 0}
+  useVirtualMouseMovement: 0
 --- !u!1 &1509977441
 GameObject:
   m_ObjectHideFlags: 0

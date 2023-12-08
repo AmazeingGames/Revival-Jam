@@ -15,6 +15,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
     [SerializeField] VirtualInputModule virtualInput;
     [SerializeField] Animator cursorAnimator;
+    [SerializeField] VirtualCursor virtualCursor;
 
     public static event Action<SetActiveCursorEventArgs> ActiveCursorSet;
 
@@ -97,7 +98,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
     public void OnSetActiveCursor(bool active)
     {
-        ActiveCursorSet?.Invoke(new SetActiveCursorEventArgs(gameObject, cursorAnimator, active));
+        ActiveCursorSet?.Invoke(new SetActiveCursorEventArgs(gameObject, cursorAnimator, virtualCursor, active));
     }
 
     public class SetActiveCursorEventArgs
@@ -105,13 +106,14 @@ public class VirtualCursorActivator : MonoBehaviour
         public bool SetActiveCursor { get; }
         public GameObject CallingObject { get; }
         public Animator CursorAnimator { get; }
+        public VirtualCursor VirtualCursor { get; }
 
-
-        public SetActiveCursorEventArgs(GameObject callingObject, Animator cursorAnimator, bool setActive)
+        public SetActiveCursorEventArgs(GameObject callingObject, Animator cursorAnimator, VirtualCursor virtualCursor, bool setActive)
         {
             CursorAnimator = cursorAnimator;
             CallingObject = callingObject;
             SetActiveCursor = setActive;
+            VirtualCursor = virtualCursor;
         }
     }
 }
