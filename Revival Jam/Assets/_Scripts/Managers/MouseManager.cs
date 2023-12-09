@@ -166,13 +166,9 @@ public class MouseManager : Singleton<MouseManager>
         if (ActiveTransform == null)
             return;
 
-        Debug.Log("Set cursor to mouse position");
-
         Vector3 newMousePosition = Input.mousePosition + cursorOffset;
 
         newMousePosition.z = ActiveTransform.position.z;
-
-        Debug.Log($"newMousePosition : ({newMousePosition.x}, {newMousePosition.y}, {newMousePosition.z})");
 
         ActiveTransform.position = newMousePosition;
     }

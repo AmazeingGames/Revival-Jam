@@ -17,17 +17,24 @@ public class HotbarManager : Singleton<HotbarManager>
 
     public ItemData HoldingItem { get; private set; } = null;
 
-    readonly List<ItemData> gainedTools = new();
+    readonly List<ItemData> gainedTools = new(); //All gained tools
+    readonly List<ItemData> currentTools = new(); //Tools currently in hotbar
     public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetGainedTools() => gainedTools.AsReadOnly();
+    public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetCurrentTools() => currentTools.AsReadOnly();
+
 
     private void OnEnable()
     {
+        Interface.UseItem += HandleUseItem;
+
         ItemAndAbilityManager.AbilityGain += HandleAbilityGain;
         Item.GrabTool += HandleGrabTool;
     }
 
     private void OnDisable()
     {
+        Interface.UseItem -= HandleUseItem;
+
         ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
         Item.GrabTool -= HandleGrabTool;
     }
@@ -76,6 +83,11 @@ public class HotbarManager : Singleton<HotbarManager>
         DebugGainItems();
     }
 
+    void HandleUseItem(ItemData itemData)
+    {
+        currentTools.Remove(itemData);
+    }
+
     //Adds the itemToGain to the player's hotbar
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities ability)
     {
@@ -87,6 +99,7 @@ public class HotbarManager : Singleton<HotbarManager>
         itemToGain.gameObject.SetActive(true);
 
         gainedTools.Add(itemToGain.ItemData);
+        currentTools.Add(itemToGain.ItemData);
     }
 
     //Simulates what it would be like to handle an Ability Gain

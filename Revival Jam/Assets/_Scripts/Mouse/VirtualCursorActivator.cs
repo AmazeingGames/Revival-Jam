@@ -21,8 +21,9 @@ public class VirtualCursorActivator : MonoBehaviour
 
     bool isActived;
     bool activeOnPause;
+    bool HasTool => HotbarManager.Instance.GetCurrentTools().Count > 0;
 
-    public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Navigation }
+    public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Interaction }
 
     private void OnEnable()
     {
@@ -44,7 +45,7 @@ public class VirtualCursorActivator : MonoBehaviour
                 switch (newState)
                 {
                     //Menu: True
-                    //Navigation: False
+                    //Interaction: False
                     case MenuManager.MenuState.MainMenu:
                     case MenuManager.MenuState.Pause:
                     case MenuManager.MenuState.Settings:
@@ -59,7 +60,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
             case ActiveState.Circuitry:
             case ActiveState.Arcade:
-            case ActiveState.Navigation:
+            case ActiveState.Interaction:
                 switch (newState)
                 {
                     case MenuManager.MenuState.Pause:
@@ -97,7 +98,7 @@ public class VirtualCursorActivator : MonoBehaviour
                     SetActiveCursor(connectEventArgs.IsConnecting);
                 break;
 
-            case ActiveState.Navigation:
+            case ActiveState.Interaction:
                 switch (connectEventArgs.LinkedStation)
                 {
                     case PlayerFocus.FocusedOn.Arcade:
@@ -106,7 +107,7 @@ public class VirtualCursorActivator : MonoBehaviour
                         break;
 
                     default:
-                        SetActiveCursor(true);
+                        SetActiveCursor(HasTool);
                         break;
                 }
                 break;
