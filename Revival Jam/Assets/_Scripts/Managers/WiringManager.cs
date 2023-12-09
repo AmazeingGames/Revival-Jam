@@ -11,7 +11,7 @@ public class WiringManager : Singleton<WiringManager>
     {
         while (Instance == null)
         {
-            Debug.Log("looping");
+            //Debug.Log("looping");
             yield return null;
         }
 

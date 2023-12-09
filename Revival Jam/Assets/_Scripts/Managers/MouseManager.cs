@@ -75,6 +75,13 @@ public class MouseManager : Singleton<MouseManager>
     //Prepares the game to use either the virtual mouse or actual mouse, for both movement and input
     void VirtualCheck()
     {
+        if (!hasActiveCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            return;
+        }
+
         if (activeCursor != null)
         {
             activeCursor.CursorEventSystem.enabled = useVirtualMouseMovement;
@@ -195,6 +202,7 @@ public class MouseManager : Singleton<MouseManager>
 
             activeAnimator = cursorEventArgs.CursorAnimator;
             activeCursor = cursorEventArgs.VirtualCursor;
+            useVirtualMouseMovement = cursorEventArgs.VirtualCursor.MovementType == VirtualCursor.MouseType.Virtual;
         }
         else if (activeAnimator == cursorEventArgs.CursorAnimator)
         {

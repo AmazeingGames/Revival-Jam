@@ -130,7 +130,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         ConnectedReceptacle = overlappingReceptacle;
 
-        Debug.Log($"is overlappingReceptacle null : {overlappingReceptacle == null}");
+        //Debug.Log($"is overlappingReceptacle null : {overlappingReceptacle == null}");
 
         ConnectWireCheck?.Invoke(controlsEventArgs);
     }
@@ -183,7 +183,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!other.TryGetComponent<ReceptacleObject>(out var receptacleObject))
             return;
 
-        Debug.Log("Over Receptacle");
+        //Debug.Log("Over Receptacle");
 
         overlappingReceptacle = receptacleObject;
     }

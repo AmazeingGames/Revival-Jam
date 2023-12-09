@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class MovementManager : Singleton<MovementManager>
     public StationMoveData CurrentStationData { get; private set; }
     public static bool ControlMovement => Instance != null && Instance.controlMovement;
 
+    public static event Action<FocusedOn> ConnectToStation;
+
     private void Awake()
     {
         base.Awake();
@@ -27,5 +30,38 @@ public class MovementManager : Singleton<MovementManager>
 
             stationToData.Add(data.StationType, data);
         }
+    }
+
+    private void OnEnable()
+    {
+        GameManager.AfterStateChange += HandleGameStateChange;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.AfterStateChange -= HandleGameStateChange;
+    }
+
+    void HandleGameStateChange(GameManager.GameState newGameState)
+    {
+        switch (newGameState)
+        {
+            case GameManager.GameState.StartGame:
+                OnGameStart();
+                break;
+        }
+    }
+
+    //Connect to starting station, 
+    void OnGameStart()
+    {
+        controlMovement = true;
+        StartCoroutine(ConnectToStationMethod(startingStation));
+    }
+
+    public IEnumerator ConnectToStationMethod(FocusedOn stationToConnect)
+    {
+        yield return new WaitForSeconds(.1f);
+        ConnectToStation?.Invoke(stationToConnect);
     }
 }

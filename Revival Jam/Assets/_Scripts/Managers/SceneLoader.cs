@@ -51,7 +51,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
         GameManager.Instance.UpdateGameState(GameState.Loading);
 
-        Debug.Log($"Loading Scene: {sceneName}");
+        //Debug.Log($"Loading Scene: {sceneName}");
 
         AsyncOperation load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 

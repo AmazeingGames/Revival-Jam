@@ -6,6 +6,7 @@ using static AudioManager;
 
 public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
+    [Header("Button")]
     [SerializeField] protected bool isArcadeButton = false;
 
     EventSounds HoverSound => isArcadeButton ? EventSounds.ArcadeUIHover : EventSounds.UIHover;

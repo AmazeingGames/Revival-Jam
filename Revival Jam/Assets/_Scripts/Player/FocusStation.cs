@@ -14,9 +14,6 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
     [Header("Sound FX")]
     [SerializeField] EventSounds stationEnterSound = EventSounds.Null;
 
-    [Header("Debug")]
-    [SerializeField] KeyCode stationKey;
-
     VirtualScreen linkedScreen;
 
     public static event Action<FocusStation, bool> StationEnter;
@@ -38,7 +35,7 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        MoveArrow.ConnectToStation += HandleMoveFocusAttempt;
+        MovementManager.ConnectToStation += HandleArrowFocusAttempt;
 
         FocusAttempt += HandlePlayerFocusAttempt;
         VirtualScreen.FindStation += HandleFindStation;
@@ -46,7 +43,7 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
     private void OnDisable()
     {
-        MoveArrow.ConnectToStation -= HandleMoveFocusAttempt;
+        MovementManager.ConnectToStation -= HandleArrowFocusAttempt;
 
         FocusAttempt -= HandlePlayerFocusAttempt;
         VirtualScreen.FindStation -= HandleFindStation;
@@ -94,23 +91,27 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
             TriggerAudioClip(stationEnterSound, transform);
     }
 
-    public void HandleMoveFocusAttempt(FocusedOn stationType)
+    public void HandleArrowFocusAttempt(FocusedOn stationType)
     {
-        if (linkedScreen == null)
-            return;
-
         //Neither connecting nor disconnecting
         if (stationType != linkedStation && PlayerFocus.Instance.Focused != linkedStation)
         {
-            linkedScreen.enabled = false;
+            if (linkedScreen != null)
+                linkedScreen.enabled = false;
+
+            //Debug.Log("Neither connecting or disconnecting");
             return;
         }
 
         bool isConnecting = stationType == linkedStation;
 
         //Either connecting or disconnecting
-        linkedScreen.enabled = true;
+        if (linkedScreen != null)
+            linkedScreen.enabled = true;
+
         ConnectToStation?.Invoke(new ConnectEventArgs(linkedStation, isConnecting, stationCamera));
+
+        Debug.Log($"Is Connecting: {isConnecting} | Is Disconnecting: {!isConnecting} | linkedStation : {linkedStation}");
 
         if (isConnecting)
             TriggerAudioClip(stationEnterSound, transform);
@@ -121,7 +122,7 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
         if (virtualScreenType == linkedStation)
         {
             linkedScreen = sender;
-            Debug.Log($"Found screen! Linked Screen null : {linkedScreen == null}");
+            //Debug.Log($"Found screen! Linked Screen null : {linkedScreen == null}");
 
             linkedScreen.enabled = false;
         }

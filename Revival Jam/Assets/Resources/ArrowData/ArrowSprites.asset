@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1cb8d463701974a8ec4d896a0a4804, type: 3}
   m_Name: ArrowSprites
   m_EditorClassIdentifier: 
-  upArrow: {fileID: 0}
-  downArrow: {fileID: 0}
-  leftArrow: {fileID: 0}
-  rightArrow: {fileID: 0}
+  upArrow: {fileID: 21300000, guid: 3cd6bc8060311c84abea991fbb6a20d3, type: 3}
+  downArrow: {fileID: 21300000, guid: 93adb2bcbdd005b419f15b8ad571d7d2, type: 3}
+  leftArrow: {fileID: 21300000, guid: 229ac33cff50c554685e54fd8837aed1, type: 3}
+  rightArrow: {fileID: 21300000, guid: 2adf5c58796f99e44b646d1e61c90e88, type: 3}

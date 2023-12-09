@@ -20,8 +20,9 @@ public class VirtualCursorActivator : MonoBehaviour
     public static event Action<SetActiveCursorEventArgs> ActiveCursorSet;
 
     bool isActived;
+    bool activeOnPause;
 
-    public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3}
+    public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Navigation }
 
     private void OnEnable()
     {
@@ -42,6 +43,8 @@ public class VirtualCursorActivator : MonoBehaviour
             case ActiveState.Menu:
                 switch (newState)
                 {
+                    //Menu: True
+                    //Navigation: False
                     case MenuManager.MenuState.MainMenu:
                     case MenuManager.MenuState.Pause:
                     case MenuManager.MenuState.Settings:
@@ -56,7 +59,18 @@ public class VirtualCursorActivator : MonoBehaviour
 
             case ActiveState.Circuitry:
             case ActiveState.Arcade:
-                SetActiveCursor(false);
+            case ActiveState.Navigation:
+                switch (newState)
+                {
+                    case MenuManager.MenuState.Pause:
+                        activeOnPause = isActived;
+                        SetActiveCursor(false);
+                        break;
+
+                    case MenuManager.MenuState.GameResume:
+                        SetActiveCursor(activeOnPause);
+                        break;
+                }
                 break;
         }
     }
@@ -75,13 +89,26 @@ public class VirtualCursorActivator : MonoBehaviour
         switch (activeState)
         {
             case ActiveState.Menu:
-                SetActiveCursor(false);
                 break;
 
             case ActiveState.Arcade:
             case ActiveState.Circuitry:
                 if (connectEventArgs.LinkedStation == convertedStation)
                     SetActiveCursor(connectEventArgs.IsConnecting);
+                break;
+
+            case ActiveState.Navigation:
+                switch (connectEventArgs.LinkedStation)
+                {
+                    case PlayerFocus.FocusedOn.Arcade:
+                    case PlayerFocus.FocusedOn.Circuitry:
+                        SetActiveCursor(false);
+                        break;
+
+                    default:
+                        SetActiveCursor(true);
+                        break;
+                }
                 break;
         }
     }

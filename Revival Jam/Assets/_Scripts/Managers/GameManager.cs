@@ -11,7 +11,6 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] bool loadStartingScenes = true;
 
-    public static event Action<GameState> BeforeStateChange;
     public static event Action<GameState> AfterStateChange;
 
     private void Awake()
@@ -30,8 +29,6 @@ public class GameManager : Singleton<GameManager>
 
     public void UpdateGameState(GameState newState)
     {
-        BeforeStateChange?.Invoke(newState);
-
         State = newState;
 
         switch (newState)

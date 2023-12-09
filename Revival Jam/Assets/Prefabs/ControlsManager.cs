@@ -31,7 +31,9 @@ public class ControlsManager : Singleton<ControlsManager>
     void AddControls(params Controls[] controlsToAdd)
     {
         foreach (var control in controlsToAdd)
-            Debug.Log($"Control Added : {control}");
+        {
+            //Debug.Log($"Control Added : {control}");
+        }
 
         ConnectedControls.AddRange(controlsToAdd);
     }
@@ -40,7 +42,7 @@ public class ControlsManager : Singleton<ControlsManager>
     {
         foreach (var control in controlsToRemove)
         {
-            Debug.Log($"Control Removed : {control}");
+            //Debug.Log($"Control Removed : {control}");
 
             ConnectedControls.Remove(control);
         }
@@ -79,7 +81,7 @@ public class ControlsManager : Singleton<ControlsManager>
     {
         while (Wires.Count == 0)
         {
-            Debug.Log("Waiting for wires to load");
+            //Debug.Log("Waiting for wires to load");
             yield return null;
         }
 

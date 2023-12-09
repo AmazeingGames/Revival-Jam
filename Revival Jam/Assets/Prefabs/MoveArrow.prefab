@@ -53,6 +53,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isArcadeButton: 0
   arrowDirection: 0
+  arrowSpriteData: {fileID: 11400000, guid: 6cbc1743e8a67b547b52dc8b57fd1350, type: 2}
+  image: {fileID: 7194780903140715949}
 --- !u!114 &7194780903140715949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +75,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2adf5c58796f99e44b646d1e61c90e88, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

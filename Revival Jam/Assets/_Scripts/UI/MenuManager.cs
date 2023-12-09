@@ -57,7 +57,7 @@ public class MenuManager : Singleton<MenuManager>
         if (sender != null)
         {
             objectsToDisable.Add(sender);
-            Debug.Log($"Added {sender} to disable list");
+            //Debug.Log($"Added {sender} to disable list");
         }
     }
 
@@ -147,6 +147,7 @@ public class MenuManager : Singleton<MenuManager>
         }
     }
 
+    //Is there a level select screen???
     void OnLevelSelectMenuEnter()
     {
         mainMenu.gameObject.SetActive(false);
