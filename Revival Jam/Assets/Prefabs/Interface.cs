@@ -29,8 +29,6 @@ public class Interface : MonoBehaviour
 
         if (Physics.Raycast(ray, out var hit, 5, InterfaceLayer))
         {
-            //Debug.Log(hit.transform.name);
-
             return hit.transform == transform;
         }
         return false;

@@ -99,7 +99,7 @@ public class MouseManager : Singleton<MouseManager>
         else
         {
             Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
+            Cursor.visible = false;
         }
     }
 
