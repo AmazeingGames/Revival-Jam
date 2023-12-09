@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbb7e61c95cdf745a83c00e8c6f5b0e, type: 3}
+  m_Name: FinalDialogue
+  m_EditorClassIdentifier: 
+  <DialogueType>k__BackingField: 0
+  <Messages>k__BackingField:
+  - actorId: 0
+    message: Thank you for
+    continuePreviousMessage: 0
+    overrideSpeed: 0
+    newSpeed: 0
+  - actorId: 0
+    message: ' freeing me'
+    continuePreviousMessage: 1
+    overrideSpeed: 0
+    newSpeed: 0
+  <Actors>k__BackingField:
+  - name: 
+    sprite: {fileID: 0}
+  NewInformation: 0

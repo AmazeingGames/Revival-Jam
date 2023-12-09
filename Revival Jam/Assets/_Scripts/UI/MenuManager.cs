@@ -16,14 +16,18 @@ public class MenuManager : Singleton<MenuManager>
     [SerializeField] GameObject controlsPanel;
     [SerializeField] GameObject settings;
 
+    [Header("Game End")]
+    [SerializeField] Canvas endScreen;
+    [SerializeField] Dialogue finalDialogue;
+
     [Header("Cameras")]
     [SerializeField] Camera menuCamera;
 
-    List<DisableOnMenu> objectsToDisable = new();
+    readonly List<DisableOnMenu> objectsToDisable = new();
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
 
-    public enum MenuState { Null, MainMenu, LevelSelectMenu, GameStart, Pause, Settings, GameResume }
+    public enum MenuState { Null, MainMenu, LevelSelectMenu, GameStart, Pause, Settings, GameResume, GameEnd }
 
     public MenuState CurrentState { get; private set; }
 
@@ -57,14 +61,13 @@ public class MenuManager : Singleton<MenuManager>
         if (sender != null)
         {
             objectsToDisable.Add(sender);
-            //Debug.Log($"Added {sender} to disable list");
+            Debug.Log($"Added {sender} to disable list");
         }
     }
 
     //Pressing escape will either pause and unpause the game
     void OnEscape()
     {
-
         var keyPress = KeyCode.Escape;
 
 #if DEBUG 
@@ -117,12 +120,24 @@ public class MenuManager : Singleton<MenuManager>
                 OnGameResume();
                 break;
 
+            case MenuState.GameEnd:
+                OnGameEnd();
+                break;
+
             default:
                 Debug.Log("Unknown Menu State");
                 break;
         }
 
         OnMenuStateChange.Invoke(newState);
+    }
+
+    void OnGameEnd()
+    {
+        SetMenuCamera(true);
+
+        endScreen.gameObject.SetActive(true);
+        DialogueManager.Instance.StartDialogue(finalDialogue, DialogueManager.DialogueType.Meta);
     }
 
     void SetMenuCamera(bool setActive)
@@ -139,6 +154,7 @@ public class MenuManager : Singleton<MenuManager>
     void OnMainMenuEnter()
     {
         mainMenu.gameObject.SetActive(true);
+        endScreen.gameObject.SetActive(false);
         
         if (!menuCamera.isActiveAndEnabled)
         {

@@ -5,23 +5,37 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using static ArcadeGameManager;
+using static AudioManager;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
+    public enum DialogueType { Note, Player, Meta }
+
     [SerializeField] float globalTextSpeed;
     [SerializeField] float blipDelay;
 
-    [SerializeField] Image dialoguePortrait;
-    [SerializeField] TextMeshProUGUI dialogueName;
-    [SerializeField] TextMeshProUGUI dialogueSpeech;
-    [SerializeField] RectTransform dialogueBackground;
+    [Header("Note Dialogue")]
+    [SerializeField] Canvas noteDialogueCanvas;
+    [SerializeField] RectTransform noteDialogueBackground;
+    [SerializeField] Image noteDialoguePortrait;
+    [SerializeField] TextMeshProUGUI noteDialogueName;
+    [SerializeField] TextMeshProUGUI noteDialogueSpeech;
 
-    [SerializeField] Canvas dialogueCanvas;
+    [Header("Meta Dialogue")]
+    [SerializeField] RectTransform metaDialogueBackground;
+    [SerializeField] TextMeshProUGUI metaDialogueSpeech;
+
 
     Dialogue currentDialogue;
     List<Message> currentMessages;
     List<Actor> currentActors;
     int activeMessage = 0;
+
+    TextMeshProUGUI dialogueSpeech;
+    TextMeshProUGUI dialogueName;
+    Image dialoguePortrait;
+    RectTransform dialogueBackground;
+    EventSounds textSFX;
 
     public static bool isDialogueRunning = false;
 
@@ -32,6 +46,8 @@ public class DialogueManager : Singleton<DialogueManager>
     public static event Action<bool> EnterDialogue;
 
     float blipTimer;
+
+    float textSpeed;
 
     private void Start()
     {
@@ -56,7 +72,7 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Opens the dialogue slot and prepares for the first line of a dialogue
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue, DialogueType type = DialogueType.Note)
     {
         EnterDialogue?.Invoke(true);
 
@@ -66,14 +82,23 @@ public class DialogueManager : Singleton<DialogueManager>
         activeMessage = 0;
 
         isDialogueRunning = true;
-        OpenDialogueBox();
-        dialogueSpeech.text = string.Empty;
+        OpenDialogueBox(type);
+        SetDialougeSFX(type);
 
+        dialogueSpeech.text = string.Empty;
         StartCoroutine(DisplayMessageSlow());
 
         //DisplayMessageInstant();
 
         Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
+    }
+
+    void SetDialougeSFX(DialogueType dialogueType)
+    {
+        textSFX = dialogueType switch
+        {
+            _ => EventSounds.ConsoleDialogue
+        };
     }
 
     //Sets the name and portrait for the current line of dialogue
@@ -95,6 +120,11 @@ public class DialogueManager : Singleton<DialogueManager>
 
         Message displayMessage = currentMessages[activeMessage];
 
+        textSpeed = globalTextSpeed;
+
+        if (displayMessage.overrideSpeed)
+            textSpeed = displayMessage.newSpeed;
+
         foreach (char character in displayMessage.message)
         {
             if (textFinished)
@@ -104,11 +134,11 @@ public class DialogueManager : Singleton<DialogueManager>
 
             if (blipTimer <= 0)
             {
-                AudioManager.TriggerAudioClip(AudioManager.EventSounds.ConsoleDialogue, transform);
+                TriggerAudioClip(textSFX, transform);
                 blipTimer = blipDelay;
             }
 
-            yield return new WaitForSeconds(globalTextSpeed);
+            yield return new WaitForSeconds(textSpeed);
         }
         textFinished = true;
     }
@@ -128,7 +158,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         textFinished = true;
 
-        AudioManager.TriggerAudioClip(AudioManager.EventSounds.ConsoleDialogue, transform);
+        TriggerAudioClip(textSFX, transform);
     }
 
     //Starts the next line of the current dialogue, and exits if there are none left
@@ -143,7 +173,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
 
         if (!currentMessages[activeMessage].continuePreviousMessage)
-            dialogueSpeech.text = string.Empty;
+            noteDialogueSpeech.text = string.Empty;
 
         StartCoroutine(DisplayMessageSlow());
     }
@@ -154,6 +184,7 @@ public class DialogueManager : Singleton<DialogueManager>
         EnterDialogue?.Invoke(false);
         
         //Why does this happen twice?
+        //^^^What is this comment for? Did I fix this??? - 12/8/23
         if (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None)
             ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
@@ -163,14 +194,32 @@ public class DialogueManager : Singleton<DialogueManager>
         Debug.Log("Conversation finished");
     }
 
-    void OpenDialogueBox()
+    void OpenDialogueBox(DialogueType dialogueType)
     {
+        switch (dialogueType)
+        {
+            case DialogueType.Note:
+                dialogueBackground = noteDialogueBackground;
+                dialogueSpeech = noteDialogueSpeech;
+                dialogueName = noteDialogueName;
+                dialoguePortrait = noteDialoguePortrait;
+                break;
+
+            case DialogueType.Player:
+                break;
+
+            case DialogueType.Meta:
+                dialogueBackground = metaDialogueBackground;
+                dialogueSpeech = metaDialogueSpeech;
+                break;
+        }
+
         dialogueBackground.gameObject.SetActive(true);
     }
 
     void CloseDialogueBox()
     {
-        dialogueBackground.gameObject.SetActive(false);
+        noteDialogueBackground.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -210,6 +259,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
         Debug.Log("Found arcade camera!");
 
-        dialogueCanvas.worldCamera = arcadeCamera.GetComponent<Camera>();
+        noteDialogueCanvas.worldCamera = arcadeCamera.GetComponent<Camera>();
     }
 }

@@ -77,7 +77,7 @@ public class MoveArrow : UIButtonBase
 
     void MovementKeysCheck()
     {
-        if (shouldBeDisabled)
+        if (shouldBeDisabled || MenuManager.Instance.IsInMenu)
             return;
 
         for (int i = 0; i < keyCodes.Count; i++)

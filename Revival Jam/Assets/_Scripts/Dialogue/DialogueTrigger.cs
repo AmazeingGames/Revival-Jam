@@ -55,9 +55,14 @@ public class DialogueTrigger : MonoBehaviour
 [Serializable]
 public class Message
 {
+    [Header("Dialogue")]
     public int actorId;
     public string message;
+
+    [Header("Properties")]
     public bool continuePreviousMessage;
+    public bool overrideSpeed = false;
+    public float newSpeed;
 }
 
 [Serializable]

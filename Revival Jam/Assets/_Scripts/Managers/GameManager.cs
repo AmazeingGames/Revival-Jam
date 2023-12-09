@@ -41,13 +41,32 @@ public class GameManager : Singleton<GameManager>
             case GameState.Loading:
                 break;
 
+            case GameState.EndGame:
+                TriggerGameEndScreen();
+                UnloadGameScenes();
+                AudioManager.TriggerAudioClip(AudioManager.EventSounds.Ending, ArcadeSoundEmitter.Transform);
+                break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
 
         AfterStateChange?.Invoke(newState);
 
-        Debug.Log($"New state: {newState}");
+        //Debug.Log($"New state: {newState}");
+    }
+
+    void TriggerGameEndScreen()
+    {
+        MenuManager.Instance.UpdateState(MenuManager.MenuState.GameEnd);
+    }
+
+    void UnloadGameScenes()
+    {
+        SceneLoader.Instance.UnloadScene("RealWorld", true);
+        SceneLoader.Instance.UnloadScene("Hotbar", true);
+        SceneLoader.Instance.UnloadScene("Circuits", true);
+        SceneLoader.Instance.UnloadScene("_ArcadeGame", true);
     }
 
     void ReadyGameScenes()
@@ -88,5 +107,6 @@ public class GameManager : Singleton<GameManager>
         Null,
         StartGame,
         Loading,
+        EndGame
     }
 }

@@ -2464,6 +2464,7 @@ GameObject:
   - component: {fileID: 2094941016}
   - component: {fileID: 2094941015}
   - component: {fileID: 2094941014}
+  - component: {fileID: 2094941020}
   m_Layer: 0
   m_Name: VirtualScreen
   m_TagString: Untagged
@@ -2600,6 +2601,18 @@ RectTransform:
   m_AnchoredPosition: {x: -4.017, y: 10.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2094941020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094941013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43f77841ee50f4d4b9029549d41bd5b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2523900339866458019
 PrefabInstance:
   m_ObjectHideFlags: 0

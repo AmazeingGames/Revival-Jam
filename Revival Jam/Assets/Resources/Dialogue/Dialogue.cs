@@ -6,6 +6,7 @@ using UnityEngine;
 public class Dialogue : ScriptableObject
 {
     [field: Header("Dialogue")]
+    [field: SerializeField] public DialogueManager.DialogueType DialogueType { get; private set; } = DialogueManager.DialogueType.Note;
     [field: SerializeField] public List<Message> Messages { get; private set; }
     [field: SerializeField] public List<Actor> Actors { get; private set; }
 
