@@ -18,6 +18,7 @@ public class MenuManager : Singleton<MenuManager>
 
     [Header("Game End")]
     [SerializeField] Canvas endScreen;
+    [SerializeField] float timeUntilCredits = 4f;
     [SerializeField] Dialogue finalDialogue;
 
     [Header("Cameras")]
@@ -54,6 +55,14 @@ public class MenuManager : Singleton<MenuManager>
     private void Update()
     {
         OnEscape();
+
+//Test game end
+#if DEBUG
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            UpdateState(MenuState.GameEnd);
+        }
+#endif
     }
 
     void HandleAddToDisable(DisableOnMenu sender)
@@ -137,6 +146,14 @@ public class MenuManager : Singleton<MenuManager>
         SetMenuCamera(true);
 
         endScreen.gameObject.SetActive(true);
+
+        StartCoroutine(PlayCredits());
+    }
+
+
+    IEnumerator PlayCredits()
+    {
+        yield return new WaitForSeconds(timeUntilCredits);
         DialogueManager.Instance.StartDialogue(finalDialogue, DialogueManager.DialogueType.Meta);
     }
 

@@ -25,6 +25,12 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] RectTransform metaDialogueBackground;
     [SerializeField] TextMeshProUGUI metaDialogueSpeech;
 
+    [Header("Text Properties")]
+    [SerializeField] bool skipSilentCharacters = false;
+    [SerializeField] bool useSilentCharacters = false;
+
+    [Header("Special Characters")]
+    [SerializeField] List<char> silentCharacters;
 
     Dialogue currentDialogue;
     List<Message> currentMessages;
@@ -51,6 +57,10 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private void Start()
     {
+        string test = "<Return this> and not this>";
+
+        Debug.Log(GetBetween(test, "<", ">"));
+
         CloseDialogueBox();
     }
 
@@ -107,8 +117,10 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         Actor actor = currentActors[currentMessages[activeMessage].actorId];
 
-        dialogueName.text = actor.name;
-        dialoguePortrait.sprite = actor.sprite;
+        if (dialogueName != null)
+            dialogueName.text = actor.name;
+        if (dialoguePortrait != null)
+            dialoguePortrait.sprite = actor.sprite;
     }
 
     //Displays the current line one character at a time
@@ -125,22 +137,66 @@ public class DialogueManager : Singleton<DialogueManager>
         if (displayMessage.overrideSpeed)
             textSpeed = displayMessage.newSpeed;
 
-        foreach (char character in displayMessage.message)
+        for (int i = 0; i < displayMessage.message.Length; i++)
         {
+            //Is it better to make the variable inside or outside the loop?
+            char character = displayMessage.message[i];
+            bool skipSound = false;
+            bool skipWait = false;
+
             if (textFinished)
                 yield break;
 
-            dialogueSpeech.text += character;
+            //Create dictionary for 'start' and 'end' 'command characters' and see if the given character is a valid key
+            if (character == '<')
+            {
+                var subString = displayMessage.message[i..];
 
-            if (blipTimer <= 0)
+                var commandText = GetBetween(subString, character.ToString(), ">");
+
+                dialogueSpeech.text += commandText;
+
+                i += commandText.Length - 1;
+
+                skipSound = true;
+                skipWait = true;
+            }
+            else
+                dialogueSpeech.text += character;
+
+            if (silentCharacters.Contains(character) && skipSilentCharacters && useSilentCharacters)
+            {
+                skipSound = true;
+                skipWait = true;
+            }
+
+            if (blipTimer <= 0 && !skipSound)
             {
                 TriggerAudioClip(textSFX, transform);
                 blipTimer = blipDelay;
             }
 
-            yield return new WaitForSeconds(textSpeed);
+            float wait = textSpeed;
+
+            if (skipWait)
+                wait = 0;
+
+            yield return new WaitForSeconds(wait);
         }
         textFinished = true;
+    }
+
+    
+    public static string GetBetween(string stringSource, string startValue, string endValue)
+    {
+        if (stringSource.Contains(startValue) && stringSource.Contains(endValue))
+        {
+            int Start = stringSource.IndexOf(startValue, 0) + startValue.Length;
+            int End = stringSource.IndexOf(endValue, Start);
+
+            return $"{startValue}{stringSource[Start..End]}{endValue}";
+        }
+        return "";
     }
 
     //Bug Fix Idea: Issue where instant display doesn't properly display instant messages
@@ -173,7 +229,10 @@ public class DialogueManager : Singleton<DialogueManager>
         }
 
         if (!currentMessages[activeMessage].continuePreviousMessage)
-            noteDialogueSpeech.text = string.Empty;
+        {
+            Debug.Log("Did not continue message");
+            dialogueSpeech.text = string.Empty;
+        }
 
         StartCoroutine(DisplayMessageSlow());
     }
@@ -211,6 +270,8 @@ public class DialogueManager : Singleton<DialogueManager>
             case DialogueType.Meta:
                 dialogueBackground = metaDialogueBackground;
                 dialogueSpeech = metaDialogueSpeech;
+                dialoguePortrait = null;
+                dialogueName = null;
                 break;
         }
 
