@@ -6,6 +6,7 @@ using TMPro;
 using System;
 using static ArcadeGameManager;
 using static AudioManager;
+using TMPro.Examples;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -20,10 +21,12 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] Image noteDialoguePortrait;
     [SerializeField] TextMeshProUGUI noteDialogueName;
     [SerializeField] TextMeshProUGUI noteDialogueSpeech;
+    VertexJitter noteJitter;
 
     [Header("Meta Dialogue")]
     [SerializeField] RectTransform metaDialogueBackground;
     [SerializeField] TextMeshProUGUI metaDialogueSpeech;
+    VertexJitter metaJitter;
 
     [Header("Text Properties")]
     [SerializeField] bool skipSilentCharacters = false;
@@ -37,6 +40,7 @@ public class DialogueManager : Singleton<DialogueManager>
     List<Actor> currentActors;
     int activeMessage = 0;
 
+    VertexJitter currentJitter;
     TextMeshProUGUI dialogueSpeech;
     TextMeshProUGUI dialogueName;
     Image dialoguePortrait;
@@ -57,6 +61,11 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private void Start()
     {
+        if (metaDialogueSpeech != null)
+            metaJitter = metaDialogueSpeech.GetComponent<VertexJitter>();
+        if (noteDialogueSpeech != null)
+            noteJitter = noteDialogueSpeech.GetComponent<VertexJitter>();
+
         string test = "<Return this> and not this>";
 
         Debug.Log(GetBetween(test, "<", ">"));
@@ -98,8 +107,6 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueSpeech.text = string.Empty;
         StartCoroutine(DisplayMessageSlow());
 
-        //DisplayMessageInstant();
-
         Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
     }
 
@@ -112,30 +119,36 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Sets the name and portrait for the current line of dialogue
-    //Not currently used to its fullest, since all dialogue comes from the same individual
-    void SetActor()
+    void SetDialogueProperties()
     {
-        Actor actor = currentActors[currentMessages[activeMessage].actorId];
+        Message displayMessage = currentMessages[activeMessage];
 
+        Actor actor = currentActors[displayMessage.actorId];
+
+        //Set Speaker
         if (dialogueName != null)
             dialogueName.text = actor.name;
         if (dialoguePortrait != null)
             dialoguePortrait.sprite = actor.sprite;
+
+        //Set Jitter
+        currentJitter.shouldJitter = displayMessage.shouldJitter;
+        Debug.Log($"Set {currentJitter} jitter to {displayMessage.shouldJitter}");
+
+        //Set Speed
+        textSpeed = globalTextSpeed;
+        if (displayMessage.overrideSpeed)
+            textSpeed = displayMessage.newSpeed;
     }
 
     //Displays the current line one character at a time
     IEnumerator DisplayMessageSlow()
     {
-        SetActor();
+        SetDialogueProperties();
 
         textFinished = false;
 
         Message displayMessage = currentMessages[activeMessage];
-
-        textSpeed = globalTextSpeed;
-
-        if (displayMessage.overrideSpeed)
-            textSpeed = displayMessage.newSpeed;
 
         for (int i = 0; i < displayMessage.message.Length; i++)
         {
@@ -164,29 +177,29 @@ public class DialogueManager : Singleton<DialogueManager>
             else
                 dialogueSpeech.text += character;
 
+            //Makes sure empty characters don't take up time or make noise
             if (silentCharacters.Contains(character) && skipSilentCharacters && useSilentCharacters)
             {
                 skipSound = true;
                 skipWait = true;
             }
 
+            //Plays sound for each character (at a fixed rate)
             if (blipTimer <= 0 && !skipSound)
             {
                 TriggerAudioClip(textSFX, transform);
                 blipTimer = blipDelay;
             }
 
+            //Displays characters one at a time
             float wait = textSpeed;
-
             if (skipWait)
                 wait = 0;
-
             yield return new WaitForSeconds(wait);
         }
         textFinished = true;
     }
 
-    
     public static string GetBetween(string stringSource, string startValue, string endValue)
     {
         if (stringSource.Contains(startValue) && stringSource.Contains(endValue))
@@ -206,7 +219,7 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         StopCoroutine(DisplayMessageSlow());
 
-        SetActor();
+        SetDialogueProperties();
 
         Message displayMessage = currentMessages[activeMessage];
 
@@ -262,6 +275,7 @@ public class DialogueManager : Singleton<DialogueManager>
                 dialogueSpeech = noteDialogueSpeech;
                 dialogueName = noteDialogueName;
                 dialoguePortrait = noteDialoguePortrait;
+                currentJitter = noteJitter;
                 break;
 
             case DialogueType.Player:
@@ -272,6 +286,7 @@ public class DialogueManager : Singleton<DialogueManager>
                 dialogueSpeech = metaDialogueSpeech;
                 dialoguePortrait = null;
                 dialogueName = null;
+                currentJitter = metaJitter;
                 break;
         }
 

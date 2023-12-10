@@ -7257,7 +7257,7 @@ GameObject:
   - component: {fileID: 1441067491}
   - component: {fileID: 1441067490}
   m_Layer: 0
-  m_Name: GameEnd
+  m_Name: MetaDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8981,6 +8981,7 @@ GameObject:
   - component: {fileID: 1826431576}
   - component: {fileID: 1826431578}
   - component: {fileID: 1826431577}
+  - component: {fileID: 1826431579}
   m_Layer: 0
   m_Name: DialogueText
   m_TagString: Untagged
@@ -9105,6 +9106,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826431575}
   m_CullTransparentMesh: 1
+--- !u!114 &1826431579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826431575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed57967c52645d390a89dcf8f61ba73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldJitter: 0
+  AngleMultiplier: 1
+  SpeedMultiplier: 1
+  CurveScale: 1
 --- !u!1 &1858616361
 GameObject:
   m_ObjectHideFlags: 0
@@ -9699,6 +9716,7 @@ GameObject:
   - component: {fileID: 2107827859}
   - component: {fileID: 2107827860}
   - component: {fileID: 2107827861}
+  - component: {fileID: 2107827862}
   m_Layer: 14
   m_Name: Dialogue
   m_TagString: Untagged
@@ -9825,6 +9843,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2107827862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107827858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed57967c52645d390a89dcf8f61ba73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldJitter: 0
+  AngleMultiplier: 1
+  SpeedMultiplier: 1
+  CurveScale: 1
 --- !u!224 &2124389446 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1891215318027607128, guid: b0d4ac6a3c63f99438ec1cc942fe3a70, type: 3}

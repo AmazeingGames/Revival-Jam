@@ -1117,11 +1117,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalTextSpeed: 0.05
   blipDelay: 0.15
-  dialoguePortrait: {fileID: 8352127450778684863}
-  dialogueName: {fileID: 8352127450418121474}
-  dialogueSpeech: {fileID: 8352127451858274276}
-  dialogueBackground: {fileID: 8352127451080916126}
-  dialogueCanvas: {fileID: 0}
+  noteDialogueCanvas: {fileID: 0}
+  noteDialogueBackground: {fileID: 0}
+  noteDialoguePortrait: {fileID: 0}
+  noteDialogueName: {fileID: 0}
+  noteDialogueSpeech: {fileID: 0}
+  metaDialogueBackground: {fileID: 0}
+  metaDialogueSpeech: {fileID: 0}
+  skipSilentCharacters: 0
+  useSilentCharacters: 0
+  silentCharacters: 
 --- !u!4 &2005302220
 Transform:
   m_ObjectHideFlags: 0
@@ -1222,6 +1227,13 @@ MonoBehaviour:
       Data3: -609620568
       Data4: 973732384
     Path: event:/Amb/Amb_Fire_Wall
+  enemyDamage:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   circuitCablePlug:
     Guid:
       Data1: 1477670588
@@ -2013,7 +2025,7 @@ PrefabInstance:
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: dialogue
       value: 
-      objectReference: {fileID: 11400000, guid: a8fbde9e20cf6c44f954dc0c9e92e15e, type: 2}
+      objectReference: {fileID: 11400000, guid: ece564bda8a80ba46a5be88cad75c5d6, type: 2}
     - target: {fileID: 458819473841049502, guid: 6c9ee45b32567c947a6674e0a144dba9, type: 3}
       propertyPath: actors.Array.size
       value: 1

@@ -61,6 +61,7 @@ public class Message
 
     [Header("Properties")]
     public bool continuePreviousMessage;
+    public bool shouldJitter;
     public bool overrideSpeed = false;
     public float newSpeed;
 }
