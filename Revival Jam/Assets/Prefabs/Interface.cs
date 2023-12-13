@@ -37,6 +37,9 @@ public class Interface : MonoBehaviour
 
     void UseItemOnInterface()
     {
+        if (HotbarManager.Instance == null)
+            return;
+
         var holdingItem = HotbarManager.Instance.HoldingItem;
 
         if (!InterfaceData.InterfaceType.Contains(PlayerFocus.Instance.Focused))
