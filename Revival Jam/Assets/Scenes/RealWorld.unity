@@ -2591,7 +2591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 599860584414831378}
   maxZRotation: 12
-  speed: 3
+  speed: 5.5
   curve:
     serializedVersion: 2
     m_Curve:
@@ -2616,6 +2616,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  button: {fileID: 5854696603639646949}
 --- !u!1 &1509977441
 GameObject:
   m_ObjectHideFlags: 0
