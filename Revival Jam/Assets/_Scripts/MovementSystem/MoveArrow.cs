@@ -90,7 +90,7 @@ public class MoveArrow : UIButtonBase
     public override void OnClick()
     {
         base.OnClick();
-        StartCoroutine(MovementManager.Instance.ConnectToStationMethod(connectingStation));
+        StartCoroutine(MovementManager.Instance.CallConnectToStation(connectingStation));
     }
 
     void SetSprite() => image.sprite = arrowSpriteData.DirectionToSprite(arrowDirection); 

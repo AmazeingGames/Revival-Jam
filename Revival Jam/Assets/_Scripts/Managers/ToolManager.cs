@@ -20,6 +20,8 @@ public class ToolManager : Singleton<ToolManager>
     readonly List<ItemData> usedTools = new();  
 
     public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
+    public System.Collections.Generic.IEnumerable<ItemsAndAbilities> GetUsedToolsTypes() => usedTools.Select(t => t.ItemType);
+    public bool HasUsedTool(ItemsAndAbilities toolType) => GetUsedToolsTypes().Contains(toolType);
 
     private void Update()
     {
@@ -35,11 +37,11 @@ public class ToolManager : Singleton<ToolManager>
     {
         if (toolData == null)
         {
-            Debug.Log("tool data is null");
+            Debug.Log("toolType data is null");
             return;
         }
 
-        Debug.Log($"Handled tool use {toolData.ItemType}");
+        Debug.Log($"Handled toolType use {toolData.ItemType}");
 
         switch (toolData.ItemType)
         {

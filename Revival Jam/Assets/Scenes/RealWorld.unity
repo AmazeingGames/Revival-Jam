@@ -2590,9 +2590,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 599860584414831378}
-  maxZRotation: 12
-  speed: 5.5
-  curve:
+  maxJoystickRotation: 12
+  joyStickSpeed: 6
+  joystickCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -2617,6 +2617,36 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   button: {fileID: 5854696603639646949}
+  panel: {fileID: 5838420073996364257}
+  closePanelOnLeave: 0
+  maxPanelRotation: 105
+  panelPrySpeed: 5
+  panelOpenSpeed: 3
+  panelCloseSpeed: 2
+  panelCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1509977441
 GameObject:
   m_ObjectHideFlags: 0
@@ -5567,7 +5597,7 @@ GameObject:
   - component: {fileID: 2882298455985724474}
   - component: {fileID: 1196498449408528058}
   m_Layer: 6
-  m_Name: pCube3
+  m_Name: WiringPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8423,7 +8453,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638233044785039451}
-  m_LocalRotation: {x: 0, y: 0.021763263, z: -0, w: 0.9997632}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0018901693, y: 0.08090577, z: -0.028855063}
   m_LocalScale: {x: 2.5957198, y: 2.7673554, z: 0.20187213}
   m_ConstrainProportionsScale: 0

@@ -25,7 +25,7 @@ public class CharacterController : StateRunner<CharacterController>
         //Changes our acceleration rate to suit the situation
         float acceleartionRate = (Mathf.Abs(targetSpeed > .01f ? accelerationAmount : decelerationAmount));
 
-        //Applies acceleration to the speed difference, then raises it to a power, meaning acceleration increases with higher speeds
+        //Applies acceleration to the joyStickSpeed difference, then raises it to a power, meaning acceleration increases with higher speeds
         //Multiplies it to reapply direction
         float movement = Mathf.Pow(Mathf.Abs(speedDifference) * acceleartionRate, velocityPower) * Mathf.Sign(speedDifference);
 

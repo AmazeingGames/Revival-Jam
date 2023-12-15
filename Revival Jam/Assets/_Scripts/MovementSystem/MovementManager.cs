@@ -14,7 +14,6 @@ public class MovementManager : Singleton<MovementManager>
 
     public readonly Dictionary<FocusedOn, StationMoveData> stationToData = new();
 
-    public StationMoveData CurrentStationData { get; private set; }
     public static bool ControlMovement => Instance != null && Instance.controlMovement;
 
     public static event Action<FocusedOn> ConnectToStation;
@@ -56,10 +55,10 @@ public class MovementManager : Singleton<MovementManager>
     void OnGameStart()
     {
         controlMovement = true;
-        StartCoroutine(ConnectToStationMethod(startingStation));
+        StartCoroutine(CallConnectToStation(startingStation));
     }
 
-    public IEnumerator ConnectToStationMethod(FocusedOn stationToConnect)
+    public IEnumerator CallConnectToStation(FocusedOn stationToConnect)
     {
         yield return new WaitForSeconds(.1f);
         ConnectToStation?.Invoke(stationToConnect);
