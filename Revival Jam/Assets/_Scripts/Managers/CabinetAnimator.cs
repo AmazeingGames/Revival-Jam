@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 using static ToolManager;
 using static ItemAndAbilityManager;
 
-public class CabinetAnimator : MonoBehaviour
+public class CabinetAnimator : Singleton<CabinetAnimator>
 {
     //Maybe turn this data into scriptable objects to make it easier to edit
     [Header("Joystick Movement")]
@@ -14,7 +14,8 @@ public class CabinetAnimator : MonoBehaviour
     [SerializeField] float joyStickSpeed;
     [SerializeField] AnimationCurve joystickCurve;
 
-    float joystickCurrent;
+    public float JoystickCurrent { get; private set; }
+
     float joystickTarget;
     float horizontalInput;
 
@@ -112,9 +113,9 @@ public class CabinetAnimator : MonoBehaviour
 
         joystickTarget = .5f * (horizontalInput + 1);
 
-        joystickCurrent = Mathf.MoveTowards(joystickCurrent, joystickTarget, joyStickSpeed * Time.deltaTime);
+        JoystickCurrent = Mathf.MoveTowards(JoystickCurrent, joystickTarget, joyStickSpeed * Time.deltaTime);
         
-        joystick.localRotation = Quaternion.Lerp(Quaternion.Euler(minRotation), Quaternion.Euler(maxRotation), joystickCurve.Evaluate(joystickCurrent));
+        joystick.localRotation = Quaternion.Lerp(Quaternion.Euler(minRotation), Quaternion.Euler(maxRotation), joystickCurve.Evaluate(JoystickCurrent));
     }
 
     void HandleUseItem(ItemData itemData)

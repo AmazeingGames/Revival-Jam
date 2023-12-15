@@ -14,6 +14,7 @@ public class Walk : State<CharacterController>
     [SerializeField] bool showDebug;
 
     [Header("Walk")]
+    [SerializeField] bool useJoystickPosition;
     [SerializeField] float walkSpeed;
     [SerializeField] float acceleration;
     [SerializeField] float deceleration;
@@ -66,6 +67,11 @@ public class Walk : State<CharacterController>
     public override void CaptureInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
+
+        if (useJoystickPosition && CabinetAnimator.Instance != null)
+            horizontalInput = CabinetAnimator.Instance.JoystickCurrent.ConvertToNewRange(oldRange: new Vector2(0, 1), newRange: new Vector2(-1, 1));
+
+        Debug.Log($"HorizontalInput : {horizontalInput}");
 
         if (Input.GetButtonDown("Jump"))
             jumpTimer = jumpBufferLength;
