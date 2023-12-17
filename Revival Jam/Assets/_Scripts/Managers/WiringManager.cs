@@ -15,7 +15,7 @@ public class WiringManager : Singleton<WiringManager>
             yield return null;
         }
 
-        Debug.Log($"Set wiring cabinet active {isActive} - wiring cabine is active {Instance.wiringCabinet.activeSelf}");
+        //Debug.Log($"Set wiring cabinet active {isActive} - wiring cabinet is active {Instance.wiringCabinet.activeSelf}");
 
         Instance.wiringCabinet.SetActive(isActive);
     }

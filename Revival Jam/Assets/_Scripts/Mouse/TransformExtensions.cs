@@ -4,16 +4,15 @@ using UnityEngine;
 
 public static class TransformExtensions
 {
-    //Updates the Transform along with the mouse movement
+    public enum Axes { Horizontal, Vertical }
+
+    //Updates the Transform along with some movement
     //Either sets the position directly or adds the position
     public static void FollowMovement(this Transform followingTransform, Vector2 movementToFollow, float sensitivity, bool setPosition, ref Vector2 AddAmount)
     {
-        float addXAmount;
-        float addYAmount;
-
-        //Gets the amount to move the wires by
-        addXAmount = (movementToFollow.x / 188) * Time.deltaTime * sensitivity;
-        addYAmount = (movementToFollow.y / 188) * Time.deltaTime * sensitivity;
+        //Gets the amount to move the transform by
+        float addXAmount = (movementToFollow.x / 188) * Time.deltaTime * sensitivity;
+        float addYAmount = (movementToFollow.y / 188) * Time.deltaTime * sensitivity;
 
         AddAmount = new Vector2(addXAmount, addYAmount);
 

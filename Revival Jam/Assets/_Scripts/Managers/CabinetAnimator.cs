@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using static ToolManager;
 using static ItemAndAbilityManager;
+using static PlayerFocus;
 
 public class CabinetAnimator : Singleton<CabinetAnimator>
 {
     //Maybe turn this data into scriptable objects to make it easier to edit
     [Header("Joystick Movement")]
     [SerializeField] Transform joystick;
+    [SerializeField] LayerMask joystickLayer;
     [SerializeField] float maxJoystickRotation;
     [SerializeField] float joyStickSpeed;
     [SerializeField] AnimationCurve joystickCurve;
@@ -24,6 +26,7 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
 
     [Header("Wiring Panel")]
     [SerializeField] Transform panel;
+    [SerializeField] LayerMask panelLayer;
     [SerializeField] bool closePanelOnLeave;
     [SerializeField] float maxPanelRotation;
     [SerializeField] float panelPrySpeed = 5f;
@@ -31,6 +34,9 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
     [SerializeField] float panelCloseSpeed;
 
     [SerializeField] AnimationCurve panelCurve;
+
+    bool isMouseOverPanel;
+    bool isDraggingPanel;
 
     float panelCurrent;
     float panelTarget;
@@ -59,6 +65,10 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
 #endif
         MoveJoystick();
         RotatePanel();
+
+        var focusInstance = PlayerFocus.Instance;
+        if (focusInstance != null && focusInstance.Focused == FocusedOn.BackView)
+            ClickWiringPanel();
     }
 
     //1 = Open
@@ -73,11 +83,11 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
             panelSpeed = panelPrySpeed;
     }
 
-    void HandleConnectToStation(PlayerFocus.FocusedOn stationType)
+    void HandleConnectToStation(FocusedOn stationType)
     {
         switch (stationType)
         {
-            case PlayerFocus.FocusedOn.Circuitry:
+            case FocusedOn.Circuitry:
                 if (ToolManager.Instance.HasUsedTool(ItemsAndAbilities.Crowbar))
                     SetPanelTarget(1);
                 break;
@@ -133,10 +143,40 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
         }
     }
 
+    void ClickWiringPanel()
+    {
+        isMouseOverPanel = IsMouseOver(panel, panelLayer);
+
+        if (Input.GetMouseButtonUp(0))
+            isDraggingPanel = false;
+
+        var toolManger = ToolManager.Instance;
+        if (toolManger != null && !toolManger.HasUsedTool(ItemsAndAbilities.Crowbar))
+            return;
+
+        if (!(isMouseOverPanel && Input.GetMouseButtonDown(0)))
+            return;
+
+        Debug.Log("Click!");
+
+        isDraggingPanel = true;
+    }
+
     //When the player fixes the jammed button with the tool, returns it to its normal visuals
     void FixButton()
     {
         button.localRotation = Quaternion.Euler(Vector3.zero);
     }
 
+    bool IsMouseOver(Transform transform, LayerMask targetLayer)
+    {
+        if (Camera.main == null)
+            return false;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out var hit, 5, targetLayer))
+            return hit.transform == transform;
+        return false;
+    }
 }

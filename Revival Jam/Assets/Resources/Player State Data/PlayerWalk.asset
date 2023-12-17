@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerWalk
   m_EditorClassIdentifier: 
   showDebug: 0
+  useJoystickPosition: 0
   walkSpeed: 9
   acceleration: 13
   deceleration: 16

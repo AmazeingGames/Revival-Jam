@@ -2590,6 +2590,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 599860584414831378}
+  joystickLayer:
+    serializedVersion: 2
+    m_Bits: 1048576
   maxJoystickRotation: 12
   joyStickSpeed: 6
   joystickCurve:
@@ -2618,9 +2621,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   button: {fileID: 5854696603639646949}
   panel: {fileID: 5838420073996364257}
+  panelLayer:
+    serializedVersion: 2
+    m_Bits: 524288
   closePanelOnLeave: 0
   maxPanelRotation: 105
-  panelPrySpeed: 5
+  panelPrySpeed: 4.4
   panelOpenSpeed: 3
   panelCloseSpeed: 2
   panelCurve:
@@ -5596,7 +5602,8 @@ GameObject:
   - component: {fileID: 5838420073996364257}
   - component: {fileID: 2882298455985724474}
   - component: {fileID: 1196498449408528058}
-  m_Layer: 6
+  - component: {fileID: 5838420073996364258}
+  m_Layer: 19
   m_Name: WiringPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6659,7 +6666,8 @@ GameObject:
   - component: {fileID: 2168733679750621646}
   - component: {fileID: 8697669388119511804}
   - component: {fileID: 5185625358169064965}
-  m_Layer: 6
+  - component: {fileID: 8697669388119511805}
+  m_Layer: 20
   m_Name: JoystickBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8461,6 +8469,20 @@ Transform:
   m_Father: {fileID: 527052477982836160}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &5838420073996364258
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638233044785039451}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3369316746193770658, guid: b1fd10f5cf4c85746b407ea8508a7b4b, type: 3}
 --- !u!23 &5853961183158198536
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17364,6 +17386,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2387249075944867198}
+  m_Mesh: {fileID: 7560267142187180976, guid: b1fd10f5cf4c85746b407ea8508a7b4b, type: 3}
+--- !u!64 &8697669388119511805
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2387249075944867198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 7560267142187180976, guid: b1fd10f5cf4c85746b407ea8508a7b4b, type: 3}
 --- !u!4 &8705321461356741806
 Transform:

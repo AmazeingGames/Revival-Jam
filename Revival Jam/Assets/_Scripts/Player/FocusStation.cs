@@ -111,7 +111,7 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
         ConnectToStation?.Invoke(new ConnectEventArgs(linkedStation, isConnecting, stationCamera));
 
-        Debug.Log($"Is Connecting: {isConnecting} | Is Disconnecting: {!isConnecting} | linkedStation : {linkedStation}");
+        //Debug.Log($"Is Connecting: {isConnecting} | Is Disconnecting: {!isConnecting} | linkedStation : {linkedStation}");
 
         if (isConnecting)
             TriggerAudioClip(stationEnterSound, transform);

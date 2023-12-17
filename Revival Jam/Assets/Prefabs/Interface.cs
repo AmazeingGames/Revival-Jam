@@ -19,7 +19,6 @@ public class Interface : MonoBehaviour
             UseItemOnInterface();
     }
 
-    //This can be changed to detect all interfaces instead, so we don't need so many layers
     bool IsMouseOver()
     {
         if (Camera.main == null)
@@ -28,9 +27,7 @@ public class Interface : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out var hit, 5, InterfaceLayer))
-        {
             return hit.transform == transform;
-        }
         return false;
     }
 

@@ -113,7 +113,7 @@ public class MoveArrow : UIButtonBase
 
     void HandleConnectToStation(ConnectEventArgs eventArgs)
     {
-        Debug.Log("CONNECT TO STATION");
+       //Debug.Log("CONNECT TO STATION");
 
         if (!eventArgs.IsConnecting)
             return;
@@ -123,7 +123,7 @@ public class MoveArrow : UIButtonBase
         if (data != null)
         {
             connectingStation = data.DirectionToStation(arrowDirection);
-            Debug.Log($"{arrowDirection} Arrow : Set new connecting station ({connectingStation}) from newly connected station data ({data}) of type {data.StationType}");
+            //Debug.Log($"{arrowDirection} Arrow : Set new connecting station ({connectingStation}) from newly connected station data ({data}) of type {data.StationType}");
         }
         else
             Debug.Log("New Station data is null!");

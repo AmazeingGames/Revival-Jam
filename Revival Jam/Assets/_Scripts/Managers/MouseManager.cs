@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.UI;
 using static FocusStation;
 
 //Rename: "CursorManager"
@@ -24,8 +27,6 @@ public class MouseManager : Singleton<MouseManager>
 
     [field: Header("Debug")]
     [SerializeField] bool useVirtualMouseMovement;
-
-
     bool isDelayOver;
 
     Vector2 variable;
@@ -35,9 +36,15 @@ public class MouseManager : Singleton<MouseManager>
 
     Transform ActiveTransform => activeCursor == null ? null : activeCursor.transform;
     VirtualCursor activeCursor;
+    Image activeCursorImage;
     Animator activeAnimator;
 
     bool hasActiveCursor = false;
+
+    bool setActive;
+    public bool HasRememberedPosition { get; private set; }
+    Vector3 mousePositionRemember;
+    Transform cursorTest;
 
     private void OnEnable()
     {
@@ -54,6 +61,8 @@ public class MouseManager : Singleton<MouseManager>
     //Purpose is to fix bug where mouse is very sensitive on game start
     private IEnumerator Start()
     {
+        cursorTest = GameObject.Find("CursorTest").transform;
+
         yield return new WaitForSeconds(moveDelay);
 
         isDelayOver = true;
@@ -72,6 +81,7 @@ public class MouseManager : Singleton<MouseManager>
     }
 
     //Prepares the game to use either the virtual mouse or actual mouse, for both movement and input
+    //Change this to use a switch statement
     void VirtualCheck()
     {
         if (!hasActiveCursor)
@@ -160,16 +170,33 @@ public class MouseManager : Singleton<MouseManager>
     }
 
     //Updates the visual cursor's transform to the mouse
+    //Move where the cursor image is disabled; the cursor blinks a few times and looks a bit wierd
     void FollowMousePosition()
     {
         if (ActiveTransform == null)
             return;
+
+        if (HasRememberedPosition)
+        {
+            Debug.Log("Set mouse position");
+
+            HasRememberedPosition = false;
+            StartCoroutine(SetMousePosition());
+        }
 
         Vector3 newMousePosition = Input.mousePosition + cursorOffset;
 
         newMousePosition.z = ActiveTransform.position.z;
 
         ActiveTransform.position = newMousePosition;
+    }
+
+    IEnumerator SetMousePosition()
+    {
+        yield return null;
+
+        Mouse.current.WarpCursorPosition(mousePositionRemember);
+        activeCursor.gameObject.SetActive(true);
     }
 
     //Updates the virtual cursor's position to follow the movement of the mouse
@@ -197,7 +224,22 @@ public class MouseManager : Singleton<MouseManager>
 
             activeAnimator = cursorEventArgs.CursorAnimator;
             activeCursor = cursorEventArgs.VirtualCursor;
+            activeCursorImage = cursorEventArgs.Image;
             useVirtualMouseMovement = cursorEventArgs.VirtualCursor.MovementType == VirtualCursor.MouseType.Virtual;
+
+            if (useVirtualMouseMovement)
+            {
+                //Remember mouse position
+                Debug.Log("Remember mouse position");
+                HasRememberedPosition = true;
+                mousePositionRemember = Input.mousePosition;
+                cursorTest.transform.position = mousePositionRemember;
+            }
+            else if (HasRememberedPosition)
+            {
+                Debug.Log("Disabled cursor");
+                cursorEventArgs.VirtualCursor.gameObject.SetActive(false);
+            }
         }
         else if (activeAnimator == cursorEventArgs.CursorAnimator)
         {
