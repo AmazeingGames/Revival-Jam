@@ -6,6 +6,7 @@ using TMPro;
 using System;
 using static ArcadeGameManager;
 using static AudioManager;
+using static PlayerFocus;
 using TMPro.Examples;
 
 public class DialogueManager : Singleton<DialogueManager>
@@ -45,6 +46,7 @@ public class DialogueManager : Singleton<DialogueManager>
     TextMeshProUGUI dialogueName;
     Image dialoguePortrait;
     RectTransform dialogueBackground;
+    DialogueType dialogueType;
     EventSounds textSFX;
 
     public static bool isDialogueRunning = false;
@@ -75,16 +77,27 @@ public class DialogueManager : Singleton<DialogueManager>
 
     void Update()
     {
-        if (isDialogueRunning && Input.GetKeyDown(KeyCode.Space))
+        ContinueDialogue();
+    }
+
+    //Checks when to update the dialogue to display the full message or to display the next message
+    void ContinueDialogue()
+    {
+        if (!isDialogueRunning)
+            return;
+
+        if (dialogueType == DialogueType.Note && !IsFocusedOn(FocusedOn.Arcade))
+        {
+            Debug.Log("Not focused on arcade");
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (textFinished)
-            {
                 NextMessage();
-            }
             else
-            {
                 DisplayMessageInstant();
-            }
         }
 
         blipTimer -= Time.deltaTime;
@@ -200,6 +213,7 @@ public class DialogueManager : Singleton<DialogueManager>
         textFinished = true;
     }
 
+    //Returns the content of a string that appears between two values
     public static string GetBetween(string stringSource, string startValue, string endValue)
     {
         if (stringSource.Contains(startValue) && stringSource.Contains(endValue))
@@ -214,6 +228,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     //Bug Fix Idea: Issue where instant display doesn't properly display instant messages
     //Create a 'load message' string variable, it holds the message to display using the continues messages, clear it when there isn't a continuous message, add to it when there is
+    
     //Displays the message all at once instead of one character at a time
     void DisplayMessageInstant()
     {
@@ -290,6 +305,7 @@ public class DialogueManager : Singleton<DialogueManager>
                 break;
         }
 
+        this.dialogueType = dialogueType; 
         dialogueBackground.gameObject.SetActive(true);
     }
 
