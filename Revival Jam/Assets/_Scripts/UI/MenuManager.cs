@@ -11,6 +11,7 @@ public class MenuManager : Singleton<MenuManager>
     [Header("Main Menu")]
     [SerializeField] Canvas mainMenu;
     [SerializeField] GameObject menuButtons;
+    [SerializeField] GameObject title;
 
     [Header("Pause")]
     [SerializeField] Canvas pauseMenu;
@@ -181,6 +182,7 @@ public class MenuManager : Singleton<MenuManager>
         mainMenu.gameObject.SetActive(true);
         endScreen.gameObject.SetActive(false);
         menuButtons.SetActive(true);
+        title.SetActive(true);
 
         settings.SetActive(false);
         
@@ -220,6 +222,7 @@ public class MenuManager : Singleton<MenuManager>
     {
         menuButtons.SetActive(false);
         controlsPanel.SetActive(false);
+        title.SetActive(false);
 
         settings.SetActive(true);
     }
