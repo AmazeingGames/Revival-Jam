@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BackButton : UIButtonBase
 {
+    public void Start()
+    {
+    }
+
     public override void OnEnter()
     {
         base.OnEnter();
