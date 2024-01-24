@@ -10,6 +10,7 @@ public class MenuManager : Singleton<MenuManager>
 {
     [Header("Main Menu")]
     [SerializeField] Canvas mainMenu;
+    [SerializeField] GameObject menuButtons;
 
     [Header("Pause")]
     [SerializeField] Canvas pauseMenu;
@@ -28,9 +29,10 @@ public class MenuManager : Singleton<MenuManager>
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
 
-    public enum MenuState { Null, MainMenu, LevelSelectMenu, GameStart, Pause, Settings, GameResume, GameEnd }
+    public enum MenuState { Null, MainMenu, GameStart, Pause, Settings, GameResume, GameEnd }
 
     public MenuState CurrentState { get; private set; }
+    public MenuState PreviousState { get; private set; } = MenuState.Null;
 
     public static event Action<MenuState> OnMenuStateChange;
 
@@ -101,16 +103,13 @@ public class MenuManager : Singleton<MenuManager>
 
     public void UpdateState(MenuState newState)
     {
+        PreviousState = CurrentState;
         CurrentState = newState;
 
         switch (newState)
         {
             case MenuState.MainMenu:
                 OnMainMenuEnter();
-                break;
-
-            case MenuState.LevelSelectMenu:
-                OnLevelSelectMenuEnter();
                 break;
 
             case MenuState.GameStart:
@@ -139,6 +138,15 @@ public class MenuManager : Singleton<MenuManager>
         }
 
         OnMenuStateChange.Invoke(newState);
+    }
+
+    //Not sure if this is necessary at the moment, but I will think about it
+    //When exiting a menu, we'll need to always disable certain things.
+    //Instead of handling this in every other 'entry' function, it may be better to handle it in a single area
+    //The only downside this would have would be if the gamee is not set up properly the first time, though we can make a new function to prepare the game to be ready
+    void AddToDisable(params GameObject[] objects)
+    {
+
     }
 
     void OnGameEnd()
@@ -172,18 +180,15 @@ public class MenuManager : Singleton<MenuManager>
     {
         mainMenu.gameObject.SetActive(true);
         endScreen.gameObject.SetActive(false);
+        menuButtons.SetActive(true);
+
+        settings.SetActive(false);
         
         if (!menuCamera.isActiveAndEnabled)
         {
             Debug.LogWarning("MenuCamera was not active. Setting Cam active");
             SetMenuCamera(true);
         }
-    }
-
-    //Is there a level select screen???
-    void OnLevelSelectMenuEnter()
-    {
-        mainMenu.gameObject.SetActive(false);
     }
 
     void OnGameStart()
@@ -199,6 +204,8 @@ public class MenuManager : Singleton<MenuManager>
 
         controlsPanel.SetActive(true);
         pauseMenu.gameObject.SetActive(true);
+
+        menuButtons.SetActive(false);
         settings.SetActive(false);
     }
 
@@ -211,7 +218,9 @@ public class MenuManager : Singleton<MenuManager>
 
     void OnSettingsEnter()
     {
+        menuButtons.SetActive(false);
         controlsPanel.SetActive(false);
+
         settings.SetActive(true);
     }
 

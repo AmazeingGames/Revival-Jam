@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MenuManager;
 
 public class BackButton : UIButtonBase
 {
-    public void Start()
-    {
-    }
-
     public override void OnEnter()
     {
         base.OnEnter();
@@ -17,6 +14,6 @@ public class BackButton : UIButtonBase
     {
         base.OnClick();
 
-        MenuManager.Instance.UpdateState(MenuManager.MenuState.Settings);
+        MenuManager.Instance.UpdateState(MenuManager.Instance.PreviousState);
     }
 }
