@@ -22,7 +22,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
     bool isActive;
     bool wasActiveOnPause;
-    bool HasTool => HotbarManager.Instance.GetCurrentTools().Count > 0;
+    bool HasTool => HotbarManager.Instance != null && HotbarManager.Instance.GetCurrentTools().Count > 0;
 
     public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Interaction }
 

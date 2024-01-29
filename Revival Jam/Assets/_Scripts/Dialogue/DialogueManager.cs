@@ -333,7 +333,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
             case ArcadeState.Lose:
             case ArcadeState.RestartLevel:
-                ExitDialogue(grantAbility: false);
+                if (isDialogueRunning)
+                    ExitDialogue(grantAbility: false);
                 break;
         }
     }
