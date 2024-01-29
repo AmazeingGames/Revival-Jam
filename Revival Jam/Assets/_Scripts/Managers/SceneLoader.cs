@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    [SerializeField] string levelNameConvention;
+    readonly string levelNameConvention = "NewArcadeLevel_";
 
     public static event Action<AsyncOperation, bool> OnLoadStart;
 
@@ -29,9 +29,12 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public bool LoadLevel(int level)
     {
-        Debug.Log("CHANGE LEVEL NAME CONVENTION");
-        return LoadScene($"NewArcadeLevel_{level}", true);
-        //return LoadScene($"{levelNameConvention}{level}", true);
+        //Debug.Log("CHANGE LEVEL NAME CONVENTION");
+        //return LoadScene($"NewArcadeLevel_{level}", true);
+
+        Debug.Log($"Loading Level : {levelNameConvention}{level}");
+
+        return LoadScene($"{levelNameConvention}{level}", true);
     }
 
     public bool LoadScene(string sceneName, bool isLevel = false)
@@ -42,7 +45,7 @@ public class SceneLoader : Singleton<SceneLoader>
         {
             //loadingCanvas.gameObject.SetActiveCursor(false);
 
-            Debug.Log("Scene does not exist");
+            Debug.Log($"Scene, {sceneName}, does not exist");
             return false;
         }
 
@@ -80,6 +83,8 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         if (Instance == null)
             return false;
+
+        Debug.Log($"Checking for level : {Instance.levelNameConvention}{levelnumber})");
 
         return DoesSceneExist($"{Instance.levelNameConvention}{levelnumber}");
     }

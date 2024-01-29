@@ -8,6 +8,7 @@ using static ArcadeGameManager;
 using static AudioManager;
 using static PlayerFocus;
 using TMPro.Examples;
+using Unity.VisualScripting;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -61,6 +62,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     float textSpeed;
 
+
     private void Start()
     {
         if (metaDialogueSpeech != null)
@@ -72,7 +74,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         Debug.Log(GetBetween(test, "<", ">"));
 
-        CloseDialogueBox();
+        noteDialogueBackground.gameObject.SetActive(false);
     }
 
     void Update()
@@ -230,7 +232,7 @@ public class DialogueManager : Singleton<DialogueManager>
     //Create a 'load message' string variable, it holds the message to display using the continues messages, clear it when there isn't a continuous message, add to it when there is
     
     //Displays the message all at once instead of one character at a time
-    void DisplayMessageInstant()
+    void DisplayMessageInstant(bool playSFX = true)
     {
         StopCoroutine(DisplayMessageSlow());
 
@@ -242,7 +244,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
         textFinished = true;
 
-        TriggerAudioClip(textSFX, transform);
+        if (playSFX)
+            TriggerAudioClip(textSFX, transform);
     }
 
     //Starts the next line of the current dialogue, and exits if there are none left
@@ -266,16 +269,17 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Finishes the dialogue and informs listeners dialogue has ended
-    void ExitDialogue()
+    void ExitDialogue(bool grantAbility = true)
     {
         EnterDialogue?.Invoke(false);
         
-        //Why does this happen twice?
-        //^^^What is this comment for? Did I fix this??? - 12/8/23
-        if (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None)
+        if (grantAbility && (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None))
             ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
-        CloseDialogueBox();
+        //Makes sure no dialogue is playing when we're exiting
+        DisplayMessageInstant(false);
+
+        noteDialogueBackground.gameObject.SetActive(false);
         isDialogueRunning = false;
 
         Debug.Log("Conversation finished");
@@ -309,11 +313,6 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueBackground.gameObject.SetActive(true);
     }
 
-    void CloseDialogueBox()
-    {
-        noteDialogueBackground.gameObject.SetActive(false);
-    }
-
     private void OnEnable()
     {
         AfterArcadeStateChange += HandleArcadeGameStateChange;
@@ -331,10 +330,15 @@ public class DialogueManager : Singleton<DialogueManager>
             case ArcadeState.StartLevel:
                 StartCoroutine(FindCamera());
                 break;
+
+            case ArcadeState.Lose:
+            case ArcadeState.RestartLevel:
+                ExitDialogue(grantAbility: false);
+                break;
         }
     }
 
-    //Yes, find in coroutine is bad for performance, but it's hard to think of a better way with tile maps
+    //Yes; 'find' in coroutine is bad for performance, but I dumb
     IEnumerator FindCamera()
     {
         while (Player.Instance == null)
