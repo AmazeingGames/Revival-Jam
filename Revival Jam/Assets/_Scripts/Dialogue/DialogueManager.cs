@@ -276,8 +276,8 @@ public class DialogueManager : Singleton<DialogueManager>
         if (grantAbility && (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None))
             ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
-        //Makes sure no dialogue is playing when we're exiting
-        DisplayMessageInstant(false);
+        if (!textFinished)
+            DisplayMessageInstant(false);
 
         noteDialogueBackground.gameObject.SetActive(false);
         isDialogueRunning = false;
