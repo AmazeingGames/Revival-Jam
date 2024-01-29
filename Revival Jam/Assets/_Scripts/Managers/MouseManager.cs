@@ -13,7 +13,8 @@ public class MouseManager : Singleton<MouseManager>
 {
     [Header("Virtual Cursor")]
     [SerializeField] Vector3 cursorOffset;
-    [SerializeField] float wireFollowSensitivity;
+    //Why is wire follow sensitivity not read?
+    //[SerializeField] float wireFollowSensitivity;
     [SerializeField] float mouseFollowSensitivity;
 
     [SerializeField] bool getRaw;
@@ -24,6 +25,7 @@ public class MouseManager : Singleton<MouseManager>
 
     [field: Header("Debug")]
     [SerializeField] bool useVirtualMouseMovement;
+    [SerializeField] bool alwaysUseVirtualMovement;
 
 
     bool isDelayOver;
@@ -165,6 +167,8 @@ public class MouseManager : Singleton<MouseManager>
         if (ActiveTransform == null)
             return;
 
+        //Debug.Log("Following position");
+
         Vector3 newMousePosition = Input.mousePosition + cursorOffset;
 
         newMousePosition.z = ActiveTransform.position.z;
@@ -178,7 +182,9 @@ public class MouseManager : Singleton<MouseManager>
         if (ActiveTransform == null)
             return;
 
-        ActiveTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), mouseFollowSensitivity, false, ref variable);
+        //Debug.Log("Following movement");
+
+        ActiveTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), mouseFollowSensitivity * SettingsManager.Instance.MouseSensitivity, false, ref variable);
     }
 
     //Gets a reference to the wire on grab
@@ -197,7 +203,12 @@ public class MouseManager : Singleton<MouseManager>
 
             activeAnimator = cursorEventArgs.CursorAnimator;
             activeCursor = cursorEventArgs.VirtualCursor;
-            useVirtualMouseMovement = cursorEventArgs.VirtualCursor.MovementType == VirtualCursor.MouseType.Virtual;
+
+            if (alwaysUseVirtualMovement)
+                useVirtualMouseMovement = true;
+            else
+                useVirtualMouseMovement = cursorEventArgs.VirtualCursor.MovementType == VirtualCursor.MouseType.Virtual;
+
         }
         else if (activeAnimator == cursorEventArgs.CursorAnimator)
         {

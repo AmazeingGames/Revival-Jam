@@ -29,7 +29,6 @@ public class MenuManager : Singleton<MenuManager>
     readonly List<DisableOnMenu> objectsToDisable = new();
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
-
     public enum MenuState { Null, MainMenu, GameStart, Pause, Settings, GameResume, GameEnd }
 
     public MenuState CurrentState { get; private set; }

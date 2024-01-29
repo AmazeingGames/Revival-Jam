@@ -43,6 +43,8 @@ public class AudioManager : Singleton<AudioManager>
     [field: Header("2D Game")]
     [SerializeField] EventReference consoleBlip;
 
+    Bus masterBus;
+
     public enum EventSounds { Null, CastleAmbience, CastleGlitchAmbience, ForestAmbience, ForestGlitchAmbience, PlayerJoust, PlayerDamage, ArcadeFootsteps, CircuitCablePlug, CircuitCableUnplug, ArcadeOn, ArcadeOff, CircuitPanelOpen, Player3DFootsteps, ArcadeUIHover, ArcadeUISelect, UIHover, UISelect, FireWall, ConsoleDialogue, Ending, ArcadeShake, EnemyTakeDamage }
 
     public enum FootstepsParameter { Grass, Stone }
@@ -83,7 +85,8 @@ public class AudioManager : Singleton<AudioManager>
             { EventSounds.ArcadeShake, shakeArcade },
             { EventSounds.EnemyTakeDamage, enemyDamage },
         };
-            
+
+        masterBus = RuntimeManager.GetBus("bus:/");
     }
 
     private void Update()
@@ -96,6 +99,8 @@ public class AudioManager : Singleton<AudioManager>
         if (Input.GetKeyDown(KeyCode.L))
             TriggerAudioClip(arcadeFootsteps, transform.position);
 #endif
+
+        masterBus.setVolume(SettingsManager.Instance.GameVolume);
     }
 
     public static void SetFootsteps(FootstepsParameter groundType)

@@ -9,6 +9,7 @@ using static FocusStation;
 
 //Having so many of these could be costly in terms of performance?
 //If so, it would be better to have a reference to all of the cursors and have this act as a singleton manager instead
+//Also, this system seems overcomplicated
 public class VirtualCursorActivator : MonoBehaviour
 {
     [SerializeField] ActiveState activeState;
@@ -19,8 +20,8 @@ public class VirtualCursorActivator : MonoBehaviour
 
     public static event Action<SetActiveCursorEventArgs> ActiveCursorSet;
 
-    bool isActived;
-    bool activeOnPause;
+    bool isActive;
+    bool wasActiveOnPause;
     bool HasTool => HotbarManager.Instance.GetCurrentTools().Count > 0;
 
     public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Interaction }
@@ -63,13 +64,18 @@ public class VirtualCursorActivator : MonoBehaviour
             case ActiveState.Interaction:
                 switch (newState)
                 {
+                    //This needs to change to have this only occur when the game actually pauses; not when we enter the pause *screen*
                     case MenuManager.MenuState.Pause:
-                        activeOnPause = isActived;
-                        SetActiveCursor(false);
+                        if (!wasActiveOnPause)
+                        {
+                            wasActiveOnPause = isActive;
+                            SetActiveCursor(false);
+                        }
                         break;
 
                     case MenuManager.MenuState.GameResume:
-                        SetActiveCursor(activeOnPause);
+                        SetActiveCursor(wasActiveOnPause);
+                        wasActiveOnPause = false;
                         break;
                 }
                 break;
@@ -116,9 +122,9 @@ public class VirtualCursorActivator : MonoBehaviour
 
     void SetActiveCursor(bool active)
     {
-        Debug.Log($"Set active cursor {active}");
+        Debug.Log($"Set {activeState} active cursor {active}");
 
-        isActived = active;
+        isActive = active;
         virtualInput.gameObject.SetActive(active);
 
         OnSetActiveCursor(active);
