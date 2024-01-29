@@ -52,6 +52,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
                 break;
 
             case ArcadeState.Win:
+                Debug.Log("Couldn't I just call start 'UpdateState(StartLevel, level + 1)'?");
                 SceneLoader.Instance.StartLevelLoad(SceneLoader.Instance.LevelNumber + 1);
                 break;
         }

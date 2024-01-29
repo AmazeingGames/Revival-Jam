@@ -5,8 +5,17 @@ using UnityEngine;
 
 public class DisableOnMenu : MonoBehaviour
 {
+    [field: Header("Debug")]
+    [field: SerializeField] public bool Disable { get; private set; } = true;
+
     public static event Action<DisableOnMenu> AddToDisable;
 
-    void Start() => AddToDisable?.Invoke(this);
+    void Start()
+    {
+        if (!Disable)
+            Debug.LogWarning("Debug should always remain true. Please either fix or remove this component");
+
+        AddToDisable?.Invoke(this);
+    }
 
 }

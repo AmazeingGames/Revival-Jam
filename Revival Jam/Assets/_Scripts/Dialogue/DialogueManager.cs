@@ -324,6 +324,8 @@ public class DialogueManager : Singleton<DialogueManager>
         switch (arcadeState)
         {
             case ArcadeState.StartLevel:
+            case ArcadeState.Win:
+                Debug.Log("Started search for camera");
                 StartCoroutine(FindCamera());
                 break;
 

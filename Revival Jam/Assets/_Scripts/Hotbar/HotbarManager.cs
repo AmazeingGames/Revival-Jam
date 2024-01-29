@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -92,9 +93,18 @@ public class HotbarManager : Singleton<HotbarManager>
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities ability)
     {
         if (!ItemsDictionary.ContainsKey(ability))
+        {
+            Debug.Log("Item doesn't exist!");
             return;
+        }
 
         Item itemToGain = ItemsDictionary[ability];
+
+        if (currentTools.Contains(itemToGain.ItemData))
+        {
+            Debug.Log("Player already has item!");
+            return;
+        }
 
         itemToGain.gameObject.SetActive(true);
 
@@ -106,14 +116,12 @@ public class HotbarManager : Singleton<HotbarManager>
     void DebugGainItems()
     {
 #if DEBUG
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.U))
             HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Crowbar);
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.I))
             HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Hammer);
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.O))
             HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Wrench);
 #endif
     }
-
-   
 }

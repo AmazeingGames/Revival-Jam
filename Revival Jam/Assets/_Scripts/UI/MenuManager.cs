@@ -26,6 +26,10 @@ public class MenuManager : Singleton<MenuManager>
     [Header("Cameras")]
     [SerializeField] Camera menuCamera;
 
+
+    [Header("Debug")]
+    [SerializeField] bool disableObjectsOnMenu = true; //Always keep true -- this is just for testing
+
     readonly List<DisableOnMenu> objectsToDisable = new();
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
@@ -140,15 +144,6 @@ public class MenuManager : Singleton<MenuManager>
         OnMenuStateChange.Invoke(newState);
     }
 
-    //Not sure if this is necessary at the moment, but I will think about it
-    //When exiting a menu, we'll need to always disable certain things.
-    //Instead of handling this in every other 'entry' function, it may be better to handle it in a single area
-    //The only downside this would have would be if the gamee is not set up properly the first time, though we can make a new function to prepare the game to be ready
-    void AddToDisable(params GameObject[] objects)
-    {
-
-    }
-
     void OnGameEnd()
     {
         SetMenuCamera(true);
@@ -169,11 +164,23 @@ public class MenuManager : Singleton<MenuManager>
     {
         menuCamera.gameObject.SetActive(setActive);
 
+        if (!disableObjectsOnMenu)
+        {
+            Debug.LogWarning("Objects Disable is false -- this can cause serious problems.");
+            return;
+        }
+
         foreach (var disable in objectsToDisable)
         {
-            if (disable != null)
-                disable.gameObject.SetActive(!setActive);
+            if (disable == null || !disable.Disable)
+            {
+                Debug.Log("Skipped!");
+                continue;
+            }
+            disable.gameObject.SetActive(!setActive);
         }
+
+        Debug.Log($"Set objectsToDisable {!setActive}");
     }
 
     void OnMainMenuEnter()
