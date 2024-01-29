@@ -29,13 +29,16 @@ public class VirtualCursorActivator : MonoBehaviour
     private void OnEnable()
     {
         FocusStation.ConnectToStation += HandleConnectToStation;
-        MenuManager.OnMenuStateChange += HandleMenuStateChange; 
+        MenuManager.OnMenuStateChange += HandleMenuStateChange;
+        ArcadeGameManager.AfterArcadeStateChange += HandleArcadeStateChange;
     }
 
     private void OnDisable()
     {
         FocusStation.ConnectToStation -= HandleConnectToStation;
         MenuManager.OnMenuStateChange -= HandleMenuStateChange;
+        ArcadeGameManager.AfterArcadeStateChange -= HandleArcadeStateChange;
+
     }
 
     void HandleMenuStateChange(MenuManager.MenuState newState)
@@ -82,6 +85,21 @@ public class VirtualCursorActivator : MonoBehaviour
         }
     }
 
+    void HandleArcadeStateChange(ArcadeGameManager.ArcadeState newArcadeState)
+    {
+        switch (activeState)
+        {
+            case ActiveState.Arcade:
+                switch (newArcadeState)
+                {
+                    case ArcadeGameManager.ArcadeState.StartLevel:
+                        SetActiveCursor(false);
+                        break;
+                }
+                break;
+        }
+    }
+
     void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
         Debug.Log($"Cursor | Handled connect to Station {connectEventArgs.LinkedStation} | isConnecting {connectEventArgs.IsConnecting}");
@@ -122,7 +140,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
     void SetActiveCursor(bool active)
     {
-        Debug.Log($"Set {activeState} active cursor {active}");
+        //Debug.Log($"Set {activeState} active cursor {active}");
 
         isActive = active;
         virtualInput.gameObject.SetActive(active);

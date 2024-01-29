@@ -29,9 +29,6 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public bool LoadLevel(int level)
     {
-        //Debug.Log("CHANGE LEVEL NAME CONVENTION");
-        //return LoadScene($"NewArcadeLevel_{level}", true);
-
         Debug.Log($"Loading Level : {levelNameConvention}{level}");
 
         return LoadScene($"{levelNameConvention}{level}", true);
@@ -59,8 +56,6 @@ public class SceneLoader : Singleton<SceneLoader>
 
         GameManager.Instance.UpdateGameState(GameState.Loading);
 
-        //Debug.Log($"Loading Scene: {sceneName}");
-
         AsyncOperation load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
         OnLoadStart?.Invoke(load, isLevel);
@@ -82,7 +77,10 @@ public class SceneLoader : Singleton<SceneLoader>
     public static bool DoesLevelExist(int levelnumber)
     {
         if (Instance == null)
+        {
+            Debug.Log("Instance is null");
             return false;
+        }
 
         Debug.Log($"Checking for level : {Instance.levelNameConvention}{levelnumber})");
 

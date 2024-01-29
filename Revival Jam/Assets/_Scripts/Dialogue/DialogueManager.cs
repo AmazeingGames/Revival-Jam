@@ -70,10 +70,6 @@ public class DialogueManager : Singleton<DialogueManager>
         if (noteDialogueSpeech != null)
             noteJitter = noteDialogueSpeech.GetComponent<VertexJitter>();
 
-        string test = "<Return this> and not this>";
-
-        Debug.Log(GetBetween(test, "<", ">"));
-
         noteDialogueBackground.gameObject.SetActive(false);
     }
 
@@ -343,7 +339,10 @@ public class DialogueManager : Singleton<DialogueManager>
     IEnumerator FindCamera()
     {
         while (Player.Instance == null)
+        {
+            Debug.Log("Player is null");
             yield return null;
+        }
 
         GameObject arcadeCamera = null;
 

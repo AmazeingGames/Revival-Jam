@@ -52,7 +52,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
                 break;
 
             case ArcadeState.Win:
-                LoadNextLevel();
+                SceneLoader.Instance.StartLevelLoad(SceneLoader.Instance.LevelNumber + 1);
                 break;
         }
 
@@ -70,17 +70,6 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
     void Lose()
     {
         ReloadLevel();
-    }
-
-    void LoadNextLevel()
-    {
-        if (SceneLoader.DoesLevelExist(SceneLoader.Instance.LevelNumber + 1))
-        {
-            UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber + 1);
-            Debug.Log("Loading next level");
-        }
-        else
-            Debug.Log("Level doesn't exist");
     }
 
     [Serializable]

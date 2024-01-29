@@ -2264,7 +2264,7 @@ GameObject:
   - component: {fileID: 1979725711}
   - component: {fileID: 1979725712}
   m_Layer: 0
-  m_Name: ArcadeMenuManager
+  m_Name: ArcadeManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2297,6 +2297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b533be6786afd4e803019feb442b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScreenContentCamera: {fileID: 717188439}
   mainMenuScreen: {fileID: 1918733264}
   selectSaveMenu: {fileID: 1898418545}
   eventSystem: {fileID: 944597391}

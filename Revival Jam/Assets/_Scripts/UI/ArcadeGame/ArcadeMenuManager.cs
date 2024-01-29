@@ -5,6 +5,8 @@ using static GameManager;
 
 public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
 {
+    [SerializeField] GameObject ScreenContentCamera;
+
     [SerializeField] GameObject mainMenuScreen;
     [SerializeField] GameObject selectSaveMenu;
 
@@ -50,6 +52,7 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
         Debug.Log("Main menu enter");
         mainMenuScreen.SetActive(true);
         selectSaveMenu.SetActive(false);
+        ScreenContentCamera.SetActive(true);
     }
 
     void SelectSaveEnter()
@@ -66,5 +69,6 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
 
         mainMenuScreen.SetActive(false);
         selectSaveMenu.SetActive(false);
+        ScreenContentCamera.SetActive(false);
     }
 }
