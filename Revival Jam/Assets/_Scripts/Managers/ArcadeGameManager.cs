@@ -40,7 +40,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         switch (newState)
         {
             case ArcadeState.StartLevel:
-                LoadLevel(levelToLoad);
+                SceneLoader.Instance.StartLevelLoad(levelToLoad);
                 break;
 
             case ArcadeState.RestartLevel:
@@ -57,12 +57,6 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         }
 
         AfterArcadeStateChange?.Invoke(newState);
-    }
-
-    //Loads the given level
-    void LoadLevel(int levelToLoad)
-    {
-        SceneLoader.Instance.StartLevelLoad(levelToLoad);
     }
 
     //Starts the current level over from the beginning

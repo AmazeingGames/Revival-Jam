@@ -17,7 +17,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public void StartLevelLoad(int levelToLoad)
     {
-        Debug.Log("level Start");
+        Debug.Log($"level Start : Level {levelToLoad}");
 
         if (levelToLoad == -1)
             throw new NotImplementedException();
@@ -27,7 +27,12 @@ public class SceneLoader : Singleton<SceneLoader>
         LoadLevel(levelToLoad);
     }
 
-    public bool LoadLevel(int level) => LoadScene($"{levelNameConvention}{level}", true);
+    public bool LoadLevel(int level)
+    {
+        Debug.Log("CHANGE LEVEL NAME CONVENTION");
+        return LoadScene($"NewArcadeLevel_{level}", true);
+        //return LoadScene($"{levelNameConvention}{level}", true);
+    }
 
     public bool LoadScene(string sceneName, bool isLevel = false)
     {
