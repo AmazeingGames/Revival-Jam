@@ -42,7 +42,7 @@ public class SettingsManager : Singleton<SettingsManager>
 
     class SaveSettings
     {
-        public float gameVolume;
-        public float mouseSensitivity;
+        public float gameVolume = .5f;
+        public float mouseSensitivity = .25f;
     }
 }
