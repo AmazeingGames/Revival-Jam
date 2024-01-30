@@ -91,15 +91,6 @@ public class AudioManager : Singleton<AudioManager>
 
     private void Update()
     {
-#if DEBUG
-        if (Input.GetKeyDown(KeyCode.J))
-            SetFootsteps(FootstepsParameter.Grass);
-        if (Input.GetKeyDown(KeyCode.K))
-            SetFootsteps(FootstepsParameter.Stone);
-        if (Input.GetKeyDown(KeyCode.L))
-            TriggerAudioClip(arcadeFootsteps, transform.position);
-#endif
-
         masterBus.setVolume(SettingsManager.Instance.GameVolume);
     }
 

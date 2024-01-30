@@ -72,13 +72,6 @@ public class Walk : State<CharacterController>
 
         if (Input.GetButtonUp("Jump"))
             CharacterController.CutJumpHeight(rigidbody, jumpCutAmount);
-
-#if DEBUG
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            walkOverride = !walkOverride;
-        }
-    #endif
     }
 
     public override void Update()

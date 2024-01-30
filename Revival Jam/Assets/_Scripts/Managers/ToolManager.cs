@@ -21,16 +21,6 @@ public class ToolManager : Singleton<ToolManager>
 
     public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
 
-    private void Update()
-    {
-#if DEBUG
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            StartCoroutine(WiringManager.SetWiringCabinet(isActive: true));
-        }
-#endif
-    }
-
     void HandleUseTool(ItemData toolData)
     {
         if (toolData == null)

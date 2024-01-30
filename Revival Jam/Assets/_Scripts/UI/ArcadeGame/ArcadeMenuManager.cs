@@ -20,12 +20,11 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
     // Start is called before the first frame update
     void Start()
     {
-#if DEBUG
         var isGameManagerNull = GameManager.Instance == null;
 
         eventSystem.SetActive(isGameManagerNull);
         mainCamera.SetActive(isGameManagerNull);
-#endif
+
         UpdateArcadeMenu(ArcadeMenuState.MainMenu);
     }
 
