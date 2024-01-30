@@ -8899,7 +8899,7 @@ GameObject:
   - component: {fileID: 1813601987}
   - component: {fileID: 1813601986}
   m_Layer: 5
-  m_Name: Settings | Keep Active
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10133,7 +10133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6905534592346919666, guid: 1e3f3be9476d52f49a06189d56f44b42, type: 3}
       propertyPath: m_Value
-      value: 0.3
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6905534592346919666, guid: 1e3f3be9476d52f49a06189d56f44b42, type: 3}
       propertyPath: m_MaxValue

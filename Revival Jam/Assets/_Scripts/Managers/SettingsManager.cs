@@ -1,17 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MenuManager;
 
 public class SettingsManager : Singleton<SettingsManager>
 {
-    public float GameVolume { get => gameVolume; private set => gameVolume = value; }
-    public float MouseSensitivity { get => mouseSensitivity; private set => mouseSensitivity = value; }
 
-    float gameVolume = 1.0f;
-    float mouseSensitivity = 1.0f;
+    SaveSettings settings = new();
 
-    public void UpdateVolume(float newValue) => UpdateValue(ref gameVolume, newValue);
-    public void UpdateSensitivity(float newValue) => UpdateValue(ref mouseSensitivity, newValue);
+    public float GameVolume { get => settings.gameVolume; private set => settings.gameVolume = value; }
+    public float MouseSensitivity { get => settings.mouseSensitivity; private set => settings.mouseSensitivity = value; }
 
-    void UpdateValue<T>(ref T value,T newValue) => value = newValue;
+    public void UpdateVolume(float newValue) => GameVolume = newValue;
+    public void UpdateSensitivity(float newValue) => MouseSensitivity = newValue;
+
+
+    private void OnEnable()
+    {
+        MenuManager.OnMenuStateChange += HandleMenuStateChange;
+    }
+
+    private void OnDisable()
+    {
+        MenuManager.OnMenuStateChange -= HandleMenuStateChange;
+    }
+
+    const string pathName = "settings";
+
+    private void Start()
+    {
+        GameManager.Load(pathName, ref settings);
+    }
+
+    void HandleMenuStateChange(MenuState menuState)
+    {
+        if (MenuManager.Instance.PreviousState == MenuState.Settings)
+            GameManager.Save(settings, pathName);
+    }
+
+    class SaveSettings
+    {
+        public float gameVolume;
+        public float mouseSensitivity;
+    }
 }

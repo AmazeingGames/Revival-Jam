@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -96,10 +97,24 @@ public class GameManager : Singleton<GameManager>
         SceneLoader.Instance.LoadScene("RealWorld_BackgroundArea");
     }
 
-    void OnLevelLoad(int levelnumber)
+    public static void Save<T>(T data, string pathName)
     {
-        SceneLoader.Instance.LoadLevel(levelnumber);
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Application.dataPath + $"/{pathName}.txt", json);
     }
+
+    public static void Load<T>(string pathName, ref T data)
+    {
+        var fileLocation = Application.dataPath + $"/{pathName}.txt";
+        if (File.Exists(fileLocation))
+        {
+            string saveString = File.ReadAllText(fileLocation);
+            data = JsonUtility.FromJson<T>(saveString);
+        }
+        else
+            Debug.Log($"No {pathName} save found");
+    }
+
 
     [Serializable]
     public enum GameState
