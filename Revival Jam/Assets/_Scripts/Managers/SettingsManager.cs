@@ -5,12 +5,14 @@ using static MenuManager;
 
 public class SettingsManager : Singleton<SettingsManager>
 {
-
     SaveSettings settings = new();
 
     public float GameVolume { get => settings.gameVolume; private set => settings.gameVolume = value; }
     public float MouseSensitivity { get => settings.mouseSensitivity; private set => settings.mouseSensitivity = value; }
 
+
+    public float LoadVolume() => GameVolume;
+    public float LoadSensitivity() => MouseSensitivity;
     public void UpdateVolume(float newValue) => GameVolume = newValue;
     public void UpdateSensitivity(float newValue) => MouseSensitivity = newValue;
 

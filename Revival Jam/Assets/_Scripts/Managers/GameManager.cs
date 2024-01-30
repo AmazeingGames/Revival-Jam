@@ -97,6 +97,7 @@ public class GameManager : Singleton<GameManager>
         SceneLoader.Instance.LoadScene("RealWorld_BackgroundArea");
     }
 
+    //This can be moved into its own static class instead, but it's fine here.
     public static void Save<T>(T data, string pathName)
     {
         string json = JsonUtility.ToJson(data);
