@@ -13,8 +13,6 @@ public class MouseManager : Singleton<MouseManager>
 {
     [Header("Virtual Cursor")]
     [SerializeField] Vector3 cursorOffset;
-    //Why is wire follow sensitivity not read?
-    //[SerializeField] float wireFollowSensitivity;
     [SerializeField] float mouseFollowSensitivity;
 
     [SerializeField] bool getRaw;
@@ -35,7 +33,7 @@ public class MouseManager : Singleton<MouseManager>
     Wire wireToFollow;
     Coroutine followWire;
 
-    Transform ActiveTransform => activeCursor == null ? null : activeCursor.transform;
+    Transform ActiveCursorTransform => activeCursor == null ? null : activeCursor.transform;
     VirtualCursor activeCursor;
     Animator activeAnimator;
 
@@ -154,37 +152,37 @@ public class MouseManager : Singleton<MouseManager>
         while (wireToFollow != null)
         {
             var wirePosition = wireToFollow.transform.position;
-            wirePosition.z = ActiveTransform.position.z;
+            wirePosition.z = ActiveCursorTransform.position.z;
 
-            ActiveTransform.transform.position = wirePosition;
+            ActiveCursorTransform.transform.position = wirePosition;
             yield return null;
         }
     }
 
-    //Updates the visual cursor's transform to the mouse
+    //Updates the visual cursor's transform to the mouse | Regular mouse movement
     void FollowMousePosition()
     {
-        if (ActiveTransform == null)
+        if (ActiveCursorTransform == null)
             return;
-
-        //Debug.Log("Following position");
 
         Vector3 newMousePosition = Input.mousePosition + cursorOffset;
 
-        newMousePosition.z = ActiveTransform.position.z;
+        newMousePosition.z = ActiveCursorTransform.position.z;
 
-        ActiveTransform.position = newMousePosition;
+        ActiveCursorTransform.position = newMousePosition;
     }
 
-    //Updates the virtual cursor's position to follow the movement of the mouse
+    //Updates the virtual cursor's position to follow the movement of the mouse | Virtual mouse movement
     void FollowMouseMovement()
     {
-        if (ActiveTransform == null)
+        if (ActiveCursorTransform == null)
             return;
 
-        //Debug.Log("Following movement");
+        var sensitivity = mouseFollowSensitivity * SettingsManager.Instance.MouseSensitivity;
 
-        ActiveTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), mouseFollowSensitivity * SettingsManager.Instance.MouseSensitivity, false, ref variable);
+        Debug.Log($"mouseSensitivity : {mouseFollowSensitivity} | sensitivity setting: {SettingsManager.Instance.MouseSensitivity} | sensitivity: {sensitivity}");
+
+        ActiveCursorTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), sensitivity, false, ref variable);
     }
 
     //Gets a reference to the wire on grab

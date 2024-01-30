@@ -43,34 +43,22 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
                 SceneLoader.Instance.StartLevelLoad(levelToLoad);
                 break;
 
+            //Maybe change these two to reset the level, instead of changing the arcade state
+            //This would improve performance to do to the potentially intensive tasks called whenever the level starts, that wouldn't need to be performed more than once
             case ArcadeState.RestartLevel:
-                ReloadLevel();
+                UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
                 break;
-
             case ArcadeState.Lose:
-                Lose();
+                UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
                 break;
 
             case ArcadeState.Win:
-                Debug.Log("Couldn't I just call start 'UpdateState(StartLevel, level + 1)'?");
+                //This could instead update the ArcadeGameState
                 SceneLoader.Instance.StartLevelLoad(SceneLoader.Instance.LevelNumber + 1);
                 break;
         }
 
         AfterArcadeStateChange?.Invoke(newState);
-    }
-
-    //Starts the current level over from the beginning
-    void ReloadLevel()
-    {
-        UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
-    }
-
-    //Restarts the current level
-    //To Do: Create Game Over Menu
-    void Lose()
-    {
-        ReloadLevel();
     }
 
     [Serializable]
