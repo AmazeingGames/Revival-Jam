@@ -110,7 +110,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public static void TriggerAudioClip(EventSounds sound, Vector3 origin)
     {
-        //Debug.Log($"Triggered Audio Clip: {sound}");
+        Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == EventSounds.Null)
             return;
@@ -173,11 +173,6 @@ public class AudioManager : Singleton<AudioManager>
         instance.start();
 
         Debug.Log($"Started {key}");
-    }
-
-
-    public void SetFootstepsParameter(string name, float value)
-    {
     }
 
     public void StopEventInstance(EventSounds key, FMOD.Studio.STOP_MODE stopMode = FMOD.Studio.STOP_MODE.ALLOWFADEOUT)

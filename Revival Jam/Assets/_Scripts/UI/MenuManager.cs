@@ -36,6 +36,8 @@ public class MenuManager : Singleton<MenuManager>
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
 
+    public bool IsGamePaused { get; private set; }
+
     //Rework this to include 'substates' of a certain menuState
     //This would make it easier to add new states, as substates of other states, without haveing to update VirtualCursorActivator, for each state added
     //Plus, they are already unofficially organized like this through the headers
@@ -231,6 +233,8 @@ public class MenuManager : Singleton<MenuManager>
 
     void OnGamePause()
     {
+        IsGamePaused = true;
+
         SetMenuCamera(true);
 
         controlsPanel.SetActive(true);
@@ -242,6 +246,8 @@ public class MenuManager : Singleton<MenuManager>
 
     void OnGameResume()
     {
+        IsGamePaused = false;
+
         SetMenuCamera(false);
 
         pauseMenu.gameObject.SetActive(false);

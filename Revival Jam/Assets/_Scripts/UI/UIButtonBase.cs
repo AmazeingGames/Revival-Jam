@@ -23,9 +23,6 @@ public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         if (!CanBeClicked())
             return;
 
-        if (isArcadeButton)
-            return;
-
         TriggerAudioClip(ClickSound, Origin);
     }
 

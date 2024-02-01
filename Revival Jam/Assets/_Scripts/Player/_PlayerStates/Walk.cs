@@ -97,7 +97,6 @@ public class Walk : State<CharacterController>
     bool CanWalkDirection(bool isRight)
     {
         Controls walkDirection = isRight ? Controls.WalkRight : Controls.WalkLeft;
-        string directionText = $"{walkDirection}"[4..];
 
         bool isFocusedOnArcade = IsFocusedOn(FocusedOn.Arcade);
 
@@ -105,6 +104,7 @@ public class Walk : State<CharacterController>
 
         bool canWalkDirection = (isFocusedOnArcade && isWalkDirectionConnected);
 
+        //string directionText = $"{walkDirection}"[4..];
         //Debug.Log($"canWalk{directionText} : {canWalkDirection}");
 
         return canWalkDirection;
@@ -129,7 +129,13 @@ public class Walk : State<CharacterController>
     //Sets the scale of the player negative or positve, when they move left/right
     void FlipPlayer()
     {
-        if (horizontalInput == 0 && rigidbody.velocity.x == 0)
+        if (MenuManager.Instance != null && MenuManager.Instance.IsGamePaused)
+            return;
+
+        if (PlayerFocus.Instance != null && PlayerFocus.Instance.Focused != FocusedOn.Arcade)
+            return;
+
+        if ((horizontalInput == 0 && rigidbody.velocity.x == 0))
             return;
 
         int multipler;
@@ -202,6 +208,12 @@ public class Walk : State<CharacterController>
             canWalkLeftMod = CanWalkLeft() ? 1 : 0;
 
             CheckDebug($"If connected - canWalkRight {canWalkRightMod} | canWalkLeft {canWalkLeftMod}");
+        }
+
+        if (MenuManager.Instance != null && MenuManager.Instance.IsGamePaused)
+        {
+            canWalkLeftMod = 0;
+            canWalkRightMod = 0;
         }
 
         if (ControlsManager.Instance == null)

@@ -4,10 +4,6 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Nice, easy to understand enum-based game manager. For larger and more complex games, look into
-/// state machines. But this will serve just fine for most games.
-/// </summary>
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] bool loadStartingScenes = true;
