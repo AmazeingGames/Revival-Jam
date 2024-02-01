@@ -180,15 +180,13 @@ public class MouseManager : Singleton<MouseManager>
 
         var sensitivity = mouseFollowSensitivity * SettingsManager.Instance.MouseSensitivity;
 
-        Debug.Log($"mouseSensitivity : {mouseFollowSensitivity} | sensitivity setting: {SettingsManager.Instance.MouseSensitivity} | sensitivity: {sensitivity}");
-
         ActiveCursorTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), sensitivity, false, ref variable);
     }
 
     //Gets a reference to the wire on grab
     void HandleWireGrab(Wire wire, bool isGrab)
     {
-        Debug.Log("HandleWireGrab");
+        //Debug.Log("HandleWireGrab");
 
         wireToFollow = isGrab ? wire : null;
     }

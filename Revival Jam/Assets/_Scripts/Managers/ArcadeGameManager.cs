@@ -54,7 +54,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
 
             case ArcadeState.Win:
                 //This could instead update the ArcadeGameState
-                SceneLoader.Instance.StartLevelLoad(SceneLoader.Instance.LevelNumber + 1);
+                UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber + 1);
                 break;
         }
 

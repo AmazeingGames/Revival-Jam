@@ -97,8 +97,6 @@ public class AudioManager : Singleton<AudioManager>
     public static void SetFootsteps(FootstepsParameter groundType)
     {
         RuntimeManager.StudioSystem.setParameterByName("TerrainType", (float)groundType);
-
-        Debug.Log($"Set TerrainType Parameter to {groundType}");
     }
 
     void OnDestroy()
@@ -110,7 +108,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public static void TriggerAudioClip(EventSounds sound, Vector3 origin)
     {
-        Debug.Log($"Triggered Audio Clip: {sound}");
+        // Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == EventSounds.Null)
             return;
