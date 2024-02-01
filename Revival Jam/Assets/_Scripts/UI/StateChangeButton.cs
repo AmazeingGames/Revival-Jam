@@ -5,7 +5,7 @@ using static GameManager;
 using static MenuManager;
 
 
-public class StateButton : UIButtonBase
+public class StateChangeButton : UIButtonBase
 {
     [Header("State Change")]
     [SerializeField] GameState gameState = GameState.Null;

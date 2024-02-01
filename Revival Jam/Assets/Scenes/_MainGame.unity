@@ -4568,10 +4568,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 792686647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc0a45bb68d56949b128acf6c0cf603, type: 3}
+  m_Script: {fileID: 11500000, guid: 428b483c87715874981854a0c0e9c2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isArcadeButton: 0
+  gameState: 1
+  menuState: 2
 --- !u!1 &814687486
 GameObject:
   m_ObjectHideFlags: 0
@@ -5651,7 +5653,6 @@ GameObject:
   - component: {fileID: 1145464193}
   - component: {fileID: 1145464192}
   - component: {fileID: 1145464191}
-  - component: {fileID: 1145464190}
   - component: {fileID: 1145464194}
   m_Layer: 0
   m_Name: PlayButton
@@ -5681,19 +5682,6 @@ RectTransform:
   m_AnchoredPosition: {x: 59.7, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1145464190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1145464188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc0a45bb68d56949b128acf6c0cf603, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isArcadeButton: 0
 --- !u!114 &1145464191
 MonoBehaviour:
   m_ObjectHideFlags: 0

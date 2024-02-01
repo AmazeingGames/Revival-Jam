@@ -106,7 +106,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
     void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
-        Debug.Log($"Cursor | Handled connect to Station {connectEventArgs.LinkedStation} | isConnecting {connectEventArgs.IsConnecting}");
+        //Debug.Log($"Cursor | Handled connect to Station {connectEventArgs.LinkedStation} | isConnecting {connectEventArgs.IsConnecting}");
 
         PlayerFocus.FocusedOn convertedStation = activeState switch
         {

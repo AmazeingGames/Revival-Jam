@@ -113,7 +113,7 @@ public class MoveArrow : UIButtonBase
 
     void HandleConnectToStation(ConnectEventArgs eventArgs)
     {
-        Debug.Log("CONNECT TO STATION");
+        //Debug.Log("CONNECT TO STATION");
 
         if (!eventArgs.IsConnecting)
             return;
