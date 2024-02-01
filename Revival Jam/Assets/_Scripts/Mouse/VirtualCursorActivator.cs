@@ -6,10 +6,10 @@ using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static FocusStation;
-using UnityEngine.UI;
 
 //Having so many of these could be costly in terms of performance?
 //If so, it would be better to have a reference to all of the cursors and have this act as a singleton manager instead
+//Also, this system seems overcomplicated
 public class VirtualCursorActivator : MonoBehaviour
 {
     [SerializeField] ActiveState activeState;
@@ -17,12 +17,11 @@ public class VirtualCursorActivator : MonoBehaviour
     [SerializeField] VirtualInputModule virtualInput;
     [SerializeField] Animator cursorAnimator;
     [SerializeField] VirtualCursor virtualCursor;
-    Image cursorImage;
 
     public static event Action<SetActiveCursorEventArgs> ActiveCursorSet;
 
-    bool isActived;
-    bool activeOnPause;
+    bool isActive;
+    bool wasActiveOnPause;
     bool HasTool => HotbarManager.Instance != null && HotbarManager.Instance.GetCurrentTools().Count > 0;
 
     public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Interaction }
@@ -30,18 +29,16 @@ public class VirtualCursorActivator : MonoBehaviour
     private void OnEnable()
     {
         FocusStation.ConnectToStation += HandleConnectToStation;
-        MenuManager.OnMenuStateChange += HandleMenuStateChange; 
+        MenuManager.OnMenuStateChange += HandleMenuStateChange;
+        ArcadeGameManager.AfterArcadeStateChange += HandleArcadeStateChange;
     }
 
     private void OnDisable()
     {
         FocusStation.ConnectToStation -= HandleConnectToStation;
         MenuManager.OnMenuStateChange -= HandleMenuStateChange;
-    }
+        ArcadeGameManager.AfterArcadeStateChange -= HandleArcadeStateChange;
 
-    private void Start()
-    {
-        cursorImage = virtualCursor.GetComponent<Image>();
     }
 
     void HandleMenuStateChange(MenuManager.MenuState newState)
@@ -56,7 +53,13 @@ public class VirtualCursorActivator : MonoBehaviour
                     case MenuManager.MenuState.MainMenu:
                     case MenuManager.MenuState.Pause:
                     case MenuManager.MenuState.Settings:
+                    case MenuManager.MenuState.Controls:
+                    case MenuManager.MenuState.Credits:
                         SetActiveCursor(true);
+                        break;
+
+                    case MenuManager.MenuState.PreviousState:
+                        //Do nothing
                         break;
 
                     default:
@@ -70,13 +73,33 @@ public class VirtualCursorActivator : MonoBehaviour
             case ActiveState.Interaction:
                 switch (newState)
                 {
+                    //This needs to change to have this only occur when the game actually pauses; not when we enter the pause *screen*
                     case MenuManager.MenuState.Pause:
-                        activeOnPause = isActived;
-                        SetActiveCursor(false);
+                        if (!wasActiveOnPause)
+                        {
+                            wasActiveOnPause = isActive;
+                            SetActiveCursor(false);
+                        }
                         break;
 
                     case MenuManager.MenuState.GameResume:
-                        SetActiveCursor(activeOnPause);
+                        SetActiveCursor(wasActiveOnPause);
+                        wasActiveOnPause = false;
+                        break;
+                }
+                break;
+        }
+    }
+
+    void HandleArcadeStateChange(ArcadeGameManager.ArcadeState newArcadeState)
+    {
+        switch (activeState)
+        {
+            case ActiveState.Arcade:
+                switch (newArcadeState)
+                {
+                    case ArcadeGameManager.ArcadeState.StartLevel:
+                        SetActiveCursor(false);
                         break;
                 }
                 break;
@@ -85,6 +108,8 @@ public class VirtualCursorActivator : MonoBehaviour
 
     void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
+        //Debug.Log($"Cursor | Handled connect to Station {connectEventArgs.LinkedStation} | isConnecting {connectEventArgs.IsConnecting}");
+
         PlayerFocus.FocusedOn convertedStation = activeState switch
         {
             ActiveState.Arcade      => PlayerFocus.FocusedOn.Arcade,
@@ -119,29 +144,19 @@ public class VirtualCursorActivator : MonoBehaviour
         }
     }
 
-    //this is the world's worst code and I hate it
-    //And it doesn't even work 100% of the time
-
     void SetActiveCursor(bool active)
     {
-        //Debug.Log($"Set active cursor {active}");
+        //Debug.Log($"Set {activeState} active cursor {active}");
 
-        isActived = active;
-
-        if (virtualCursor.MovementType == VirtualCursor.MouseType.Regular && MouseManager.Instance.HasRememberedPosition)
-        {
-            Debug.Log("Also disabled cursor");
-            virtualInput.gameObject.SetActive(false);
-        }
-        else
-            virtualInput.gameObject.SetActive(active);
+        isActive = active;
+        virtualInput.gameObject.SetActive(active);
 
         OnSetActiveCursor(active);
     }
 
     public void OnSetActiveCursor(bool active)
     {
-        ActiveCursorSet?.Invoke(new SetActiveCursorEventArgs(gameObject, cursorAnimator, virtualCursor, cursorImage, active));
+        ActiveCursorSet?.Invoke(new SetActiveCursorEventArgs(gameObject, cursorAnimator, virtualCursor, active));
     }
 
     public class SetActiveCursorEventArgs
@@ -150,15 +165,13 @@ public class VirtualCursorActivator : MonoBehaviour
         public GameObject CallingObject { get; }
         public Animator CursorAnimator { get; }
         public VirtualCursor VirtualCursor { get; }
-        public Image Image { get; }
 
-        public SetActiveCursorEventArgs(GameObject callingObject, Animator cursorAnimator, VirtualCursor virtualCursor, Image cursorImage, bool setActive)
+        public SetActiveCursorEventArgs(GameObject callingObject, Animator cursorAnimator, VirtualCursor virtualCursor, bool setActive)
         {
             CursorAnimator = cursorAnimator;
             CallingObject = callingObject;
             SetActiveCursor = setActive;
             VirtualCursor = virtualCursor;
-            Image = cursorImage;
         }
     }
 }

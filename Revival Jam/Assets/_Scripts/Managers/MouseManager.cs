@@ -1,14 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
-using UnityEngine.UI;
 using static FocusStation;
 
 //Rename: "CursorManager"
@@ -16,7 +13,6 @@ public class MouseManager : Singleton<MouseManager>
 {
     [Header("Virtual Cursor")]
     [SerializeField] Vector3 cursorOffset;
-    [SerializeField] float wireFollowSensitivity;
     [SerializeField] float mouseFollowSensitivity;
 
     [SerializeField] bool getRaw;
@@ -27,6 +23,9 @@ public class MouseManager : Singleton<MouseManager>
 
     [field: Header("Debug")]
     [SerializeField] bool useVirtualMouseMovement;
+    [SerializeField] bool alwaysUseVirtualMovement;
+
+
     bool isDelayOver;
 
     Vector2 variable;
@@ -34,17 +33,11 @@ public class MouseManager : Singleton<MouseManager>
     Wire wireToFollow;
     Coroutine followWire;
 
-    Transform ActiveTransform => activeCursor == null ? null : activeCursor.transform;
+    Transform ActiveCursorTransform => activeCursor == null ? null : activeCursor.transform;
     VirtualCursor activeCursor;
-    Image activeCursorImage;
     Animator activeAnimator;
 
     bool hasActiveCursor = false;
-
-    bool setActive;
-    public bool HasRememberedPosition { get; private set; }
-    Vector3 mousePositionRemember;
-    Transform cursorTest;
 
     private void OnEnable()
     {
@@ -61,8 +54,6 @@ public class MouseManager : Singleton<MouseManager>
     //Purpose is to fix bug where mouse is very sensitive on game start
     private IEnumerator Start()
     {
-        cursorTest = GameObject.Find("CursorTest").transform;
-
         yield return new WaitForSeconds(moveDelay);
 
         isDelayOver = true;
@@ -81,7 +72,6 @@ public class MouseManager : Singleton<MouseManager>
     }
 
     //Prepares the game to use either the virtual mouse or actual mouse, for both movement and input
-    //Change this to use a switch statement
     void VirtualCheck()
     {
         if (!hasActiveCursor)
@@ -162,56 +152,41 @@ public class MouseManager : Singleton<MouseManager>
         while (wireToFollow != null)
         {
             var wirePosition = wireToFollow.transform.position;
-            wirePosition.z = ActiveTransform.position.z;
+            wirePosition.z = ActiveCursorTransform.position.z;
 
-            ActiveTransform.transform.position = wirePosition;
+            ActiveCursorTransform.transform.position = wirePosition;
             yield return null;
         }
     }
 
-    //Updates the visual cursor's transform to the mouse
-    //Move where the cursor image is disabled; the cursor blinks a few times and looks a bit wierd
+    //Updates the visual cursor's transform to the mouse | Regular mouse movement
     void FollowMousePosition()
     {
-        if (ActiveTransform == null)
+        if (ActiveCursorTransform == null)
             return;
-
-        if (HasRememberedPosition)
-        {
-            Debug.Log("Set mouse position");
-
-            HasRememberedPosition = false;
-            StartCoroutine(SetMousePosition());
-        }
 
         Vector3 newMousePosition = Input.mousePosition + cursorOffset;
 
-        newMousePosition.z = ActiveTransform.position.z;
+        newMousePosition.z = ActiveCursorTransform.position.z;
 
-        ActiveTransform.position = newMousePosition;
+        ActiveCursorTransform.position = newMousePosition;
     }
 
-    IEnumerator SetMousePosition()
-    {
-        yield return null;
-
-        Mouse.current.WarpCursorPosition(mousePositionRemember);
-        activeCursor.gameObject.SetActive(true);
-    }
-
-    //Updates the virtual cursor's position to follow the movement of the mouse
+    //Updates the virtual cursor's position to follow the movement of the mouse | Virtual mouse movement
     void FollowMouseMovement()
     {
-        if (ActiveTransform == null)
+        if (ActiveCursorTransform == null)
             return;
 
-        ActiveTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), mouseFollowSensitivity, false, ref variable);
+        var sensitivity = mouseFollowSensitivity * SettingsManager.Instance.MouseSensitivity;
+
+        ActiveCursorTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), sensitivity, false, ref variable);
     }
 
     //Gets a reference to the wire on grab
     void HandleWireGrab(Wire wire, bool isGrab)
     {
-        Debug.Log("HandleWireGrab");
+        //Debug.Log("HandleWireGrab");
 
         wireToFollow = isGrab ? wire : null;
     }
@@ -224,22 +199,12 @@ public class MouseManager : Singleton<MouseManager>
 
             activeAnimator = cursorEventArgs.CursorAnimator;
             activeCursor = cursorEventArgs.VirtualCursor;
-            activeCursorImage = cursorEventArgs.Image;
-            useVirtualMouseMovement = cursorEventArgs.VirtualCursor.MovementType == VirtualCursor.MouseType.Virtual;
 
-            if (useVirtualMouseMovement)
-            {
-                //Remember mouse position
-                Debug.Log("Remember mouse position");
-                HasRememberedPosition = true;
-                mousePositionRemember = Input.mousePosition;
-                cursorTest.transform.position = mousePositionRemember;
-            }
-            else if (HasRememberedPosition)
-            {
-                Debug.Log("Disabled cursor");
-                cursorEventArgs.VirtualCursor.gameObject.SetActive(false);
-            }
+            if (alwaysUseVirtualMovement)
+                useVirtualMouseMovement = true;
+            else
+                useVirtualMouseMovement = cursorEventArgs.VirtualCursor.MovementType == VirtualCursor.MouseType.Virtual;
+
         }
         else if (activeAnimator == cursorEventArgs.CursorAnimator)
         {

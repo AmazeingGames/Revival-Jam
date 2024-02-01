@@ -1117,11 +1117,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalTextSpeed: 0.05
   blipDelay: 0.15
-  noteDialogueCanvas: {fileID: 0}
-  noteDialogueBackground: {fileID: 0}
-  noteDialoguePortrait: {fileID: 0}
-  noteDialogueName: {fileID: 0}
-  noteDialogueSpeech: {fileID: 0}
+  noteDialogueCanvas: {fileID: 8352127450538410119}
+  noteDialogueBackground: {fileID: 8352127451080916126}
+  noteDialoguePortrait: {fileID: 8352127450778684863}
+  noteDialogueName: {fileID: 8352127450418121474}
+  noteDialogueSpeech: {fileID: 8352127451858274276}
   metaDialogueBackground: {fileID: 0}
   metaDialogueSpeech: {fileID: 0}
   skipSilentCharacters: 0

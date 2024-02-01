@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+//This script seems pretty complicated for what it does
+//Maybe we can simplify it? Could be handled by the menu manager class, but maybe its better as its own class
 public class ButtonPromptInVolume : MonoBehaviour
 {
     public GameObject gameObjectToActivate;

@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Nice, easy to understand enum-based game manager. For larger and more complex games, look into
-/// state machines. But this will serve just fine for most games.
-/// </summary>
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] bool loadStartingScenes = true;
@@ -96,10 +93,25 @@ public class GameManager : Singleton<GameManager>
         SceneLoader.Instance.LoadScene("RealWorld_BackgroundArea");
     }
 
-    void OnLevelLoad(int levelnumber)
+    //This can be moved into its own static class instead, but it's fine here.
+    public static void Save<T>(T data) where T : class
     {
-        SceneLoader.Instance.LoadLevel(levelnumber);
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Application.dataPath + $"/{data}.txt", json);
     }
+
+    public static void Load<T>(ref T data)
+    {
+        var fileLocation = Application.dataPath + $"/{data}.txt";
+        if (File.Exists(fileLocation))
+        {
+            string saveString = File.ReadAllText(fileLocation);
+            data = JsonUtility.FromJson<T>(saveString);
+        }
+        else
+            Debug.Log($"No {data} save found");
+    }
+
 
     [Serializable]
     public enum GameState

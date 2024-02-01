@@ -90,7 +90,7 @@ public class MoveArrow : UIButtonBase
     public override void OnClick()
     {
         base.OnClick();
-        StartCoroutine(MovementManager.Instance.CallConnectToStation(connectingStation));
+        StartCoroutine(MovementManager.Instance.ConnectToStationMethod(connectingStation));
     }
 
     void SetSprite() => image.sprite = arrowSpriteData.DirectionToSprite(arrowDirection); 
@@ -113,7 +113,7 @@ public class MoveArrow : UIButtonBase
 
     void HandleConnectToStation(ConnectEventArgs eventArgs)
     {
-       //Debug.Log("CONNECT TO STATION");
+        //Debug.Log("CONNECT TO STATION");
 
         if (!eventArgs.IsConnecting)
             return;

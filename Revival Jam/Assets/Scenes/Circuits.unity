@@ -1990,6 +1990,7 @@ GameObject:
   - component: {fileID: 1243010077}
   - component: {fileID: 1243010078}
   - component: {fileID: 1243010079}
+  - component: {fileID: 1243010080}
   m_Layer: 0
   m_Name: WiresContentCamera
   m_TagString: Untagged
@@ -2064,6 +2065,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243010076}
   m_Enabled: 0
+--- !u!114 &1243010080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243010076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43f77841ee50f4d4b9029549d41bd5b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1362663970
 GameObject:
   m_ObjectHideFlags: 0

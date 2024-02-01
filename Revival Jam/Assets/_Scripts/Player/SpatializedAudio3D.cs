@@ -43,8 +43,6 @@ public class SpatializedAudio3D : MonoBehaviour
             FMODUnity.RuntimeManager.StudioSystem.setListenerAttributes(0, attributes, playerPosition);
         else
             FMODUnity.RuntimeManager.StudioSystem.setListenerAttributes(0, attributes);
-
-        Debug.Log("playing");
     }
 
     private void OnEnable()

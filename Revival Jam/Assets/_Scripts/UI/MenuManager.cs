@@ -10,6 +10,10 @@ public class MenuManager : Singleton<MenuManager>
 {
     [Header("Main Menu")]
     [SerializeField] Canvas mainMenu;
+    [SerializeField] GameObject menuButtons;
+    [SerializeField] GameObject title;
+    [SerializeField] GameObject controls;
+    [SerializeField] GameObject credits;
 
     [Header("Pause")]
     [SerializeField] Canvas pauseMenu;
@@ -24,13 +28,23 @@ public class MenuManager : Singleton<MenuManager>
     [Header("Cameras")]
     [SerializeField] Camera menuCamera;
 
+
+    [Header("Debug")]
+    [SerializeField] bool disableObjectsOnMenu = true; //Always keep true -- this is just for testing
+
     readonly List<DisableOnMenu> objectsToDisable = new();
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
 
-    public enum MenuState { Null, MainMenu, LevelSelectMenu, GameStart, Pause, Settings, GameResume, GameEnd }
+    public bool IsGamePaused { get; private set; }
+
+    //Rework this to include 'substates' of a certain menuState
+    //This would make it easier to add new states, as substates of other states, without haveing to update VirtualCursorActivator, for each state added
+    //Plus, they are already unofficially organized like this through the headers
+    public enum MenuState { Null, MainMenu, GameStart, Pause, Settings, GameResume, GameEnd, PreviousState, Controls, Credits }
 
     public MenuState CurrentState { get; private set; }
+    public MenuState PreviousState { get; private set; } = MenuState.Null;
 
     public static event Action<MenuState> OnMenuStateChange;
 
@@ -101,16 +115,16 @@ public class MenuManager : Singleton<MenuManager>
 
     public void UpdateState(MenuState newState)
     {
-        CurrentState = newState;
+        if (newState != MenuState.PreviousState)
+        {
+            PreviousState = CurrentState;
+            CurrentState = newState;
+        }
 
         switch (newState)
         {
             case MenuState.MainMenu:
                 OnMainMenuEnter();
-                break;
-
-            case MenuState.LevelSelectMenu:
-                OnLevelSelectMenuEnter();
                 break;
 
             case MenuState.GameStart:
@@ -125,12 +139,24 @@ public class MenuManager : Singleton<MenuManager>
                 OnSettingsEnter();
                 break;
 
+            case MenuState.Credits:
+                credits.SetActive(true);
+                break;
+
+            case MenuState.Controls:
+                controls.SetActive(true);
+                break;
+
             case MenuState.GameResume:
                 OnGameResume();
                 break;
 
             case MenuState.GameEnd:
                 OnGameEnd();
+                break;
+
+            case MenuState.PreviousState:
+                UpdateState(PreviousState);
                 break;
 
             default:
@@ -161,29 +187,41 @@ public class MenuManager : Singleton<MenuManager>
     {
         menuCamera.gameObject.SetActive(setActive);
 
+        if (!disableObjectsOnMenu)
+        {
+            Debug.LogWarning("Warning -- Objects Disable is false; this can cause serious problems.");
+            return;
+        }
+
         foreach (var disable in objectsToDisable)
         {
-            if (disable != null)
-                disable.gameObject.SetActive(!setActive);
+            if (disable == null || !disable.Disable)
+            {
+                Debug.Log("Skipped!");
+                continue;
+            }
+            disable.gameObject.SetActive(!setActive);
         }
+
+        Debug.Log($"Set objectsToDisable {!setActive}");
     }
 
     void OnMainMenuEnter()
     {
         mainMenu.gameObject.SetActive(true);
         endScreen.gameObject.SetActive(false);
+        menuButtons.SetActive(true);
+        title.SetActive(true);
+
+        settings.SetActive(false);
+        credits.SetActive(false);
+        controls.SetActive(false);
         
         if (!menuCamera.isActiveAndEnabled)
         {
             Debug.LogWarning("MenuCamera was not active. Setting Cam active");
             SetMenuCamera(true);
         }
-    }
-
-    //Is there a level select screen???
-    void OnLevelSelectMenuEnter()
-    {
-        mainMenu.gameObject.SetActive(false);
     }
 
     void OnGameStart()
@@ -195,15 +233,21 @@ public class MenuManager : Singleton<MenuManager>
 
     void OnGamePause()
     {
+        IsGamePaused = true;
+
         SetMenuCamera(true);
 
         controlsPanel.SetActive(true);
         pauseMenu.gameObject.SetActive(true);
+
+        menuButtons.SetActive(false);
         settings.SetActive(false);
     }
 
     void OnGameResume()
     {
+        IsGamePaused = false;
+
         SetMenuCamera(false);
 
         pauseMenu.gameObject.SetActive(false);
@@ -211,7 +255,10 @@ public class MenuManager : Singleton<MenuManager>
 
     void OnSettingsEnter()
     {
+        menuButtons.SetActive(false);
         controlsPanel.SetActive(false);
+        title.SetActive(false);
+
         settings.SetActive(true);
     }
 

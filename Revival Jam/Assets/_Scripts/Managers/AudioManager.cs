@@ -43,6 +43,8 @@ public class AudioManager : Singleton<AudioManager>
     [field: Header("2D Game")]
     [SerializeField] EventReference consoleBlip;
 
+    Bus masterBus;
+
     public enum EventSounds { Null, CastleAmbience, CastleGlitchAmbience, ForestAmbience, ForestGlitchAmbience, PlayerJoust, PlayerDamage, ArcadeFootsteps, CircuitCablePlug, CircuitCableUnplug, ArcadeOn, ArcadeOff, CircuitPanelOpen, Player3DFootsteps, ArcadeUIHover, ArcadeUISelect, UIHover, UISelect, FireWall, ConsoleDialogue, Ending, ArcadeShake, EnemyTakeDamage }
 
     public enum FootstepsParameter { Grass, Stone }
@@ -83,26 +85,19 @@ public class AudioManager : Singleton<AudioManager>
             { EventSounds.ArcadeShake, shakeArcade },
             { EventSounds.EnemyTakeDamage, enemyDamage },
         };
-            
+
+        masterBus = RuntimeManager.GetBus("bus:/");
     }
 
     private void Update()
     {
-#if DEBUG
-        if (Input.GetKeyDown(KeyCode.J))
-            SetFootsteps(FootstepsParameter.Grass);
-        if (Input.GetKeyDown(KeyCode.K))
-            SetFootsteps(FootstepsParameter.Stone);
-        if (Input.GetKeyDown(KeyCode.L))
-            TriggerAudioClip(arcadeFootsteps, transform.position);
-#endif
+        if (SettingsManager.Instance != null)
+            masterBus.setVolume(SettingsManager.Instance.GameVolume);
     }
 
     public static void SetFootsteps(FootstepsParameter groundType)
     {
         RuntimeManager.StudioSystem.setParameterByName("TerrainType", (float)groundType);
-
-        Debug.Log($"Set TerrainType Parameter to {groundType}");
     }
 
     void OnDestroy()
@@ -110,14 +105,11 @@ public class AudioManager : Singleton<AudioManager>
         CleanUp();
     }
 
-    public static void TriggerAudioClip(EventSounds sound, GameObject origin) => TriggerAudioClip(sound, origin.transform.position);
-
-    //Change this to be a static function that uses emitter
     public static void TriggerAudioClip(EventSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
     public static void TriggerAudioClip(EventSounds sound, Vector3 origin)
     {
-        //Debug.Log($"Triggered Audio Clip: {key}");
+        // Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == EventSounds.Null)
             return;
@@ -180,11 +172,6 @@ public class AudioManager : Singleton<AudioManager>
         instance.start();
 
         Debug.Log($"Started {key}");
-    }
-
-
-    public void SetFootstepsParameter(string name, float value)
-    {
     }
 
     public void StopEventInstance(EventSounds key, FMOD.Studio.STOP_MODE stopMode = FMOD.Studio.STOP_MODE.ALLOWFADEOUT)

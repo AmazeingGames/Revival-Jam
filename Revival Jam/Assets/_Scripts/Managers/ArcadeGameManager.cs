@@ -40,53 +40,25 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         switch (newState)
         {
             case ArcadeState.StartLevel:
-                LoadLevel(levelToLoad);
+                SceneLoader.Instance.StartLevelLoad(levelToLoad);
                 break;
 
+            //Maybe change these two to reset the level, instead of changing the arcade state
+            //This would improve performance to do to the potentially intensive tasks called whenever the level starts, that wouldn't need to be performed more than once
+            //Alternatively, add a parameter to start level load
             case ArcadeState.RestartLevel:
-                ReloadLevel();
+                UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
                 break;
-
             case ArcadeState.Lose:
-                Lose();
+                UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
                 break;
 
             case ArcadeState.Win:
-                LoadNextLevel();
+                UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber + 1);
                 break;
         }
 
         AfterArcadeStateChange?.Invoke(newState);
-    }
-
-    //Loads the given level
-    void LoadLevel(int levelToLoad)
-    {
-        SceneLoader.Instance.StartLevelLoad(levelToLoad);
-    }
-
-    //Starts the current level over from the beginning
-    void ReloadLevel()
-    {
-        UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
-    }
-
-    //Restarts the current level
-    //To Do: Create Game Over Menu
-    void Lose()
-    {
-        ReloadLevel();
-    }
-
-    void LoadNextLevel()
-    {
-        if (SceneLoader.DoesLevelExist(SceneLoader.Instance.LevelNumber + 1))
-        {
-            UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber + 1);
-            Debug.Log("Loading next level");
-        }
-        else
-            Debug.Log("Level doesn't exist");
     }
 
     [Serializable]

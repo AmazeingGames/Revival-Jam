@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    [SerializeField] string levelNameConvention;
+    readonly string levelNameConvention = "NewArcadeLevel_";
 
     public static event Action<AsyncOperation, bool> OnLoadStart;
 
@@ -17,7 +17,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public void StartLevelLoad(int levelToLoad)
     {
-        Debug.Log("level Start");
+        Debug.Log($"level Start : Level {levelToLoad}");
 
         if (levelToLoad == -1)
             throw new NotImplementedException();
@@ -27,7 +27,12 @@ public class SceneLoader : Singleton<SceneLoader>
         LoadLevel(levelToLoad);
     }
 
-    public bool LoadLevel(int level) => LoadScene($"{levelNameConvention}{level}", true);
+    public bool LoadLevel(int level)
+    {
+        Debug.Log($"Loading Level : {levelNameConvention}{level}");
+
+        return LoadScene($"{levelNameConvention}{level}", true);
+    }
 
     public bool LoadScene(string sceneName, bool isLevel = false)
     {
@@ -37,7 +42,7 @@ public class SceneLoader : Singleton<SceneLoader>
         {
             //loadingCanvas.gameObject.SetActiveCursor(false);
 
-            Debug.Log("Scene does not exist");
+            Debug.Log($"Scene, {sceneName}, does not exist");
             return false;
         }
 
@@ -50,8 +55,6 @@ public class SceneLoader : Singleton<SceneLoader>
             Debug.Log("No Game Manager Instance");
 
         GameManager.Instance.UpdateGameState(GameState.Loading);
-
-        //Debug.Log($"Loading Scene: {sceneName}");
 
         AsyncOperation load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -74,7 +77,12 @@ public class SceneLoader : Singleton<SceneLoader>
     public static bool DoesLevelExist(int levelnumber)
     {
         if (Instance == null)
+        {
+            Debug.Log("Instance is null");
             return false;
+        }
+
+        Debug.Log($"Checking for level : {Instance.levelNameConvention}{levelnumber})");
 
         return DoesSceneExist($"{Instance.levelNameConvention}{levelnumber}");
     }

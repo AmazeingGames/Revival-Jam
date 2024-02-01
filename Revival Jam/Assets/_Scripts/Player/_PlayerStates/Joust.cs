@@ -49,8 +49,7 @@ public class Joust : State<CharacterController>
     {
         base.Enter(parent);
 
-        Debug.Log("Joust!");
-
+        //Make this run only once
         if (rigidbody == null)
             rigidbody = parent.GetComponent<Rigidbody2D>();
         if (attackHitbox == null)

@@ -6,7 +6,9 @@ using TMPro;
 using System;
 using static ArcadeGameManager;
 using static AudioManager;
+using static PlayerFocus;
 using TMPro.Examples;
+using Unity.VisualScripting;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -45,6 +47,7 @@ public class DialogueManager : Singleton<DialogueManager>
     TextMeshProUGUI dialogueName;
     Image dialoguePortrait;
     RectTransform dialogueBackground;
+    DialogueType dialogueType;
     EventSounds textSFX;
 
     public static bool isDialogueRunning = false;
@@ -59,6 +62,9 @@ public class DialogueManager : Singleton<DialogueManager>
 
     float textSpeed;
 
+    string instantMessageText = string.Empty;
+
+
     private void Start()
     {
         if (metaDialogueSpeech != null)
@@ -66,25 +72,32 @@ public class DialogueManager : Singleton<DialogueManager>
         if (noteDialogueSpeech != null)
             noteJitter = noteDialogueSpeech.GetComponent<VertexJitter>();
 
-        string test = "<Return this> and not this>";
-
-        Debug.Log(GetBetween(test, "<", ">"));
-
-        CloseDialogueBox();
+        noteDialogueBackground.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (isDialogueRunning && Input.GetKeyDown(KeyCode.Space))
+        ContinueDialogue();
+    }
+
+    //Checks when to update the dialogue to display the full message or to display the next message
+    void ContinueDialogue()
+    {
+        if (!isDialogueRunning)
+            return;
+
+        if (dialogueType == DialogueType.Note && !IsFocusedOn(FocusedOn.Arcade))
+        {
+            Debug.Log("Not focused on arcade");
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (textFinished)
-            {
                 NextMessage();
-            }
             else
-            {
                 DisplayMessageInstant();
-            }
         }
 
         blipTimer -= Time.deltaTime;
@@ -93,6 +106,9 @@ public class DialogueManager : Singleton<DialogueManager>
     //Opens the dialogue slot and prepares for the first line of a dialogue
     public void StartDialogue(Dialogue dialogue, DialogueType type = DialogueType.Note)
     {
+        if (isDialogueRunning)
+            return;
+
         EnterDialogue?.Invoke(true);
 
         currentDialogue = dialogue;
@@ -200,6 +216,7 @@ public class DialogueManager : Singleton<DialogueManager>
         textFinished = true;
     }
 
+    //Returns the content of a string that appears between two values
     public static string GetBetween(string stringSource, string startValue, string endValue)
     {
         if (stringSource.Contains(startValue) && stringSource.Contains(endValue))
@@ -213,9 +230,10 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Bug Fix Idea: Issue where instant display doesn't properly display instant messages
-    //Create a 'load message' string variable, it holds the message to display using the continues messages, clear it when there isn't a continuous message, add to it when there is
+    //Create a 'load message' string variable, it holds the message to display using the continued messages, clear it when there isn't a continuous message, add to it when there is
+    
     //Displays the message all at once instead of one character at a time
-    void DisplayMessageInstant()
+    void DisplayMessageInstant(bool playSFX = true)
     {
         StopCoroutine(DisplayMessageSlow());
 
@@ -223,11 +241,22 @@ public class DialogueManager : Singleton<DialogueManager>
 
         Message displayMessage = currentMessages[activeMessage];
 
-        dialogueSpeech.text = displayMessage.message;
+        //Maybe use a stringbuilder for performance
+        bool continueMessage = currentMessages[activeMessage].continuePreviousMessage;
+        if (continueMessage && activeMessage != 0)
+        {
+            instantMessageText += currentMessages[activeMessage - 1].message;
+        }
+        if (!continueMessage)
+            instantMessageText = string.Empty;
+
+        dialogueSpeech.text = string.Empty;
+        dialogueSpeech.text += instantMessageText + displayMessage.message;
 
         textFinished = true;
 
-        TriggerAudioClip(textSFX, transform);
+        if (playSFX)
+            TriggerAudioClip(textSFX, transform);
     }
 
     //Starts the next line of the current dialogue, and exits if there are none left
@@ -251,16 +280,17 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Finishes the dialogue and informs listeners dialogue has ended
-    void ExitDialogue()
+    void ExitDialogue(bool grantAbility = true)
     {
         EnterDialogue?.Invoke(false);
         
-        //Why does this happen twice?
-        //^^^What is this comment for? Did I fix this??? - 12/8/23
-        if (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None)
+        if (grantAbility && (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None))
             ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
-        CloseDialogueBox();
+        if (!textFinished)
+            DisplayMessageInstant(false);
+
+        noteDialogueBackground.gameObject.SetActive(false);
         isDialogueRunning = false;
 
         Debug.Log("Conversation finished");
@@ -290,12 +320,8 @@ public class DialogueManager : Singleton<DialogueManager>
                 break;
         }
 
+        this.dialogueType = dialogueType; 
         dialogueBackground.gameObject.SetActive(true);
-    }
-
-    void CloseDialogueBox()
-    {
-        noteDialogueBackground.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -313,16 +339,27 @@ public class DialogueManager : Singleton<DialogueManager>
         switch (arcadeState)
         {
             case ArcadeState.StartLevel:
+            case ArcadeState.Win:
+                Debug.Log("Started search for camera");
                 StartCoroutine(FindCamera());
+                break;
+
+            case ArcadeState.Lose:
+            case ArcadeState.RestartLevel:
+                if (isDialogueRunning)
+                    ExitDialogue(grantAbility: false);
                 break;
         }
     }
 
-    //Yes, find in coroutine is bad for performance, but it's hard to think of a better way with tile maps
+    //Yes; 'find' in coroutine is bad for performance, but I dumb
     IEnumerator FindCamera()
     {
         while (Player.Instance == null)
+        {
+            Debug.Log("Player is null");
             yield return null;
+        }
 
         GameObject arcadeCamera = null;
 

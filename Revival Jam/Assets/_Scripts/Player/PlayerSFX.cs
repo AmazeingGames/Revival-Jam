@@ -12,17 +12,17 @@ public class PlayerSFX : MonoBehaviour
     {
         if (isJoustPlaying)
         {
-            Debug.Log("Joust already playing");
+            //Debug.Log("Joust already playing");
             return;
         }
 
-        Debug.Log("Start Joust sound");
+        //Debug.Log("Start Joust sound");
         StartCoroutine(PlayJoustSounds(timeBetweenSounds));
     }
 
     public void StopJoustSound()
     {
-        Debug.Log("Stop joust");
+        //Debug.Log("Stop joust");
         StopAllCoroutines();
         isJoustPlaying = false;
     }
@@ -31,7 +31,7 @@ public class PlayerSFX : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("joust running");
+            //Debug.Log("joust running");
             isJoustPlaying = true;
             AudioManager.TriggerAudioClip(PlayerJoust, transform);
             yield return new WaitForSeconds(timeBetweenSounds);

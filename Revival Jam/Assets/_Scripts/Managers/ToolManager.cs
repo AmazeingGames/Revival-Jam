@@ -23,16 +23,6 @@ public class ToolManager : Singleton<ToolManager>
     public System.Collections.Generic.IEnumerable<ItemsAndAbilities> GetUsedToolsTypes() => usedTools.Select(t => t.ItemType);
     public bool HasUsedTool(ItemsAndAbilities toolType) => GetUsedToolsTypes().Contains(toolType);
 
-    private void Update()
-    {
-#if DEBUG
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            StartCoroutine(WiringManager.SetWiringCabinet(isActive: true));
-        }
-#endif
-    }
-
     void HandleUseTool(ItemData toolData)
     {
         if (toolData == null)
