@@ -62,6 +62,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
     float textSpeed;
 
+    string instantMessageText = string.Empty;
+
 
     private void Start()
     {
@@ -104,6 +106,9 @@ public class DialogueManager : Singleton<DialogueManager>
     //Opens the dialogue slot and prepares for the first line of a dialogue
     public void StartDialogue(Dialogue dialogue, DialogueType type = DialogueType.Note)
     {
+        if (isDialogueRunning)
+            return;
+
         EnterDialogue?.Invoke(true);
 
         currentDialogue = dialogue;
@@ -225,7 +230,7 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Bug Fix Idea: Issue where instant display doesn't properly display instant messages
-    //Create a 'load message' string variable, it holds the message to display using the continues messages, clear it when there isn't a continuous message, add to it when there is
+    //Create a 'load message' string variable, it holds the message to display using the continued messages, clear it when there isn't a continuous message, add to it when there is
     
     //Displays the message all at once instead of one character at a time
     void DisplayMessageInstant(bool playSFX = true)
@@ -236,7 +241,17 @@ public class DialogueManager : Singleton<DialogueManager>
 
         Message displayMessage = currentMessages[activeMessage];
 
-        dialogueSpeech.text = displayMessage.message;
+        //Maybe use a stringbuilder for performance
+        bool continueMessage = currentMessages[activeMessage].continuePreviousMessage;
+        if (continueMessage && activeMessage != 0)
+        {
+            instantMessageText += currentMessages[activeMessage - 1].message;
+        }
+        if (!continueMessage)
+            instantMessageText = string.Empty;
+
+        dialogueSpeech.text = string.Empty;
+        dialogueSpeech.text += instantMessageText + displayMessage.message;
 
         textFinished = true;
 

@@ -91,7 +91,8 @@ public class AudioManager : Singleton<AudioManager>
 
     private void Update()
     {
-        masterBus.setVolume(SettingsManager.Instance.GameVolume);
+        if (SettingsManager.Instance != null)
+            masterBus.setVolume(SettingsManager.Instance.GameVolume);
     }
 
     public static void SetFootsteps(FootstepsParameter groundType)

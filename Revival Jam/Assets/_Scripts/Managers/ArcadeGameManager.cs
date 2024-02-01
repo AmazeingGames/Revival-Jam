@@ -45,6 +45,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
 
             //Maybe change these two to reset the level, instead of changing the arcade state
             //This would improve performance to do to the potentially intensive tasks called whenever the level starts, that wouldn't need to be performed more than once
+            //Alternatively, add a parameter to start level load
             case ArcadeState.RestartLevel:
                 UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
                 break;
@@ -53,7 +54,6 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
                 break;
 
             case ArcadeState.Win:
-                //This could instead update the ArcadeGameState
                 UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber + 1);
                 break;
         }
