@@ -2554,7 +2554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1476442969}
-  - component: {fileID: 1476442970}
+  - component: {fileID: 1476442971}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2577,26 +2577,82 @@ Transform:
   m_Father: {fileID: 1250487356}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1476442970
+--- !u!114 &1476442971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476442968}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afdfba1a56948c64693b32b96b31ef01, type: 3}
+  m_Script: {fileID: 11500000, guid: e0490662be9e7f14594e15367ee126d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorOffset: {x: 30, y: -28, z: 0}
-  mouseFollowSensitivity: 0
-  getRaw: 0
-  normalize: 0
-  moveDelay: 0.1
-  mouseEventSystem: {fileID: 0}
-  useVirtualMouseMovement: 0
-  alwaysUseVirtualMovement: 0
+  joystick: {fileID: 599860584414831378}
+  joystickLayer:
+    serializedVersion: 2
+    m_Bits: 1048576
+  maxJoystickRotation: 12
+  joyStickSpeed: 6
+  joystickCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  button: {fileID: 5854696603639646949}
+  panel: {fileID: 5838420073996364257}
+  panelLayer:
+    serializedVersion: 2
+    m_Bits: 524288
+  closePanelOnLeave: 1
+  maxPanelRotation: 105
+  panelPrySpeed: 4.4
+  panelOpenSpeed: 3
+  panelCloseSpeed: 2
+  panelCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1509977441
 GameObject:
   m_ObjectHideFlags: 0
