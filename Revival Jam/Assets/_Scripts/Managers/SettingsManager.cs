@@ -5,14 +5,11 @@ using static MenuManager;
 
 public class SettingsManager : Singleton<SettingsManager>
 {
-    SaveSettings settings = new();
+    static SaveSettings settings = new();
 
     public float GameVolume { get => settings.gameVolume; private set => settings.gameVolume = value; }
     public float MouseSensitivity { get => settings.mouseSensitivity; private set => settings.mouseSensitivity = value; }
 
-
-    public float LoadVolume() => GameVolume;
-    public float LoadSensitivity() => MouseSensitivity;
     public void UpdateVolume(float newValue) => GameVolume = newValue;
     public void UpdateSensitivity(float newValue) => MouseSensitivity = newValue;
 
@@ -27,20 +24,24 @@ public class SettingsManager : Singleton<SettingsManager>
         MenuManager.OnMenuStateChange -= HandleMenuStateChange;
     }
 
-    const string pathName = "settings";
-
-    private void Start()
+    private void Awake()
     {
-        GameManager.Load(pathName, ref settings);
+        base.Awake();
+        string oldSettings = $"old volume : {settings.gameVolume}";
+        GameManager.Load(ref settings);
+        string newSettings = $"new volume : {settings.gameVolume}";
+
+        Debug.Log($"{oldSettings} | {newSettings}");
+
     }
 
     void HandleMenuStateChange(MenuState menuState)
     {
         if (MenuManager.Instance.PreviousState == MenuState.Settings)
-            GameManager.Save(settings, pathName);
+            GameManager.Save(settings);
     }
 
-    class SaveSettings
+    [field: Serializable] class SaveSettings
     {
         public float gameVolume = .5f;
         public float mouseSensitivity = .25f;

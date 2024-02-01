@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,48 +15,61 @@ public class SliderSettings : MonoBehaviour
     public enum SliderType { Null, Sensitivity, Volume }
 
     Action<float> updateSetting;
-    Func<float> loadSetting;
-
 
     public void Start()
     {
-        SetLoadValue();
-        SetSetting();
+        SetUpdateFunc();
 
         slider.onValueChanged.AddListener((v) =>
         {
             updateSetting?.Invoke(v);
         });
 
-        Debug.Log("Initialized Setting");
+        string sliderOldValue = $"{sliderType} slider old value : {slider.value}";
 
-        slider.value = loadSetting();
+        LoadSlider();
+
+        string sliderNewValue = $"slider new value : {slider.value}";
+
         updateSetting?.Invoke(slider.value);
+
+        SettingsManager settings = SettingsManager.Instance;
+
+        Debug.Log($"{sliderOldValue} | {sliderNewValue}");
+    }
+
+    public void Update()
+    {
+        Debug.Log("running update");
+    }
+    //
+    void ReadySlider()
+    {
+        SettingsManager settings = SettingsManager.Instance;
+
+        switch (sliderType)
+        {
+            case SliderType.Sensitivity:
+                updateSetting = settings.UpdateSensitivity;
+                slider.value = settings.MouseSensitivity;
+                break;
+
+            case SliderType.Volume:
+                updateSetting = settings.UpdateVolume;
+                slider.value = settings.GameVolume;
+                break;
+        }
     }
 
     //Sets the delegate to update the proper setting when called
-    void SetSetting()
+    void SetUpdateFunc()
     {
-        SettingsManager settings = SettingsManager.Instance;
-
-        updateSetting = sliderType switch
-        {
-            SliderType.Sensitivity => settings.UpdateSensitivity,
-            SliderType.Volume => settings.UpdateVolume,
-            _ => null
-        };
+        
     }
 
     //Sets the slider to equal the last loaded setting
-    void SetLoadValue()
+    void LoadSlider()
     {
-        SettingsManager settings = SettingsManager.Instance;
-
-        loadSetting = sliderType switch
-        {
-            SliderType.Sensitivity => settings.LoadSensitivity,
-            SliderType.Volume => settings.LoadVolume,
-            _ => null
-        };
+        
     }
 }

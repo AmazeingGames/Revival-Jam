@@ -106,14 +106,11 @@ public class AudioManager : Singleton<AudioManager>
         CleanUp();
     }
 
-    public static void TriggerAudioClip(EventSounds sound, GameObject origin) => TriggerAudioClip(sound, origin.transform.position);
-
-    //Change this to be a static function that uses emitter
     public static void TriggerAudioClip(EventSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
     public static void TriggerAudioClip(EventSounds sound, Vector3 origin)
     {
-        //Debug.Log($"Triggered Audio Clip: {key}");
+        Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == EventSounds.Null)
             return;
