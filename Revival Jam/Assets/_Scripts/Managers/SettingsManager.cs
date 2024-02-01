@@ -27,12 +27,7 @@ public class SettingsManager : Singleton<SettingsManager>
     private void Awake()
     {
         base.Awake();
-        string oldSettings = $"old volume : {settings.gameVolume}";
         GameManager.Load(ref settings);
-        string newSettings = $"new volume : {settings.gameVolume}";
-
-        Debug.Log($"{oldSettings} | {newSettings}");
-
     }
 
     void HandleMenuStateChange(MenuState menuState)

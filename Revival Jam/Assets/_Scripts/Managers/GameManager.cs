@@ -100,16 +100,12 @@ public class GameManager : Singleton<GameManager>
     //This can be moved into its own static class instead, but it's fine here.
     public static void Save<T>(T data) where T : class
     {
-        Debug.Log($"data path is {data}");
-
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Application.dataPath + $"/{data}.txt", json);
     }
 
     public static void Load<T>(ref T data)
     {
-        Debug.Log($"Pathname is {data}");
-
         var fileLocation = Application.dataPath + $"/{data}.txt";
         if (File.Exists(fileLocation))
         {

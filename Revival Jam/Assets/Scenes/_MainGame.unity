@@ -1861,10 +1861,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 265905256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a681e41c06ec2be4c9edf67ab48b4f2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 428b483c87715874981854a0c0e9c2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isArcadeButton: 0
+  gameState: 0
+  menuState: 5
 --- !u!1 &270595449
 GameObject:
   m_ObjectHideFlags: 0
@@ -3019,10 +3021,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 462679106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b324d57633ad0e8409154580d018bb44, type: 3}
+  m_Script: {fileID: 11500000, guid: 428b483c87715874981854a0c0e9c2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isArcadeButton: 0
+  gameState: 0
+  menuState: 4
 --- !u!1 &467958458
 GameObject:
   m_ObjectHideFlags: 0
@@ -5648,6 +5652,7 @@ GameObject:
   - component: {fileID: 1145464192}
   - component: {fileID: 1145464191}
   - component: {fileID: 1145464190}
+  - component: {fileID: 1145464194}
   m_Layer: 0
   m_Name: PlayButton
   m_TagString: Untagged
@@ -5771,6 +5776,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1145464188}
   m_CullTransparentMesh: 1
+--- !u!114 &1145464194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145464188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428b483c87715874981854a0c0e9c2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isArcadeButton: 0
+  gameState: 1
+  menuState: 2
 --- !u!1 &1161492040
 GameObject:
   m_ObjectHideFlags: 0
@@ -6839,10 +6859,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1323055121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b324d57633ad0e8409154580d018bb44, type: 3}
+  m_Script: {fileID: 11500000, guid: 428b483c87715874981854a0c0e9c2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isArcadeButton: 0
+  gameState: 0
+  menuState: 4
 --- !u!1 &1331025906
 GameObject:
   m_ObjectHideFlags: 0
@@ -8515,7 +8537,7 @@ GameObject:
   - component: {fileID: 1764519843}
   - component: {fileID: 1764519842}
   - component: {fileID: 1764519841}
-  - component: {fileID: 1764519845}
+  - component: {fileID: 1764519846}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -8676,7 +8698,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764519838}
   m_CullTransparentMesh: 1
---- !u!114 &1764519845
+--- !u!114 &1764519846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8685,10 +8707,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1764519838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dea2612bc6a65d43ab30ba0a020459a, type: 3}
+  m_Script: {fileID: 11500000, guid: 428b483c87715874981854a0c0e9c2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isArcadeButton: 0
+  gameState: 0
+  menuState: 7
 --- !u!1 &1771856726
 GameObject:
   m_ObjectHideFlags: 0

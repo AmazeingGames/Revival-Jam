@@ -18,31 +18,18 @@ public class SliderSettings : MonoBehaviour
 
     public void Start()
     {
-        SetUpdateFunc();
+        ReadySlider();
 
         slider.onValueChanged.AddListener((v) =>
         {
             updateSetting?.Invoke(v);
         });
 
-        string sliderOldValue = $"{sliderType} slider old value : {slider.value}";
-
-        LoadSlider();
-
-        string sliderNewValue = $"slider new value : {slider.value}";
-
         updateSetting?.Invoke(slider.value);
 
         SettingsManager settings = SettingsManager.Instance;
-
-        Debug.Log($"{sliderOldValue} | {sliderNewValue}");
     }
 
-    public void Update()
-    {
-        Debug.Log("running update");
-    }
-    //
     void ReadySlider()
     {
         SettingsManager settings = SettingsManager.Instance;
@@ -59,17 +46,5 @@ public class SliderSettings : MonoBehaviour
                 slider.value = settings.GameVolume;
                 break;
         }
-    }
-
-    //Sets the delegate to update the proper setting when called
-    void SetUpdateFunc()
-    {
-        
-    }
-
-    //Sets the slider to equal the last loaded setting
-    void LoadSlider()
-    {
-        
     }
 }

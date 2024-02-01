@@ -33,7 +33,7 @@ public class MenuManager : Singleton<MenuManager>
     readonly List<DisableOnMenu> objectsToDisable = new();
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
-    public enum MenuState { Null, MainMenu, GameStart, Pause, Settings, GameResume, GameEnd }
+    public enum MenuState { Null, MainMenu, GameStart, Pause, Settings, GameResume, GameEnd, PreviousState }
 
     public MenuState CurrentState { get; private set; }
     public MenuState PreviousState { get; private set; } = MenuState.Null;
@@ -107,8 +107,11 @@ public class MenuManager : Singleton<MenuManager>
 
     public void UpdateState(MenuState newState)
     {
-        PreviousState = CurrentState;
-        CurrentState = newState;
+        if (newState != MenuState.PreviousState)
+        {
+            PreviousState = CurrentState;
+            CurrentState = newState;
+        }
 
         switch (newState)
         {
@@ -134,6 +137,10 @@ public class MenuManager : Singleton<MenuManager>
 
             case MenuState.GameEnd:
                 OnGameEnd();
+                break;
+
+            case MenuState.PreviousState:
+                UpdateState(PreviousState);
                 break;
 
             default:
