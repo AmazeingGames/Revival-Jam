@@ -1,1 +1,1 @@
-{"gameVolume":0.0,"mouseSensitivity":0.25}
+{"gameVolume":0.9654151797294617,"mouseSensitivity":0.44279107451438906}

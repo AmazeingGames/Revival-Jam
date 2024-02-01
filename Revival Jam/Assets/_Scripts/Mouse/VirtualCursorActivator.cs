@@ -53,6 +53,8 @@ public class VirtualCursorActivator : MonoBehaviour
                     case MenuManager.MenuState.MainMenu:
                     case MenuManager.MenuState.Pause:
                     case MenuManager.MenuState.Settings:
+                    case MenuManager.MenuState.Controls:
+                    case MenuManager.MenuState.Credits:
                         SetActiveCursor(true);
                         break;
 

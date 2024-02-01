@@ -12,6 +12,8 @@ public class MenuManager : Singleton<MenuManager>
     [SerializeField] Canvas mainMenu;
     [SerializeField] GameObject menuButtons;
     [SerializeField] GameObject title;
+    [SerializeField] GameObject controls;
+    [SerializeField] GameObject credits;
 
     [Header("Pause")]
     [SerializeField] Canvas pauseMenu;
@@ -33,7 +35,11 @@ public class MenuManager : Singleton<MenuManager>
     readonly List<DisableOnMenu> objectsToDisable = new();
 
     public bool IsInMenu => menuCamera.isActiveAndEnabled;
-    public enum MenuState { Null, MainMenu, GameStart, Pause, Settings, GameResume, GameEnd, PreviousState }
+
+    //Rework this to include 'substates' of a certain menuState
+    //This would make it easier to add new states, as substates of other states, without haveing to update VirtualCursorActivator, for each state added
+    //Plus, they are already unofficially organized like this through the headers
+    public enum MenuState { Null, MainMenu, GameStart, Pause, Settings, GameResume, GameEnd, PreviousState, Controls, Credits }
 
     public MenuState CurrentState { get; private set; }
     public MenuState PreviousState { get; private set; } = MenuState.Null;
@@ -131,6 +137,14 @@ public class MenuManager : Singleton<MenuManager>
                 OnSettingsEnter();
                 break;
 
+            case MenuState.Credits:
+                credits.SetActive(true);
+                break;
+
+            case MenuState.Controls:
+                controls.SetActive(true);
+                break;
+
             case MenuState.GameResume:
                 OnGameResume();
                 break;
@@ -173,7 +187,7 @@ public class MenuManager : Singleton<MenuManager>
 
         if (!disableObjectsOnMenu)
         {
-            Debug.LogWarning("Objects Disable is false -- this can cause serious problems.");
+            Debug.LogWarning("Warning -- Objects Disable is false; this can cause serious problems.");
             return;
         }
 
@@ -198,6 +212,8 @@ public class MenuManager : Singleton<MenuManager>
         title.SetActive(true);
 
         settings.SetActive(false);
+        credits.SetActive(false);
+        controls.SetActive(false);
         
         if (!menuCamera.isActiveAndEnabled)
         {
