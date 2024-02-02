@@ -164,9 +164,10 @@ public class VirtualCursorActivator : MonoBehaviour
 
         if (active)
         {
-            CursorTest.Instance.transform.position = mousePositionRemember;
-
             StartCoroutine(SetRealMousePosition());
+
+            if (CursorTest.Instance != null)
+                CursorTest.Instance.transform.position = mousePositionRemember;
         }
         else
             mousePositionRemember = Mouse.current.position.value;

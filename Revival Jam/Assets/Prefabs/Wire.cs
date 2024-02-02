@@ -175,15 +175,18 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         } 
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other == null) 
+        if (ConnectedReceptacle != null)
+            return;
+
+        if (other == null)
             return;
 
         if (!other.TryGetComponent<ReceptacleObject>(out var receptacleObject))
             return;
 
-        //Debug.Log("Over Receptacle");
+        Debug.Log("Over Receptacle");
 
         overlappingReceptacle = receptacleObject;
     }
