@@ -150,6 +150,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
     void SetActiveCursor(bool active)
     {
+        bool wasActive = isActive;
         isActive = active;
         virtualInput.gameObject.SetActive(active);
 
@@ -162,7 +163,7 @@ public class VirtualCursorActivator : MonoBehaviour
             return;
         }
 
-        if (active)
+        if (active && !wasActive)
         {
             StartCoroutine(SetRealMousePosition());
 
@@ -173,6 +174,7 @@ public class VirtualCursorActivator : MonoBehaviour
             mousePositionRemember = Mouse.current.position.value;
     }
 
+    //Keeps the cursor positions consistent
     IEnumerator SetRealMousePosition()
     {
         const float margin = 50;

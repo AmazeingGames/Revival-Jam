@@ -28,10 +28,9 @@ public class MouseManager : Singleton<MouseManager>
 
     bool isDelayOver;
 
-    Wire wireToFollow;
-    Coroutine followWire;
+    Wire wireToMove;
 
-    Transform ActiveCursorTransform => activeCursor == null ? null : activeCursor.transform;
+    public Transform ActiveCursorTransform => activeCursor == null ? null : activeCursor.transform;
     VirtualCursor activeCursor;
     Animator activeAnimator;
 
@@ -123,18 +122,6 @@ public class MouseManager : Singleton<MouseManager>
             return;
         }
 
-        //If we're holding a wire, uses the wire follow movement; otherwise stops wire movement
-        if (wireToFollow != null)
-        {
-            followWire ??= StartCoroutine(FollowWire());
-            return;
-        }
-        else if (followWire != null)
-        {
-            StopCoroutine(followWire);
-            followWire = null;
-        }
-
         //Either uses the mouse movement or mouse's actual position
         if (useVirtualMouseMovement)
             FollowMouseMovement();
@@ -142,21 +129,6 @@ public class MouseManager : Singleton<MouseManager>
             FollowMousePosition();
     }
 
-    //Instead of making this so complicated, we could just make the wire a child of the cursor and move it as normal
-    //Updates the virtual activeCursor to follow the *position of the grabbed wire
-    IEnumerator FollowWire()
-    {
-        yield return null;
-
-        while (wireToFollow != null)
-        {
-            var wirePosition = wireToFollow.transform.position;
-            wirePosition.z = ActiveCursorTransform.position.z;
-
-            ActiveCursorTransform.transform.position = wirePosition;
-            yield return null;
-        }
-    }
 
     //Updates the visual cursor's transform to the mouse | Regular mouse movement
     void FollowMousePosition()
@@ -180,12 +152,15 @@ public class MouseManager : Singleton<MouseManager>
         var sensitivity = mouseFollowSensitivity * SettingsManager.Instance.MouseSensitivity;
 
         ActiveCursorTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), sensitivity, false, out _);
+
+        if (wireToMove != null)
+            wireToMove.transform.position = ActiveCursorTransform.position;
     }
 
     //Gets a reference to the wire on grab
     void HandleWireGrab(Wire wire, bool isGrab)
     {
-        wireToFollow = isGrab ? wire : null;
+        wireToMove = isGrab ? wire : null;
     }
 
     void HandleSetActiveCursor(VirtualCursorActivator.SetActiveCursorEventArgs cursorEventArgs)

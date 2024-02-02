@@ -16,10 +16,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] WireSettings wireSettings;
 
-    Vector2 addAmount;
-
-    bool shouldFollowMouse = false;
-
     public ReceptacleObject ConnectedReceptacle { get; private set; }
 
     ReceptacleObject overlappingReceptacle = null;
@@ -28,6 +24,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public static event Action<Wire, bool> GrabWire; 
 
     Transform autoPosition = null;
+    bool isGrab;
 
     enum Pointer { Up, Down }
 
@@ -80,7 +77,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Called on pointer up/down
     void OnGrab(Pointer pointer)
     {
-        bool isGrab;
         AudioManager.EventSounds soundToPlay;
 
         switch (pointer)
@@ -101,36 +97,20 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         AudioManager.TriggerAudioClip(soundToPlay, transform);
 
-        SetMouseFollow(isGrab);
         GrabWire?.Invoke(this, isGrab);
     }
 
-    //Preps the mouse cursor for wire follow
-    void SetMouseFollow(bool shouldFollowMouse)
-    {
-        this.shouldFollowMouse = shouldFollowMouse;
-
-        if (wireSettings.HideMouse)
-            UnityEngine.Cursor.visible = !shouldFollowMouse;
-        
-        if (wireSettings.LockMouse)
-            UnityEngine.Cursor.lockState = shouldFollowMouse ? CursorLockMode.Locked : CursorLockMode.Confined;
-    }
 
     //Replaces the old control with the new receptacle's control
     void WireToConnector()
     {
         Controls controlToRemove = ConnectedReceptacle == null ? Controls.Unknown : ConnectedReceptacle.LinkedControl;
 
-        //ReceptacleObject receptacleScript = overlappingReceptacle == null ? null : overlappingReceptacle.GetComponent<ReceptacleObject>();
-
         Controls controlToAdd = overlappingReceptacle == null ? Controls.Unknown : overlappingReceptacle.LinkedControl;
 
         ChangeControlsEventArgs controlsEventArgs = new(overlappingReceptacle, controlToAdd, controlToRemove);
 
         ConnectedReceptacle = overlappingReceptacle;
-
-        //Debug.Log($"is overlappingReceptacle null : {overlappingReceptacle == null}");
 
         ConnectWireCheck?.Invoke(controlsEventArgs);
     }
@@ -165,19 +145,10 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             Debug.LogWarning("ControlsManager.Instance is null");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (shouldFollowMouse)
-        {
-            transform.FollowMovement(TransformExtensions.GetMouseInput(), wireSettings.Sensitivity, wireSettings.SetPosition, out addAmount);
-            transform.ClampToBounds(CircuitScreenBounds.Instance.PositveBounds, CircuitScreenBounds.Instance.NegativeBounds);
-        } 
-    }
-
     private void OnTriggerStay(Collider other)
     {
-        if (ConnectedReceptacle != null)
+        //if there's some issues with wire connections remove this.
+        if (ConnectedReceptacle != null && !isGrab)
             return;
 
         if (other == null)
