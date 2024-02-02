@@ -8,7 +8,7 @@ public static class TransformExtensions
 
     //Updates the Transform along with some movement
     //Either sets the position directly or adds the position
-    public static void FollowMovement(this Transform followingTransform, Vector2 movementToFollow, float sensitivity, bool setPosition, ref Vector2 AddAmount)
+    public static void FollowMovement(this Transform followingTransform, Vector2 movementToFollow, float sensitivity, bool setPosition, out Vector2 AddAmount)
     {
         //Gets the amount to move the transform by
         float addXAmount = (movementToFollow.x / 188) * Time.deltaTime * sensitivity;

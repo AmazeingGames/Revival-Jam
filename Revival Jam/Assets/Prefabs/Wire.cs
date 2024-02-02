@@ -170,7 +170,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (shouldFollowMouse)
         {
-            transform.FollowMovement(TransformExtensions.GetMouseInput(), wireSettings.Sensitivity, wireSettings.SetPosition, ref addAmount);
+            transform.FollowMovement(TransformExtensions.GetMouseInput(), wireSettings.Sensitivity, wireSettings.SetPosition, out addAmount);
             transform.ClampToBounds(CircuitScreenBounds.Instance.PositveBounds, CircuitScreenBounds.Instance.NegativeBounds);
         } 
     }

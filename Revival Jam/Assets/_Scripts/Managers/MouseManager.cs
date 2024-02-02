@@ -28,8 +28,6 @@ public class MouseManager : Singleton<MouseManager>
 
     bool isDelayOver;
 
-    Vector2 variable;
-
     Wire wireToFollow;
     Coroutine followWire;
 
@@ -125,7 +123,7 @@ public class MouseManager : Singleton<MouseManager>
             return;
         }
 
-        //If we're holding a wire, uses the wire follow movement; otherwise ends the wire movement coroutine
+        //If we're holding a wire, uses the wire follow movement; otherwise stops wire movement
         if (wireToFollow != null)
         {
             followWire ??= StartCoroutine(FollowWire());
@@ -144,6 +142,7 @@ public class MouseManager : Singleton<MouseManager>
             FollowMousePosition();
     }
 
+    //Instead of making this so complicated, we could just make the wire a child of the cursor and move it as normal
     //Updates the virtual activeCursor to follow the *position of the grabbed wire
     IEnumerator FollowWire()
     {
@@ -180,14 +179,12 @@ public class MouseManager : Singleton<MouseManager>
 
         var sensitivity = mouseFollowSensitivity * SettingsManager.Instance.MouseSensitivity;
 
-        ActiveCursorTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), sensitivity, false, ref variable);
+        ActiveCursorTransform.FollowMovement(TransformExtensions.GetMouseInput(getRaw, normalize), sensitivity, false, out _);
     }
 
     //Gets a reference to the wire on grab
     void HandleWireGrab(Wire wire, bool isGrab)
     {
-        //Debug.Log("HandleWireGrab");
-
         wireToFollow = isGrab ? wire : null;
     }
 
@@ -205,8 +202,10 @@ public class MouseManager : Singleton<MouseManager>
             else
                 useVirtualMouseMovement = cursorEventArgs.VirtualCursor.MovementType == VirtualCursor.MouseType.Virtual;
 
+            return;
         }
-        else if (activeAnimator == cursorEventArgs.CursorAnimator)
+        
+        if (activeAnimator == cursorEventArgs.CursorAnimator)
         {
             hasActiveCursor = false;
 

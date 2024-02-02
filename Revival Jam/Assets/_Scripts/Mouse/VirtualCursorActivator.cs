@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using static FocusStation;
 
 //Having so many of these could be costly in terms of performance?
@@ -23,6 +24,9 @@ public class VirtualCursorActivator : MonoBehaviour
     bool isActive;
     bool wasActiveOnPause;
     bool HasTool => HotbarManager.Instance != null && HotbarManager.Instance.GetCurrentTools().Count > 0;
+
+    bool isFirstTime = true;
+    Vector2 mousePositionRemember = new();
 
     public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Interaction }
 
@@ -146,12 +150,61 @@ public class VirtualCursorActivator : MonoBehaviour
 
     void SetActiveCursor(bool active)
     {
-        //Debug.Log($"Set {activeState} active cursor {active}");
-
         isActive = active;
         virtualInput.gameObject.SetActive(active);
 
         OnSetActiveCursor(active);
+
+        //We don't want to set the mouse position the very first time we enter the game
+        if (isFirstTime)
+        {
+            isFirstTime = false;
+            return;
+        }
+
+        if (active)
+        {
+            CursorTest.Instance.transform.position = mousePositionRemember;
+
+            StartCoroutine(SetRealMousePosition());
+        }
+        else
+            mousePositionRemember = Mouse.current.position.value;
+    }
+
+    IEnumerator SetRealMousePosition()
+    {
+        int tries = 0;
+
+        const float margin = 50;
+        const float maxTries = 5;
+
+        string brokeReason = string.Empty;
+
+        while (true)
+        {
+            var current = Mouse.current.position.value;
+            Cursor.lockState = CursorLockMode.Confined;
+
+            if ((current.x > mousePositionRemember.x - margin && current.x < mousePositionRemember.x + margin) && (current.y > mousePositionRemember.y - margin && current.y < mousePositionRemember.y + margin))
+                break;
+
+            if (tries >= maxTries)
+            {
+                brokeReason += "Broke due to max tries. | ";
+                break;
+            }
+                
+
+            tries++;
+            Mouse.current.WarpCursorPosition(mousePositionRemember);
+            yield return null;
+        }
+
+        if (brokeReason == string.Empty)
+            Debug.Log($"Successfuly set mouse position after {tries} tries!");
+        else
+            Debug.Log(brokeReason);
     }
 
     public void OnSetActiveCursor(bool active)
