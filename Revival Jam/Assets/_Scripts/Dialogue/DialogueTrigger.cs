@@ -64,6 +64,10 @@ public class Message
     public bool shouldJitter;
     public bool overrideSpeed = false;
     public float newSpeed;
+
+    [Header("Interaction")]
+    public bool autoPlay;
+    public float hangTime = .5f;
 }
 
 [Serializable]

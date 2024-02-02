@@ -99,14 +99,13 @@ public class MoveArrow : UIButtonBase
     {
         switch (newMenuState)
         {
-            case MenuManager.MenuState.Settings:
-            case MenuManager.MenuState.MainMenu:
-            case MenuManager.MenuState.Pause:
-                SetAble(false);
-                break;
-
+            case MenuManager.MenuState.GameStart:
             case MenuManager.MenuState.GameResume:
                 SetAble(!shouldBeDisabled);
+                break;
+
+            default:
+                SetAble(false);
                 break;
         }
     }

@@ -73,7 +73,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         OnGrab(Pointer.Up);
         WireToConnector();
     }
-
+        
     //Called on pointer up/down
     void OnGrab(Pointer pointer)
     {

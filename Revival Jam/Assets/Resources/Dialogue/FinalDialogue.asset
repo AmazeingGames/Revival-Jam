@@ -12,20 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbb7e61c95cdf745a83c00e8c6f5b0e, type: 3}
   m_Name: FinalDialogue
   m_EditorClassIdentifier: 
-  <DialogueType>k__BackingField: 0
+  <DialogueType>k__BackingField: 2
   <Messages>k__BackingField:
   - actorId: 0
     message: Thank you for...
     continuePreviousMessage: 0
     shouldJitter: 0
     overrideSpeed: 1
-    newSpeed: 0.5
+    newSpeed: 0.55
+    autoPlay: 1
+    hangTime: 1
   - actorId: 0
     message: <color="red">f r e e i n g  m e</color>
     continuePreviousMessage: 0
     shouldJitter: 1
     overrideSpeed: 1
     newSpeed: 0.65
+    autoPlay: 1
+    hangTime: 0.5
   <Actors>k__BackingField:
   - name: 
     sprite: {fileID: 0}

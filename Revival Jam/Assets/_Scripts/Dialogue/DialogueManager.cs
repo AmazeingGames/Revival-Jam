@@ -9,6 +9,7 @@ using static AudioManager;
 using static PlayerFocus;
 using TMPro.Examples;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -40,7 +41,8 @@ public class DialogueManager : Singleton<DialogueManager>
     Dialogue currentDialogue;
     List<Message> currentMessages;
     List<Actor> currentActors;
-    int activeMessage = 0;
+    int currentIndex = 0;
+    Message CurrentMessage => currentMessages[currentIndex];
 
     VertexJitter currentJitter;
     TextMeshProUGUI dialogueSpeech;
@@ -54,8 +56,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     bool textFinished = false;
 
-    //True -> Enter Dialogue
-    //False -> Exit Dialogue
     public static event Action<bool> EnterDialogue;
 
     float blipTimer;
@@ -64,7 +64,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     string instantMessageText = string.Empty;
 
-
+    Coroutine autoPlayMessage;
     private void Start()
     {
         if (metaDialogueSpeech != null)
@@ -92,7 +92,10 @@ public class DialogueManager : Singleton<DialogueManager>
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (CurrentMessage.autoPlay && textFinished)
+            autoPlayMessage ??= StartCoroutine(AutoplayNextMessage(CurrentMessage.hangTime));
+        
+        if (Input.GetKeyDown(KeyCode.Space) && !CurrentMessage.autoPlay)
         {
             if (textFinished)
                 NextMessage();
@@ -101,6 +104,16 @@ public class DialogueManager : Singleton<DialogueManager>
         }
 
         blipTimer -= Time.deltaTime;
+    }
+
+    IEnumerator AutoplayNextMessage(float delaySeconds)
+    {
+        Debug.Log($"Started auto play. Will play next message in {delaySeconds} seconds");
+
+        yield return new WaitForSeconds(delaySeconds);
+
+        autoPlayMessage = null;
+        NextMessage();
     }
 
     //Opens the dialogue slot and prepares for the first line of a dialogue
@@ -114,7 +127,7 @@ public class DialogueManager : Singleton<DialogueManager>
         currentDialogue = dialogue;
         currentActors = dialogue.Actors;
         currentMessages = dialogue.Messages;
-        activeMessage = 0;
+        currentIndex = 0;
 
         isDialogueRunning = true;
         OpenDialogueBox(type);
@@ -137,7 +150,7 @@ public class DialogueManager : Singleton<DialogueManager>
     //Sets the name and portrait for the current line of dialogue
     void SetDialogueProperties()
     {
-        Message displayMessage = currentMessages[activeMessage];
+        Message displayMessage = currentMessages[currentIndex];
 
         Actor actor = currentActors[displayMessage.actorId];
 
@@ -164,7 +177,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         textFinished = false;
 
-        Message displayMessage = currentMessages[activeMessage];
+        Message displayMessage = currentMessages[currentIndex];
 
         for (int i = 0; i < displayMessage.message.Length; i++)
         {
@@ -239,13 +252,13 @@ public class DialogueManager : Singleton<DialogueManager>
 
         SetDialogueProperties();
 
-        Message displayMessage = currentMessages[activeMessage];
+        Message displayMessage = currentMessages[currentIndex];
 
         //Maybe use a stringbuilder for performance
-        bool continueMessage = currentMessages[activeMessage].continuePreviousMessage;
-        if (continueMessage && activeMessage != 0)
+        bool continueMessage = currentMessages[currentIndex].continuePreviousMessage;
+        if (continueMessage && currentIndex != 0)
         {
-            instantMessageText += currentMessages[activeMessage - 1].message;
+            instantMessageText += currentMessages[currentIndex - 1].message;
         }
         if (!continueMessage)
             instantMessageText = string.Empty;
@@ -262,15 +275,15 @@ public class DialogueManager : Singleton<DialogueManager>
     //Starts the next line of the current dialogue, and exits if there are none left
     void NextMessage()
     {
-        activeMessage++;
+        currentIndex++;
 
-        if (activeMessage >= currentMessages.Count)
+        if (currentIndex >= currentMessages.Count)
         {
             ExitDialogue();
             return;
         }
 
-        if (!currentMessages[activeMessage].continuePreviousMessage)
+        if (!currentMessages[currentIndex].continuePreviousMessage)
         {
             Debug.Log("Did not continue message");
             dialogueSpeech.text = string.Empty;
