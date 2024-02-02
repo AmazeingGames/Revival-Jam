@@ -174,28 +174,25 @@ public class VirtualCursorActivator : MonoBehaviour
 
     IEnumerator SetRealMousePosition()
     {
-        int tries = 0;
-
         const float margin = 50;
         const float maxTries = 5;
 
         string brokeReason = string.Empty;
 
-        while (true)
+        int tries = 0;
+        for (; tries < maxTries; tries++)
         {
             var current = Mouse.current.position.value;
             Cursor.lockState = CursorLockMode.Confined;
 
+            //Checks if current == target
             if ((current.x > mousePositionRemember.x - margin && current.x < mousePositionRemember.x + margin) && (current.y > mousePositionRemember.y - margin && current.y < mousePositionRemember.y + margin))
                 break;
 
             if (tries >= maxTries)
-            {
                 brokeReason += "Broke due to max tries. | ";
-                break;
-            }
-                
-
+            
+            //Otherwise, curent = target
             tries++;
             Mouse.current.WarpCursorPosition(mousePositionRemember);
             yield return null;
