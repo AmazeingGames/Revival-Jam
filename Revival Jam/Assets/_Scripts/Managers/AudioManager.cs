@@ -204,31 +204,7 @@ public class AudioManager : Singleton<AudioManager>
             case InstanceStartMode.Start:
                 instance.start();
 
-                int currentPriority = priorityEventInstance.loopingAudioReference.priority;
-                if (currentPriority == -1)
-                    break;
-
-                //Job is to loop through all created events that match the started event's priority and stop them from playing
-
-                //Alternatively, I could store different priorities in different lists and simply loop through the lists
-                //This would save on performance, but cost more memory
-                List<PriorityEventInstance> instances = Instance.SoundTypeToEventInstance.Values.ToList();
-
-                //Could use stringbuilder to improve performance
-                string stoppedEventsString = string.Empty;
-                string priorityString = $"of priority {currentPriority}";
-                foreach (var currentEventInstance in instances)
-                {
-                    if (currentPriority == currentEventInstance.loopingAudioReference.priority && priorityEventInstance.EventKey != currentEventInstance.EventKey)
-                    {
-                        StartEventInstance(currentEventInstance, InstanceStartMode.StopAllowFadeout);
-                        stoppedEventsString += $"{currentEventInstance.EventKey}, ";
-                    }
-                }
-                if (stoppedEventsString == string.Empty)
-                    Debug.Log($"Started {priorityEventInstance.EventKey} | Stopped no events {priorityString}");
-                else
-                    Debug.Log($"Started {priorityEventInstance.EventKey} | Stopped all matching events {priorityString} : {stoppedEventsString[..^2]}");
+                StopMatchingPriority(priorityEventInstance);
                 break;
 
             case InstanceStartMode.StopAllowFadeout:
@@ -239,6 +215,36 @@ public class AudioManager : Singleton<AudioManager>
                 instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                 break;
         }
+    }
+
+    //Job is to loop through all created events that match a target's priority and stop all found tracks
+    static void StopMatchingPriority(PriorityEventInstance priorityEventInstance)
+    {
+        int priority = priorityEventInstance.loopingAudioReference.priority;
+        if (priority == -1)
+            return;
+
+        //Alternatively, I could store different priorities in different lists and simply loop through the lists
+        //This would save on performance, but cost more memory
+        List<PriorityEventInstance> instances = Instance.SoundTypeToEventInstance.Values.ToList();
+
+        //Could use stringbuilder to improve performance
+        string stoppedEventsString = string.Empty;
+        string priorityString = $"of priority {priority}";
+
+        foreach (var currentEventInstance in instances)
+        {
+            if (priority == currentEventInstance.loopingAudioReference.priority && priorityEventInstance.EventKey != currentEventInstance.EventKey)
+            {
+                StartEventInstance(currentEventInstance, InstanceStartMode.StopAllowFadeout);
+                stoppedEventsString += $"{currentEventInstance.EventKey}, ";
+            }
+        }
+
+        if (stoppedEventsString == string.Empty)
+            Debug.Log($"Started {priorityEventInstance.EventKey} | Stopped no events {priorityString}");
+        else
+            Debug.Log($"Started {priorityEventInstance.EventKey} | Stopped all matching events {priorityString} : {stoppedEventsString[..^2]}");
     }
 
     void CleanUp()
