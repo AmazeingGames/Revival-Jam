@@ -10,7 +10,7 @@ using System;
 using static ReceptacleObject;
 using static ControlsManager;
 using static PlayerFocus;
-using static AudioManager.EventSounds;
+using static AudioManager.OneShotSounds;
 
 public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -77,7 +77,7 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Called on pointer up/down
     void OnGrab(Pointer pointer)
     {
-        AudioManager.EventSounds soundToPlay;
+        AudioManager.OneShotSounds soundToPlay;
 
         switch (pointer)
         {

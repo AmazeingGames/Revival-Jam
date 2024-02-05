@@ -9,7 +9,7 @@ public class FlameDamage : DealDamage
 
     private void Awake()
     {
-        emitter = AudioManager.Instance.InitializeEventEmitter(AudioManager.EventSounds.FireWall, gameObject);
+        emitter = AudioManager.Instance.InitializeEventEmitter(AudioManager.LoopingSounds.FireWall, gameObject);
     }
 
     private void OnEnable()

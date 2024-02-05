@@ -50,7 +50,7 @@ public class DialogueManager : Singleton<DialogueManager>
     Image dialoguePortrait;
     RectTransform dialogueBackground;
     DialogueType dialogueType;
-    EventSounds textSFX;
+    OneShotSounds textSFX;
 
     public static bool isDialogueRunning = false;
 
@@ -143,7 +143,7 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         textSFX = dialogueType switch
         {
-            _ => EventSounds.ConsoleDialogue
+            _ => OneShotSounds.ConsoleDialogue
         };
     }
 

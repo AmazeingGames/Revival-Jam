@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MusicShift : MonoBehaviour
 {
-    [SerializeField] AudioManager.EventSounds ambienceTrigger;
+    [SerializeField] AudioManager.OneShotSounds ambienceTrigger;
     bool isPlayerOver = false;
 
     private void Update()

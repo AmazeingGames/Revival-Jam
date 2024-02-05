@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static AudioManager;
-using static AudioManager.EventSounds;
+using static AudioManager.OneShotSounds;
 
 public class PlayerSFX : MonoBehaviour
 {
