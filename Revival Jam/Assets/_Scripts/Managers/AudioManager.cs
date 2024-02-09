@@ -12,7 +12,7 @@ using static UnityEngine.Timeline.AnimationPlayableAsset;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    [field: Header("Game PriorityEventInstance")]
+    [field: Header("Game Ambiences")]
     [SerializeField] EventReference castleAmbience;
     [SerializeField] EventReference forestAmbience;
     [SerializeField] EventReference atticAmbience;
@@ -49,20 +49,22 @@ public class AudioManager : Singleton<AudioManager>
 
     public enum OneShotSounds { Null, PlayerJoust, PlayerDamage, ArcadeFootsteps, CircuitCablePlug, CircuitCableUnplug, ArcadeOn, ArcadeOff, CircuitPanelOpen, Player3DFootsteps, ArcadeUIHover, ArcadeUISelect, UIHover, UISelect, ConsoleDialogue, Ending, ArcadeShake, EnemyTakeDamage }
 
-    public enum LoopingSounds { CastleAmbience, ForestAmbience, AtticAmbience, FireWall }
+    public enum LoopingAudio { Null, CastleAmbience, ForestAmbience, AtticAmbience, FireWall, PauseAmbience }
 
     public enum FootstepsParameter { Grass, Stone }
 
-    public enum InstanceStartMode { Start, StopAllowFadeout, StopImmediate,}
+    public enum InstanceInteractMode { Start, StopAllowFadeout, StopImmediate }
+
+    public enum LoopingAudioType { Null, Ambience }
 
     //Refers to the audio *file* correlated to the enum
     Dictionary<OneShotSounds, EventReference> OneShotToReference;
 
     //Refers to both the audio *file* location and the audio's priority value
-    Dictionary<LoopingSounds, LoopingAudioReference> LoopingToReference;
+    Dictionary<LoopingAudio, LoopingAudioReference> LoopingToReference;
 
     //Refers to the gameObject containing the 'EventInstance' script in scene
-    readonly Dictionary<LoopingSounds, PriorityEventInstance> SoundTypeToEventInstance = new();
+    readonly Dictionary<LoopingAudio, PriorityEventInstance> SoundTypeToEventInstance = new();
 
 
     readonly List<StudioEventEmitter> EventEmitters = new();
@@ -94,10 +96,10 @@ public class AudioManager : Singleton<AudioManager>
 
         LoopingToReference = new()
         {
-            { LoopingSounds.FireWall, new (LoopingSounds.FireWall, fireWall) },
-            { LoopingSounds.CastleAmbience, new (LoopingSounds.CastleAmbience, castleAmbience, 1) },
-            { LoopingSounds.AtticAmbience,  new (LoopingSounds.AtticAmbience, atticAmbience, 1) },
-            { LoopingSounds.ForestAmbience, new (LoopingSounds.ForestAmbience, forestAmbience, 1) },
+            { LoopingAudio.FireWall, new (LoopingAudio.FireWall, fireWall) },
+            { LoopingAudio.CastleAmbience, new (LoopingAudio.CastleAmbience, castleAmbience, LoopingAudioType.Ambience) },
+            { LoopingAudio.AtticAmbience,  new (LoopingAudio.AtticAmbience, atticAmbience, LoopingAudioType.Ambience) },
+            { LoopingAudio.ForestAmbience, new (LoopingAudio.ForestAmbience, forestAmbience, LoopingAudioType.Ambience) },
         }; 
     }
 
@@ -137,7 +139,7 @@ public class AudioManager : Singleton<AudioManager>
 
     //Pass in the sound you want to play and the object to emit the sound
     //Supplies the audio event referencce and also keeps a list of emitter objects to be later disabled 
-    public StudioEventEmitter InitializeEventEmitter(LoopingSounds key, GameObject emitterObject)
+    public StudioEventEmitter InitializeEventEmitter(LoopingAudio key, GameObject emitterObject)
     {
         if (!LoopingToReference.TryGetValue(key, out var reference))
         {
@@ -159,7 +161,7 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     //Given a looping sound, creates an instance of that sound that can be played on repeat
-    PriorityEventInstance CreateEventInstance(LoopingSounds key)
+    PriorityEventInstance CreateEventInstance(LoopingAudio key)
     {
         LoopingToReference.TryGetValue(key, out LoopingAudioReference reference);
 
@@ -170,8 +172,12 @@ public class AudioManager : Singleton<AudioManager>
         return priorityEventInstance;
     }
 
-    //Responsible for making sure the event exists and calling the real 'startEvent' method
-    public static void StartEventInstance(LoopingSounds key, InstanceStartMode startMode)
+    public static void StartEventTrack(LoopingAudio key) => EventInstanceInteract(key, InstanceInteractMode.Start);
+    public static void StopEventTrack(LoopingAudio key) => EventInstanceInteract(key, InstanceInteractMode.StopAllowFadeout);
+
+    //Used to start and stop looping audio
+    //Creates audio of the given track, if none currently exists
+    static void EventInstanceInteract(LoopingAudio key, InstanceInteractMode interactMode)
     {
         //This should instead instantiate the manager
         if (Instance == null)
@@ -185,67 +191,90 @@ public class AudioManager : Singleton<AudioManager>
         {
             PriorityEventInstance newEventInstance = Instance.CreateEventInstance(key);
 
-            Debug.Log($"Created new EventInstance (key) {key} | (instance) {newEventInstance.EventKey}");
+            Debug.Log($"Created new EventInstance (key) {key} | (instance) {newEventInstance.LoopingAudio}");
 
-            StartEventInstance(key, startMode);
+            EventInstanceInteract(key, interactMode);
             return;
         }
 
-        StartEventInstance(priorityEventInstance, startMode);
+        EventInstanceStartOrStop(priorityEventInstance, interactMode);
     }
 
     //Responsbile for starting and stopping the given event instance
     //On starting an eventInstance, stops all other running event instances that match the given instance's priority
-    static void StartEventInstance(PriorityEventInstance priorityEventInstance, InstanceStartMode startMode)
+    static void EventInstanceStartOrStop(PriorityEventInstance priorityEventInstance, InstanceInteractMode interactMode)
     {
         var instance = priorityEventInstance.instance;
-        switch (startMode)
+        switch (interactMode)
         {
-            case InstanceStartMode.Start:
+            case InstanceInteractMode.Start:
+                Debug.Log($"Started track : {priorityEventInstance.LoopingAudio}");
                 instance.start();
-
-                StopMatchingPriority(priorityEventInstance);
+                StopMatchingAudioType(priorityEventInstance);
                 break;
 
-            case InstanceStartMode.StopAllowFadeout:
+            case InstanceInteractMode.StopAllowFadeout:
                 instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                 break;
 
-            case InstanceStartMode.StopImmediate:
+            case InstanceInteractMode.StopImmediate:
+
                 instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                 break;
         }
     }
 
+    //Alternatively, I could set the volume to 0, this would allow me to set volume to custom values, in certain situations
     //Job is to loop through all created events that match a target's priority and stop all found tracks
-    static void StopMatchingPriority(PriorityEventInstance priorityEventInstance)
+    public static void StopMatchingAudioType(LoopingAudio currentAudio)
     {
-        int priority = priorityEventInstance.loopingAudioReference.priority;
-        if (priority == -1)
+        if (Instance == null)
             return;
 
-        //Alternatively, I could store different priorities in different lists and simply loop through the lists
-        //This would save on performance, but cost more memory
+        LoopingAudioType audioType = Instance.LoopingToReference[currentAudio].audioType;
+        if (audioType == LoopingAudioType.Null)
+            return;
+
         List<PriorityEventInstance> instances = Instance.SoundTypeToEventInstance.Values.ToList();
 
+        Instance.StopMatching(instances, i => audioType == i.loopingAudioReference.audioType && currentAudio != i.LoopingAudio, $"of audioType {audioType}");
+    }
+
+    //Not sure why, but this function breaks the ambience manager when called
+    static void StopAudioType(LoopingAudioType loopingAudioType)
+    {
+        if (Instance == null) 
+            return;
+
+        if (loopingAudioType == LoopingAudioType.Null)
+            return;
+
+        List<PriorityEventInstance> instances = Instance.SoundTypeToEventInstance.Values.ToList();
+
+        Instance.StopMatching(instances, i => loopingAudioType == i.loopingAudioReference.audioType, $"of audioType {loopingAudioType}");
+    }
+
+    void StopMatching(List<PriorityEventInstance> priorityEventInstances, Predicate<PriorityEventInstance> stopCondition, string priorityString = "")
+    {
         //Could use stringbuilder to improve performance
         string stoppedEventsString = string.Empty;
-        string priorityString = $"of priority {priority}";
 
-        foreach (var currentEventInstance in instances)
+        foreach (var currentEventInstance in priorityEventInstances)
         {
-            if (priority == currentEventInstance.loopingAudioReference.priority && priorityEventInstance.EventKey != currentEventInstance.EventKey)
+            if (stopCondition(currentEventInstance))
             {
-                StartEventInstance(currentEventInstance, InstanceStartMode.StopAllowFadeout);
-                stoppedEventsString += $"{currentEventInstance.EventKey}, ";
+                EventInstanceStartOrStop(currentEventInstance, InstanceInteractMode.StopAllowFadeout);
+                stoppedEventsString += $"{currentEventInstance.LoopingAudio}, ";
             }
         }
 
         if (stoppedEventsString == string.Empty)
-            Debug.Log($"Started {priorityEventInstance.EventKey} | Stopped no events {priorityString}");
+            Debug.Log($"Stopped no events {priorityString}");
         else
-            Debug.Log($"Started {priorityEventInstance.EventKey} | Stopped all matching events {priorityString} : {stoppedEventsString[..^2]}");
+            Debug.Log($"Stopped all matching events {priorityString} ({stoppedEventsString[..^2]})");
     }
+
+    static void StopMatchingAudioType(PriorityEventInstance priorityEventInstance) => StopMatchingAudioType(priorityEventInstance.LoopingAudio);
 
     void CleanUp()
     {
@@ -268,16 +297,16 @@ public class AudioManager : Singleton<AudioManager>
     //Priority is a confusing name -- think of it more like a 'sound type'. No sound is more important than any other, except the one we want to currently play. All it does is stop sounds of a matching 'type'.
     readonly struct LoopingAudioReference
     {
-        public readonly LoopingSounds eventKey;
+        public readonly LoopingAudio eventKey;
         public readonly EventReference eventReference;
-        public readonly int priority;
+        public readonly LoopingAudioType audioType;
 
         //Sets 'no conflicts' as the default priority value
-        public LoopingAudioReference(LoopingSounds eventKey, EventReference eventReference, int priority = -1)
+        public LoopingAudioReference(LoopingAudio eventKey, EventReference eventReference, LoopingAudioType audioType = LoopingAudioType.Null)
         {
             this.eventKey = eventKey;
             this.eventReference = eventReference;
-            this.priority = priority;
+            this.audioType = audioType;
         }
     }
 
@@ -289,7 +318,7 @@ public class AudioManager : Singleton<AudioManager>
         public readonly EventInstance instance;
 
         public EventReference EventReference => loopingAudioReference.eventReference;
-        public LoopingSounds EventKey => loopingAudioReference.eventKey;
+        public LoopingAudio LoopingAudio => loopingAudioReference.eventKey;
         public PriorityEventInstance(LoopingAudioReference audioReference)
         {
             this.loopingAudioReference = audioReference;

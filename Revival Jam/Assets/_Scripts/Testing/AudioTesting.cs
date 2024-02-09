@@ -10,11 +10,11 @@ public class AudioTesting : MonoBehaviour
 
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            StartEventInstance(LoopingSounds.CastleAmbience, InstanceStartMode.Start);
+            StartEventTrack(LoopingAudio.CastleAmbience);
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            StartEventInstance(LoopingSounds.ForestAmbience, InstanceStartMode.Start);
+            StartEventTrack(LoopingAudio.ForestAmbience);
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            StartEventInstance(LoopingSounds.AtticAmbience, InstanceStartMode.Start);
+            StartEventTrack(LoopingAudio.AtticAmbience);
 #endif
 
 
