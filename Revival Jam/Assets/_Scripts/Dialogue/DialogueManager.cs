@@ -8,8 +8,6 @@ using static ArcadeGameManager;
 using static AudioManager;
 using static PlayerFocus;
 using TMPro.Examples;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
