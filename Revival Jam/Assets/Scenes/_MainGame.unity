@@ -360,11 +360,11 @@ MonoBehaviour:
     Path: event:/Amb/Amb_Forest
   atticAmbience:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -896848042
+      Data2: 1116116168
+      Data3: 1957736363
+      Data4: -1194877041
+    Path: event:/Amb/Amb_Attic
   playerJoust:
     Guid:
       Data1: 1844079503
