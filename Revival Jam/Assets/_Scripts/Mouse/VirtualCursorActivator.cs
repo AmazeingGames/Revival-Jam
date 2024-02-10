@@ -176,8 +176,7 @@ public class VirtualCursorActivator : MonoBehaviour
             mousePositionRemember = Mouse.current.position.value;
         }
 
-        Debug.Log($"SetActiveCursor {activeState} called with params of setActive : {setActive} | wasActive : {wasActive} mousePosition");
-
+        //Debug.Log($"SetActiveCursor {activeState} called with params of setActive : {setActive} | wasActive : {wasActive} mousePosition");
     }
 
     //Keeps the cursor positions consistent
