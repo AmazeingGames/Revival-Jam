@@ -137,7 +137,8 @@ public class VirtualCursorActivator : MonoBehaviour
                 {
                     case PlayerFocus.FocusedOn.Arcade:
                     case PlayerFocus.FocusedOn.Circuitry:
-                        SetActiveCursor(false);
+                        if (connectEventArgs.IsConnecting)
+                            SetActiveCursor(false);
                         break;
 
                     default:
@@ -148,13 +149,13 @@ public class VirtualCursorActivator : MonoBehaviour
         }
     }
 
-    void SetActiveCursor(bool active)
+    void SetActiveCursor(bool setActive)
     {
         bool wasActive = isActive;
-        isActive = active;
-        virtualInput.gameObject.SetActive(active);
+        isActive = setActive;
+        virtualInput.gameObject.SetActive(setActive);
 
-        OnSetActiveCursor(active);
+        OnSetActiveCursor(setActive);
 
         //We don't want to set the mouse position the very first time we enter the game
         if (isFirstTime)
@@ -163,15 +164,20 @@ public class VirtualCursorActivator : MonoBehaviour
             return;
         }
 
-        if (active && !wasActive)
+        if (setActive && !wasActive)
         {
             StartCoroutine(SetRealMousePosition());
 
             if (CursorTest.Instance != null)
                 CursorTest.Instance.transform.position = mousePositionRemember;
         }
-        else
+        else if (!setActive)
+        {
             mousePositionRemember = Mouse.current.position.value;
+        }
+
+        Debug.Log($"SetActiveCursor {activeState} called with params of setActive : {setActive} | wasActive : {wasActive} mousePosition");
+
     }
 
     //Keeps the cursor positions consistent
