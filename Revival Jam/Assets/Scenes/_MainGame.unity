@@ -6876,7 +6876,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 46.2698, y: -12.227501}
+  m_AnchoredPosition: {x: 46.2698, y: -32}
   m_SizeDelta: {x: 239.3475, y: 24.4549}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1297940731
@@ -6909,8 +6909,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u201CC;Users\\John\\Devnotes>Note /?"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a24ec483e8570764abf1601605fe15a0, type: 2}
-  m_sharedMaterial: {fileID: 1217586888262297466, guid: a24ec483e8570764abf1601605fe15a0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
+  m_sharedMaterial: {fileID: 6116459931647696423, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10164,8 +10164,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -139.7, y: -29.300003}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 113, y: -49.07251}
+  m_SizeDelta: {x: 361.8391, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2107827860
 CanvasRenderer:
@@ -10199,8 +10199,8 @@ MonoBehaviour:
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5fa849894e4b2a2449e8f30d4b893a10, type: 2}
-  m_sharedMaterial: {fileID: -7827564153191684394, guid: 5fa849894e4b2a2449e8f30d4b893a10, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
+  m_sharedMaterial: {fileID: 6116459931647696423, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10260,7 +10260,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -513.97473, w: 27.162292}
+  m_margin: {x: -72.14474, y: 0, z: -91.147255, w: 67.62875}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
