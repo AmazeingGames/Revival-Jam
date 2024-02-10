@@ -161,7 +161,8 @@ public class DialogueManager : Singleton<DialogueManager>
             dialoguePortrait.sprite = actor.sprite;
 
         //Set Jitter
-        currentJitter.shouldJitter = displayMessage.shouldJitter;
+        if (currentJitter != null)
+            currentJitter.shouldJitter = displayMessage.shouldJitter;
         Debug.Log($"Set {currentJitter} jitter to {displayMessage.shouldJitter}");
 
         //Set Speed
