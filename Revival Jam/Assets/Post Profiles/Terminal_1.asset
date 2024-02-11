@@ -56,7 +56,7 @@ MonoBehaviour:
     dimension: 1
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 2.2
+    m_Value: 1
 --- !u!114 &-7857355361299317437
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -75,13 +75,13 @@ MonoBehaviour:
     m_Value: 0
   verticalJump:
     m_OverrideState: 1
-    m_Value: 0.04
+    m_Value: 0.02
   horizontalShake:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.015
   colorDrift:
     m_OverrideState: 1
-    m_Value: 0.03
+    m_Value: 0.01
 --- !u!114 &-7011558710299706105
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -159,7 +159,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.005
+    m_Value: 0
 --- !u!114 &5932969237171010068
 MonoBehaviour:
   m_ObjectHideFlags: 3
