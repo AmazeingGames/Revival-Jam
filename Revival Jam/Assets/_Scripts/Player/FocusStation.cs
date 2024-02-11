@@ -12,7 +12,7 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
     [SerializeField] Transform stationCamera;
 
     [Header("Sound FX")]
-    [SerializeField] EventSounds stationEnterSound = EventSounds.Null;
+    [SerializeField] OneShotSounds stationEnterSound = OneShotSounds.Null;
 
     VirtualScreen linkedScreen;
 

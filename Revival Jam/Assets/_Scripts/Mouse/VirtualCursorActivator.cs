@@ -77,7 +77,7 @@ public class VirtualCursorActivator : MonoBehaviour
             case ActiveState.Interaction:
                 switch (newState)
                 {
-                    //This needs to change to have this only occur when the game actually pauses; not when we enter the pause *screen*
+                    //Extra code is needed, because this checks only for when the game enters the pause *screen*, not when the game actually becomes paused
                     case MenuManager.MenuState.Pause:
                         if (!wasActiveOnPause)
                         {

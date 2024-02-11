@@ -9,8 +9,8 @@ public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     [Header("Button")]
     [SerializeField] protected bool isArcadeButton = false;
 
-    EventSounds HoverSound => isArcadeButton ? EventSounds.ArcadeUIHover : EventSounds.UIHover;
-    EventSounds ClickSound => isArcadeButton ? EventSounds.ArcadeUISelect : EventSounds.UISelect;
+    OneShotSounds HoverSound => isArcadeButton ? OneShotSounds.ArcadeUIHover : OneShotSounds.UIHover;
+    OneShotSounds ClickSound => isArcadeButton ? OneShotSounds.ArcadeUISelect : OneShotSounds.UISelect;
 
     Transform Origin => isArcadeButton ? ArcadeSoundEmitter.Transform : transform;
 

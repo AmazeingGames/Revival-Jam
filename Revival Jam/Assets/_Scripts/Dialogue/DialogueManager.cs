@@ -8,8 +8,6 @@ using static ArcadeGameManager;
 using static AudioManager;
 using static PlayerFocus;
 using TMPro.Examples;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -50,7 +48,7 @@ public class DialogueManager : Singleton<DialogueManager>
     Image dialoguePortrait;
     RectTransform dialogueBackground;
     DialogueType dialogueType;
-    EventSounds textSFX;
+    OneShotSounds textSFX;
 
     public static bool isDialogueRunning = false;
 
@@ -143,7 +141,7 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         textSFX = dialogueType switch
         {
-            _ => EventSounds.ConsoleDialogue
+            _ => OneShotSounds.ConsoleDialogue
         };
     }
 

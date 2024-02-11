@@ -309,6 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 57155831}
   - component: {fileID: 57155832}
+  - component: {fileID: 57155833}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -350,13 +351,6 @@ MonoBehaviour:
       Data3: 1294306176
       Data4: -300508654
     Path: event:/Amb/Amb_Castle
-  castleGlitchAmbience:
-    Guid:
-      Data1: 1143012046
-      Data2: 1075363930
-      Data3: 1294306176
-      Data4: -300508654
-    Path: event:/Amb/Amb_Castle
   forestAmbience:
     Guid:
       Data1: -970859097
@@ -364,13 +358,13 @@ MonoBehaviour:
       Data3: -13866850
       Data4: -45242747
     Path: event:/Amb/Amb_Forest
-  forestGlitchAmbience:
+  atticAmbience:
     Guid:
-      Data1: -970859097
-      Data2: 1211753154
-      Data3: -13866850
-      Data4: -45242747
-    Path: event:/Amb/Amb_Forest
+      Data1: -896848042
+      Data2: 1116116168
+      Data3: 1957736363
+      Data4: -1194877041
+    Path: event:/Amb/Amb_Attic
   playerJoust:
     Guid:
       Data1: 1844079503
@@ -497,6 +491,18 @@ MonoBehaviour:
       Data3: -1918120796
       Data4: -129498168
     Path: event:/Other/Console_Blip
+--- !u!114 &57155833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57155830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 008fa8244ec71ea4b9687222afd09386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &101640500
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 using static ControlsManager;
 using static PlayerFocus;
 using static AudioManager;
-using static AudioManager.EventSounds;
+using static AudioManager.OneShotSounds;
 
 [CreateAssetMenu(menuName = "States/Player/Walk")]
 public class Walk : State<CharacterController>

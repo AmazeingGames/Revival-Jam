@@ -6,7 +6,7 @@ using static GameManager;
 using static PlayerFocus;
 using static ArcadeGameManager;
 using static AudioManager;
-using static AudioManager.EventSounds;
+using static AudioManager.OneShotSounds;
 
 public class MachineAbilities : Singleton<MachineAbilities>
 {
@@ -44,7 +44,7 @@ public class MachineAbilities : Singleton<MachineAbilities>
         {
             SetMachineOn(!IsMachineOn);
             
-            EventSounds soundToPlay = IsMachineOn ? ArcadeOn : ArcadeOff;
+            OneShotSounds soundToPlay = IsMachineOn ? ArcadeOn : ArcadeOff;
 
             AudioManager.TriggerAudioClip(soundToPlay, transform);
         }
@@ -102,7 +102,7 @@ public class MachineAbilities : Singleton<MachineAbilities>
         Debug.Log("Shake Arcade");
         StartCoroutine(EnterGlitchedWorld());
 
-        TriggerAudioClip(EventSounds.ArcadeShake, ArcadeSoundEmitter.Transform);
+        TriggerAudioClip(OneShotSounds.ArcadeShake, ArcadeSoundEmitter.Transform);
     }
 
     //Yes, 'GameObject.Find' in coroutine is bad for performance, but it's hard to think of a better way with tile maps
