@@ -77,7 +77,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0.04
   horizontalShake:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.015
   colorDrift:
     m_OverrideState: 1
@@ -159,7 +159,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.0009999
 --- !u!114 &5932969237171010068
 MonoBehaviour:
   m_ObjectHideFlags: 3
