@@ -41,7 +41,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.EndGame:
                 TriggerGameEndScreen();
                 UnloadGameScenes();
-                AudioManager.TriggerAudioClip(AudioManager.EventSounds.Ending, ArcadeSoundEmitter.Transform);
+                AudioManager.TriggerAudioClip(AudioManager.OneShotSounds.Ending, ArcadeSoundEmitter.Transform);
                 break;
 
             default:

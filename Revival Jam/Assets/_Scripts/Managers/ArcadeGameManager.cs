@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static GameManager;
 
+//Job is to control the overall game flow state for the 2D platformer
 public class ArcadeGameManager : Singleton<ArcadeGameManager>
 {
     public static event Action<ArcadeState> AfterArcadeStateChange;
@@ -44,7 +45,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
                 break;
 
             //Maybe change these two to reset the level, instead of changing the arcade state
-            //This would improve performance to do to the potentially intensive tasks called whenever the level starts, that wouldn't need to be performed more than once
+            //This would improve performance because of the potentially intensive tasks called whenever the level starts, that wouldn't need to be performed when simply restarting
             //Alternatively, add a parameter to start level load
             case ArcadeState.RestartLevel:
                 UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);

@@ -6,7 +6,7 @@ using UnityEngine;
 using static ReceptacleObject;
 using static Wire;
 using static AudioManager;
-using static AudioManager.EventSounds;
+using static AudioManager.OneShotSounds;
 using FMODUnity;
 
 //Could put this in a field separate completely from the player, that the player is able to reference for their controls.
@@ -128,7 +128,7 @@ public class Player : Singleton<Player>
         return racyastHit;
     }
 
-    public EventSounds GetWalkSound()
+    public OneShotSounds GetWalkSound()
     {
         switch (LastGroundLayer)
         {

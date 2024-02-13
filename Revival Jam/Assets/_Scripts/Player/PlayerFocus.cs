@@ -8,6 +8,8 @@ using UnityEngine;
 public class PlayerFocus : Singleton<PlayerFocus>
 {
     public FocusedOn Focused { get; private set; } = FocusedOn.Nothing;
+    public FocusedOn PreviouslyFocusedOn { get; private set; } = FocusedOn.Nothing;
+
 
     public enum FocusedOn { Circuitry, Arcade, Nothing, Null, FrontView, BackView, RightView, LeftView }
 
@@ -44,6 +46,7 @@ public class PlayerFocus : Singleton<PlayerFocus>
 
     public void HandleConnectToStation(FocusStation.ConnectEventArgs connectEventArgs)
     {
+        PreviouslyFocusedOn = Focused;
         Focused = connectEventArgs.IsConnecting switch
         {
             true    => connectEventArgs.LinkedStation,

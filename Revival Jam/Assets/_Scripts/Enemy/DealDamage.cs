@@ -13,7 +13,7 @@ public abstract class DealDamage : MonoBehaviour
     [SerializeField] bool shouldDebug;
 
     [Header("Sound FX")]
-    [SerializeField] EventSounds dealDamageSound;
+    [SerializeField] OneShotSounds dealDamageSound;
 
     protected virtual void InitiateDamage(GameObject _gameObject, bool startDamage)
     {

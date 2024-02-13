@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static AudioManager;
-using static AudioManager.EventSounds;
+using static AudioManager.OneShotSounds;
 
 public abstract class Damageable : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public abstract class Damageable : MonoBehaviour
     [SerializeField] bool shouldDebug;
 
     [Header("Sound FX")]
-    [SerializeField] EventSounds takeDamageSound;
+    [SerializeField] OneShotSounds takeDamageSound;
 
     readonly Dictionary<GameObject, Coroutine> DamageCoroutine = new();
 
