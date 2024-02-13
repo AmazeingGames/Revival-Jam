@@ -26,7 +26,7 @@ public class DialogueTrigger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Interact") && isPlayerInRange)
+        if (Input.GetButtonDown("Interact") && isPlayerInRange && PlayerFocus.IsFocusedOn(PlayerFocus.FocusedOn.Arcade))
             StartDialogue();
     }
 

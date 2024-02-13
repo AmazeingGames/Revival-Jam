@@ -9,7 +9,8 @@ using static GameManager;
 public class ArcadeGameManager : Singleton<ArcadeGameManager>
 {
     public static event Action<ArcadeState> AfterArcadeStateChange;
-    public ArcadeState CurrentState { get; private set; }
+    public ArcadeState PreviousState { get; private set; } = ArcadeState.Null;
+    public ArcadeState CurrentState { get; private set; } = ArcadeState.Null;
 
     private void Update()
     {
@@ -36,6 +37,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
 
     public void UpdateArcadeState(ArcadeState newState, int levelToLoad = -1)
     {
+        PreviousState = CurrentState;
         CurrentState = newState;
 
         switch (newState)
@@ -48,7 +50,13 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
             //This would improve performance because of the potentially intensive tasks called whenever the level starts, that wouldn't need to be performed when simply restarting
             //Alternatively, add a parameter to start level load
             case ArcadeState.RestartLevel:
-                UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
+                if (PreviousState == ArcadeState.StartLevel && PlayerFocus.IsFocusedOn(PlayerFocus.FocusedOn.Arcade))
+                    UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
+                else
+                {
+                    Debug.Log("Can't restart level");
+                    CurrentState = PreviousState;
+                }
                 break;
             case ArcadeState.Lose:
                 UpdateArcadeState(ArcadeState.StartLevel, SceneLoader.Instance.LevelNumber);
@@ -69,5 +77,6 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         Lose,
         RestartLevel,
         Win,
+        Null,
     } 
 }
