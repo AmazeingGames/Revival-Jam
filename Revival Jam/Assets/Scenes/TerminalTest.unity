@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Content: {fileID: 1679618584}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 0
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -943,7 +943,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1679618585
 MonoBehaviour:
@@ -1246,6 +1246,7 @@ GameObject:
   - component: {fileID: 8352127450538410117}
   - component: {fileID: 8352127450538410120}
   - component: {fileID: 8352127450538410122}
+  - component: {fileID: 8352127450538410123}
   m_Layer: 0
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1367,3 +1368,17 @@ MonoBehaviour:
   userInputLine: {fileID: 411852649}
   scrollRect: {fileID: 1515645315}
   commandLineContainer: {fileID: 1679618584}
+  interpreter: {fileID: 8352127450538410123}
+  scrollAmount: -0.04
+--- !u!114 &8352127450538410123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8352127450538410115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491d13db4d0ee6446924857400c6c023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
