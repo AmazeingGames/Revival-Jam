@@ -123,6 +123,80 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &263075321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263075324}
+  - component: {fileID: 263075323}
+  - component: {fileID: 263075322}
+  m_Layer: 0
+  m_Name: DialogueManager (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &263075322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263075321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7b1afdfaad7e443a8eb15dea55cdb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerDialogue: {fileID: 11400000, guid: a8fbde9e20cf6c44f954dc0c9e92e15e, type: 2}
+  shakeDialogue: {fileID: 11400000, guid: 3b9bd74aee584eb4e84aad2a9899abb6, type: 2}
+  hammerDialogue: {fileID: 11400000, guid: 7e7d762637d8e5848834a4748529554f, type: 2}
+  wiresDialogue: {fileID: 11400000, guid: b33d0e7e31aec924d9fc988e71a80229, type: 2}
+  wrenchDialogue: {fileID: 11400000, guid: 67149374c3bb1c54886ce46e60ceec28, type: 2}
+  finalDialogue: {fileID: 11400000, guid: b3d73bbe29159b4478fb51b106c9f7fd, type: 2}
+--- !u!114 &263075323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263075321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf39e97430cc9d44b841994136fc655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalTextSpeed: 0.05
+  blipDelay: 0
+  terminalDialogueCanvas: {fileID: 8352127450538410119}
+  terminalDialogueBackground: {fileID: 1515645311}
+  metaDialogueBackground: {fileID: 0}
+  metaDialogueSpeech: {fileID: 0}
+  terminalGlobalSpeed: 0.008
+  skipSilentCharacters: 1
+  useSilentCharacters: 1
+  silentCharacters: 2000
+  generateNewLines: 1
+--- !u!4 &263075324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263075321}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 352.9773, y: 278.12354, z: 71.46088}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &411852649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,7 +1422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26aae43e1ae82343afc4a691e58be23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
+  dialogueKey: 0
   Icon: {fileID: 0}
 --- !u!114 &8352127450538410122
 MonoBehaviour:
@@ -1363,15 +1437,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directoryLine: {fileID: 970858829374567589, guid: d9a94284ae4887c4182d953ebcb6401f, type: 3}
-  responseLine: {fileID: 2012678035835511008, guid: ecb18723120b8a746a9dc970ece3d6c5, type: 3}
+  responseLine: {fileID: 2050767291128485279, guid: ecb18723120b8a746a9dc970ece3d6c5, type: 3}
   terminalInput: {fileID: 1614089330}
   userInputLine: {fileID: 411852649}
   scrollRect: {fileID: 1515645315}
   commandLineContainer: {fileID: 1679618584}
   interpreter: {fileID: 8352127450538410123}
   heightIncrease: 35
-  scrollType: 0
-  smoothScrollSpeed: 1000
+  scrollType: 1
+  smoothScrollSpeed: 200
 --- !u!114 &8352127450538410123
 MonoBehaviour:
   m_ObjectHideFlags: 0

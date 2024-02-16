@@ -124,7 +124,7 @@ public class AudioManager : Singleton<AudioManager>
 
     public static void TriggerAudioClip(OneShotSounds sound, Vector3 origin)
     {
-        Debug.Log($"Triggered Audio Clip: {sound}");
+        //Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == OneShotSounds.Null)
             return;

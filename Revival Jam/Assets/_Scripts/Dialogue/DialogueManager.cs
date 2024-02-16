@@ -11,18 +11,15 @@ using TMPro.Examples;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
-    public enum DialogueType { Note, Player, Meta }
+    public enum DialogueType { Terminal, Player, Meta }
 
     [SerializeField] float globalTextSpeed;
     [SerializeField] float blipDelay;
 
-    [Header("Note Dialogue")]
-    [SerializeField] Canvas noteDialogueCanvas;
-    [SerializeField] RectTransform noteDialogueBackground;
-    [SerializeField] Image noteDialoguePortrait;
-    [SerializeField] TextMeshProUGUI noteDialogueName;
-    [SerializeField] TextMeshProUGUI noteDialogueSpeech;
-    VertexJitter noteJitter;
+    [Header("Terminal Dialogue")]
+    [SerializeField] Canvas terminalDialogueCanvas;
+    [SerializeField] RectTransform terminalDialogueBackground;
+    readonly VertexJitter noteJitter;
 
     [Header("Meta Dialogue")]
     [SerializeField] RectTransform metaDialogueBackground;
@@ -30,11 +27,15 @@ public class DialogueManager : Singleton<DialogueManager>
     VertexJitter metaJitter;
 
     [Header("Text Properties")]
+    [SerializeField] float terminalGlobalSpeed;
     [SerializeField] bool skipSilentCharacters = false;
     [SerializeField] bool useSilentCharacters = false;
 
     [Header("Special Characters")]
     [SerializeField] List<char> silentCharacters;
+
+    [Header("TerminalSettins")]
+    [SerializeField] bool generateNewLines;
 
     Dialogue currentDialogue;
     List<Message> currentMessages;
@@ -68,10 +69,14 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         if (metaDialogueSpeech != null)
             metaJitter = metaDialogueSpeech.GetComponent<VertexJitter>();
-        if (noteDialogueSpeech != null)
-            noteJitter = noteDialogueSpeech.GetComponent<VertexJitter>();
 
-        noteDialogueBackground.gameObject.SetActive(false);
+        //if (noteDialogueSpeech != null)
+            //noteJitter = noteDialogueSpeech.GetComponent<VertexJitter>();
+
+        terminalDialogueBackground.gameObject.SetActive(false);
+
+        //REMOVE THIS LATER
+        terminalDialogueBackground.gameObject.SetActive(true);
     }
 
     void Update()
@@ -85,13 +90,20 @@ public class DialogueManager : Singleton<DialogueManager>
         if (!isDialogueRunning)
             return;
 
-        if (dialogueType == DialogueType.Note && !IsFocusedOn(FocusedOn.Arcade))
+        if (dialogueType == DialogueType.Terminal && !IsFocusedOn(FocusedOn.Arcade))
         {
             Debug.Log("Not focused on arcade");
             return;
         }
 
-        if (CurrentMessage.autoPlay && textFinished)
+        //Always autoplay for terminal messages
+        if (dialogueType == DialogueType.Terminal)
+        {
+            if (textFinished)
+                autoPlayMessage ??= StartCoroutine(AutoplayNextMessage(0));
+        }
+        //Check autoplay status
+        else if (CurrentMessage.autoPlay && textFinished)
             autoPlayMessage ??= StartCoroutine(AutoplayNextMessage(CurrentMessage.hangTime));
         
         if (Input.GetKeyDown(KeyCode.Space) && !CurrentMessage.autoPlay)
@@ -107,7 +119,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     IEnumerator AutoplayNextMessage(float delaySeconds)
     {
-        Debug.Log($"Started auto play. Will play next message in {delaySeconds} seconds");
+        //Debug.Log($"Started auto play. Will play next message in {delaySeconds} seconds");
 
         yield return new WaitForSeconds(delaySeconds);
 
@@ -138,7 +150,7 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueSpeech.text = string.Empty;
         StartCoroutine(DisplayMessageSlow());
 
-        Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
+        //Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
     }
 
     void SetDialougeSFX(DialogueType dialogueType)
@@ -165,12 +177,16 @@ public class DialogueManager : Singleton<DialogueManager>
         //Set Jitter
         if (currentJitter != null)
             currentJitter.shouldJitter = displayMessage.shouldJitter;
-        Debug.Log($"Set {currentJitter} jitter to {displayMessage.shouldJitter}");
+        //Debug.Log($"Set {currentJitter} jitter to {displayMessage.shouldJitter}");
 
         //Set Speed
         textSpeed = globalTextSpeed;
+
         if (displayMessage.overrideSpeed)
             textSpeed = displayMessage.newSpeed;
+
+        if (dialogueType == DialogueType.Terminal)
+            textSpeed = terminalGlobalSpeed;
     }
 
     //Displays the current line one character at a time
@@ -286,10 +302,18 @@ public class DialogueManager : Singleton<DialogueManager>
             return;
         }
 
-        if (!currentMessages[currentIndex].continuePreviousMessage)
+        if (currentDialogueType == DialogueType.Terminal && generateNewLines)
+            dialogueSpeech = TerminalManager.Instance.CreateResponseLine().responseText;
+        else if (!currentMessages[currentIndex].continuePreviousMessage && currentDialogueType != DialogueType.Terminal)
         {
+            //Creates a new line in the terminal
             Debug.Log("Did not continue message");
             dialogueSpeech.text = string.Empty;
+        }
+
+        if (currentDialogueType == DialogueType.Terminal)
+        {
+            TerminalManager.Instance.ScrollToBottom();
         }
 
         StartCoroutine(DisplayMessageSlow());
@@ -306,22 +330,24 @@ public class DialogueManager : Singleton<DialogueManager>
         if (!textFinished)
             DisplayMessageInstant(false);
 
-        noteDialogueBackground.gameObject.SetActive(false);
+        //terminalDialogueBackground.gameObject.SetActive(false);
         isDialogueRunning = false;
 
         Debug.Log("Conversation finished");
     }
 
+    //When starting a new dialogue, we need to make sure we write to the proper location
     void OpenDialogueBox(DialogueType dialogueType)
     {
         switch (dialogueType)
         {
-            case DialogueType.Note:
-                dialogueBackground = noteDialogueBackground;
-                dialogueSpeech = noteDialogueSpeech;
-                dialogueName = noteDialogueName;
-                dialoguePortrait = noteDialoguePortrait;
+            case DialogueType.Terminal:
+                dialogueBackground = terminalDialogueBackground;
                 currentJitter = noteJitter;
+                dialoguePortrait = null;
+                dialogueName = null;
+                dialogueSpeech = TerminalManager.Instance.CreateResponseLine().responseText;
+
                 break;
 
             case DialogueType.Player:
@@ -388,6 +414,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
         Debug.Log("Found arcade camera!");
 
-        noteDialogueCanvas.worldCamera = arcadeCamera.GetComponent<Camera>();
+        terminalDialogueCanvas.worldCamera = arcadeCamera.GetComponent<Camera>();
     }
 }

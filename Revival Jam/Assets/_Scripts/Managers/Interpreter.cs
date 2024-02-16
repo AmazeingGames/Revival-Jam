@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static DialogueBank;
 
 public class Interpreter : MonoBehaviour
 {
     List<string> response = new();
 
     readonly HelpCommand help = new("help");
-    readonly NoteCommand note1 = new("note1");
-    readonly NoteCommand note2 = new("note2");
-    readonly NoteCommand note3 = new("note3");
-    readonly NoteCommand noteSelection = new("note");
+    readonly NoteCommand wrenchNote = new(DialogueType.Wrench, "note1", "wrench", "jump");
+    readonly NoteCommand powerNote = new(DialogueType.Power, "note2", "power");
+    readonly NoteCommand wiresNote = new(DialogueType.Wires, "note3", "crowbar", "wires", "controls");
+    readonly NoteCommand shakeNote = new(DialogueType.Shake, "note4", "shake");
+    readonly NoteCommand hammerNote = new(DialogueType.Hammer, "note5", "hammer", "break");
+    readonly ClearCommand clearCommand = new("clear", "clear console");
+
     readonly UnknownCommand unknown = new();
 
     List<Command> commands = new();
@@ -22,11 +26,32 @@ public class Interpreter : MonoBehaviour
         commands = new List<Command>()
         {
             help,
-            note1,
-            note2,
-            note3,
-            noteSelection,
+            wrenchNote,
+            powerNote,
+            wiresNote,
+            shakeNote,
+            hammerNote,
+            clearCommand
         };
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("subscribed");
+        DialogueManager.EnterDialogue += HandleFinishDialogue;
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("unsubscribed");
+        DialogueManager.EnterDialogue -= HandleFinishDialogue;
+    }
+
+    void HandleFinishDialogue(bool isEntering)
+    {
+        //Ready Input on Note end
+        if (!isEntering)
+            TerminalManager.Instance.ReadyInput();
     }
 
     //Finds and executes the matching command
@@ -50,19 +75,31 @@ public class Interpreter : MonoBehaviour
     {
         public override void Execute()
         {
-            throw new System.NotImplementedException();
+            TerminalManager.Instance.ReadyInput();
         }
+    }
 
-        public override List<string> GetResponse()
+    //Disables all instantiated lines in the terminal screen
+    //To Do: Return all these objects to an object pool
+    class ClearCommand : Command
+    {
+        public ClearCommand(params string[] commandKeys) : base  (commandKeys) { }
+
+        public override void Execute()
         {
-            var response = new List<string>
-            {
-                "I have no clue what you are saying, like literally no clue.",
-                "Get some help. Seriously: 'help'."
-            };
+            List<GameObject> linesToClear = TerminalManager.Instance.ResponseLines
+                                        .Select(l => l.gameObject)
+                                        .ToList();
 
-            return response;
+            linesToClear.AddRange(TerminalManager.Instance.MimicLines);
+
+            foreach (var line in linesToClear)
+                line.SetActive(false);
+
+            TerminalManager.Instance.SetCommandLineSize(TerminalManager.CommandLineSet.Reset);
+            TerminalManager.Instance.ReadyInput();
         }
+
     }
 
     class HelpCommand : Command
@@ -71,39 +108,24 @@ public class Interpreter : MonoBehaviour
 
         override public void Execute()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override List<string> GetResponse()
-        {
-            var response = new List<string>
-            {
-                "If you need help, you should see a doctor.",
-                "Alternatively, a therapist can work wonders."
-            };
-
-            return response;
+            TerminalManager.Instance.ReadyInput();
         }
     }
 
     class NoteCommand : Command
     {
-        public NoteCommand(params string[] commandKeys) : base(commandKeys) { }
+        readonly DialogueType dialogueToPlay;
+        public NoteCommand(DialogueType dialogueToPlay, params string[] commandKeys) : base(commandKeys) 
+        {
+            
+            this.dialogueToPlay = dialogueToPlay;
+        }
 
         override public void Execute() 
         {
-            throw new System.NotImplementedException(); 
-        }
-
-        public override List<string> GetResponse()
-        {
-            var response = new List<string>
-            {
-                "This is the first line of the note.",
-                "This is the second line of the note."
-            };
-
-            return response;
+            TerminalManager.Instance.DisableInput();
+            TerminalManager.Instance.ScrollToBottom();
+            DialogueManager.Instance.StartDialogue(dialogueToPlay);
         }
     }
 
@@ -118,8 +140,6 @@ public class Interpreter : MonoBehaviour
         }
 
         public abstract void Execute();
-
-        public abstract List<string> GetResponse();
 
         public bool DoesCallMatch(string key)
         {

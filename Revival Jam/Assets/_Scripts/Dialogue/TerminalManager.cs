@@ -8,7 +8,7 @@ public class TerminalManager : Singleton<TerminalManager>
 {
     [Header("Instantiating")]
     [SerializeField] GameObject directoryLine;
-    [SerializeField] GameObject responseLine;
+    [SerializeField] ResponseLine responseLine;
 
     [Header("Terminal Display")]
     [SerializeField] TMP_InputField terminalInput;
@@ -28,6 +28,22 @@ public class TerminalManager : Singleton<TerminalManager>
 
     List<string> previousInput;
 
+    public enum CommandLineSet { Set, Add, Reset, Subtract }
+
+    //Create a pool of response lines later
+    public IList<ResponseLine> ResponseLines { get => responseLines.AsReadOnly(); }
+    readonly List<ResponseLine> responseLines = new();
+
+    //Create a pool of mimic lines later
+    public IList<GameObject> MimicLines { get => mimicLines.AsReadOnly(); }
+    readonly List<GameObject> mimicLines = new();
+    Vector2 startingContainerSize;
+
+    private void Start()
+    {
+        startingContainerSize = commandLineContainer.sizeDelta;
+    }
+
     private void OnGUI()
     {
         if (terminalInput.isFocused && terminalInput.text != "" && Input.GetKeyDown(KeyCode.Return))
@@ -36,53 +52,99 @@ public class TerminalManager : Singleton<TerminalManager>
 
             terminalInput.text = "";
 
-            Vector2 commandLineContainerSize = commandLineContainer.sizeDelta;
+            SetCommandLineSize(CommandLineSet.Add, heightIncrease);
 
-            commandLineContainer.sizeDelta = new Vector2(commandLineContainerSize.x, commandLineContainerSize.y + heightIncrease);
+            MimicInput(userInput);
 
-            GameObject message = Instantiate(directoryLine, commandLineContainer);
-            message.transform.SetSiblingIndex(commandLineContainer.transform.childCount - 1);
-            message.GetComponentInChildren<TMP_Text>().text = userInput;
-
-            int lines = DisplayInterpretation(interpreter.Interpret(userInput));
-            ScrollToBottom(lines);
-
-            userInputLine.transform.SetAsLastSibling();
-
-            terminalInput.ActivateInputField();
-            terminalInput.Select();
+            //Run the user's found command
+            interpreter.Interpret(userInput).Execute();
         }
     }
 
-    int DisplayInterpretation(Interpreter.Command interpretedCommand)
+    //Creates and accommodates for a new line of text
+    public ResponseLine CreateResponseLine()
     {
-        for (int i = 0; i < interpretedCommand.GetResponse().Count; i++)
-        {
-            GameObject response = Instantiate(responseLine, commandLineContainer);
+        //Create line
+        ResponseLine response = Instantiate(responseLine, commandLineContainer);
+        response.transform.SetAsLastSibling();
 
-            response.transform.SetAsLastSibling();
+        //Accommodates to fit new line
+        SetCommandLineSize(CommandLineSet.Add, heightIncrease);
 
-            Vector2 listSize = commandLineContainer.sizeDelta;
-            commandLineContainer.sizeDelta = new Vector2(listSize.x, listSize.y + heightIncrease);
-
-            response.GetComponentInChildren<TMP_Text>().text = interpretedCommand.GetResponse()[i];
-        }
-        
-        return interpretedCommand.GetResponse().Count;
+        responseLines.Add(response);
+        return response;
     }
 
-    void ScrollToBottom(int lines)
+    //Creates a copy of the givent text in the terminal
+    void MimicInput(string userInput)
     {
-        if (lines > 4)
+        GameObject message = Instantiate(directoryLine, commandLineContainer);
+        message.transform.SetSiblingIndex(commandLineContainer.transform.childCount - 1);
+        message.GetComponentInChildren<TMP_Text>().text = userInput;
+
+        mimicLines.Add(message);
+    }
+
+    //Stops the user from writing any responses
+    public void DisableInput()
+    {
+        terminalInput.gameObject.SetActive(false);
+    }
+
+    public void SetCommandLineSize(CommandLineSet setSettings, float newYSize = 0)
+    {
+        Debug.Log($"Set command line size : {setSettings} : {newYSize}");
+        switch (setSettings)
         {
-            scrollRect.velocity = new Vector2(0, 450);
+            case CommandLineSet.Set:
+                commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, newYSize);
+                break;
+            case CommandLineSet.Add:
+                commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, newYSize + commandLineContainer.sizeDelta.y);
+                break;
+            case CommandLineSet.Reset:
+                commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, startingContainerSize.y);
+                break;
+            case CommandLineSet.Subtract:
+                commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, Mathf.Abs(newYSize - commandLineContainer.sizeDelta.y));
+                break;
         }
-        else
+    }
+
+    //Positions the input at the bottom and readies the user to write a new command
+
+    public void ReadyInput(bool scrollToBottom = true)
+    {
+        terminalInput.gameObject.SetActive(true);
+
+        userInputLine.transform.SetAsLastSibling();
+        terminalInput.ActivateInputField();
+        terminalInput.Select();
+
+        Debug.Log("Readied Input");
+
+        if (scrollToBottom)
         {
-            if (scrollType == ScrollType.JumpTo)
+            ScrollToBottom();
+        }
+    }
+
+    public void ScrollToBottom()
+    {
+        scrollRect.velocity = new Vector2(0, smoothScrollSpeed);
+        Debug.Log("Scrolled to bottom!");
+
+        /*
+        switch (scrollType)
+        {
+            case ScrollType.JumpTo:
                 scrollRect.verticalNormalizedPosition = 0;
-            else if (scrollType == ScrollType.SmoothScroll)
+                break;
+
+            case ScrollType.SmoothScroll:
                 scrollRect.velocity = new Vector2(0, smoothScrollSpeed);
+                break;
         }
+        */
     }
 }

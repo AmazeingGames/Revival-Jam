@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2012678035835510812}
   - component: {fileID: 2012678035835510815}
   - component: {fileID: 2012678035835510814}
+  - component: {fileID: 2050767291128485279}
   m_Layer: 0
   m_Name: ResponseLine
   m_TagString: Untagged
@@ -104,6 +105,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2050767291128485279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012678035835511008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e0e294e00f4564699501df6a80685f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  responseText: {fileID: 2012678036389206054}
 --- !u!1 &2012678036389206056
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,10 +184,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Terminal Response
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
-  m_sharedMaterial: {fileID: 6116459931647696423, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cf408165c7de61343b2b5159c75b544a, type: 2}
+  m_sharedMaterial: {fileID: 7252347734040159322, guid: cf408165c7de61343b2b5159c75b544a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -205,7 +219,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -213,7 +227,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
