@@ -40,6 +40,7 @@ public class DialogueManager : Singleton<DialogueManager>
     List<Message> currentMessages;
     List<Actor> currentActors;
     int currentIndex = 0;
+    DialogueType currentDialogueType;
     Message CurrentMessage => currentMessages[currentIndex];
 
     VertexJitter currentJitter;
@@ -115,10 +116,12 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     //Opens the dialogue slot and prepares for the first line of a dialogue
-    public void StartDialogue(Dialogue dialogue, DialogueType type = DialogueType.Note)
+    public void StartDialogue(DialogueBank.DialogueType dialogueKey)
     {
         if (isDialogueRunning)
             return;
+
+        Dialogue dialogue = DialogueBank.Instance.DialogueDataByType[dialogueKey];
 
         EnterDialogue?.Invoke(true);
 
@@ -126,10 +129,11 @@ public class DialogueManager : Singleton<DialogueManager>
         currentActors = dialogue.Actors;
         currentMessages = dialogue.Messages;
         currentIndex = 0;
+        currentDialogueType = dialogue.DialogueType;
 
         isDialogueRunning = true;
-        OpenDialogueBox(type);
-        SetDialougeSFX(type);
+        OpenDialogueBox(currentDialogueType);
+        SetDialougeSFX(currentDialogueType);
 
         dialogueSpeech.text = string.Empty;
         StartCoroutine(DisplayMessageSlow());

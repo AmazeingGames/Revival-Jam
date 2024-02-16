@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26aae43e1ae82343afc4a691e58be23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
+  dialogueKey: 0
   Icon: {fileID: 0}
 --- !u!114 &145791903
 MonoBehaviour:
@@ -1728,7 +1728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26aae43e1ae82343afc4a691e58be23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
+  dialogueKey: 0
   Icon: {fileID: 0}
 --- !u!114 &199956996
 MonoBehaviour:
@@ -6796,6 +6796,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1210245295}
   - component: {fileID: 1210245296}
+  - component: {fileID: 1210245297}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -6842,6 +6843,24 @@ MonoBehaviour:
   skipSilentCharacters: 1
   useSilentCharacters: 1
   silentCharacters: 2000
+--- !u!114 &1210245297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210245294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7b1afdfaad7e443a8eb15dea55cdb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerDialogue: {fileID: 11400000, guid: a8fbde9e20cf6c44f954dc0c9e92e15e, type: 2}
+  shakeDialogue: {fileID: 11400000, guid: 3b9bd74aee584eb4e84aad2a9899abb6, type: 2}
+  hammerDialogue: {fileID: 11400000, guid: 7e7d762637d8e5848834a4748529554f, type: 2}
+  wiresDialogue: {fileID: 11400000, guid: b33d0e7e31aec924d9fc988e71a80229, type: 2}
+  wrenchDialogue: {fileID: 11400000, guid: 67149374c3bb1c54886ce46e60ceec28, type: 2}
+  finalDialogue: {fileID: 11400000, guid: b3d73bbe29159b4478fb51b106c9f7fd, type: 2}
 --- !u!224 &1224179819 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6905534592346919665, guid: 1e3f3be9476d52f49a06189d56f44b42, type: 3}

@@ -9,7 +9,10 @@ public class Interpreter : MonoBehaviour
     List<string> response = new();
 
     readonly HelpCommand help = new("help");
-    readonly NoteCommand note = new("note");
+    readonly NoteCommand note1 = new("note1");
+    readonly NoteCommand note2 = new("note2");
+    readonly NoteCommand note3 = new("note3");
+    readonly NoteCommand noteSelection = new("note");
     readonly UnknownCommand unknown = new();
 
     List<Command> commands = new();
@@ -19,7 +22,10 @@ public class Interpreter : MonoBehaviour
         commands = new List<Command>()
         {
             help,
-            note,
+            note1,
+            note2,
+            note3,
+            noteSelection,
         };
     }
 

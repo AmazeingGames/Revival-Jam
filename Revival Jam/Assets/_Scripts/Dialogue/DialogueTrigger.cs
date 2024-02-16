@@ -8,7 +8,7 @@ public class DialogueTrigger : MonoBehaviour
 {
     //Probably Change this to accept a scriptable object instead
     [Header("Dialogue")]
-    [SerializeField] Dialogue dialogue;
+    [SerializeField] DialogueBank.DialogueType dialogueKey;
 
     [Header("Prompt")]
     [SerializeField] GameObject Icon;
@@ -21,7 +21,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue()
     {
-        DialogueManager.Instance.StartDialogue(dialogue);
+        DialogueManager.Instance.StartDialogue(dialogueKey);
     }
 
     void Update()

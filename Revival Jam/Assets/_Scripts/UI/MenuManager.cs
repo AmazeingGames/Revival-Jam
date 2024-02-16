@@ -180,7 +180,7 @@ public class MenuManager : Singleton<MenuManager>
     IEnumerator PlayCredits()
     {
         yield return new WaitForSeconds(timeUntilCredits);
-        DialogueManager.Instance.StartDialogue(finalDialogue, DialogueManager.DialogueType.Meta);
+        DialogueManager.Instance.StartDialogue(DialogueBank.DialogueType.Final);
     }
 
     void SetMenuCamera(bool setActive)
