@@ -18,7 +18,13 @@ public class TerminalManager : Singleton<TerminalManager>
 
     [Header("Terminal")]
     [SerializeField] Interpreter interpreter;
-    [SerializeField] float scrollAmount;
+    [SerializeField] float heightIncrease = 35f;
+
+    [Header("Display Settings")]
+    [SerializeField] ScrollType scrollType;
+    [SerializeField] float smoothScrollSpeed;
+
+    enum ScrollType { JumpTo, SmoothScroll }
 
     List<string> previousInput;
 
@@ -32,7 +38,7 @@ public class TerminalManager : Singleton<TerminalManager>
 
             Vector2 commandLineContainerSize = commandLineContainer.sizeDelta;
 
-            commandLineContainer.sizeDelta = new Vector2(commandLineContainerSize.x, commandLineContainerSize.y + 35f);
+            commandLineContainer.sizeDelta = new Vector2(commandLineContainerSize.x, commandLineContainerSize.y + heightIncrease);
 
             GameObject message = Instantiate(directoryLine, commandLineContainer);
             message.transform.SetSiblingIndex(commandLineContainer.transform.childCount - 1);
@@ -57,7 +63,7 @@ public class TerminalManager : Singleton<TerminalManager>
             response.transform.SetAsLastSibling();
 
             Vector2 listSize = commandLineContainer.sizeDelta;
-            commandLineContainer.sizeDelta = new Vector2(listSize.x, listSize.y + 35);
+            commandLineContainer.sizeDelta = new Vector2(listSize.x, listSize.y + heightIncrease);
 
             response.GetComponentInChildren<TMP_Text>().text = interpretedCommand.GetResponse()[i];
         }
@@ -73,7 +79,10 @@ public class TerminalManager : Singleton<TerminalManager>
         }
         else
         {
-            scrollRect.verticalNormalizedPosition = 0 + scrollAmount;
+            if (scrollType == ScrollType.JumpTo)
+                scrollRect.verticalNormalizedPosition = 0;
+            else if (scrollType == ScrollType.SmoothScroll)
+                scrollRect.velocity = new Vector2(0, smoothScrollSpeed);
         }
     }
 }

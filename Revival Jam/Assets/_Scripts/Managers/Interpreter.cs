@@ -34,10 +34,8 @@ public class Interpreter : MonoBehaviour
         {
             var command = commands[i];
 
-            if (DoesKeyMatch(userInput, command))
-            {
+            if (command.DoesCallMatch(userInput))
                 return command;
-            }
         }
         return unknown;
     }
@@ -105,30 +103,30 @@ public class Interpreter : MonoBehaviour
 
     public abstract class Command
     {
-        public IList<string> CommandKeys { get => commandKeys.AsReadOnlyList(); }
-        readonly List<string> commandKeys;
+        //public IList<string> CommandKeys { get => commandKeys.AsReadOnlyList(); }
+        readonly List<string> commandCall;
 
         public Command(params string[] commandKeys) 
         {
-            this.commandKeys = commandKeys.ToList();    
+            this.commandCall = commandKeys.ToList();    
         }
 
         public abstract void Execute();
 
         public abstract List<string> GetResponse();
-    }
 
-    bool DoesKeyMatch(string key, Command command)
-    {
-        string keyLower = key.ToLower();
-
-        for (int i = 0; i < command.CommandKeys.Count; i++)
+        public bool DoesCallMatch(string key)
         {
-            var currentLower = command.CommandKeys[i].ToLower();
+            string keyLower = key.ToLower();
 
-            if (currentLower == keyLower)
-                return true;
+            for (int i = 0; i < commandCall.Count; i++)
+            {
+                var currentLower = commandCall[i].ToLower();
+
+                if (currentLower == keyLower)
+                    return true;
+            }
+            return false;
         }
-        return false;
     }
 }
