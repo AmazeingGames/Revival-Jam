@@ -35,25 +35,6 @@ public class Interpreter : MonoBehaviour
         };
     }
 
-    private void OnEnable()
-    {
-        Debug.Log("subscribed");
-        DialogueManager.EnterDialogue += HandleFinishDialogue;
-    }
-
-    private void OnDisable()
-    {
-        Debug.Log("unsubscribed");
-        DialogueManager.EnterDialogue -= HandleFinishDialogue;
-    }
-
-    void HandleFinishDialogue(bool isEntering)
-    {
-        //Ready Input on Note end
-        if (!isEntering)
-            TerminalManager.Instance.ReadyInput();
-    }
-
     //Finds and executes the matching command
     public Command Interpret(string userInput)
     {

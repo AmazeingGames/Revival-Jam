@@ -9,6 +9,7 @@ public class TerminalManager : Singleton<TerminalManager>
     [Header("Instantiating")]
     [SerializeField] GameObject directoryLine;
     [SerializeField] ResponseLine responseLine;
+    [SerializeField] GameObject userInputLinePrefab;
 
     [Header("Terminal Display")]
     [SerializeField] TMP_InputField terminalInput;
@@ -44,6 +45,54 @@ public class TerminalManager : Singleton<TerminalManager>
         startingContainerSize = commandLineContainer.sizeDelta;
     }
 
+    private void OnEnable()
+    {
+        Debug.Log("subscribed");
+        DialogueManager.EnterDialogue += HandleFinishDialogue;
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("unsubscribed");
+        DialogueManager.EnterDialogue -= HandleFinishDialogue;
+    }
+
+    void HandleFinishDialogue(bool isEntering)
+    {
+        //Ready Input on Note end
+        if (!isEntering)
+            ReadyInput();
+    }
+
+    private void Update()
+    {
+#if DEBUG
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                ReadyInput();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                ReadyInput(false);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                DisableInput();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+
+            }
+        }
+#endif
+    }
+
     private void OnGUI()
     {
         if (terminalInput.isFocused && terminalInput.text != "" && Input.GetKeyDown(KeyCode.Return))
@@ -61,18 +110,20 @@ public class TerminalManager : Singleton<TerminalManager>
         }
     }
 
-    //Creates and accommodates for a new line of text
+    //Creates, and accommodates for, a new line of text
     public ResponseLine CreateResponseLine()
     {
+        Debug.Log("Created response line");
+
         //Create line
-        ResponseLine response = Instantiate(responseLine, commandLineContainer);
-        response.transform.SetAsLastSibling();
+        ResponseLine responseLn = Instantiate(responseLine, commandLineContainer);
+        responseLn.transform.SetAsLastSibling();
 
         //Accommodates to fit new line
         SetCommandLineSize(CommandLineSet.Add, heightIncrease);
 
-        responseLines.Add(response);
-        return response;
+        responseLines.Add(responseLn);
+        return responseLn;
     }
 
     //Creates a copy of the givent text in the terminal
@@ -83,12 +134,6 @@ public class TerminalManager : Singleton<TerminalManager>
         message.GetComponentInChildren<TMP_Text>().text = userInput;
 
         mimicLines.Add(message);
-    }
-
-    //Stops the user from writing any responses
-    public void DisableInput()
-    {
-        terminalInput.gameObject.SetActive(false);
     }
 
     public void SetCommandLineSize(CommandLineSet setSettings, float newYSize = 0)
@@ -129,22 +174,15 @@ public class TerminalManager : Singleton<TerminalManager>
         }
     }
 
+    //Stops the user from writing any responses
+    public void DisableInput()
+    {
+        terminalInput.gameObject.SetActive(false);
+    }
+
     public void ScrollToBottom()
     {
         scrollRect.velocity = new Vector2(0, smoothScrollSpeed);
         Debug.Log("Scrolled to bottom!");
-
-        /*
-        switch (scrollType)
-        {
-            case ScrollType.JumpTo:
-                scrollRect.verticalNormalizedPosition = 0;
-                break;
-
-            case ScrollType.SmoothScroll:
-                scrollRect.velocity = new Vector2(0, smoothScrollSpeed);
-                break;
-        }
-        */
     }
 }

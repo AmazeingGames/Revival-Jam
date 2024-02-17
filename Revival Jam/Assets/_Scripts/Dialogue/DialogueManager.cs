@@ -294,6 +294,13 @@ public class DialogueManager : Singleton<DialogueManager>
     //Starts the next line of the current dialogue, and exits if there are none left
     void NextMessage()
     {
+        Debug.Log($"Line {currentIndex} has {dialogueSpeech.textInfo.lineCount} lines");
+        int numOfLines = dialogueSpeech.textInfo.lineCount;
+        for (int i = 1; i < numOfLines; i++)
+        {
+            TerminalManager.Instance.CreateResponseLine();
+        }
+
         currentIndex++;
 
         if (currentIndex >= currentMessages.Count)
