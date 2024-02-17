@@ -86,8 +86,8 @@ namespace TMPro.Examples
 
             while (true)
             {
-                Debug.Log("Jitter Check");
-                    Debug.Log("SHOULD JITTER");
+                //Debug.Log("Jitter Check");
+                //Debug.Log("SHOULD JITTER");
                     // Get new copy of vertex data if the text has changed.
                     if (hasTextChanged)
                     {

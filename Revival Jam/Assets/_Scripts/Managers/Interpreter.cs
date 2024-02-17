@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static DialogueBank;
 
-public class Interpreter : MonoBehaviour
+public class Interpreter : Singleton<Interpreter>
 {
     List<string> response = new();
 

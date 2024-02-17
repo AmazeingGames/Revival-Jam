@@ -18,7 +18,6 @@ public class TerminalManager : Singleton<TerminalManager>
     [SerializeField] RectTransform commandLineContainer;
 
     [Header("Terminal")]
-    [SerializeField] Interpreter interpreter;
     [SerializeField] float heightIncrease = 35f;
 
     [Header("Display Settings")]
@@ -106,7 +105,7 @@ public class TerminalManager : Singleton<TerminalManager>
             MimicInput(userInput);
 
             //Run the user's found command
-            interpreter.Interpret(userInput).Execute();
+            Interpreter.Instance.Interpret(userInput).Execute();
         }
     }
 
