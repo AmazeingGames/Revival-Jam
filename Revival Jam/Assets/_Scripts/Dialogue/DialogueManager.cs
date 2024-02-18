@@ -56,7 +56,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     bool textFinished = false;
 
-    public static event Action<bool> EnterDialogue;
+    public static EventHandler<DialogueEventArgs> RaiseDialogue;
 
     float blipTimer;
 
@@ -113,8 +113,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     IEnumerator AutoplayNextMessage(float delaySeconds)
     {
-        //Debug.Log($"Started auto play. Will play next message in {delaySeconds} seconds");
-
         yield return new WaitForSeconds(delaySeconds);
 
         autoPlayMessage = null;
@@ -136,7 +134,7 @@ public class DialogueManager : Singleton<DialogueManager>
         if (isDialogueRunning)
             return;
 
-        EnterDialogue?.Invoke(true);
+        RaiseDialogue?.Invoke(this, new DialogueEventArgs(DialogueEventArgs.DialogueState.Entering, dialogue, false));
 
         currentDialogue = dialogue;
         currentActors = dialogue.Actors;
@@ -334,18 +332,13 @@ public class DialogueManager : Singleton<DialogueManager>
     //Finishes the dialogue and informs listeners dialogue has ended
     void ExitDialogue(bool grantAbility = true)
     {
-        EnterDialogue?.Invoke(false);
-
-        if (grantAbility && (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None))
-            ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
+        RaiseDialogue?.Invoke(this, new DialogueEventArgs(DialogueEventArgs.DialogueState.Exiting, currentDialogue, grantAbility));
 
         if (!textFinished)
             DisplayMessageInstant(false);
 
         //terminalDialogueBackground.gameObject.SetActive(false);
         isDialogueRunning = false;
-
-        //Debug.Log("Conversation finished");
     }
 
     //When starting a new dialogue, we need to make sure we write to the proper location
@@ -392,11 +385,6 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         switch (arcadeState)
         {
-            case ArcadeState.StartLevel:
-                Debug.Log("Started search for camera");
-                StartCoroutine(FindCamera());
-                break;
-
             case ArcadeState.Lose:
             case ArcadeState.RestartLevel:
                 if (isDialogueRunning)
@@ -405,26 +393,20 @@ public class DialogueManager : Singleton<DialogueManager>
         }
     }
 
-    //Yes; 'find' in coroutine is bad for performance, but I dumb
-    IEnumerator FindCamera()
+    public class DialogueEventArgs : EventArgs
     {
-        while (Player.Instance == null)
+        public enum DialogueState { Entering, Exiting }
+
+        public readonly DialogueState dialogueState;
+        public readonly Dialogue dialogue;
+        public readonly bool shouldGrantAbility;
+
+        public DialogueEventArgs(DialogueState dialogueState, Dialogue dialogue, bool shouldGrantAbility)
         {
-            Debug.Log("Player is null");
-            yield return null;
+            this.dialogue = dialogue;
+            this.dialogueState = dialogueState;
+            this.shouldGrantAbility = shouldGrantAbility;
         }
-
-        GameObject arcadeCamera = null;
-
-        while (arcadeCamera == null)
-        {
-            yield return null;
-
-            arcadeCamera = GameObject.Find("Arcade Camera");
-        }
-
-        Debug.Log("Found arcade camera!");
-
-        terminalDialogueCanvas.worldCamera = arcadeCamera.GetComponent<Camera>();
     }
+
 }

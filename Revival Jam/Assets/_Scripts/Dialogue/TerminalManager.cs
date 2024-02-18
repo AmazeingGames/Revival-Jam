@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static DialogueManager;
+using static DialogueManager.DialogueEventArgs;
 
 public class TerminalManager : Singleton<TerminalManager>
 {
@@ -46,19 +48,19 @@ public class TerminalManager : Singleton<TerminalManager>
 
     private void OnEnable()
     {   
-        DialogueManager.EnterDialogue += HandleFinishDialogue;
+        DialogueManager.RaiseDialogue += HandleFinishDialogue;
     }
 
     private void OnDisable()
     {
-        DialogueManager.EnterDialogue -= HandleFinishDialogue;
+        DialogueManager.RaiseDialogue -= HandleFinishDialogue;
     }
 
+    //This should be in its own class
     private void Update()
     {
         Switch();
     }
-
     void Switch()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -67,10 +69,10 @@ public class TerminalManager : Singleton<TerminalManager>
         }
     }
 
-    void HandleFinishDialogue(bool isEntering)
+    void HandleFinishDialogue(object sender, DialogueEventArgs dialogueEventArgs)
     {
         //Ready Input on Note end
-        if (!isEntering)
+        if (dialogueEventArgs.dialogueState == DialogueState.Exiting)
             ReadyInput();
     }
 

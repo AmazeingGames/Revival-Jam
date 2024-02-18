@@ -11,15 +11,33 @@ public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
 {
     public static event Action<ItemsAndAbilities> AbilityGain;
 
-    public enum ItemsAndAbilities { None, Shake, Power, Crowbar, Hammer, Screwdriver, Wrench }
+    public enum ItemsAndAbilities { None, Shake, Power, Crowbar, Hammer, Screwdriver, Wrench, EnterTerminal }
 
     readonly List<ItemsAndAbilities> learnedAbilities = new();
 
-    //public List<ItemsAndAbilities> GetLearnedAbilities() => learnedAbilities.AsReadOnly().ToList();
+    private void OnEnable()
+    {
+        DialogueManager.RaiseDialogue += HandleDialogue;
+    }
+
+    private void OnDisable()
+    {
+        DialogueManager.RaiseDialogue -= HandleDialogue;
+    }
+
+    void HandleDialogue(object sender, DialogueManager.DialogueEventArgs dialogueEventArgs)
+    {
+        if (!dialogueEventArgs.shouldGrantAbility)
+            return;
+
+        if (dialogueEventArgs.dialogue.NewItemOrAbility == ItemsAndAbilities.None)
+            return;
+
+        GainAbilityInformation(dialogueEventArgs.dialogue.NewItemOrAbility);
+    }
 
     public void GainAbilityInformation(ItemsAndAbilities ability)
     {
-        //learnedAbilities.Add(ability);
         if (learnedAbilities.Contains(ability))
             return;
 

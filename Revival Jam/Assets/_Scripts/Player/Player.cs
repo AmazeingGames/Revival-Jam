@@ -45,12 +45,12 @@ public class Player : Singleton<Player>
 
     private void OnEnable()
     {
-        DialogueManager.EnterDialogue += HandleDialogue;
+        DialogueManager.RaiseDialogue += HandleDialogue;
     }
 
     private void OnDisable()
     {
-        DialogueManager.EnterDialogue -= HandleDialogue;
+        DialogueManager.RaiseDialogue -= HandleDialogue;
     }
 
     void HandleDialogue(bool enteringDialogue)

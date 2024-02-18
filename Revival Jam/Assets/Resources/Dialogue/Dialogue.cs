@@ -12,7 +12,7 @@ public class Dialogue : ScriptableObject
     [field: SerializeField] public List<Actor> Actors { get; private set; }
 
     [field: Header("Ability")]
-    [field: SerializeField] public ItemAndAbilityManager.ItemsAndAbilities NewInformation = ItemAndAbilityManager.ItemsAndAbilities.None;
+    [field: SerializeField] public ItemAndAbilityManager.ItemsAndAbilities NewItemOrAbility = ItemAndAbilityManager.ItemsAndAbilities.None;
 
     void Init(string message, DialogueManager.DialogueType dialogueType = DialogueManager.DialogueType.Terminal)
     {

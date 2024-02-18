@@ -87,6 +87,14 @@ public class Interpreter : Singleton<Interpreter>
         public HelpCommand(params string[] commandKeys) : base("Press | TAB | to switch between views", commandKeys) { }
     }
 
+    class CommandCommand : WriteCommand
+    {
+        public CommandCommand(params string[] commandKeys) : base("Write all commands", commandKeys)
+        {
+
+        }
+    }
+
     class NoteCommand : WriteCommand
     {
         readonly DialogueType dialogueToPlay;

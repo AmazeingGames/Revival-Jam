@@ -20,6 +20,9 @@ public class MachineAbilities : Singleton<MachineAbilities>
 
     bool canShakeMachine = false;
     bool canPowerMachine = false;
+    bool canEnterTerminal = false;
+
+    Dictionary<ItemAndAbilityManager.ItemsAndAbilities, bool> canUseAbilityByType;
 
     public bool IsMachineOn { get; private set; } = false;
 
@@ -35,6 +38,16 @@ public class MachineAbilities : Singleton<MachineAbilities>
         ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
     }
 
+    private void Start()
+    {
+        canUseAbilityByType = new()
+        {
+            { ItemAndAbilityManager.ItemsAndAbilities.EnterTerminal, canEnterTerminal },
+            { ItemAndAbilityManager.ItemsAndAbilities.Power, canPowerMachine },
+            { ItemAndAbilityManager.ItemsAndAbilities.Shake, canShakeMachine },
+        };
+    }
+
     private void Update()
     {
         if (PlayerFocus.Instance.Focused != FocusedOn.Arcade)
@@ -46,7 +59,7 @@ public class MachineAbilities : Singleton<MachineAbilities>
             
             OneShotSounds soundToPlay = IsMachineOn ? ArcadeOn : ArcadeOff;
 
-            AudioManager.TriggerAudioClip(soundToPlay, transform);
+            TriggerAudioClip(soundToPlay, transform);
         }
         
         //Perhaps check if we have already shaked the machine in the last 10 seconds
@@ -69,31 +82,10 @@ public class MachineAbilities : Singleton<MachineAbilities>
 
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities newAbility)
     {
-        switch (newAbility)
+        if (canUseAbilityByType.TryGetValue(newAbility, out bool _))
         {
-            case ItemAndAbilityManager.ItemsAndAbilities.Shake:
-                Debug.Log("Learned Ability: Shake Machine");
-                canShakeMachine = true;
-                break;
-
-            case ItemAndAbilityManager.ItemsAndAbilities.Power:
-                canPowerMachine = true;
-                Debug.Log("Learned Ability: Power Machine");
-                break;
-
-            case ItemAndAbilityManager.ItemsAndAbilities.Screwdriver:
-                break;
-
-            
-            case ItemAndAbilityManager.ItemsAndAbilities.Crowbar:
-                
-                break;
-
-            case ItemAndAbilityManager.ItemsAndAbilities.Hammer:
-                break;
-
-            case ItemAndAbilityManager.ItemsAndAbilities.Wrench:
-                break;
+            canUseAbilityByType[newAbility] = true;
+            Debug.Log($"Learned Ability: {newAbility}");
         }
     }
 
