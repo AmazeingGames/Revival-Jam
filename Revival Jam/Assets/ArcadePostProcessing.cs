@@ -26,12 +26,12 @@ public class ArcadePostProcessing : MonoBehaviour
             LevelPostProcessing.gameObject.SetActive(true);
     }
 
-    //true -> open dialogue
-    //false -> close dialogue
-    //Responsible for deciding which post processing to use, since we want to use different processes for the terminal and the level
-    void HandleEnterDialogue(bool dialogueOpen)
+    //Responsible for deciding which post processing to use, either the terminal or arcade processing
+    void HandleEnterDialogue(object sender, DialogueManager.DialogueEventArgs dialogueEventArgs)
     {
-        TerminalPostProcessing.gameObject.SetActive(dialogueOpen);
-        LevelPostProcessing.gameObject.SetActive(!dialogueOpen);
+        bool isOpeningDialogue = dialogueEventArgs.dialogueState == DialogueManager.DialogueEventArgs.DialogueState.Entering;
+
+        TerminalPostProcessing.gameObject.SetActive(isOpeningDialogue);
+        LevelPostProcessing.gameObject.SetActive(!isOpeningDialogue);
     }
 }

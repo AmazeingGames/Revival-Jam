@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 970858829374567608}
   - component: {fileID: 970858829374567611}
   m_Layer: 0
-  m_Name: PlayerInputCopy
+  m_Name: LineMimic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,8 +172,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: This was the player input
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
-  m_sharedMaterial: {fileID: 6116459931647696423, guid: d673b12f72a37e64e884e4c78973ea8b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cf408165c7de61343b2b5159c75b544a, type: 2}
+  m_sharedMaterial: {fileID: 7252347734040159322, guid: cf408165c7de61343b2b5159c75b544a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

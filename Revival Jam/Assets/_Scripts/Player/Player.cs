@@ -53,16 +53,12 @@ public class Player : Singleton<Player>
         DialogueManager.RaiseDialogue -= HandleDialogue;
     }
 
-    void HandleDialogue(bool enteringDialogue)
+    //Stops the character from moving while dialogue is playing
+    //Needs to be updated at any time the terminal is open
+    void HandleDialogue(object sender, DialogueManager.DialogueEventArgs dialogueEventArgs)
     {
-        characterController.enabled = !enteringDialogue;
-
+        characterController.enabled = dialogueEventArgs.dialogueState == DialogueManager.DialogueEventArgs.DialogueState.Exiting;
         rigidbody.velocity = Vector3.zero;
-
-        Debug.Log(enteringDialogue);
-
-        //if (!stopOnDialogue)
-          //  characterController.enabled = true;
     }
 
     private void Update()

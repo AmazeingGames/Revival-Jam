@@ -299,7 +299,7 @@ public class DialogueManager : Singleton<DialogueManager>
         //For long messages in the Terminal, the spacing needs to be adjusted to account for multiple lines
         int numOfLines = dialogueSpeech.textInfo.lineCount;
         for (int i = 1; i < numOfLines; i++)
-            TerminalManager.Instance.CreateResponseLine();
+            TerminalManager.Instance.CreateResponseLine(true);
 
         currentIndex++;
 

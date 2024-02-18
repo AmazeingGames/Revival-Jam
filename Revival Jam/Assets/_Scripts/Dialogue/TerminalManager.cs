@@ -11,17 +11,17 @@ public class TerminalManager : Singleton<TerminalManager>
     [Header("Instantiating")]
     [SerializeField] GameObject directoryLine;
     [SerializeField] ResponseLine responseLine;
-    [SerializeField] GameObject userInputLinePrefab;
+    [SerializeField] ResponseLine emptyLine;
 
-    [Header("Terminal Display")]
-    [SerializeField] TMP_InputField terminalInput;
+    [field: Header("Terminal Display Instances")]
+    [field: SerializeField] public TMP_InputField TerminalInput { get; private set; }
     [SerializeField] GameObject userInputLine;
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] RectTransform commandLineContainer;
 
     [Header("Terminal")]
-    //This should always be the height of the object we are instantiating in the command line
-    [SerializeField] float heightIncrease = 35f;
+    //This should generally be the height of the object we are instantiating in the command line
+    [SerializeField] float heightIncrease = 30f; //Used to properly scroll through the commands
 
     [Header("Settings")]
     [SerializeField] ScrollType scrollType;
@@ -56,19 +56,6 @@ public class TerminalManager : Singleton<TerminalManager>
         DialogueManager.RaiseDialogue -= HandleFinishDialogue;
     }
 
-    //This should be in its own class
-    private void Update()
-    {
-        Switch();
-    }
-    void Switch()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            scrollRect.gameObject.SetActive(!scrollRect.gameObject.activeSelf);
-        }
-    }
-
     void HandleFinishDialogue(object sender, DialogueEventArgs dialogueEventArgs)
     {
         //Ready Input on Note end
@@ -76,40 +63,22 @@ public class TerminalManager : Singleton<TerminalManager>
             ReadyInput();
     }
 
-    private void OnGUI()
-    {
-        if (terminalInput.isFocused && terminalInput.text != "" && Input.GetKeyDown(KeyCode.Return))
-        {
-            string userInput = terminalInput.text;
-
-            terminalInput.text = "";
-
-            SetCommandLineSize(CommandLineSet.Add, heightIncrease);
-
-            MimicInput(userInput);
-
-            //Run the user's found command
-            Interpreter.Instance.Interpret(userInput).Execute();
-        }
-    }
-
     //Creates, and accommodates for, a new line of text
-    public ResponseLine CreateResponseLine()
+    public ResponseLine CreateResponseLine(bool willBeEmpty = false)
     {
-        ResponseLine responseLn = Instantiate(responseLine, commandLineContainer);
+        var line = willBeEmpty ? emptyLine : responseLine;
+        ResponseLine responseLn = Instantiate(line, commandLineContainer);
         responseLn.transform.SetAsLastSibling();
 
-        SetCommandLineSize(CommandLineSet.Add, heightIncrease);
-
+        AdjustCommandLineSize(CommandLineSet.Add, heightIncrease);
         responseLines.Add(responseLn);
 
-        //User Input line always needs to be at the very bottom, or else the text will jump around
-        userInputLine.transform.SetAsLastSibling();
+        userInputLine.transform.SetAsLastSibling(); //User Input line always needs to be at the very bottom, or else the text will jump around
         return responseLn;
     }
 
     //Creates a copy of the givent text in the terminal
-    void MimicInput(string userInput)
+    public void MimicInput(string userInput)
     {
         GameObject message = Instantiate(directoryLine, commandLineContainer);
         message.transform.SetSiblingIndex(commandLineContainer.transform.childCount - 1);
@@ -121,20 +90,25 @@ public class TerminalManager : Singleton<TerminalManager>
         userInputLine.transform.SetAsLastSibling();
     }
 
-    public void SetCommandLineSize(CommandLineSet setSettings, float newYSize = 0)
+    //Adjusting the command line needs to be done whenver we create a new line of text
+    //This is done to make sure the scrolling works properly with the scroll rect
+    public void AdjustCommandLineSize(CommandLineSet setSettings, float newYSize = 0)
     {
-        //Debug.Log($"Set command line size : {setSettings} : {newYSize}");
+        Debug.Log($"Set command line size : {setSettings} : {newYSize}");
         switch (setSettings)
         {
             case CommandLineSet.Set:
                 commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, newYSize);
                 break;
+
             case CommandLineSet.Add:
                 commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, newYSize + commandLineContainer.sizeDelta.y);
                 break;
+
             case CommandLineSet.Reset:
                 commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, startingContainerSize.y);
                 break;
+
             case CommandLineSet.Subtract:
                 commandLineContainer.sizeDelta = new Vector2(commandLineContainer.sizeDelta.x, Mathf.Abs(newYSize - commandLineContainer.sizeDelta.y));
                 break;
@@ -142,17 +116,16 @@ public class TerminalManager : Singleton<TerminalManager>
     }
 
     //Positions the input at the bottom and readies the user to write a new command
-
     public void ReadyInput(bool scrollToBottom = true)
     {
-        if (terminalInput.transform.parent != null)
-            terminalInput.transform.parent.gameObject.SetActive(true);
+        if (TerminalInput.transform.parent != null)
+            TerminalInput.transform.parent.gameObject.SetActive(true);
 
-        terminalInput.gameObject.SetActive(true);
+        TerminalInput.gameObject.SetActive(true);
 
         userInputLine.transform.SetAsLastSibling();
-        terminalInput.ActivateInputField();
-        terminalInput.Select();
+        TerminalInput.ActivateInputField();
+        TerminalInput.Select();
 
         if (scrollToBottom)
         {
@@ -164,9 +137,9 @@ public class TerminalManager : Singleton<TerminalManager>
     //Stops the user from writing any responses
     public void DisableInput()
     {
-        if (disableInputParent && terminalInput.transform.parent != null)
-            terminalInput.transform.parent.gameObject.SetActive(false);
-        terminalInput.gameObject.SetActive(false);
+        if (disableInputParent && TerminalInput.transform.parent != null)
+            TerminalInput.transform.parent.gameObject.SetActive(false);
+        TerminalInput.gameObject.SetActive(false);
     }
 
     public void ScrollToBottom()

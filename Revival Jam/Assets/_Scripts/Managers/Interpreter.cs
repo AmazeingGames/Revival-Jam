@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using static DialogueBank;
+using static TerminalManager;
 
 public class Interpreter : Singleton<Interpreter>
 {
@@ -53,6 +54,29 @@ public class Interpreter : Singleton<Interpreter>
         return unknown;
     }
 
+    
+    private void OnGUI()
+    {
+        var terminalInput = TerminalManager.Instance.TerminalInput;
+
+        //Instead of checking for empty text, we could instead put a cap that this can be called in one second
+        if (terminalInput.isFocused && terminalInput.text != "" && Input.GetKeyDown(KeyCode.Return))
+        {
+            string userInput = terminalInput.text;
+            terminalInput.text = "";
+
+            TerminalManager.Instance.AdjustCommandLineSize(CommandLineSet.Add, 30);
+            TerminalManager.Instance.MimicInput(userInput);
+
+            //Run the user's found command
+            Interpret(userInput).Execute();
+
+            Debug.Log($"Adjusted size and ran interpret command. User Input = \"{userInput}\"");
+
+        }
+    }
+    
+
     class UnknownCommand : Command
     {
         public override void Execute()
@@ -77,7 +101,7 @@ public class Interpreter : Singleton<Interpreter>
             foreach (var line in linesToClear)
                 line.SetActive(false);
 
-            TerminalManager.Instance.SetCommandLineSize(TerminalManager.CommandLineSet.Reset);
+            TerminalManager.Instance.AdjustCommandLineSize(TerminalManager.CommandLineSet.Reset);
             TerminalManager.Instance.ReadyInput();
         }
     }

@@ -1200,7 +1200,7 @@ GameObject:
   - component: {fileID: 145791902}
   - component: {fileID: 145791906}
   m_Layer: 14
-  m_Name: NoteDialogueCanvas
+  m_Name: TerminalCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5533,6 +5533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491d13db4d0ee6446924857400c6c023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adjustSize: 0
 --- !u!114 &1032904884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5547,12 +5548,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directoryLine: {fileID: 970858829374567589, guid: d9a94284ae4887c4182d953ebcb6401f, type: 3}
   responseLine: {fileID: 2050767291128485279, guid: ecb18723120b8a746a9dc970ece3d6c5, type: 3}
-  userInputLinePrefab: {fileID: 2549377529346437055, guid: 01ccb321719c8954aaeada7b17f76819, type: 3}
-  terminalInput: {fileID: 1614089330}
+  <TerminalInput>k__BackingField: {fileID: 1614089330}
   userInputLine: {fileID: 411852649}
   scrollRect: {fileID: 1515645315}
   commandLineContainer: {fileID: 1679618584}
-  heightIncrease: 35
+  heightIncrease: 30
   scrollType: 1
   smoothScrollSpeed: 200
   disableInputParent: 0
@@ -9162,12 +9162,12 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 5
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -3.5
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -9798,6 +9798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glitchWorldTimerLength: 10
   pauseTimerOnMachineOff: 0
+  terminal: {fileID: 0}
 --- !u!114 &1798405143
 MonoBehaviour:
   m_ObjectHideFlags: 0

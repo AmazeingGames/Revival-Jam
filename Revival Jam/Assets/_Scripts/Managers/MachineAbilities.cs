@@ -7,20 +7,21 @@ using static PlayerFocus;
 using static ArcadeGameManager;
 using static AudioManager;
 using static AudioManager.OneShotSounds;
+using UnityEngine.UI;
 
 public class MachineAbilities : Singleton<MachineAbilities>
 {
     [SerializeField] float glitchWorldTimerLength;
-
     [SerializeField] bool pauseTimerOnMachineOff;
+    [SerializeField] GameObject terminal;
 
     GameObject glitchedWorld;
 
     float glitchTimer;
 
-    bool canShakeMachine = false;
-    bool canPowerMachine = false;
-    bool canEnterTerminal = false;
+    readonly bool canShakeMachine = false;
+    readonly bool canPowerMachine = false;
+    readonly bool canEnterTerminal = false;
 
     Dictionary<ItemAndAbilityManager.ItemsAndAbilities, bool> canUseAbilityByType;
 
@@ -67,6 +68,11 @@ public class MachineAbilities : Singleton<MachineAbilities>
         {
             Debug.Log("Shake Arcade");
             ShakeArcade();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab) && IsFocusedOn(FocusedOn.Arcade)) //&& canEnterTerminal)
+        {
+            terminal.SetActive(!terminal.activeSelf);
         }
     }
 

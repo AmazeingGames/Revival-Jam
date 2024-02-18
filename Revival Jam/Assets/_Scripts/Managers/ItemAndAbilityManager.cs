@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 //Keeps track of the player's real world items and tools
 public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
@@ -25,19 +23,20 @@ public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
         DialogueManager.RaiseDialogue -= HandleDialogue;
     }
 
+    //The player needs to receive an ability or an item at the end of reading a note
     void HandleDialogue(object sender, DialogueManager.DialogueEventArgs dialogueEventArgs)
     {
+        //Sometimes the note won't want us to gain the ability, even when it finishes
+        //Example being when we restart the level, closing the note
+        //Because we're now creating the notes to be entirely separate from the arcade, this is starting to become a moot point
         if (!dialogueEventArgs.shouldGrantAbility)
             return;
 
-        if (dialogueEventArgs.dialogue.NewItemOrAbility == ItemsAndAbilities.None)
+        var ability = dialogueEventArgs.dialogue.NewItemOrAbility;
+
+        if (ability == ItemsAndAbilities.None)
             return;
 
-        GainAbilityInformation(dialogueEventArgs.dialogue.NewItemOrAbility);
-    }
-
-    public void GainAbilityInformation(ItemsAndAbilities ability)
-    {
         if (learnedAbilities.Contains(ability))
             return;
 
