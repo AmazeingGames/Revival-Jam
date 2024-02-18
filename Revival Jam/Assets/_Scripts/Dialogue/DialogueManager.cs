@@ -70,13 +70,7 @@ public class DialogueManager : Singleton<DialogueManager>
         if (metaDialogueSpeech != null)
             metaJitter = metaDialogueSpeech.GetComponent<VertexJitter>();
 
-        //if (noteDialogueSpeech != null)
-            //noteJitter = noteDialogueSpeech.GetComponent<VertexJitter>();
-
         terminalDialogueBackground.gameObject.SetActive(false);
-
-        //REMOVE THIS LATER
-        terminalDialogueBackground.gameObject.SetActive(true);
     }
 
     void Update()
@@ -130,10 +124,17 @@ public class DialogueManager : Singleton<DialogueManager>
     //Opens the dialogue slot and prepares for the first line of a dialogue
     public void StartDialogue(DialogueBank.DialogueType dialogueKey)
     {
+        Dialogue dialogue = DialogueBank.Instance.DialogueDataByType[dialogueKey];
+        StartDialogue(dialogue);
+    }
+
+    public void StartDialogue(Dialogue dialogue)
+    {
+        if (dialogue == null)
+            throw new ArgumentNullException("Dialogue is null");
+
         if (isDialogueRunning)
             return;
-
-        Dialogue dialogue = DialogueBank.Instance.DialogueDataByType[dialogueKey];
 
         EnterDialogue?.Invoke(true);
 
@@ -149,8 +150,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
         dialogueSpeech.text = string.Empty;
         StartCoroutine(DisplayMessageSlow());
-
-        //Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
     }
 
     void SetDialougeSFX(DialogueType dialogueType)
@@ -166,14 +165,19 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         Message displayMessage = currentMessages[currentIndex];
 
-        Actor actor = currentActors[displayMessage.actorId];
+        Actor actor = null;
+        if (currentActors != null)
+            actor = currentActors[displayMessage.actorId];
 
         //Set Speaker
-        if (dialogueName != null)
-            dialogueName.text = actor.name;
-        if (dialoguePortrait != null)
-            dialoguePortrait.sprite = actor.sprite;
-
+        if (actor != null)
+        {
+            if (dialogueName != null)
+                dialogueName.text = actor.name;
+            if (dialoguePortrait != null)
+                dialoguePortrait.sprite = actor.sprite;
+        }
+        
         //Set Jitter
         if (currentJitter != null)
             currentJitter.shouldJitter = displayMessage.shouldJitter;
@@ -294,12 +298,10 @@ public class DialogueManager : Singleton<DialogueManager>
     //Starts the next line of the current dialogue, and exits if there are none left
     void NextMessage()
     {
-        Debug.Log($"Line {currentIndex} has {dialogueSpeech.textInfo.lineCount} lines");
+        //For long messages in the Terminal, the spacing needs to be adjusted to account for multiple lines
         int numOfLines = dialogueSpeech.textInfo.lineCount;
         for (int i = 1; i < numOfLines; i++)
-        {
             TerminalManager.Instance.CreateResponseLine();
-        }
 
         currentIndex++;
 
@@ -309,20 +311,23 @@ public class DialogueManager : Singleton<DialogueManager>
             return;
         }
 
+        //Writes every message in the terminal as a new terminal line
         if (currentDialogueType == DialogueType.Terminal && generateNewLines)
             dialogueSpeech = TerminalManager.Instance.CreateResponseLine().responseText;
+        //Makes sure continued and not continued messages work
         else if (!currentMessages[currentIndex].continuePreviousMessage && currentDialogueType != DialogueType.Terminal)
         {
             //Creates a new line in the terminal
-            Debug.Log("Did not continue message");
             dialogueSpeech.text = string.Empty;
         }
 
+        //Move this to the Manager script
         if (currentDialogueType == DialogueType.Terminal)
         {
             TerminalManager.Instance.ScrollToBottom();
         }
 
+        //Starts playing the next message
         StartCoroutine(DisplayMessageSlow());
     }
 
@@ -330,7 +335,7 @@ public class DialogueManager : Singleton<DialogueManager>
     void ExitDialogue(bool grantAbility = true)
     {
         EnterDialogue?.Invoke(false);
-        
+
         if (grantAbility && (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None))
             ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
 
@@ -340,7 +345,7 @@ public class DialogueManager : Singleton<DialogueManager>
         //terminalDialogueBackground.gameObject.SetActive(false);
         isDialogueRunning = false;
 
-        Debug.Log("Conversation finished");
+        //Debug.Log("Conversation finished");
     }
 
     //When starting a new dialogue, we need to make sure we write to the proper location
@@ -388,7 +393,6 @@ public class DialogueManager : Singleton<DialogueManager>
         switch (arcadeState)
         {
             case ArcadeState.StartLevel:
-            case ArcadeState.Win:
                 Debug.Log("Started search for camera");
                 StartCoroutine(FindCamera());
                 break;

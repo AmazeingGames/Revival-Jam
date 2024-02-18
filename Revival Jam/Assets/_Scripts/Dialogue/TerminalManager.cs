@@ -18,15 +18,15 @@ public class TerminalManager : Singleton<TerminalManager>
     [SerializeField] RectTransform commandLineContainer;
 
     [Header("Terminal")]
+    //This should always be the height of the object we are instantiating in the command line
     [SerializeField] float heightIncrease = 35f;
 
-    [Header("Display Settings")]
+    [Header("Settings")]
     [SerializeField] ScrollType scrollType;
     [SerializeField] float smoothScrollSpeed;
+    [SerializeField] bool disableInputParent;
 
     enum ScrollType { JumpTo, SmoothScroll }
-
-    List<string> previousInput;
 
     public enum CommandLineSet { Set, Add, Reset, Subtract }
 
@@ -45,15 +45,26 @@ public class TerminalManager : Singleton<TerminalManager>
     }
 
     private void OnEnable()
-    {
-        Debug.Log("subscribed");
+    {   
         DialogueManager.EnterDialogue += HandleFinishDialogue;
     }
 
     private void OnDisable()
     {
-        Debug.Log("unsubscribed");
         DialogueManager.EnterDialogue -= HandleFinishDialogue;
+    }
+
+    private void Update()
+    {
+        Switch();
+    }
+
+    void Switch()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            scrollRect.gameObject.SetActive(!scrollRect.gameObject.activeSelf);
+        }
     }
 
     void HandleFinishDialogue(bool isEntering)
@@ -61,35 +72,6 @@ public class TerminalManager : Singleton<TerminalManager>
         //Ready Input on Note end
         if (!isEntering)
             ReadyInput();
-    }
-
-    private void Update()
-    {
-#if DEBUG
-        if (Input.GetKey(KeyCode.LeftAlt))
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                ReadyInput();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                ReadyInput(false);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                DisableInput();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-
-            }
-        }
-#endif
     }
 
     private void OnGUI()
@@ -112,16 +94,15 @@ public class TerminalManager : Singleton<TerminalManager>
     //Creates, and accommodates for, a new line of text
     public ResponseLine CreateResponseLine()
     {
-        Debug.Log("Created response line");
-
-        //Create line
         ResponseLine responseLn = Instantiate(responseLine, commandLineContainer);
         responseLn.transform.SetAsLastSibling();
 
-        //Accommodates to fit new line
         SetCommandLineSize(CommandLineSet.Add, heightIncrease);
 
         responseLines.Add(responseLn);
+
+        //User Input line always needs to be at the very bottom, or else the text will jump around
+        userInputLine.transform.SetAsLastSibling();
         return responseLn;
     }
 
@@ -133,11 +114,14 @@ public class TerminalManager : Singleton<TerminalManager>
         message.GetComponentInChildren<TMP_Text>().text = userInput;
 
         mimicLines.Add(message);
+
+        //User Input line always needs to be at the very bottom, or else the text will jump around
+        userInputLine.transform.SetAsLastSibling();
     }
 
     public void SetCommandLineSize(CommandLineSet setSettings, float newYSize = 0)
     {
-        Debug.Log($"Set command line size : {setSettings} : {newYSize}");
+        //Debug.Log($"Set command line size : {setSettings} : {newYSize}");
         switch (setSettings)
         {
             case CommandLineSet.Set:
@@ -159,13 +143,14 @@ public class TerminalManager : Singleton<TerminalManager>
 
     public void ReadyInput(bool scrollToBottom = true)
     {
+        if (terminalInput.transform.parent != null)
+            terminalInput.transform.parent.gameObject.SetActive(true);
+
         terminalInput.gameObject.SetActive(true);
 
         userInputLine.transform.SetAsLastSibling();
         terminalInput.ActivateInputField();
         terminalInput.Select();
-
-        Debug.Log("Readied Input");
 
         if (scrollToBottom)
         {
@@ -173,15 +158,17 @@ public class TerminalManager : Singleton<TerminalManager>
         }
     }
 
+    
     //Stops the user from writing any responses
     public void DisableInput()
     {
+        if (disableInputParent && terminalInput.transform.parent != null)
+            terminalInput.transform.parent.gameObject.SetActive(false);
         terminalInput.gameObject.SetActive(false);
     }
 
     public void ScrollToBottom()
     {
         scrollRect.velocity = new Vector2(0, smoothScrollSpeed);
-        Debug.Log("Scrolled to bottom!");
     }
 }

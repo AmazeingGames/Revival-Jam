@@ -28,7 +28,6 @@ public class MenuManager : Singleton<MenuManager>
     [Header("Cameras")]
     [SerializeField] Camera menuCamera;
 
-
     [Header("Debug")]
     [SerializeField] bool disableObjectsOnMenu = true; //Always keep true -- this is just for testing
 

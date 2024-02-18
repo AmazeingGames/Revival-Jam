@@ -588,12 +588,12 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 5
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -3.5
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -1110,10 +1110,10 @@ MonoBehaviour:
   userInputLine: {fileID: 411852649}
   scrollRect: {fileID: 1515645315}
   commandLineContainer: {fileID: 1679618584}
-  interpreter: {fileID: 8352127450538410123}
-  heightIncrease: 35
+  heightIncrease: 30
   scrollType: 1
   smoothScrollSpeed: 200
+  disableInputParent: 0
 --- !u!114 &8352127450538410123
 MonoBehaviour:
   m_ObjectHideFlags: 0

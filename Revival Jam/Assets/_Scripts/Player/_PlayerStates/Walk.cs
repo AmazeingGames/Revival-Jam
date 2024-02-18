@@ -70,11 +70,11 @@ public class Walk : State<CharacterController>
 
         if (useJoystickPosition && CabinetAnimator.Instance != null)
         {
-            Debug.Log("using joystick");
+            //Debug.Log("using joystick");
             horizontalInput = CabinetAnimator.Instance.JoystickCurrent.ConvertToNewRange(oldRange: new Vector2(0, 1), newRange: new Vector2(-1, 1));
         }
 
-        Debug.Log($"HorizontalInput : {horizontalInput}");
+        //Debug.Log($"HorizontalInput : {horizontalInput}");
 
         if (Input.GetButtonDown("Jump"))
             jumpTimer = jumpBufferLength;

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using static DialogueBank;
 
 public class Interpreter : Singleton<Interpreter>
 {
-    List<string> response = new();
+    readonly List<string> response = new();
 
     readonly HelpCommand help = new("help");
     readonly NoteCommand wrenchNote = new(DialogueType.Wrench, "note1", "wrench", "jump");
@@ -60,11 +61,10 @@ public class Interpreter : Singleton<Interpreter>
         }
     }
 
-    //Disables all instantiated lines in the terminal screen
-    //To Do: Return all these objects to an object pool
+    //Returns all instantiated lines in the terminal screen to the object pool
     class ClearCommand : Command
     {
-        public ClearCommand(params string[] commandKeys) : base  (commandKeys) { }
+        public ClearCommand(params string[] commandKeys) : base  (commandKeys: commandKeys) { }
 
         public override void Execute()
         {
@@ -80,48 +80,67 @@ public class Interpreter : Singleton<Interpreter>
             TerminalManager.Instance.SetCommandLineSize(TerminalManager.CommandLineSet.Reset);
             TerminalManager.Instance.ReadyInput();
         }
-
     }
 
-    class HelpCommand : Command
+    class HelpCommand : WriteCommand
     {
-        public HelpCommand(params string[] commandKeys) : base (commandKeys) { }
-
-        override public void Execute()
-        {
-            TerminalManager.Instance.ReadyInput();
-        }
+        public HelpCommand(params string[] commandKeys) : base("Press | TAB | to switch between views", commandKeys) { }
     }
 
-    class NoteCommand : Command
+    class NoteCommand : WriteCommand
     {
         readonly DialogueType dialogueToPlay;
-        public NoteCommand(DialogueType dialogueToPlay, params string[] commandKeys) : base(commandKeys) 
+        public NoteCommand(DialogueType dialogueToPlay, params string[] commandKeys) : base(commandKeys: commandKeys) 
         {
-            
             this.dialogueToPlay = dialogueToPlay;
         }
 
-        override public void Execute() 
+        protected override void CreateDialogue() =>
+            dialogue = DialogueBank.Instance.DialogueDataByType[dialogueToPlay];
+    }
+
+    //Starting dialogue always readies input once dialogue finishes
+    public abstract class WriteCommand : Command
+    {
+        readonly string dialogueText = "";
+        protected Dialogue dialogue;
+
+        public WriteCommand(string response = "", params string[] commandKeys) : base(commandKeys: commandKeys)
         {
+            dialogueText = response;
+        }
+
+        protected virtual void CreateDialogue()
+        {
+            dialogue = Dialogue.CreateDialogue(dialogueText);
+            Debug.Log("Created dialogue");
+        }
+
+        public override void Execute()
+        {
+            if (dialogue == null)
+                CreateDialogue();
+
             TerminalManager.Instance.DisableInput();
             TerminalManager.Instance.ScrollToBottom();
-            DialogueManager.Instance.StartDialogue(dialogueToPlay);
+            DialogueManager.Instance.StartDialogue(dialogue);
         }
     }
 
+    //This should always ready dialogue as part of the execute method
     public abstract class Command
     {
-        //public IList<string> CommandKeys { get => commandKeys.AsReadOnlyList(); }
         readonly List<string> commandCall;
 
         public Command(params string[] commandKeys) 
         {
-            this.commandCall = commandKeys.ToList();    
+            this.commandCall = commandKeys.ToList();
         }
 
         public abstract void Execute();
 
+        //Determines if the given text 'unlocks' the command
+        //'clear' -> clears the terminal
         public bool DoesCallMatch(string key)
         {
             string keyLower = key.ToLower();
