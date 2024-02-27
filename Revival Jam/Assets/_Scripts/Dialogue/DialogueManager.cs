@@ -34,8 +34,11 @@ public class DialogueManager : Singleton<DialogueManager>
     [Header("Special Characters")]
     [SerializeField] List<char> silentCharacters;
 
-    [Header("TerminalSettins")]
+    [Header("TerminalSettings")]
     [SerializeField] bool generateNewLines;
+
+    [Header("References")]
+    [SerializeField] TerminalManager terminalManager;
 
     Dialogue currentDialogue;
     List<Message> currentMessages;
@@ -119,13 +122,13 @@ public class DialogueManager : Singleton<DialogueManager>
         NextMessage();
     }
 
-    //Opens the dialogue slot and prepares for the first line of a dialogue
     public void StartDialogue(DialogueBank.DialogueType dialogueKey)
     {
         Dialogue dialogue = DialogueBank.Instance.DialogueDataByType[dialogueKey];
         StartDialogue(dialogue);
     }
 
+    //Opens the dialogue slot and prepares for the first line of a dialogue
     public void StartDialogue(Dialogue dialogue)
     {
         if (dialogue == null)
@@ -299,7 +302,7 @@ public class DialogueManager : Singleton<DialogueManager>
         //For long messages in the Terminal, the spacing needs to be adjusted to account for multiple lines
         int numOfLines = dialogueSpeech.textInfo.lineCount;
         for (int i = 1; i < numOfLines; i++)
-            TerminalManager.Instance.CreateResponseLine(true);
+            terminalManager.CreateResponseLine(true);
 
         currentIndex++;
 
@@ -311,18 +314,13 @@ public class DialogueManager : Singleton<DialogueManager>
 
         //Writes every message in the terminal as a new terminal line
         if (currentDialogueType == DialogueType.Terminal && generateNewLines)
-            dialogueSpeech = TerminalManager.Instance.CreateResponseLine().responseText;
+            dialogueSpeech = terminalManager.CreateResponseLine().responseText;
+
         //Makes sure continued and not continued messages work
         else if (!currentMessages[currentIndex].continuePreviousMessage && currentDialogueType != DialogueType.Terminal)
         {
             //Creates a new line in the terminal
             dialogueSpeech.text = string.Empty;
-        }
-
-        //Move this to the Manager script
-        if (currentDialogueType == DialogueType.Terminal)
-        {
-            TerminalManager.Instance.ScrollToBottom();
         }
 
         //Starts playing the next message
@@ -351,7 +349,7 @@ public class DialogueManager : Singleton<DialogueManager>
                 currentJitter = noteJitter;
                 dialoguePortrait = null;
                 dialogueName = null;
-                dialogueSpeech = TerminalManager.Instance.CreateResponseLine().responseText;
+                dialogueSpeech = terminalManager.CreateResponseLine().responseText;
 
                 break;
 
@@ -408,5 +406,4 @@ public class DialogueManager : Singleton<DialogueManager>
             this.shouldGrantAbility = shouldGrantAbility;
         }
     }
-
 }

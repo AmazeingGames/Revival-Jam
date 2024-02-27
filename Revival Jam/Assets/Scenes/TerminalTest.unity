@@ -182,6 +182,7 @@ MonoBehaviour:
   useSilentCharacters: 1
   silentCharacters: 2000
   generateNewLines: 1
+  terminalManager: {fileID: 8352127450538410122}
 --- !u!4 &263075324
 Transform:
   m_ObjectHideFlags: 0
@@ -1326,6 +1327,7 @@ GameObject:
   - component: {fileID: 8352127450538410122}
   - component: {fileID: 8352127450538410123}
   - component: {fileID: 8352127450538410124}
+  - component: {fileID: 8352127450538410125}
   m_Layer: 0
   m_Name: UICanvas
   m_TagString: Untagged
@@ -1448,10 +1450,9 @@ MonoBehaviour:
   userInputLine: {fileID: 411852649}
   scrollRect: {fileID: 1515645315}
   commandLineContainer: {fileID: 1679618584}
-  heightIncrease: 30
-  scrollType: 1
-  smoothScrollSpeed: 200
+  autoScroll: {fileID: 8352127450538410125}
   disableInputParent: 0
+  heightIncrease: 30
 --- !u!114 &8352127450538410123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,6 +1465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491d13db4d0ee6446924857400c6c023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terminalManager: {fileID: 8352127450538410122}
 --- !u!114 &8352127450538410124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1476,3 +1478,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f24766a640fd0478d78714788dd9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8352127450538410125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8352127450538410115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e971ea051d49a44848e0b25b89d1a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 1515645315}
+  scrollType: 1
+  scrollVelocity: 250
+  maxScrollThreshold: 0.3

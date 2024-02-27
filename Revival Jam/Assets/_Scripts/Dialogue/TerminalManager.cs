@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using static DialogueManager;
 using static DialogueManager.DialogueEventArgs;
 
-public class TerminalManager : Singleton<TerminalManager>
+public class TerminalManager : MonoBehaviour
+//public class TerminalManager : Singleton<TerminalManager>
 {
     [Header("Instantiating")]
     [SerializeField] GameObject directoryLine;
@@ -21,12 +22,14 @@ public class TerminalManager : Singleton<TerminalManager>
 
     [Header("Terminal")]
     //This should generally be the height of the object we are instantiating in the command line
+
+    [Header("Scroll")]
+    [SerializeField] AutoScroll autoScroll;
+
+    [Header("Debug")]
+    [SerializeField] bool disableInputParent;
     [SerializeField] float heightIncrease = 30f; //Used to properly scroll through the commands
 
-    [Header("Settings")]
-    [SerializeField] ScrollType scrollType;
-    [SerializeField] float smoothScrollSpeed;
-    [SerializeField] bool disableInputParent;
 
     enum ScrollType { JumpTo, SmoothScroll }
 
@@ -47,18 +50,13 @@ public class TerminalManager : Singleton<TerminalManager>
     }
 
     private void OnEnable()
-    {   
-        DialogueManager.RaiseDialogue += HandleFinishDialogue;
-    }
-
+        => RaiseDialogue += HandleDialogue;
     private void OnDisable()
-    {
-        DialogueManager.RaiseDialogue -= HandleFinishDialogue;
-    }
+        => RaiseDialogue -= HandleDialogue;
 
-    void HandleFinishDialogue(object sender, DialogueEventArgs dialogueEventArgs)
+    //Readies player Input on Note end
+    void HandleDialogue(object sender, DialogueEventArgs dialogueEventArgs)
     {
-        //Ready Input on Note end
         if (dialogueEventArgs.dialogueState == DialogueState.Exiting)
             ReadyInput();
     }
@@ -128,22 +126,14 @@ public class TerminalManager : Singleton<TerminalManager>
         TerminalInput.Select();
 
         if (scrollToBottom)
-        {
-            ScrollToBottom();
-        }
+            autoScroll.ScrollTimes(1);
     }
 
-    
     //Stops the user from writing any responses
     public void DisableInput()
     {
         if (disableInputParent && TerminalInput.transform.parent != null)
             TerminalInput.transform.parent.gameObject.SetActive(false);
         TerminalInput.gameObject.SetActive(false);
-    }
-
-    public void ScrollToBottom()
-    {
-        scrollRect.velocity = new Vector2(0, smoothScrollSpeed);
     }
 }

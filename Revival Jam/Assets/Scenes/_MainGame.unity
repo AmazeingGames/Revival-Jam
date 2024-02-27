@@ -5533,7 +5533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491d13db4d0ee6446924857400c6c023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjustSize: 0
+  terminalManager: {fileID: 1032904884}
 --- !u!114 &1032904884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5548,6 +5548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directoryLine: {fileID: 970858829374567589, guid: d9a94284ae4887c4182d953ebcb6401f, type: 3}
   responseLine: {fileID: 2050767291128485279, guid: ecb18723120b8a746a9dc970ece3d6c5, type: 3}
+  emptyLine: {fileID: 0}
   <TerminalInput>k__BackingField: {fileID: 1614089330}
   userInputLine: {fileID: 411852649}
   scrollRect: {fileID: 1515645315}
@@ -6940,6 +6941,7 @@ MonoBehaviour:
   useSilentCharacters: 1
   silentCharacters: 2000
   generateNewLines: 1
+  terminalManager: {fileID: 1032904884}
 --- !u!114 &1210245297
 MonoBehaviour:
   m_ObjectHideFlags: 0

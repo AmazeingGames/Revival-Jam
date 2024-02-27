@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
+[Obsolete]
 public class DialogueTrigger : MonoBehaviour
 {
     //Probably Change this to accept a scriptable object instead
