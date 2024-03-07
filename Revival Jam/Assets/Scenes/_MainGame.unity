@@ -5499,6 +5499,7 @@ GameObject:
   - component: {fileID: 1032904882}
   - component: {fileID: 1032904884}
   - component: {fileID: 1032904883}
+  - component: {fileID: 1032904885}
   m_Layer: 0
   m_Name: TerminalManagers
   m_TagString: Untagged
@@ -5548,15 +5549,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directoryLine: {fileID: 970858829374567589, guid: d9a94284ae4887c4182d953ebcb6401f, type: 3}
   responseLine: {fileID: 2050767291128485279, guid: ecb18723120b8a746a9dc970ece3d6c5, type: 3}
-  emptyLine: {fileID: 0}
+  emptyLine: {fileID: 2050767291128485279, guid: ad9ddcc1e4862cd45a946d8f10cdca18, type: 3}
   <TerminalInput>k__BackingField: {fileID: 1614089330}
   userInputLine: {fileID: 411852649}
   scrollRect: {fileID: 1515645315}
   commandLineContainer: {fileID: 1679618584}
-  heightIncrease: 30
-  scrollType: 1
-  smoothScrollSpeed: 200
+  autoScroll: {fileID: 1032904885}
   disableInputParent: 0
+  heightIncrease: 30
+--- !u!114 &1032904885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032904881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e971ea051d49a44848e0b25b89d1a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 1515645315}
+  scrollType: 1
+  scrollVelocity: 250
+  maxScrollThreshold: 0.3
 --- !u!1 &1048726894
 GameObject:
   m_ObjectHideFlags: 0
@@ -9800,7 +9816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glitchWorldTimerLength: 10
   pauseTimerOnMachineOff: 0
-  terminal: {fileID: 0}
+  terminal: {fileID: 1515645310}
 --- !u!114 &1798405143
 MonoBehaviour:
   m_ObjectHideFlags: 0

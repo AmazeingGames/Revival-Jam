@@ -11,9 +11,9 @@ public class AutoScroll : MonoBehaviour
 {
     bool didPlayerScroll;
     bool isMaxScroll;
-    CurrentScroll currentScroll;
+    AutoScrollType currentScroll;
 
-    enum CurrentScroll {  Auto, Times, None  };
+    enum AutoScrollType {  Auto, Times, None  };
     enum ScrollType { JumpTo, SmoothScroll }
 
     [SerializeField] ScrollRect scrollRect;
@@ -22,8 +22,6 @@ public class AutoScroll : MonoBehaviour
     [SerializeField] ScrollType scrollType;
     [SerializeField] float scrollVelocity;
     [SerializeField] float maxScrollThreshold = .1f;
-    [SerializeField] float resumeScrollCheckDelay;
-    //float resumeScrollTimer;
 
     private void OnEnable()
         => RaiseDialogue += HandleDialogue;
@@ -65,10 +63,10 @@ public class AutoScroll : MonoBehaviour
         if (!isMaxScroll)
             return false;
 
-        if (currentScroll == CurrentScroll.None)
+        if (currentScroll == AutoScrollType.None)
             return false;
 
-        else if (currentScroll == CurrentScroll.Times && scrollTimes <= 0)
+        else if (currentScroll == AutoScrollType.Times && scrollTimes <= 0)
             return false;
 
         //Scroll down
@@ -111,13 +109,11 @@ public class AutoScroll : MonoBehaviour
     }
 
     public void StartAutoScroll()
-    {
-        currentScroll = CurrentScroll.Auto;
-    }
+        => currentScroll = AutoScrollType.Auto;
 
     public void ScrollTimes(int times)
     {
-        currentScroll = CurrentScroll.Times;
+        currentScroll = AutoScrollType.Times;
         scrollTimes = times;
     }
 
@@ -125,7 +121,10 @@ public class AutoScroll : MonoBehaviour
     {
         Debug.Log("stopped auto scroll");
         scrollRect.velocity = Vector2.zero;
-        currentScroll = CurrentScroll.None;
-        //resumeScrollTimer = resumeScrollCheckDelay;
+        currentScroll = AutoScrollType.None;
     }
+
+    
+
+    
 }
