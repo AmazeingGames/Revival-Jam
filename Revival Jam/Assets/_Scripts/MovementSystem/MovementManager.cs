@@ -13,54 +13,50 @@ public class MovementManager : Singleton<MovementManager>
     [SerializeField] FocusedOn startingStation = FocusedOn.Null;
 
     public readonly Dictionary<FocusedOn, StationMoveData> stationToData = new();
-
-    public static bool ControlMovement => Instance != null && Instance.controlMovement;
-
     public static event Action<FocusedOn> ConnectToStation;
+    public static bool ControlMovement => Instance != null && Instance.controlMovement;
 
     private void Awake()
     {
         base.Awake();
 
-        foreach (StationMoveData data in movementData)
-        {
-            if (data == null || data.StationType == FocusedOn.Null)
-                continue;
-
-            stationToData.Add(data.StationType, data);
-        }
+        InitializeStationDictionary();
     }
 
     private void OnEnable()
-    {
-        GameManager.AfterStateChange += HandleGameStateChange;
-    }
-
+        => GameManager.AfterStateChange += HandleGameStart;
     private void OnDisable()
-    {
-        GameManager.AfterStateChange -= HandleGameStateChange;
-    }
+        => GameManager.AfterStateChange -= HandleGameStart;
 
-    void HandleGameStateChange(GameManager.GameState newGameState)
+    // Starts off the game connected to a station
+    void HandleGameStart(GameManager.GameState newGameState)
     {
-        switch (newGameState)
+        if (newGameState == GameManager.GameState.StartGame)
         {
-            case GameManager.GameState.StartGame:
-                OnGameStart();
-                break;
+            controlMovement = true;
+            StartCoroutine(OnStart());
         }
     }
 
-    //Connect to starting station, 
-    void OnGameStart()
-    {
-        controlMovement = true;
-        StartCoroutine(CallConnectToStation(startingStation));
-    }
-
-    public IEnumerator CallConnectToStation(FocusedOn stationToConnect)
+    // Connects to the starting station
+    // Yield exists to give time for scene to load
+    IEnumerator OnStart()
     {
         yield return new WaitForSeconds(.1f);
-        ConnectToStation?.Invoke(stationToConnect);
+        ConnectToStation?.Invoke(startingStation);
+    }
+
+    public void CallConnectToStation(FocusedOn stationToConnect)
+        => ConnectToStation?.Invoke(stationToConnect);
+
+    // Fills out the Dictionary with data from the StationData list
+    void InitializeStationDictionary()
+    {
+        foreach (StationMoveData data in movementData)
+        {
+            if (data == null || data.StationType == FocusedOn.Null)
+                throw new Exception("Station data not configured properly or does not exist");
+            stationToData.Add(data.StationType, data);
+        }
     }
 }

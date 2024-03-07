@@ -18,7 +18,7 @@ public class MoveArrow : UIButtonBase
     [Header("Components")]
     [SerializeField] Image image;
 
-    List<KeyCode> keyCodes = new();
+    readonly List<KeyCode> inputKeys = new();
 
     FocusedOn connectingStation;
 
@@ -39,62 +39,66 @@ public class MoveArrow : UIButtonBase
 
     private void Start()
     {
-        SetMovementKeys();
+        SetInputKeys();
         SetSprite();
     }
 
-    //Move this outside of move arrow class
-    void SetMovementKeys()
+    // Sets the input keys that trigger the move event
+    void SetInputKeys()
     {
         switch (arrowDirection)
         {
             case Direction.Up:
-                keyCodes.Add(KeyCode.W);
-                keyCodes.Add(KeyCode.UpArrow);
+                inputKeys.Add(KeyCode.W);
+                inputKeys.Add(KeyCode.UpArrow);
                 break;
 
             case Direction.Down:
-                keyCodes.Add(KeyCode.S);
-                keyCodes.Add(KeyCode.DownArrow);
+                inputKeys.Add(KeyCode.S);
+                inputKeys.Add(KeyCode.DownArrow);
                 break;
 
             case Direction.Left:
-                keyCodes.Add(KeyCode.A);
-                keyCodes.Add(KeyCode.LeftArrow);
+                inputKeys.Add(KeyCode.A);
+                inputKeys.Add(KeyCode.LeftArrow);
                 break;
 
             case Direction.Right:
-                keyCodes.Add(KeyCode.D);
-                keyCodes.Add(KeyCode.RightArrow);
+                inputKeys.Add(KeyCode.D);
+                inputKeys.Add(KeyCode.RightArrow);
                 break;
         }
     }
 
     private void Update()
-    {
-        MovementKeysCheck();
-    }
+        => InputCheck();
 
-    void MovementKeysCheck()
+    // Triggers the move event on the player's input
+    void InputCheck()
     {
         if (shouldBeDisabled || MenuManager.Instance.IsInMenu)
             return;
 
-        for (int i = 0; i < keyCodes.Count; i++)
+        for (int i = 0; i < inputKeys.Count; i++)
         {
-            if (Input.GetKeyDown(keyCodes[i]))
-                OnClick();
+            if (Input.GetKeyDown(inputKeys[i]))
+                MovementManager.Instance.CallConnectToStation(connectingStation);
         }
     }
 
+    /*
     public override void OnClick()
     {
         base.OnClick();
-        StartCoroutine(MovementManager.Instance.CallConnectToStation(connectingStation));
-    }
+        MovementManager.Instance.CallConnectToStation(connectingStation);
+    } 
+    */
 
     void SetSprite() => image.sprite = arrowSpriteData.DirectionToSprite(arrowDirection); 
 
+    // On menu:
+        // Disables the arrows while in a menu
+        // Sets the arrows able while in a game, if they were already able
     void HandleMenuStateChange(MenuManager.MenuState newMenuState)
     {
         switch (newMenuState)
@@ -110,31 +114,29 @@ public class MoveArrow : UIButtonBase
         }
     }
 
+    // On connect: 
+        // Gets a reference to the new station's data
+        // Checks if this arrow still needs to be enabled
     void HandleConnectToStation(ConnectEventArgs eventArgs)
     {
-        //Debug.Log("CONNECT TO STATION");
-
         if (!eventArgs.IsConnecting)
             return;
 
         MovementManager.Instance.stationToData.TryGetValue(eventArgs.LinkedStation, out var data);
 
         if (data != null)
-        {
             connectingStation = data.DirectionToStation(arrowDirection);
-            //Debug.Log($"{arrowDirection} Arrow : Set new connecting station ({connectingStation}) from newly connected station data ({data}) of type {data.StationType}");
-        }
         else
-            Debug.Log("New Station data is null!");
+            throw new NullReferenceException("New Station data is null!");
 
-        //If the direction doesn't lead to a station, then disable the arrow; otherwise enable it
         shouldBeDisabled = connectingStation == FocusedOn.Null;
         SetAble(!shouldBeDisabled);
     }
 
-    void SetAble(bool setCondition)
+    // Ables the arrow's visual and clikability
+    void SetAble(bool shouldBeEnabled)
     {
-        image.enabled = setCondition;
-        image.raycastTarget = setCondition;
+        image.enabled = shouldBeEnabled;
+        image.raycastTarget = shouldBeEnabled;
     }
 }

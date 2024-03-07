@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <StationType>k__BackingField: 4
   <UpArrowStation>k__BackingField: 1
-  <DownArrowStation>k__BackingField: 3
+  <DownArrowStation>k__BackingField: 10
   <RightArrowStation>k__BackingField: 6
   <LeftArrowStation>k__BackingField: 7

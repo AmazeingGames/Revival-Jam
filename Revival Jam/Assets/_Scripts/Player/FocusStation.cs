@@ -98,8 +98,6 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
         {
             if (linkedScreen != null)
                 linkedScreen.enabled = false;
-
-            //Debug.Log("Neither connecting or disconnecting");
             return;
         }
 
@@ -111,8 +109,6 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
 
         ConnectToStation?.Invoke(new ConnectEventArgs(linkedStation, isConnecting, stationCamera));
 
-        //Debug.Log($"Is Connecting: {isConnecting} | Is Disconnecting: {!isConnecting} | linkedStation : {linkedStation}");
-
         if (isConnecting)
             TriggerAudioClip(stationEnterSound, transform);
     }
@@ -122,7 +118,6 @@ public class FocusStation : MonoBehaviour, IPointerClickHandler
         if (virtualScreenType == linkedStation)
         {
             linkedScreen = sender;
-            //Debug.Log($"Found screen! Linked Screen null : {linkedScreen == null}");
 
             linkedScreen.enabled = false;
         }

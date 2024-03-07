@@ -11,7 +11,7 @@ public class PlayerFocus : Singleton<PlayerFocus>
     public FocusedOn PreviouslyFocusedOn { get; private set; } = FocusedOn.Nothing;
 
 
-    public enum FocusedOn { Circuitry, Arcade, Nothing, Null, FrontView, BackView, RightView, LeftView }
+    public enum FocusedOn { Circuitry, Arcade, Nothing, Null, FrontView, BackView, RightView, LeftView, RoomNorth, RoomEast, RoomSouth, RoomWest }
 
     public FocusStation ClosestStation { get; private set; } = null;
 

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 579b7578445b98144b34b5361830011d, type: 3}
-  m_Name: BackView
+  m_Name: RoomNorth
   m_EditorClassIdentifier: 
-  <StationType>k__BackingField: 5
-  <UpArrowStation>k__BackingField: 0
-  <DownArrowStation>k__BackingField: 3
-  <RightArrowStation>k__BackingField: 7
-  <LeftArrowStation>k__BackingField: 6
+  <StationType>k__BackingField: 8
+  <UpArrowStation>k__BackingField: 3
+  <DownArrowStation>k__BackingField: 5
+  <RightArrowStation>k__BackingField: 11
+  <LeftArrowStation>k__BackingField: 9
