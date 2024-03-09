@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a1e7bcdb6edc8478391109c940d394, type: 3}
+  m_Name: Crowbar
+  m_EditorClassIdentifier: 
+  <Mesh>k__BackingField: {fileID: 7560267142187180976, guid: b1fd10f5cf4c85746b407ea8508a7b4b, type: 3}
+  <Material>k__BackingField: {fileID: 5561349426305759274, guid: d7f39e3a211b23e4a8e3d0b5310fd7ed, type: 3}
+  <ItemType>k__BackingField: 1
+  <Scale>k__BackingField: 1

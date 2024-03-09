@@ -11,18 +11,27 @@ public class ToolManager : Singleton<ToolManager>
     private void OnEnable()
     {
         Interface.UseItem += HandleUseTool;
+        ItemSpawner.GetSpawnReference += HandleSpawnerReference;
+        ItemAndAbilityManager.SpawnTool += HandleToolSpawn;
     }
 
     private void OnDisable()
     {
         Interface.UseItem -= HandleUseTool;
+        ItemAndAbilityManager.SpawnTool -= HandleToolSpawn;
+        ItemSpawner.GetSpawnReference += HandleSpawnerReference;
+
     }
 
-    readonly List<ItemData> usedTools = new();  
+    readonly List<ItemData> usedTools = new();
+    readonly Dictionary<Tools, ItemSpawner> toolTypeToSpawner = new();
 
     public ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
     public IEnumerable<Tools> GetUsedToolsTypes() => usedTools.Select(t => t.ItemType);
     public bool HasUsedTool(Tools toolType) => GetUsedToolsTypes().Contains(toolType);
+
+    void HandleSpawnerReference(ItemSpawner itemSpawner)
+        => toolTypeToSpawner.Add(itemSpawner.ToolData.ItemType, itemSpawner);
 
     void HandleUseTool(ItemData toolData)
     {
@@ -80,22 +89,10 @@ public class ToolManager : Singleton<ToolManager>
         usedTools.Add(toolData);
     }
 
-    void HandleSpawnTool(ItemData toolData)
+    void HandleToolSpawn(Tools tool)
     {
-        if (toolData == null)
-            return;
-
-        switch (toolData.ItemType)
-        {
-            case Tools.Crowbar:
-                break;
-
-            case Tools.Hammer:
-                break;
-
-            case Tools.Wrench:
-                break;
-        }
+        if (toolTypeToSpawner.TryGetValue(tool, out ItemSpawner spawner))
+            spawner.SpawnItem();
     }
 
 }

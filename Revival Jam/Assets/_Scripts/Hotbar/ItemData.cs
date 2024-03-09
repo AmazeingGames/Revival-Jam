@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item Data")]
+[CreateAssetMenu(menuName = "Item Data/Item Data 2D")]
 public class ItemData : ScriptableObject
 {
     [field: SerializeField] public Sprite Sprite { get; private set; }

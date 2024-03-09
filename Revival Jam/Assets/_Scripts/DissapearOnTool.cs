@@ -30,12 +30,12 @@ public class DissapearOnTool : MonoBehaviour
 
     private void OnEnable()
     {
-        GainTool += HandleToolGain;
+        SpawnTool += HandleToolGain;
         Interface.UseItem += HandleToolUse;
     }
     private void OnDisable()
     {
-        GainTool -= HandleToolGain;
+        SpawnTool -= HandleToolGain;
         Interface.UseItem -= HandleToolUse;
 
     }

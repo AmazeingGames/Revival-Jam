@@ -17,18 +17,17 @@ public class ArcadePostProcessing : MonoBehaviour
 
     private void Update()
     {
-        //Starts level post on level start
+        // Starts level post on level start
         if (!TerminalPostProcessing.isActiveAndEnabled)
             LevelPostProcessing.gameObject.SetActive(true);
     }
 
-    //Uses different post-processing for the terminal and the level
+    // Uses different post-processing for the terminal and the level
     void HandleDialogueEvent(object sender, DialogueEventArgs eventArgs)
     {
         bool isOpening = eventArgs.eventType == DialogueEventArgs.EventType.DialogueStart;
 
         TerminalPostProcessing.gameObject.SetActive(isOpening);
         LevelPostProcessing.gameObject.SetActive(!isOpening);
-
     }
 }

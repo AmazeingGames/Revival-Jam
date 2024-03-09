@@ -28,7 +28,7 @@ public class VirtualCursorActivator : MonoBehaviour
     bool isFirstTime = true;
     Vector2 mousePositionRemember = new();
 
-    public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Interaction }
+    public enum ActiveState { Menu = 0, Circuitry = 2, Arcade = 3, Game }
 
     private void OnEnable()
     {
@@ -74,7 +74,7 @@ public class VirtualCursorActivator : MonoBehaviour
 
             case ActiveState.Circuitry:
             case ActiveState.Arcade:
-            case ActiveState.Interaction:
+            case ActiveState.Game:
                 switch (newState)
                 {
                     //Extra code is needed, because this checks only for when the game enters the pause *screen*, not when the game actually becomes paused
@@ -112,8 +112,6 @@ public class VirtualCursorActivator : MonoBehaviour
 
     void HandleConnectToStation(ConnectEventArgs connectEventArgs)
     {
-        //Debug.Log($"Cursor | Handled connect to Station {connectEventArgs.LinkedStation} | isConnecting {connectEventArgs.IsConnecting}");
-
         PlayerFocus.FocusedOn convertedStation = activeState switch
         {
             ActiveState.Arcade      => PlayerFocus.FocusedOn.Arcade,
@@ -132,7 +130,7 @@ public class VirtualCursorActivator : MonoBehaviour
                     SetActiveCursor(connectEventArgs.IsConnecting);
                 break;
 
-            case ActiveState.Interaction:
+            case ActiveState.Game:
                 switch (connectEventArgs.LinkedStation)
                 {
                     case PlayerFocus.FocusedOn.Arcade:
@@ -142,7 +140,7 @@ public class VirtualCursorActivator : MonoBehaviour
                         break;
 
                     default:
-                        SetActiveCursor(HasTool);
+                        SetActiveCursor(HasTool || ItemAndAbilityManager.Instance.AreUncollectedTools());
                         break;
                 }
                 break;

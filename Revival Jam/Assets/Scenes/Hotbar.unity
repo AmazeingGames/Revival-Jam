@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HotbarLayoutGroup: {fileID: 1154592966}
-  slot: {fileID: 3452539140637017041, guid: e97ae1f87ff35f14492419c6a7b983b0, type: 3}
-  item: {fileID: 5692423326128565514, guid: aa6fdcb0e7917764d81bbc9f03abf5dd, type: 3}
+  genericSlot: {fileID: 3452539140637017041, guid: e97ae1f87ff35f14492419c6a7b983b0, type: 3}
+  genericItem: {fileID: 5692423326128565514, guid: aa6fdcb0e7917764d81bbc9f03abf5dd, type: 3}
   itemsData:
   - {fileID: 11400000, guid: cf313e53802ba274b92310d3ea3d932e, type: 2}
   - {fileID: 11400000, guid: f652827c036890a458f6fb8ee978e105, type: 2}

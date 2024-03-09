@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class HotbarManager : Singleton<HotbarManager>
 {
     [SerializeField] HorizontalLayoutGroup HotbarLayoutGroup;
-    [SerializeField] GameObject slot;
-    [SerializeField] Item item;
+    [SerializeField] GameObject genericSlot;
+    [SerializeField] Item genericItem;
 
     [SerializeField] List<ItemData> itemsData;
 
@@ -48,7 +48,7 @@ public class HotbarManager : Singleton<HotbarManager>
             StartCoroutine(DropHoldingItem());
     }
 
-    // Gives a delay for the interface to know we're holding an itemToGain
+    // Delays for the interface to know we're holding an itemToGain
     IEnumerator DropHoldingItem()
     {
         yield return new WaitForSeconds(.1f);
@@ -57,14 +57,14 @@ public class HotbarManager : Singleton<HotbarManager>
     }
     void Start()
     {
-        // Instantiates the hotbar and readies item data
+        // Creates the hotbar and readies item data
         foreach (var itemData in itemsData)
         {
-            Transform currentSlot = Instantiate(slot).transform;
+            Transform currentSlot = Instantiate(genericSlot).transform;
 
             currentSlot.SetParent(HotbarLayoutGroup.transform);
 
-            Item currentItem = Instantiate(item);
+            Item currentItem = Instantiate(genericItem);
 
             currentItem.InitializeData(currentSlot, itemData);
 
@@ -90,7 +90,7 @@ public class HotbarManager : Singleton<HotbarManager>
     void HandleUseItem(ItemData itemData)
         => currentTools.Remove(itemData);
 
-    //Adds the itemToGain to the player's hotbar
+    //Adds the gained to the player's hotbar
     void HandleItemGain(ItemAndAbilityManager.Tools ability)
     {
         if (!ItemsDictionary.ContainsKey(ability))
