@@ -10,14 +10,10 @@ public class ArcadePostProcessing : MonoBehaviour
 
 
     private void OnEnable()
-    {
-        DialogueManager.DialogueEvent += HandleEnterDialogue;
-    }
+        => DialogueManager.DialogueEvent += HandleDialogueEvent;
 
     private void OnDisable()
-    {
-        DialogueManager.DialogueEvent -= HandleEnterDialogue;
-    }
+        => DialogueManager.DialogueEvent -= HandleDialogueEvent;
 
     private void Update()
     {
@@ -26,12 +22,13 @@ public class ArcadePostProcessing : MonoBehaviour
             LevelPostProcessing.gameObject.SetActive(true);
     }
 
-    //true -> open dialogue
-    //false -> close dialogue
-    //Responsible for deciding which post processing to use, since we want to use different processes for the terminal and the level
-    void HandleEnterDialogue(bool dialogueOpen)
+    //Uses different post-processing for the terminal and the level
+    void HandleDialogueEvent(object sender, DialogueEventArgs eventArgs)
     {
-        TerminalPostProcessing.gameObject.SetActive(dialogueOpen);
-        LevelPostProcessing.gameObject.SetActive(!dialogueOpen);
+        bool isOpening = eventArgs.eventType == DialogueEventArgs.EventType.DialogueStart;
+
+        TerminalPostProcessing.gameObject.SetActive(isOpening);
+        LevelPostProcessing.gameObject.SetActive(!isOpening);
+
     }
 }

@@ -21,7 +21,6 @@ public class MouseLook : MonoBehaviour
     [SerializeField] float timeBetweenLockChecks = .25f;
 
     bool isLocked = false;
-    bool escape = false;
 
     // Start is called before the first frame update
     void Start()
@@ -49,9 +48,7 @@ public class MouseLook : MonoBehaviour
     }
 
     float GetXRot()
-    {
-        return Input.GetAxis("Mouse X") * sensitivityHor;
-    }
+        => Input.GetAxis("Mouse X") * sensitivityHor;
 
 
     //Makes sure isLocked stays properly synced with the game

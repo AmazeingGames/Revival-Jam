@@ -21,8 +21,8 @@ public class ToolManager : Singleton<ToolManager>
     readonly List<ItemData> usedTools = new();  
 
     public ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
-    public IEnumerable<ItemsAndAbilities> GetUsedToolsTypes() => usedTools.Select(t => t.ItemType);
-    public bool HasUsedTool(ItemsAndAbilities toolType) => GetUsedToolsTypes().Contains(toolType);
+    public IEnumerable<Tools> GetUsedToolsTypes() => usedTools.Select(t => t.ItemType);
+    public bool HasUsedTool(Tools toolType) => GetUsedToolsTypes().Contains(toolType);
 
     void HandleUseTool(ItemData toolData)
     {
@@ -37,18 +37,18 @@ public class ToolManager : Singleton<ToolManager>
         switch (toolData.ItemType)
         {
             // Allows use of control wiring
-            case ItemsAndAbilities.Crowbar:
+            case Tools.Crowbar:
                 StartCoroutine(WiringManager.SetWiringCabinet(isActive: true));
                 break;
 
             // Ends the game
-            case ItemsAndAbilities.Hammer:
+            case Tools.Hammer:
                 StartCoroutine(ArcadeQuad.SetCabinet(isActive: false));
                 GameManager.Instance.UpdateGameState(GameManager.GameState.EndGame);
                 break;
 
             // Allows the player to jump
-            case ItemsAndAbilities.Wrench:
+            case Tools.Wrench:
                 if (ControlsManager.IsControlConnected(ControlsManager.Controls.Jump))
                 {
                     Debug.Log("Jump is already connected");
@@ -87,16 +87,13 @@ public class ToolManager : Singleton<ToolManager>
 
         switch (toolData.ItemType)
         {
-            case ItemsAndAbilities.Crowbar:
+            case Tools.Crowbar:
                 break;
 
-            case ItemsAndAbilities.Hammer:
+            case Tools.Hammer:
                 break;
 
-            case ItemsAndAbilities.Screwdriver:
-                break;
-
-            case ItemsAndAbilities.Wrench:
+            case Tools.Wrench:
                 break;
         }
     }

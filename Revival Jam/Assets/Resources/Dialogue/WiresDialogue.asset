@@ -12,46 +12,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbb7e61c95cdf745a83c00e8c6f5b0e, type: 3}
   m_Name: WiresDialogue
   m_EditorClassIdentifier: 
+  <DialogueType>k__BackingField: 0
   <Messages>k__BackingField:
   - actorId: 0
     message: "Another day working on Sunday, \u2018hope you read this in your free
       time!\u2019"
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: '. . . '
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: "as if you\u2019ll ever get any at this point, since the boss apparently
       needs you to fix the machines too!"
     continuePreviousMessage: 1
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: One of the wires is missing from the machine this time, damn rats always
       chewing things up.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: What am I, a mechanic for God's sake?
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: '*sigh*'
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: 'I think he left his crowbar somewhere around here. . . '
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Apparently these machines come with extra controls that can be rerouted
       from the back.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Maybe I can use the crowbar to bend up the back panel and rewire the
       controls to whatever I need?
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: '. . . '
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: "Granted I don\u2019t die of electrocution first."
     continuePreviousMessage: 1
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   <Actors>k__BackingField:
   - name: "\u201CC;\\Users\\John\\Devnotes>Note /??"
     sprite: {fileID: 0}
-  NewInformation: 3
+  NewAbility: 0
+  NewTool: 1

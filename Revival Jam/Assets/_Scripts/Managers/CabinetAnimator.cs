@@ -88,7 +88,7 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
         switch (stationType)
         {
             case FocusedOn.Circuitry:
-                if (ToolManager.Instance.HasUsedTool(ItemsAndAbilities.Crowbar))
+                if (ToolManager.Instance.HasUsedTool(Tools.Crowbar))
                     SetPanelTarget(1);
                 break;
             
@@ -132,12 +132,11 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
     {
         switch (itemData.ItemType)
         {
-            case ItemsAndAbilities.Screwdriver:
-            case ItemsAndAbilities.Wrench:
+            case Tools.Wrench:
                 FixButton();
                 break;
 
-            case ItemsAndAbilities.Crowbar:
+            case Tools.Crowbar:
                 SetPanelTarget(1, isPrying: true);
                 break;
         }
@@ -151,7 +150,7 @@ public class CabinetAnimator : Singleton<CabinetAnimator>
             isDraggingPanel = false;
 
         var toolManger = ToolManager.Instance;
-        if (toolManger != null && !toolManger.HasUsedTool(ItemsAndAbilities.Crowbar))
+        if (toolManger != null && !toolManger.HasUsedTool(Tools.Crowbar))
             return;
 
         if (!(isMouseOverPanel && Input.GetMouseButtonDown(0)))

@@ -13,7 +13,7 @@ public class HotbarManager : Singleton<HotbarManager>
 
     [SerializeField] List<ItemData> itemsData;
 
-    readonly Dictionary<ItemAndAbilityManager.ItemsAndAbilities, Item> ItemsDictionary = new();
+    readonly Dictionary<ItemAndAbilityManager.Tools, Item> ItemsDictionary = new();
     readonly List<Item> HotbarItems = new();
 
     public ItemData HoldingItem { get; private set; } = null;
@@ -28,7 +28,7 @@ public class HotbarManager : Singleton<HotbarManager>
     {
         Interface.UseItem += HandleUseItem;
 
-        ItemAndAbilityManager.GainAbility += HandleAbilityGain;
+        ItemAndAbilityManager.GainTool += HandleItemGain;
         Item.GrabTool += HandleGrabTool;
     }
 
@@ -36,7 +36,7 @@ public class HotbarManager : Singleton<HotbarManager>
     {
         Interface.UseItem -= HandleUseItem;
 
-        ItemAndAbilityManager.GainAbility -= HandleAbilityGain;
+        ItemAndAbilityManager.GainTool -= HandleItemGain;
         Item.GrabTool -= HandleGrabTool;
     }
 
@@ -79,11 +79,11 @@ public class HotbarManager : Singleton<HotbarManager>
     {
 #if DEBUG
         if (Input.GetKeyDown(KeyCode.U))
-            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Crowbar);
+            HandleItemGain(ItemAndAbilityManager.Tools.Crowbar);
         if (Input.GetKeyDown(KeyCode.I))
-            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Hammer);
+            HandleItemGain(ItemAndAbilityManager.Tools.Hammer);
         if (Input.GetKeyDown(KeyCode.O))
-            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Wrench);
+            HandleItemGain(ItemAndAbilityManager.Tools.Wrench);
 #endif
     }
 
@@ -91,7 +91,7 @@ public class HotbarManager : Singleton<HotbarManager>
         => currentTools.Remove(itemData);
 
     //Adds the itemToGain to the player's hotbar
-    void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities ability)
+    void HandleItemGain(ItemAndAbilityManager.Tools ability)
     {
         if (!ItemsDictionary.ContainsKey(ability))
         {

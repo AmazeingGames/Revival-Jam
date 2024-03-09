@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996a08cfb7c0692429806237ae74ac95, type: 3}
   m_Name: OpenWires
   m_EditorClassIdentifier: 
-  <InterfaceTool>k__BackingField: 3
+  <InterfaceTool>k__BackingField: 1
   <InterfaceType>k__BackingField: 000000000200000005000000

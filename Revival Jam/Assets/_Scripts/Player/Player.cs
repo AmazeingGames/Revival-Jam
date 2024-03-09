@@ -7,6 +7,7 @@ using static ReceptacleObject;
 using static Wire;
 using static AudioManager;
 using static AudioManager.OneShotSounds;
+using static DialogueEventArgs.EventType;
 using FMODUnity;
 
 //Could put this in a field separate completely from the player, that the player is able to reference for their controls.
@@ -44,25 +45,17 @@ public class Player : Singleton<Player>
     }
 
     private void OnEnable()
-    {
-        DialogueManager.DialogueEvent += HandleDialogue;
-    }
+        => DialogueManager.DialogueEvent += HandleDialogue;
 
     private void OnDisable()
-    {
-        DialogueManager.DialogueEvent -= HandleDialogue;
-    }
+        => DialogueManager.DialogueEvent -= HandleDialogue;
 
-    void HandleDialogue(bool enteringDialogue)
+    void HandleDialogue(object sender, DialogueEventArgs eventArgs)
     {
+        bool enteringDialogue = eventArgs.eventType == DialogueStart;
+
         characterController.enabled = !enteringDialogue;
-
         rigidbody.velocity = Vector3.zero;
-
-        Debug.Log(enteringDialogue);
-
-        //if (!stopOnDialogue)
-          //  characterController.enabled = true;
     }
 
     private void Update()
@@ -108,14 +101,12 @@ public class Player : Singleton<Player>
         Vector3 rayDirection = new(0, -groundRaycastLength, 0);
         Gizmos.DrawRay(leftGroundRaycastStart.transform.position, rayDirection);
         Gizmos.DrawRay(rightGroundRaycastStart.transform.position, rayDirection);
-        //Vector3 rayDirection = new(0, 0, 0);
     }
 
     RaycastHit2D GroundRaycast(GameObject rayCastStart)
     {
         RaycastHit2D racyastHit = Physics2D.Raycast(rayCastStart.transform.position, Vector3.down, groundRaycastLength, groundLayer);
 
-        //Debug.Log($"Raycast hit : {(bool)racyastHit}");
         if (racyastHit)
         {
             int layerNumber = racyastHit.transform.gameObject.layer;
@@ -144,20 +135,14 @@ public class Player : Singleton<Player>
     }
 
     public void ShouldIncrementJoustTimer(bool increment)
-    {
-        incrementJoust = increment;
-    }
+        => incrementJoust = increment;
 
     public void ResetJoustTimer()
-    {
-        JoustTimer = 0;
-    }
+        => JoustTimer = 0;
 
     void UpdateJoustTimer()
     {
         if (incrementJoust)
             JoustTimer += Time.deltaTime;
-        //else
-            //set 0 (?)
     }
 }

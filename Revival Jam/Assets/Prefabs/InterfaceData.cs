@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Interface Data")]
 public class InterfaceData : ScriptableObject
 {
-    [field: SerializeField] public ItemAndAbilityManager.ItemsAndAbilities InterfaceTool { get; private set; }
+    [field: SerializeField] public ItemAndAbilityManager.Tools InterfaceTool { get; private set; }
     [field: SerializeField] public List<PlayerFocus.FocusedOn> InterfaceType { get; private set; }
 
 }

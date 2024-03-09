@@ -12,24 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbb7e61c95cdf745a83c00e8c6f5b0e, type: 3}
   m_Name: PowerDialogue
   m_EditorClassIdentifier: 
+  <DialogueType>k__BackingField: 0
   <Messages>k__BackingField:
   - actorId: 0
     message: 'Long day wrestling with this code; boss is breathing down my neck to
       finish the game. '
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Remember to fix the bug where you can still move after you turn off
       the game.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Guess collisions must not properly when work the machine is off either,
       since you stop taking damage all together.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Jeez, hope your day is better whenever you have time to read this future
       me.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   <Actors>k__BackingField:
   - name: "\u201CC;\\Users\\John\\Devnotes>Note /?"
     sprite: {fileID: 0}
-  NewInformation: 2
+  NewAbility: 2
+  NewTool: 0

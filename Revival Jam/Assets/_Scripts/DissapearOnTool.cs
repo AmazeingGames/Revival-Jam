@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,26 @@ public class DissapearOnTool : MonoBehaviour
     [SerializeField] bool appearOnToolGain = false;
     [SerializeField] bool appearOnToolUse = false;
 
-    [SerializeField] ItemsAndAbilities appearToolGainType;
-    [SerializeField] ItemsAndAbilities appearToolUseType;
+    [SerializeField] Tools appearToolGainType;
+    [SerializeField] Tools appearToolUseType;
 
     [Header("Disappear Settings")]
     [SerializeField] bool disappearOnToolGain = false;
     [SerializeField] bool disappearOnToolUse = false;
 
     [FormerlySerializedAs("toolGainType")]
-    [SerializeField] ItemsAndAbilities disappearToolGainType;
+    [SerializeField] Tools disappearToolGainType;
     [FormerlySerializedAs("toolUseType")]
-    [SerializeField] ItemsAndAbilities disappearToolUseType;
+    [SerializeField] Tools disappearToolUseType;
 
     private void OnEnable()
     {
-        ItemAndAbilityManager.GainAbility += HandleAbilityGain;
+        GainTool += HandleToolGain;
         Interface.UseItem += HandleToolUse;
     }
     private void OnDisable()
     {
-        ItemAndAbilityManager.GainAbility -= HandleAbilityGain;
+        GainTool -= HandleToolGain;
         Interface.UseItem -= HandleToolUse;
 
     }
@@ -46,11 +47,12 @@ public class DissapearOnTool : MonoBehaviour
         CheckGainedToolsDisappear();
     }
 
-    void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities abilities)
+    
+    void HandleToolGain(Tools tool)
     {
         if (disappearOnToolGain)
         {
-            if (abilities != disappearToolGainType)
+            if (tool != disappearToolGainType)
                 return;
 
             gameObject.SetActive(false);
@@ -58,12 +60,11 @@ public class DissapearOnTool : MonoBehaviour
 
         if (appearOnToolGain)
         {
-            if (abilities != appearToolGainType)
+            if (tool != appearToolGainType)
                 return;
 
             gameObject.SetActive(true);
         }
-
     }
 
     //This whole disappear/appear thing needs to be refactored
@@ -115,17 +116,5 @@ public class DissapearOnTool : MonoBehaviour
     void Appear()
     {
         gameObject.SetActive(true);
-    }
-
-
-    void SetActive(bool active)
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

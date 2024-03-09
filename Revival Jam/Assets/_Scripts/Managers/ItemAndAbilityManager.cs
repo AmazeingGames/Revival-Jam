@@ -9,11 +9,15 @@ using UnityEngine.InputSystem.LowLevel;
 // Keeps track of the player's real world items and tools
 public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
 {
-    public static event Action<ItemsAndAbilities> GainAbility;
+    public static event Action<Abilities> GainAbility;
+    public static event Action<Tools> GainTool;
 
-    public enum ItemsAndAbilities { None, Shake, Power, Crowbar, Hammer, Screwdriver, Wrench }
+    public enum Abilities { None, Shake, Power}
+    public enum Tools { None, Crowbar, Hammer, Wrench }
 
-    readonly List<ItemsAndAbilities> learnedAbilities = new();
+
+    readonly List<Abilities> learnedAbilities = new();
+    readonly List<Tools> possesedTools = new();
 
     private void OnEnable()
         => DialogueManager.DialogueEvent += HandleDialogueEvent;
@@ -22,17 +26,23 @@ public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
         => DialogueManager.DialogueEvent -= HandleDialogueEvent;
 
     // On Dialogue End:
-        // Gain ability/item and inform listeners
+        // Gain ability and inform listeners
+        // Gain item and inform listeners
     public void HandleDialogueEvent(object sender, DialogueEventArgs eventArgs)
     {
-        ItemsAndAbilities ability = eventArgs.GetAbility();
-        if (ability == ItemsAndAbilities.None)
-            return;
+        var ability = eventArgs.GetAbility();
+        var tool = eventArgs.GetTool();
 
-        if (learnedAbilities.Contains(ability))
-            return;
+        if (ability != Abilities.None && !learnedAbilities.Contains(ability))
+        {
+            learnedAbilities.Add(ability);
+            GainAbility?.Invoke(ability);
+        }
 
-        learnedAbilities.Add(ability);
-        GainAbility?.Invoke(ability);
+        if (tool != Tools.None && !possesedTools.Contains(tool))
+        {
+            possesedTools.Add(tool);
+            GainTool?.Invoke(tool);
+        }     
     }
 }

@@ -67,32 +67,18 @@ public class MachineAbilities : Singleton<MachineAbilities>
         }
     }
 
-    void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities newAbility)
+    void HandleAbilityGain(ItemAndAbilityManager.Abilities newAbility)
     {
+        Debug.Log($"Learned Ability: {newAbility} Machine");
+
         switch (newAbility)
         {
-            case ItemAndAbilityManager.ItemsAndAbilities.Shake:
-                Debug.Log("Learned Ability: Shake Machine");
+            case ItemAndAbilityManager.Abilities.Shake:
                 canShakeMachine = true;
                 break;
 
-            case ItemAndAbilityManager.ItemsAndAbilities.Power:
+            case ItemAndAbilityManager.Abilities.Power:
                 canPowerMachine = true;
-                Debug.Log("Learned Ability: Power Machine");
-                break;
-
-            case ItemAndAbilityManager.ItemsAndAbilities.Screwdriver:
-                break;
-
-            
-            case ItemAndAbilityManager.ItemsAndAbilities.Crowbar:
-                
-                break;
-
-            case ItemAndAbilityManager.ItemsAndAbilities.Hammer:
-                break;
-
-            case ItemAndAbilityManager.ItemsAndAbilities.Wrench:
                 break;
         }
     }

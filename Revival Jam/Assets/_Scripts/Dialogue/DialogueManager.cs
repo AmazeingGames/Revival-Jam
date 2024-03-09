@@ -119,7 +119,7 @@ public class DialogueManager : Singleton<DialogueManager>
         if (isDialogueRunning)
             return;
 
-        DialogueEvent?.Invoke(this, new(DialogueStart, false, ItemAndAbilityManager.ItemsAndAbilities.None));
+        DialogueEvent?.Invoke(this, new(eventType: DialogueStart, grantInformation: false, dialogue));
 
         currentDialogue = dialogue;
         currentActors = dialogue.Actors;
@@ -132,8 +132,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
         dialogueSpeech.text = string.Empty;
         StartCoroutine(DisplayMessageSlow());
-
-        Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
     }
 
     // Eventually we want different dialogue to have different sfx
@@ -286,7 +284,7 @@ public class DialogueManager : Singleton<DialogueManager>
     // Informs listeners that dialogue has ended and closes dialogue box
     void ExitDialogue(bool grantAbility = true)
     {
-        DialogueEvent?.Invoke(this, new(DialogueExit, grantAbility, currentDialogue.NewInformation));
+        DialogueEvent?.Invoke(this, new(eventType: DialogueExit, grantAbility, currentDialogue));
 
         if (!textFinished)
             DisplayMessageInstant(false);
@@ -381,16 +379,21 @@ public class DialogueEventArgs : EventArgs
 
     public readonly EventType eventType;
     
-    readonly bool shouldGrantAbility;
-    readonly ItemAndAbilityManager.ItemsAndAbilities abilityToGrant;
+    readonly bool shouldGrantInformation;
+    readonly ItemAndAbilityManager.Abilities abilityToGrant;
+    readonly ItemAndAbilityManager.Tools toolToGrant;
 
-    public DialogueEventArgs(EventType eventType, bool shouldGrantAbility, ItemAndAbilityManager.ItemsAndAbilities abilityToGrant)
+    public DialogueEventArgs(EventType eventType, bool grantInformation, Dialogue dialogue)
     {
         this.eventType = eventType;
-        this.shouldGrantAbility = shouldGrantAbility;
-        this.abilityToGrant = abilityToGrant;
+        this.shouldGrantInformation = grantInformation;
+        
+        abilityToGrant = dialogue.NewAbility;
+        toolToGrant = dialogue.NewTool;
     }
 
-    public ItemAndAbilityManager.ItemsAndAbilities GetAbility()
-        => shouldGrantAbility ? abilityToGrant : ItemAndAbilityManager.ItemsAndAbilities.None;
+    public ItemAndAbilityManager.Abilities GetAbility()
+        => shouldGrantInformation ? abilityToGrant : ItemAndAbilityManager.Abilities.None;
+    public ItemAndAbilityManager.Tools GetTool()
+        => shouldGrantInformation ? toolToGrant : ItemAndAbilityManager.Tools.None;
 }

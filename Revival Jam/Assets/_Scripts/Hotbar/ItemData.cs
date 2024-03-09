@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     [field: SerializeField] public Sprite Sprite { get; private set; }
-    [field: SerializeField] public ItemAndAbilityManager.ItemsAndAbilities ItemType { get; private set; }
+    [field: SerializeField] public ItemAndAbilityManager.Tools ItemType { get; private set; }
 
     [field: Header("Transform")]
     [field: SerializeField] public Vector2 MouseFollowOffset { get; private set; }

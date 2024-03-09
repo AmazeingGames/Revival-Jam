@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: HammerData
   m_EditorClassIdentifier: 
   <Sprite>k__BackingField: {fileID: 1721081644, guid: 3312e15c88155ab4bb7222c627426972, type: 3}
-  <ItemType>k__BackingField: 4
+  <ItemType>k__BackingField: 2
   <MouseFollowOffset>k__BackingField: {x: 0, y: 0}
   <Scale>k__BackingField: 90

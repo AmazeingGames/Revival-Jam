@@ -12,50 +12,117 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbb7e61c95cdf745a83c00e8c6f5b0e, type: 3}
   m_Name: ShakeDialogue
   m_EditorClassIdentifier: 
+  <DialogueType>k__BackingField: 0
   <Messages>k__BackingField:
   - actorId: 0
     message: This game is broken;
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: ' nothing works '
     continuePreviousMessage: 1
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: -- and I think I got bit by a damn rat hiding inside the machine.
     continuePreviousMessage: 1
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: It's no wonder why this thing contstantly stinks!
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Who the HELL's even been feeding them!?!
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: .
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: .
     continuePreviousMessage: 1
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: . My anger's been getting really bad lately.
     continuePreviousMessage: 1
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Just the other day I shook the machine so hard I must've knocked something
       loose.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Somehow it made some parts of some old levels, ones we removed a long
       time ago, reappear.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: . . .
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: Now I need to patch that out before some no life cheater nearly breaks
       the machine and crushes themself in the process.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   - actorId: 0
     message: That's just a lawsuit waiting to happen.
     continuePreviousMessage: 0
+    shouldJitter: 0
+    overrideSpeed: 0
+    newSpeed: 0
+    autoPlay: 0
+    hangTime: 0.5
   <Actors>k__BackingField:
   - name: "\u201CC;\\Users\\John\\Devnotes>Note /!!"
     sprite: {fileID: 0}
-  NewInformation: 1
+  NewAbility: 1
+  NewTool: 0
