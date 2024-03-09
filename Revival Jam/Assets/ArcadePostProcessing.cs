@@ -11,12 +11,12 @@ public class ArcadePostProcessing : MonoBehaviour
 
     private void OnEnable()
     {
-        DialogueManager.EnterDialogue += HandleEnterDialogue;
+        DialogueManager.DialogueEvent += HandleEnterDialogue;
     }
 
     private void OnDisable()
     {
-        DialogueManager.EnterDialogue -= HandleEnterDialogue;
+        DialogueManager.DialogueEvent -= HandleEnterDialogue;
     }
 
     private void Update()

@@ -26,13 +26,13 @@ public class MachineAbilities : Singleton<MachineAbilities>
     private void OnEnable()
     {
         AfterArcadeStateChange += HandleArcadeGameStateChange;
-        ItemAndAbilityManager.AbilityGain += HandleAbilityGain;
+        ItemAndAbilityManager.GainAbility += HandleAbilityGain;
     }
 
     private void OnDisable()
     {
         AfterArcadeStateChange -= HandleArcadeGameStateChange;
-        ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
+        ItemAndAbilityManager.GainAbility -= HandleAbilityGain;
     }
 
     private void Update()

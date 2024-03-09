@@ -28,7 +28,7 @@ public class HotbarManager : Singleton<HotbarManager>
     {
         Interface.UseItem += HandleUseItem;
 
-        ItemAndAbilityManager.AbilityGain += HandleAbilityGain;
+        ItemAndAbilityManager.GainAbility += HandleAbilityGain;
         Item.GrabTool += HandleGrabTool;
     }
 
@@ -36,7 +36,7 @@ public class HotbarManager : Singleton<HotbarManager>
     {
         Interface.UseItem -= HandleUseItem;
 
-        ItemAndAbilityManager.AbilityGain -= HandleAbilityGain;
+        ItemAndAbilityManager.GainAbility -= HandleAbilityGain;
         Item.GrabTool -= HandleGrabTool;
     }
 
@@ -48,19 +48,16 @@ public class HotbarManager : Singleton<HotbarManager>
             StartCoroutine(DropHoldingItem());
     }
 
-    //Gives a delay for the interface to know we're holding an itemToGain
+    // Gives a delay for the interface to know we're holding an itemToGain
     IEnumerator DropHoldingItem()
     {
         yield return new WaitForSeconds(.1f);
 
         HoldingItem = null;
     }
-
-    // Start is called before the first frame update
     void Start()
     {
-        //Instantiates the hotbar essentially
-        //Readies items and their respective data
+        // Instantiates the hotbar and readies item data
         foreach (var itemData in itemsData)
         {
             Transform currentSlot = Instantiate(slot).transform;
@@ -78,16 +75,20 @@ public class HotbarManager : Singleton<HotbarManager>
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        DebugGainItems();
+#if DEBUG
+        if (Input.GetKeyDown(KeyCode.U))
+            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Crowbar);
+        if (Input.GetKeyDown(KeyCode.I))
+            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Hammer);
+        if (Input.GetKeyDown(KeyCode.O))
+            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Wrench);
+#endif
     }
 
     void HandleUseItem(ItemData itemData)
-    {
-        currentTools.Remove(itemData);
-    }
+        => currentTools.Remove(itemData);
 
     //Adds the itemToGain to the player's hotbar
     void HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities ability)
@@ -110,18 +111,5 @@ public class HotbarManager : Singleton<HotbarManager>
 
         gainedTools.Add(itemToGain.ItemData);
         currentTools.Add(itemToGain.ItemData);
-    }
-
-    //Simulates what it would be like to handle an Ability Gain
-    void DebugGainItems()
-    {
-#if DEBUG
-        if (Input.GetKeyDown(KeyCode.U))
-            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Crowbar);
-        if (Input.GetKeyDown(KeyCode.I))
-            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Hammer);
-        if (Input.GetKeyDown(KeyCode.O))
-            HandleAbilityGain(ItemAndAbilityManager.ItemsAndAbilities.Wrench);
-#endif
     }
 }

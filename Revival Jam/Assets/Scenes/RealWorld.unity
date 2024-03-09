@@ -2768,6 +2768,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 345050877}
     m_Modifications:
+    - target: {fileID: -5987877386983386491, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: linkedStation
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: West Station
@@ -3164,6 +3168,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 345050877}
     m_Modifications:
+    - target: {fileID: -5987877386983386491, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: linkedStation
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: North Station
@@ -3617,6 +3625,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 345050877}
     m_Modifications:
+    - target: {fileID: -5987877386983386491, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: linkedStation
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: South Station
@@ -3830,6 +3842,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 345050877}
     m_Modifications:
+    - target: {fileID: -5987877386983386491, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
+      propertyPath: linkedStation
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1023459314618489941, guid: 75f423d0f4b741b4fa259e7734f05e57, type: 3}
       propertyPath: m_Name
       value: East Station

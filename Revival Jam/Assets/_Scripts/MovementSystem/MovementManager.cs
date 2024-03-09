@@ -16,10 +16,8 @@ public class MovementManager : Singleton<MovementManager>
     public static event Action<FocusedOn> ConnectToStation;
     public static bool ControlMovement => Instance != null && Instance.controlMovement;
 
-    private void Awake()
+    private void Start()
     {
-        base.Awake();
-
         InitializeStationDictionary();
     }
 
@@ -43,11 +41,15 @@ public class MovementManager : Singleton<MovementManager>
     IEnumerator OnStart()
     {
         yield return new WaitForSeconds(.1f);
-        ConnectToStation?.Invoke(startingStation);
+        CallConnectToStation(startingStation);
     }
 
+    // Gives public access to invoke the connectToStation event
     public void CallConnectToStation(FocusedOn stationToConnect)
-        => ConnectToStation?.Invoke(stationToConnect);
+    {
+        ConnectToStation?.Invoke(stationToConnect);
+        Debug.Log($"connecting to : {stationToConnect}");
+    }
 
     // Fills out the Dictionary with data from the StationData list
     void InitializeStationDictionary()

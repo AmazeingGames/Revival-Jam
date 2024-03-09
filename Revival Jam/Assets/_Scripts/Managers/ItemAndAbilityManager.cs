@@ -6,27 +6,33 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
-//Keeps track of the player's real world items and tools
+// Keeps track of the player's real world items and tools
 public class ItemAndAbilityManager : Singleton<ItemAndAbilityManager>
 {
-    public static event Action<ItemsAndAbilities> AbilityGain;
+    public static event Action<ItemsAndAbilities> GainAbility;
 
     public enum ItemsAndAbilities { None, Shake, Power, Crowbar, Hammer, Screwdriver, Wrench }
 
     readonly List<ItemsAndAbilities> learnedAbilities = new();
 
-    //public List<ItemsAndAbilities> GetLearnedAbilities() => learnedAbilities.AsReadOnly().ToList();
+    private void OnEnable()
+        => DialogueManager.DialogueEvent += HandleDialogueEvent;
 
-    public void GainAbilityInformation(ItemsAndAbilities ability)
+    private void OnDisable()
+        => DialogueManager.DialogueEvent -= HandleDialogueEvent;
+
+    // On Dialogue End:
+        // Gain ability/item and inform listeners
+    public void HandleDialogueEvent(object sender, DialogueEventArgs eventArgs)
     {
-        //learnedAbilities.Add(ability);
+        ItemsAndAbilities ability = eventArgs.GetAbility();
+        if (ability == ItemsAndAbilities.None)
+            return;
+
         if (learnedAbilities.Contains(ability))
             return;
 
         learnedAbilities.Add(ability);
-
-        AbilityGain?.Invoke(ability);
-
-        Debug.Log($"Gained Information : {ability}");
+        GainAbility?.Invoke(ability);
     }
 }

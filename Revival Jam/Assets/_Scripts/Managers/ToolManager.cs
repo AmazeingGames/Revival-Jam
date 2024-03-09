@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static ItemAndAbilityManager;
+using System.Collections.ObjectModel;
 
 public class ToolManager : Singleton<ToolManager>
 {
@@ -19,8 +20,8 @@ public class ToolManager : Singleton<ToolManager>
 
     readonly List<ItemData> usedTools = new();  
 
-    public System.Collections.ObjectModel.ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
-    public System.Collections.Generic.IEnumerable<ItemsAndAbilities> GetUsedToolsTypes() => usedTools.Select(t => t.ItemType);
+    public ReadOnlyCollection<ItemData> GetUsedTools() => usedTools.AsReadOnly();
+    public IEnumerable<ItemsAndAbilities> GetUsedToolsTypes() => usedTools.Select(t => t.ItemType);
     public bool HasUsedTool(ItemsAndAbilities toolType) => GetUsedToolsTypes().Contains(toolType);
 
     void HandleUseTool(ItemData toolData)
@@ -35,19 +36,18 @@ public class ToolManager : Singleton<ToolManager>
 
         switch (toolData.ItemType)
         {
+            // Allows use of control wiring
             case ItemsAndAbilities.Crowbar:
                 StartCoroutine(WiringManager.SetWiringCabinet(isActive: true));
                 break;
 
+            // Ends the game
             case ItemsAndAbilities.Hammer:
                 StartCoroutine(ArcadeQuad.SetCabinet(isActive: false));
-                Debug.Log("Thank you for freeing me! MuHAHAHA");
                 GameManager.Instance.UpdateGameState(GameManager.GameState.EndGame);
                 break;
 
-            case ItemsAndAbilities.Screwdriver:
-                break;
-
+            // Allows the player to jump
             case ItemsAndAbilities.Wrench:
                 if (ControlsManager.IsControlConnected(ControlsManager.Controls.Jump))
                 {
@@ -55,21 +55,20 @@ public class ToolManager : Singleton<ToolManager>
                     return;
                 }
 
+                // Finds a wire that's not connected to a control
                 var wires = ControlsManager.Instance.Wires;
-                var receptacles = ControlsManager.Instance.Receptacles;
-
                 var unusedWire = wires.FirstOrDefault(w => w.ConnectedReceptacle == null);
-
                 if (unusedWire == null)
                 {
-                    Debug.Log("No unused wire");
+                    Debug.LogWarning("All wires in use");
                     return;
                 }
 
+                // Find the receptacle connected to the jump control
+                var receptacles = ControlsManager.Instance.Receptacles;
                 var jumpReceptacle = receptacles.First(r => r.LinkedControl == ControlsManager.Controls.Jump);
-
-                Debug.Log($"Enable Jump | Using wire: {unusedWire} | Using receptacle: {jumpReceptacle}");
-
+                
+                // Connect jump
                 unusedWire.ManuallyConnect(jumpReceptacle);
                 break;
 

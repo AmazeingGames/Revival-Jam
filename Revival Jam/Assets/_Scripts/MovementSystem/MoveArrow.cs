@@ -39,8 +39,9 @@ public class MoveArrow : UIButtonBase
 
     private void Start()
     {
+        image.sprite = arrowSpriteData.DirectionToSprite(arrowDirection);
+
         SetInputKeys();
-        SetSprite();
     }
 
     // Sets the input keys that trigger the move event
@@ -73,7 +74,7 @@ public class MoveArrow : UIButtonBase
     private void Update()
         => InputCheck();
 
-    // Triggers the move event on the player's input
+    // Triggers the move event if the player presses a move direction
     void InputCheck()
     {
         if (shouldBeDisabled || MenuManager.Instance.IsInMenu)
@@ -86,17 +87,7 @@ public class MoveArrow : UIButtonBase
         }
     }
 
-    /*
-    public override void OnClick()
-    {
-        base.OnClick();
-        MovementManager.Instance.CallConnectToStation(connectingStation);
-    } 
-    */
-
-    void SetSprite() => image.sprite = arrowSpriteData.DirectionToSprite(arrowDirection); 
-
-    // On menu:
+    // On menu change:
         // Disables the arrows while in a menu
         // Sets the arrows able while in a game, if they were already able
     void HandleMenuStateChange(MenuManager.MenuState newMenuState)

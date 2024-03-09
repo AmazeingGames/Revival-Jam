@@ -8,6 +8,7 @@ using static ArcadeGameManager;
 using static AudioManager;
 using static PlayerFocus;
 using TMPro.Examples;
+using static DialogueEventArgs.EventType;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -54,7 +55,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     bool textFinished = false;
 
-    public static event Action<bool> EnterDialogue;
+    public static event EventHandler<DialogueEventArgs> DialogueEvent;
 
     float blipTimer;
 
@@ -84,16 +85,16 @@ public class DialogueManager : Singleton<DialogueManager>
         if (!isDialogueRunning)
             return;
 
+        // Only continue terminal dialogue while the player is at the machine
         if (dialogueType == DialogueType.Note && !IsFocusedOn(FocusedOn.Arcade))
-        {
-            Debug.Log("Not focused on arcade");
             return;
-        }
 
+        // Some messages we want to play without player interference
         if (CurrentMessage.autoPlay && textFinished)
             autoPlayMessage ??= StartCoroutine(AutoplayNextMessage(CurrentMessage.hangTime));
-        
-        if (Input.GetKeyDown(KeyCode.Space) && !CurrentMessage.autoPlay)
+
+        // Other messages we let the player skip
+        else if (Input.GetKeyDown(KeyCode.Space) && !CurrentMessage.autoPlay)
         {
             if (textFinished)
                 NextMessage();
@@ -101,26 +102,24 @@ public class DialogueManager : Singleton<DialogueManager>
                 DisplayMessageInstant();
         }
 
+        // Time until next beep sfx
         blipTimer -= Time.deltaTime;
     }
 
     IEnumerator AutoplayNextMessage(float delaySeconds)
     {
-        Debug.Log($"Started auto play. Will play next message in {delaySeconds} seconds");
-
         yield return new WaitForSeconds(delaySeconds);
 
         autoPlayMessage = null;
         NextMessage();
     }
 
-    //Opens the dialogue slot and prepares for the first line of a dialogue
     public void StartDialogue(Dialogue dialogue, DialogueType type = DialogueType.Note)
     {
         if (isDialogueRunning)
             return;
 
-        EnterDialogue?.Invoke(true);
+        DialogueEvent?.Invoke(this, new(DialogueStart, false, ItemAndAbilityManager.ItemsAndAbilities.None));
 
         currentDialogue = dialogue;
         currentActors = dialogue.Actors;
@@ -137,6 +136,7 @@ public class DialogueManager : Singleton<DialogueManager>
         Debug.Log($"Started Convo -- {currentDialogue.NewInformation} | Length {dialogue.Messages.Count}");
     }
 
+    // Eventually we want different dialogue to have different sfx
     void SetDialougeSFX(DialogueType dialogueType)
     {
         textSFX = dialogueType switch
@@ -145,7 +145,7 @@ public class DialogueManager : Singleton<DialogueManager>
         };
     }
 
-    //Sets the name and portrait for the current line of dialogue
+    // Because each dialogue, and sometimes each line of dialogue, has different properties, we set them each time
     void SetDialogueProperties()
     {
         Message displayMessage = currentMessages[currentIndex];
@@ -169,7 +169,7 @@ public class DialogueManager : Singleton<DialogueManager>
             textSpeed = displayMessage.newSpeed;
     }
 
-    //Displays the current line one character at a time
+    // Displays the current line one character at a time
     IEnumerator DisplayMessageSlow()
     {
         SetDialogueProperties();
@@ -180,55 +180,51 @@ public class DialogueManager : Singleton<DialogueManager>
 
         for (int i = 0; i < displayMessage.message.Length; i++)
         {
-            //Is it better to make the variable inside or outside the loop?
-            char character = displayMessage.message[i];
+            char current = displayMessage.message[i];
             bool skipSound = false;
             bool skipWait = false;
 
             if (textFinished)
                 yield break;
 
-            //Create dictionary for 'start' and 'end' 'command characters' and see if the given character is a valid key
-            if (character == '<')
+            // Used to instantly display rich text at instant speed
+            if (current == '<')
             {
-                var subString = displayMessage.message[i..];
+                string commandStart = displayMessage.message[i..];
+                string command = GetBetween(commandStart, current.ToString(), ">");
 
-                var commandText = GetBetween(subString, character.ToString(), ">");
+                dialogueSpeech.text += command;
 
-                dialogueSpeech.text += commandText;
-
-                i += commandText.Length - 1;
+                i += command.Length - 1;
 
                 skipSound = true;
                 skipWait = true;
             }
             else
-                dialogueSpeech.text += character;
+                dialogueSpeech.text += current;
 
-            //Makes sure empty characters don't take up time or make noise
-            if (silentCharacters.Contains(character) && skipSilentCharacters && useSilentCharacters)
+            // Makes sure empty characters don't take up time or make noise
+            if (silentCharacters.Contains(current) && skipSilentCharacters && useSilentCharacters)
             {
                 skipSound = true;
                 skipWait = true;
             }
 
-            //Plays sound for each character (at a fixed rate)
+            // Plays sound for each non-silent character at a fixed rate
             if (blipTimer <= 0 && !skipSound)
             {
                 TriggerAudioClip(textSFX, transform);
                 blipTimer = blipDelay;
             }
 
-            //Displays characters one at a time
-            float wait = textSpeed;
-            if (skipWait)
-                wait = 0;
+            // Displays silent characters instantly
+            // Delay between non-silent characters
+            float wait = skipWait ? 0 : textSpeed;
             yield return new WaitForSeconds(wait);
         }
         textFinished = true;
     }
 
-    //Returns the content of a string that appears between two values
     public static string GetBetween(string stringSource, string startValue, string endValue)
     {
         if (stringSource.Contains(startValue) && stringSource.Contains(endValue))
@@ -241,29 +237,25 @@ public class DialogueManager : Singleton<DialogueManager>
         return "";
     }
 
-    //Bug Fix Idea: Issue where instant display doesn't properly display instant messages
-    //Create a 'load message' string variable, it holds the message to display using the continued messages, clear it when there isn't a continuous message, add to it when there is
-    
-    //Displays the message all at once instead of one character at a time
+    // Displays current message all at once
+    // Displays any previous message that we need to continue
     void DisplayMessageInstant(bool playSFX = true)
     {
         StopCoroutine(DisplayMessageSlow());
-
         SetDialogueProperties();
 
-        Message displayMessage = currentMessages[currentIndex];
+        Message currentMessage = currentMessages[currentIndex];
 
-        //Maybe use a stringbuilder for performance
         bool continueMessage = currentMessages[currentIndex].continuePreviousMessage;
+
         if (continueMessage && currentIndex != 0)
-        {
             instantMessageText += currentMessages[currentIndex - 1].message;
-        }
-        if (!continueMessage)
+
+        else if (!continueMessage)
             instantMessageText = string.Empty;
 
         dialogueSpeech.text = string.Empty;
-        dialogueSpeech.text += instantMessageText + displayMessage.message;
+        dialogueSpeech.text += instantMessageText + currentMessage.message;
 
         textFinished = true;
 
@@ -271,33 +263,30 @@ public class DialogueManager : Singleton<DialogueManager>
             TriggerAudioClip(textSFX, transform);
     }
 
-    //Starts the next line of the current dialogue, and exits if there are none left
+    // Starts the next line of the current dialogue
+    // Ends dialogue if this is the last message
     void NextMessage()
     {
         currentIndex++;
 
+        // No more messages
         if (currentIndex >= currentMessages.Count)
         {
             ExitDialogue();
             return;
         }
 
+        // Clears speech
         if (!currentMessages[currentIndex].continuePreviousMessage)
-        {
-            Debug.Log("Did not continue message");
             dialogueSpeech.text = string.Empty;
-        }
 
         StartCoroutine(DisplayMessageSlow());
     }
 
-    //Finishes the dialogue and informs listeners dialogue has ended
+    // Informs listeners that dialogue has ended and closes dialogue box
     void ExitDialogue(bool grantAbility = true)
     {
-        EnterDialogue?.Invoke(false);
-        
-        if (grantAbility && (ItemAndAbilityManager.Instance != null && currentDialogue.NewInformation != ItemAndAbilityManager.ItemsAndAbilities.None))
-            ItemAndAbilityManager.Instance.GainAbilityInformation(currentDialogue.NewInformation);
+        DialogueEvent?.Invoke(this, new(DialogueExit, grantAbility, currentDialogue.NewInformation));
 
         if (!textFinished)
             DisplayMessageInstant(false);
@@ -308,6 +297,8 @@ public class DialogueManager : Singleton<DialogueManager>
         Debug.Log("Conversation finished");
     }
 
+    // Different dialogue types have different canvases
+    // Sets which canvas we're working on
     void OpenDialogueBox(DialogueType dialogueType)
     {
         switch (dialogueType)
@@ -337,14 +328,10 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     private void OnEnable()
-    {
-        AfterArcadeStateChange += HandleArcadeGameStateChange;
-    }
+        => AfterArcadeStateChange += HandleArcadeGameStateChange;
 
     private void OnDisable()
-    {
-        AfterArcadeStateChange -= HandleArcadeGameStateChange;
-    }
+        => AfterArcadeStateChange -= HandleArcadeGameStateChange;
 
     void HandleArcadeGameStateChange(ArcadeState arcadeState)
     {
@@ -386,4 +373,24 @@ public class DialogueManager : Singleton<DialogueManager>
 
         noteDialogueCanvas.worldCamera = arcadeCamera.GetComponent<Camera>();
     }
+}
+
+public class DialogueEventArgs : EventArgs
+{
+    public enum EventType { DialogueStart, DialogueExit }
+
+    public readonly EventType eventType;
+    
+    readonly bool shouldGrantAbility;
+    readonly ItemAndAbilityManager.ItemsAndAbilities abilityToGrant;
+
+    public DialogueEventArgs(EventType eventType, bool shouldGrantAbility, ItemAndAbilityManager.ItemsAndAbilities abilityToGrant)
+    {
+        this.eventType = eventType;
+        this.shouldGrantAbility = shouldGrantAbility;
+        this.abilityToGrant = abilityToGrant;
+    }
+
+    public ItemAndAbilityManager.ItemsAndAbilities GetAbility()
+        => shouldGrantAbility ? abilityToGrant : ItemAndAbilityManager.ItemsAndAbilities.None;
 }

@@ -119,12 +119,12 @@ public class AudioManager : Singleton<AudioManager>
         CleanUp();
     }
 
-    //Make this have a default value of the caller's transform
+    //This should have a default value of the caller's transform
     public static void TriggerAudioClip(OneShotSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
     public static void TriggerAudioClip(OneShotSounds sound, Vector3 origin)
     {
-        Debug.Log($"Triggered Audio Clip: {sound}");
+        //Debug.Log($"Triggered Audio Clip: {sound}");
 
         if (sound == OneShotSounds.Null)
             return;

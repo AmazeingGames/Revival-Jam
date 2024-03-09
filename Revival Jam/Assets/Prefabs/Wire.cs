@@ -157,8 +157,6 @@ public class Wire : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!other.TryGetComponent<ReceptacleObject>(out var receptacleObject))
             return;
 
-        Debug.Log("Over Receptacle");
-
         overlappingReceptacle = receptacleObject;
     }
 
