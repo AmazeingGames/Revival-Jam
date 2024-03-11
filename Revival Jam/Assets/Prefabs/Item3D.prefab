@@ -102,6 +102,7 @@ MonoBehaviour:
     m_Bits: 2097152
   meshRenderer: {fileID: 5269711854880037456}
   meshFilter: {fileID: 5269711854880037423}
+  boxCollider: {fileID: 4200151521288714512}
 --- !u!65 &4200151521288714512
 BoxCollider:
   m_ObjectHideFlags: 0

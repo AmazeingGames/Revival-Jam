@@ -20,8 +20,8 @@ public class ToolManager : Singleton<ToolManager>
         Interface.UseItem -= HandleUseTool;
         ItemAndAbilityManager.SpawnTool -= HandleToolSpawn;
         ItemSpawner.GetSpawnReference += HandleSpawnerReference;
-
     }
+
 
     readonly List<ItemData> usedTools = new();
     readonly Dictionary<Tools, ItemSpawner> toolTypeToSpawner = new();
@@ -32,6 +32,7 @@ public class ToolManager : Singleton<ToolManager>
 
     void HandleSpawnerReference(ItemSpawner itemSpawner)
         => toolTypeToSpawner.Add(itemSpawner.ToolData.ItemType, itemSpawner);
+
 
     void HandleUseTool(ItemData toolData)
     {

@@ -16,3 +16,5 @@ MonoBehaviour:
   <Material>k__BackingField: {fileID: 2100000, guid: 2f759e11939c83a44b3fc0b8290e8c4b, type: 2}
   <ItemType>k__BackingField: 2
   <Scale>k__BackingField: 1
+  <ColliderScale>k__BackingField: {x: 0.72, y: 2.03, z: 0.81}
+  <ColliderCenter>k__BackingField: {x: 0, y: 0, z: 0}

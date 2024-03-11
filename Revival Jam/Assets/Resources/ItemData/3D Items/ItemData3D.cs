@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item Data/Item Data 3D")]
@@ -11,6 +9,8 @@ public class ItemData3D : ScriptableObject
 
     [field: Header("Transform")]
     [field: SerializeField] public float Scale { get; private set; } = 1f;
-    [field: SerializeField] public Vector3 ColliderScale { get; private set; }
 
+    [field: Header("Collisions")]
+    [field: SerializeField] public Vector3 ColliderScale { get; private set; }
+    [field: SerializeField] public Vector3 ColliderCenter { get; private set; }
 }

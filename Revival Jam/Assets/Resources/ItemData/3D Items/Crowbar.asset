@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Crowbar
   m_EditorClassIdentifier: 
   <Mesh>k__BackingField: {fileID: 7560267142187180976, guid: b1fd10f5cf4c85746b407ea8508a7b4b, type: 3}
-  <Material>k__BackingField: {fileID: 5561349426305759274, guid: d7f39e3a211b23e4a8e3d0b5310fd7ed, type: 3}
+  <Material>k__BackingField: {fileID: 2100000, guid: 565a58b213431c846af681d849e2b9a3, type: 2}
   <ItemType>k__BackingField: 1
-  <Scale>k__BackingField: 1
+  <Scale>k__BackingField: 40
+  <ColliderScale>k__BackingField: {x: 0.02, y: 0.02, z: 0.015}
+  <ColliderCenter>k__BackingField: {x: 0, y: 0, z: 0}

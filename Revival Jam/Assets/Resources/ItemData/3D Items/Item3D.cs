@@ -9,6 +9,7 @@ public class Item3D : MonoBehaviour
     public static event Action<ItemData3D> GainItem3D;
     public ItemData3D ItemData3D { get; private set; }
 
+    [Header("Components")]
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] MeshFilter meshFilter;
     [SerializeField] BoxCollider boxCollider;
@@ -20,10 +21,11 @@ public class Item3D : MonoBehaviour
         meshRenderer.material = itemData3D.Material;
         meshFilter.mesh = itemData3D.Mesh;
 
-        transform.localScale = new Vector3(ItemData3D.Scale, ItemData3D.Scale, ItemData3D.Scale);
         transform.localPosition = Vector3.zero;
-        throw new NotImplementedException("SET COLLISION SIZE");
+        transform.localScale = new Vector3(ItemData3D.Scale, ItemData3D.Scale, ItemData3D.Scale);
 
+        boxCollider.size = ItemData3D.ColliderScale;
+        boxCollider.center = ItemData3D.ColliderCenter;
     }
 
     private void Update()
@@ -32,6 +34,7 @@ public class Item3D : MonoBehaviour
         if (ItemData3D != null)
             InitializeData(ItemData3D);
 # endif
+
         bool isMouseOver = IsMouseOver();
         if (isMouseOver)
             Debug.Log("Mouse over!");
