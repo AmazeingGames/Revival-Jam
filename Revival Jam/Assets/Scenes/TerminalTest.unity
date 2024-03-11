@@ -1493,4 +1493,4 @@ MonoBehaviour:
   scrollRect: {fileID: 1515645315}
   scrollType: 1
   scrollVelocity: 250
-  maxScrollThreshold: 0.3
+  maxScrollThreshold: 1

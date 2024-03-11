@@ -126,7 +126,7 @@ public class TerminalManager : MonoBehaviour
         TerminalInput.Select();
 
         if (scrollToBottom)
-            autoScroll.ScrollTimes(1);
+            autoScroll.StartTimedScroll(1);
     }
 
     //Stops the user from writing any responses

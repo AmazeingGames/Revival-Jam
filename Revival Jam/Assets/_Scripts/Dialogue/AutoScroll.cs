@@ -44,7 +44,7 @@ public class AutoScroll : MonoBehaviour
 
     private void Update()
     {
-        if (!Scroll())
+        if (!ShouldAutoScroll())
             StopAutoScroll();
 
         ResumeScroll();
@@ -52,24 +52,26 @@ public class AutoScroll : MonoBehaviour
 
     int scrollTimes;
 
-    bool Scroll()
+    bool ShouldAutoScroll()
     {
-        //Stop auto scroll checks
-        didPlayerScroll = DidPlayerScroll();
-        if (didPlayerScroll)
+        if (Input.mouseScrollDelta.y >= 1)
+        {
+            Debug.Log("Player scrolled up");
             return false;
+        }
 
         isMaxScroll = IsMaxScroll();
         if (!isMaxScroll)
+        {
+            Debug.Log("Not max scroll");
             return false;
+        }
 
         if (currentScroll == AutoScrollType.None)
             return false;
-
         else if (currentScroll == AutoScrollType.Times && scrollTimes <= 0)
             return false;
 
-        //Scroll down
         scrollTimes--;
         scrollRect.velocity = new Vector2(0, scrollVelocity);
 
@@ -94,24 +96,13 @@ public class AutoScroll : MonoBehaviour
         return true;
     }
 
-    bool DidPlayerScroll()
-    {
-        if (Input.mouseScrollDelta.y != 0)
-            return true;
-        return false;
-    }
-
     bool IsMaxScroll()
-    {
-        if (scrollRect.verticalNormalizedPosition < maxScrollThreshold)
-            return true;
-        return false;
-    }
+        => scrollRect.verticalNormalizedPosition < maxScrollThreshold;
 
     public void StartAutoScroll()
         => currentScroll = AutoScrollType.Auto;
 
-    public void ScrollTimes(int times)
+    public void StartTimedScroll(int times)
     {
         currentScroll = AutoScrollType.Times;
         scrollTimes = times;
@@ -123,8 +114,4 @@ public class AutoScroll : MonoBehaviour
         scrollRect.velocity = Vector2.zero;
         currentScroll = AutoScrollType.None;
     }
-
-    
-
-    
 }
