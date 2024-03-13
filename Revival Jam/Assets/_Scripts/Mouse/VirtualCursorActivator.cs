@@ -35,6 +35,7 @@ public class VirtualCursorActivator : MonoBehaviour
         FocusStation.ConnectToStation += HandleConnectToStation;
         MenuManager.OnMenuStateChange += HandleMenuStateChange;
         ArcadeGameManager.AfterArcadeStateChange += HandleArcadeStateChange;
+        MovementManager.OnValidation += HandleMovementManagerValidation;
     }
 
     private void OnDisable()
@@ -42,18 +43,18 @@ public class VirtualCursorActivator : MonoBehaviour
         FocusStation.ConnectToStation -= HandleConnectToStation;
         MenuManager.OnMenuStateChange -= HandleMenuStateChange;
         ArcadeGameManager.AfterArcadeStateChange -= HandleArcadeStateChange;
-
+        MovementManager.OnValidation -= HandleMovementManagerValidation;
     }
 
-    void HandleMenuStateChange(MenuManager.MenuState newState)
+    void HandleMenuStateChange(MenuManager.MenuState menuState)
     {
         switch (activeState)
         {
             case ActiveState.Menu:
-                switch (newState)
+                switch (menuState)
                 {
-                    //Menu: True
-                    //Interaction: False
+                    // Menu: True
+                    // Interaction: False
                     case MenuManager.MenuState.MainMenu:
                     case MenuManager.MenuState.Pause:
                     case MenuManager.MenuState.Settings:
@@ -62,8 +63,8 @@ public class VirtualCursorActivator : MonoBehaviour
                         SetActiveCursor(true);
                         break;
 
+                    // Do Nothing
                     case MenuManager.MenuState.PreviousState:
-                        //Do nothing
                         break;
 
                     default:
@@ -75,9 +76,9 @@ public class VirtualCursorActivator : MonoBehaviour
             case ActiveState.Circuitry:
             case ActiveState.Arcade:
             case ActiveState.Game:
-                switch (newState)
+                switch (menuState)
                 {
-                    //Extra code is needed, because this checks only for when the game enters the pause *screen*, not when the game actually becomes paused
+                    // Extra code is needed, because this checks only for when the game enters the pause *screen*, not when the game actually becomes paused
                     case MenuManager.MenuState.Pause:
                         if (!wasActiveOnPause)
                         {
@@ -121,7 +122,13 @@ public class VirtualCursorActivator : MonoBehaviour
 
         switch (activeState)
         {
-            case ActiveState.Menu:
+            case ActiveState.Circuitry  when MovementManager.Instance.ArrowMoveType == MovementManager.ArrowMovementType.Click:
+            case ActiveState.Arcade     when MovementManager.Instance.ArrowMoveType == MovementManager.ArrowMovementType.Click:
+                SetActiveCursor(false);
+                break;
+
+            case ActiveState.Game       when MovementManager.Instance.ArrowMoveType == MovementManager.ArrowMovementType.Click:
+                SetActiveCursor(true);
                 break;
 
             case ActiveState.Arcade:
@@ -140,12 +147,16 @@ public class VirtualCursorActivator : MonoBehaviour
                         break;
 
                     default:
-                        SetActiveCursor(HasTool || ItemAndAbilityManager.Instance.AreUncollectedTools());
+                        SetActiveCursor(HasTool || (ItemAndAbilityManager.Instance.AreUncollectedTools() || MovementManager.Instance.ArrowMoveType ==  MovementManager.ArrowMovementType.Click));
                         break;
                 }
                 break;
         }
     }
+
+    // Gets the game in a working if we change any values while the game is running
+    void HandleMovementManagerValidation()
+        => HandleConnectToStation(new ConnectEventArgs(PlayerFocus.Instance.Focused, true, null));
 
     void SetActiveCursor(bool setActive)
     {

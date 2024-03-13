@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static AudioManager;
+using static UnityEngine.UI.Button;
 
-public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
+public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Button")]
     [SerializeField] protected bool isArcadeButton = false;
@@ -14,16 +16,20 @@ public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
 
     Transform Origin => isArcadeButton ? ArcadeSoundEmitter.Transform : transform;
 
-    public void OnPointerClick(PointerEventData eventData) => OnClick();
+    public void OnPointerClick(PointerEventData eventData) 
+        => OnClick();
 
-    public void OnPointerEnter(PointerEventData eventData) => OnEnter();
+    public void OnPointerEnter(PointerEventData eventData) 
+        => OnEnter();
+
+    public void OnPointerExit(PointerEventData eventData) 
+        => OnExit();
 
     public virtual void OnClick()
     {
-        if (!CanBeClicked())
-            return;
-
-        TriggerAudioClip(ClickSound, Origin);
+        if (AudioManager.Instance != null) 
+            TriggerAudioClip(ClickSound, Origin);
+        return;
     }
 
     public virtual void OnEnter()
@@ -37,5 +43,11 @@ public class UIButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         TriggerAudioClip(HoverSound, Origin);
     }
 
+    public virtual void OnExit()
+    {
+    }
+
     public virtual bool CanBeClicked() => true;
+
+   
 }

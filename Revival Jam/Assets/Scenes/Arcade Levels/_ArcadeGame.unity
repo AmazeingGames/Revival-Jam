@@ -997,9 +997,6 @@ GameObject:
   - component: {fileID: 914837730}
   - component: {fileID: 914837733}
   - component: {fileID: 914837732}
-  - component: {fileID: 914837731}
-  - component: {fileID: 914837735}
-  - component: {fileID: 914837734}
   - component: {fileID: 914837736}
   m_Layer: 10
   m_Name: PlayButton
@@ -1029,50 +1026,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 2}
   m_SizeDelta: {x: 176.9, y: 57.3}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &914837731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914837729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.87618065, g: 0, b: 1, a: 1}
-    m_PressedColor: {r: 0.2735849, g: 0.2542275, b: 0.2542275, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 914837732}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &914837732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,35 +1064,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914837729}
   m_CullTransparentMesh: 1
---- !u!54 &914837734
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914837729}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!65 &914837735
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914837729}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &914837736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,7 +1076,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61553f3b82bd36479565ff3e096656b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isArcadeButton: 1
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.8745098, g: 0, b: 1, a: 1}
+    m_PressedColor: {r: 0.27450982, g: 0.25490198, b: 0.25490198, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 914837732}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &944597391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +1846,18 @@ PrefabInstance:
       propertyPath: isArcadeButton
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8195829619569328391, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195829619569328391, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195829619569328391, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.9843137
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
 --- !u!224 &1398747791 stripped
@@ -2289,7 +2256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScreenContentCamera: {fileID: 717188439}
   mainMenuScreen: {fileID: 1918733264}
+  playButton: {fileID: 914837729}
   selectSaveMenu: {fileID: 1898418545}
+  startingSaveButton: {fileID: 984873585}
   eventSystem: {fileID: 944597391}
   mainCamera: {fileID: 831428061}
 --- !u!114 &1979725712
@@ -2456,7 +2425,7 @@ GameObject:
   - component: {fileID: 2094941015}
   - component: {fileID: 2094941014}
   - component: {fileID: 2094941020}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VirtualScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2703,6 +2672,18 @@ PrefabInstance:
     - target: {fileID: 8195829619569328391, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
       propertyPath: isArcadeButton
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195829619569328391, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.1527234
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195829619569328391, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.1527234
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195829619569328391, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.9811321
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58df71aa9db91434f96b769315dc2dce, type: 3}

@@ -6,27 +6,31 @@ using static PlayerFocus;
 
 public class MovementManager : Singleton<MovementManager>
 {
+    public enum ArrowMovementType { Click, WASD, Both }
+    public enum ArrowDisplayType { Arrow, Cursor, Both, None }
+
     [SerializeField] List<StationMoveData> movementData = new();
 
-    [Header("Debug Settings")]
+    [field: Header("Settings")]
+    [field: SerializeField] public ArrowMovementType ArrowMoveType { get; private set; }
+    [field: SerializeField] public ArrowDisplayType ArrowVisualsType { get; private set; }
+
     [SerializeField] bool controlMovement = true;
     [SerializeField] FocusedOn startingStation = FocusedOn.Null;
 
     public readonly Dictionary<FocusedOn, StationMoveData> stationToData = new();
     public static event Action<FocusedOn> ConnectToStation;
     public static bool ControlMovement => Instance != null && Instance.controlMovement;
+    public static event Action OnValidation;
 
     private void Start()
-    {
-        InitializeStationDictionary();
-    }
-
+        => InitializeStationDictionary();
     private void OnEnable()
         => GameManager.AfterStateChange += HandleGameStart;
     private void OnDisable()
         => GameManager.AfterStateChange -= HandleGameStart;
 
-    // Starts off the game connected to a station
+    // Connects to a station on game start
     void HandleGameStart(GameManager.GameState newGameState)
     {
         if (newGameState == GameManager.GameState.StartGame)
@@ -47,8 +51,9 @@ public class MovementManager : Singleton<MovementManager>
     // Gives public access to invoke the connectToStation event
     public void CallConnectToStation(FocusedOn stationToConnect)
     {
-        ConnectToStation?.Invoke(stationToConnect);
         Debug.Log($"connecting to : {stationToConnect}");
+
+        ConnectToStation?.Invoke(stationToConnect);
     }
 
     // Fills out the Dictionary with data from the StationData list
@@ -61,4 +66,7 @@ public class MovementManager : Singleton<MovementManager>
             stationToData.Add(data.StationType, data);
         }
     }
+
+    private void OnValidate()
+        => OnValidation?.Invoke();
 }

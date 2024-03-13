@@ -7,7 +7,9 @@ using static StationMoveData;
 using static FocusStation;
 using static PlayerFocus;
 using UnityEngine.UI;
+using static MovementManager;
 using System.Xml;
+using System.Runtime.CompilerServices;
 
 public class MoveArrow : UIButtonBase
 {
@@ -16,6 +18,7 @@ public class MoveArrow : UIButtonBase
     [SerializeField] ArrowSpriteData arrowSpriteData;
 
     [Header("Components")]
+    [SerializeField] Image raycastImage;
     [SerializeField] Image image;
 
     readonly List<KeyCode> inputKeys = new();
@@ -23,18 +26,22 @@ public class MoveArrow : UIButtonBase
     FocusedOn connectingStation;
 
     bool shouldBeDisabled;
-
+    SpriteSwap gameCursor;
 
     private void OnEnable()
     {
         FocusStation.ConnectToStation += HandleConnectToStation;
         MenuManager.OnMenuStateChange += HandleMenuStateChange;
+        MovementManager.OnValidation += HandleMovementValidation;
+        GameMouse.GetReference += HandleGetReference;
     }
 
     private void OnDisable()
     {
         FocusStation.ConnectToStation -= HandleConnectToStation;
         MenuManager.OnMenuStateChange -= HandleMenuStateChange;
+        MovementManager.OnValidation -= HandleMovementValidation;
+        GameMouse.GetReference -= HandleGetReference;
     }
 
     private void Start()
@@ -42,6 +49,7 @@ public class MoveArrow : UIButtonBase
         image.sprite = arrowSpriteData.DirectionToSprite(arrowDirection);
 
         SetInputKeys();
+        HandleMovementValidation();
     }
 
     // Sets the input keys that trigger the move event
@@ -74,10 +82,10 @@ public class MoveArrow : UIButtonBase
     private void Update()
         => InputCheck();
 
-    // Triggers the move event if the player presses a move direction
+    // Moves the player on WASD
     void InputCheck()
     {
-        if (shouldBeDisabled || MenuManager.Instance.IsInMenu)
+        if (shouldBeDisabled || MenuManager.Instance.IsInMenu || MovementManager.Instance.ArrowMoveType == MovementManager.ArrowMovementType.Click)
             return;
 
         for (int i = 0; i < inputKeys.Count; i++)
@@ -86,6 +94,19 @@ public class MoveArrow : UIButtonBase
                 MovementManager.Instance.CallConnectToStation(connectingStation);
         }
     }
+
+    // Moves the player on mouse clicks
+    public override void OnClick()
+    {
+        if (!CanBeClicked())
+            return;
+
+        base.OnClick(); 
+        MovementManager.Instance.CallConnectToStation(connectingStation);
+    }
+
+    public override bool CanBeClicked()
+        => MovementManager.Instance.ArrowMoveType != MovementManager.ArrowMovementType.WASD;
 
     // On menu change:
         // Disables the arrows while in a menu
@@ -124,10 +145,35 @@ public class MoveArrow : UIButtonBase
         SetAble(!shouldBeDisabled);
     }
 
-    // Ables the arrow's visual and clikability
+    // Sets the arrow's visuals and ability to be clicked
     void SetAble(bool shouldBeEnabled)
     {
         image.enabled = shouldBeEnabled;
         image.raycastTarget = shouldBeEnabled;
+
+        raycastImage.enabled = shouldBeEnabled;
+        raycastImage.raycastTarget = shouldBeEnabled;
+    }
+
+    // Secondary way to enable/disable visuals
+    // Set via the Movement Manager's settings
+    void HandleMovementValidation()
+        => image.gameObject.SetActive(MovementManager.Instance.ArrowVisualsType == ArrowDisplayType.Arrow || MovementManager.Instance.ArrowVisualsType == ArrowDisplayType.Both);
+
+    void HandleGetReference(SpriteSwap spriteSwap)
+        => gameCursor = spriteSwap;
+
+    public override void OnEnter()
+    {
+        if (MovementManager.Instance.ArrowVisualsType == ArrowDisplayType.Arrow || MovementManager.Instance.ArrowVisualsType == ArrowDisplayType.None)
+            return;
+        
+        gameCursor.SetTemporaryVisuals(image.sprite, .7f);
+    }
+
+    public override void OnExit()
+    {
+        gameCursor.SetRegularVisuals();
     }
 }
+

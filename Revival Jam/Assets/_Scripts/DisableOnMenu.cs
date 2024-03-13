@@ -13,7 +13,7 @@ public class DisableOnMenu : MonoBehaviour
     void Start()
     {
         if (!Disable)
-            Debug.LogWarning("Debug should always remain true. Please either fix or remove this component");
+            Debug.LogWarning("Disable should always remain true. Please either fix or remove this component");
 
         AddToDisable?.Invoke(this);
     }

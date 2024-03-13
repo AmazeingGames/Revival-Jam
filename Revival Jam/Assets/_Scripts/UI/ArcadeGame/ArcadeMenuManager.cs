@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static GameManager;
 
 public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
@@ -8,7 +9,11 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
     [SerializeField] GameObject ScreenContentCamera;
 
     [SerializeField] GameObject mainMenuScreen;
+    [SerializeField] GameObject playButton;
+
+
     [SerializeField] GameObject selectSaveMenu;
+    [SerializeField] GameObject startingSaveButton;
 
     [SerializeField] GameObject eventSystem;
     [SerializeField] GameObject mainCamera;
@@ -49,6 +54,7 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
     void MainMenuEnter()
     {
         Debug.Log("Main menu enter");
+
         mainMenuScreen.SetActive(true);
         selectSaveMenu.SetActive(false);
         ScreenContentCamera.SetActive(true);
@@ -62,9 +68,12 @@ public class ArcadeMenuManager : Singleton<ArcadeMenuManager>
         mainMenuScreen.SetActive(false);
     }
 
+
     void GameStart()
     {
         Debug.Log("Game Start");
+
+        EventSystem.current.SetSelectedGameObject(null);
 
         mainMenuScreen.SetActive(false);
         selectSaveMenu.SetActive(false);

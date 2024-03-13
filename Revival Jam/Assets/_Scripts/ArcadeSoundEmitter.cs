@@ -12,6 +12,9 @@ public class ArcadeSoundEmitter : Singleton<ArcadeSoundEmitter>
     {
         if (Instance == null)
         {
+            if (Player.Instance == null)
+                return null;
+
             Debug.LogWarning("Arcade Sound Emitter is Null | Returning Player Transform instead to avoid Null Reference Exception");
             return Player.Instance.transform;
         }

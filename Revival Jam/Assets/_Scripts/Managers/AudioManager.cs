@@ -119,7 +119,7 @@ public class AudioManager : Singleton<AudioManager>
         CleanUp();
     }
 
-    //This should have a default value of the caller's transform
+    // This should instead have a default value of the caller's transform
     public static void TriggerAudioClip(OneShotSounds sound, Transform origin) => TriggerAudioClip(sound, origin.position);
 
     public static void TriggerAudioClip(OneShotSounds sound, Vector3 origin)

@@ -41,6 +41,7 @@ public class ArcadeGameManager : Singleton<ArcadeGameManager>
         switch (newState)
         {
             case ArcadeState.StartLevel:
+                
                 SceneLoader.Instance.StartLevelLoad(levelToLoad);
                 break;
 
